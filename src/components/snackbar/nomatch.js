@@ -4,7 +4,7 @@ import React from 'react'
 
 const NoMatch = () => {
   return (
-    <div className='w-100  d-grid justify-content-center align-items-center' style={{height:'calc(100vh - 120px)'}} >
+    <div className='w-100  d-grid justify-content-center align-items-center' style={{ height: 'calc(100vh - 120px)' }} >
       <Result
         status="404"
         title="404"

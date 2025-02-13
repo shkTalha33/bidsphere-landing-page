@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import { usePathname } from 'next/navigation'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
-import MobileNav from '../Header/MobileNav'
-import { useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react'
 
 const MainLayout = ({ children }) => {
     const pathname = usePathname()
@@ -30,7 +29,6 @@ const MainLayout = ({ children }) => {
         <>
             {!isPublicRoute && <Header />}
             {children}
-            {/* {isMobileRoute && <MobileNav />} */}
             {!isPublicRoute ? <Footer /> : null}
         </>
     )

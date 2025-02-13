@@ -1,5 +1,3 @@
-import ProductCard from '@/components/common/product-card'
-import React, { Fragment } from 'react'
 import { Container } from 'react-bootstrap'
 
 const Page = () => {
@@ -7,7 +5,7 @@ const Page = () => {
         <>
             <Container fluid='sm'>
                 <section className=' sm:mt-6 pt-3'>
-                   
+
                 </section>
             </Container>
         </>
