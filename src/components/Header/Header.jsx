@@ -144,7 +144,7 @@ export default function Header() {
               Login
             </button>
             <button
-              onClick={() => router.push('/auth/login')}
+              onClick={() => router.push('/auth/signup')}
               className={`px-[2rem] py-2 bg_primary text_white rounded-3 text-[0.95rem]  cursor-pointer plusJakara_medium  no-underline primary_hover`}
             >
               Sign Up

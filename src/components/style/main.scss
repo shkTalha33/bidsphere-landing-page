@@ -1,6 +1,6 @@
 @use "sass:color";
 @import url("./fonts.css");
-$primary: #7F55DF;
+$primary: #5B0F00;
 $lightprimary: #003F7D;
 $primary2: #F6921E;
 $secondary: #4D4D4D;
@@ -230,20 +230,20 @@ $sm: 640px;
 
 
 .auth-form {
-    .pac-target-input {
-        background-color: transparent !important;
-    }
+    // .pac-target-input {
+    //     background-color: transparent !important;
+    // }
 
-    .form-control {
-        box-shadow: none !important;
-        border: none !important;
-        background-color: inherit !important;
-        border-radius: 0 !important;
+    // .form-control {
+    //     box-shadow: none !important;
+    //     border: none !important;
+    //     background-color: inherit !important;
+    //     border-radius: 0 !important;
 
-        &::placeholder {
-            color: transparent !important;
-        }
-    }
+    //     &::placeholder {
+    //         color: transparent !important;
+    //     }
+    // }
 }
 
 // .auth-right {
