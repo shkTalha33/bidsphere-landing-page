@@ -3,14 +3,11 @@ import axiosInstance from "@/components/api/axiosInstance";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
 import { usePostMutation } from "@/components/redux/apiSlice2";
-import { encryptData } from "@/components/redux/localStorageSecure";
-import { setAccessToken, setLogin, setLogout, setRefreshToken, setUserData } from "@/components/redux/loginForm";
+import { setAccessToken, setLogout, setRefreshToken, setUserData } from "@/components/redux/loginForm";
 import { message } from "antd";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { GoArrowLeft } from "react-icons/go";
 import "react-phone-input-2/lib/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
@@ -33,7 +30,7 @@ const Page = () => {
   const userType = useSelector((state) => state.auth?.userType)
   const [createPost] = usePostMutation();
   const [showResendLink, setShowResendLink] = useState(false);
-  const [otpCode, setOtpCode] = useState("");
+  const [otpCode, setOtpCode] = useState(["", "", "", ""]);
   useEffect(() => {
     let interval;
     if (timer > 0) {
@@ -118,9 +115,13 @@ const Page = () => {
 
   const handleChange = (e, index) => {
     const value = e.target.value.slice(-1);
-    const updatedOtp = otpCode.split("");
-    updatedOtp[index] = value;
-    setOtpCode(updatedOtp.join(""));
+    const newOtpCode = [...otpCode];
+    newOtpCode[index] = value;
+    setOtpCode(newOtpCode);
+
+    if (value && index < 3) {
+      fieldsRef.current.children[index + 1].focus();
+    }
   };
 
   const onSubmit = async (values) => {
@@ -195,26 +196,31 @@ const Page = () => {
     }
   };
 
+  const handleKeyUp = (e, index) => {
+    if (e.key === "Backspace" && index > 0 && !otpCode[index]) {
+      fieldsRef.current.children[index - 1].focus();
+    }
+  };
+
   return (
-    <AuthLayout>
+    <AuthLayout title='Exclusive & Diverse Listings' description='Discover rare collectibles, vehicles, and premium assets.'>
       <>
         <AuthHeading heading={' Verify Your Email'} subHeading={'We have sent you an verification code with a code to this email'} email={tempData?.email || forgotCode?.email} />
         <Form onSubmit={handleSubmit(onSubmit)} className="mt-8 gap-6">
-          <div>
+          <div className="mt-5">
             <label className="text_secondary2 popins_regular">
               Enter Your OPT Code Here
             </label>
-            <div ref={fieldsRef} className="mt-2 flex items-center gap-x-2">
-              {[0, 1, 2, 3].map((index) => (
-                <Input
+            <div ref={fieldsRef} className="mt-3 flex mb-2 items-center gap-x-2">
+              {otpCode.map((value, index) => (
+                <input
                   key={index}
                   type="text"
-                  data-index={index}
                   maxLength="1"
-                  value={otpCode[index] || ""}
-                  className="otp-input"
+                  value={value}
                   onChange={(e) => handleChange(e, index)}
-                  onKeyUp={inputFocus}
+                  onKeyUp={(e) => handleKeyUp(e, index)}
+                  className="w-16 h-16 text-center text-2xl border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                 />
               ))}
             </div>

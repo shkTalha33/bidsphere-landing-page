@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { BeatLoader } from "react-spinners";
@@ -22,20 +21,20 @@ import * as Yup from "yup";
 const Page = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [createPost] = usePostMutation();
-  const [loading, setloading] = useState(false)
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const { t } = useTranslation()
+  const [loading, setloading] = useState(false);
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const togglePassword = (e) => {
     e.preventDefault();
     setIsPasswordHidden((prevState) => !prevState);
   };
 
   const schema = Yup.object().shape({
-    email: Yup.string().email(t("validation.invalidEmail")).required(t("validation.emailRequired")),
+    email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string()
-      .required(t("validation.passwordRequired"))
-      .min(8, t("validation.passwordMin")),
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
   });
 
   const {
@@ -49,70 +48,68 @@ const Page = () => {
   });
 
   const onSubmit = async (values) => {
-    setloading(true)
-    try {
-      const response = await createPost({
-        endpoint: 'api/auth/login',
-        data: values,
-        tag: 'Auth',
-      }).unwrap();
-      if (response.success) {
-        message.success('You have successfully logged in');
-        dispatch(setUserData(response?.user))
-        dispatch(setAccessToken(response?.accessToken))
-        localStorage.setItem('setofshops_user_token', response?.accessToken)
-        dispatch(setRefreshToken(response?.refreshToken))
-        // create('setofshops_user_token', response?.accessToken)
-        dispatch(setLogin(true));
-        if (response?.user?.role === 'influencer' || response?.user?.role === 'brand') {
-          router.push('/vender/dashboard');
-        } else {
-          router.push('/');
-        }
-      }
-    } catch (error) {
-      message.error(error?.data?.message || 'Login failed');
-      console.log('console', error);
-    } finally {
-      setloading(false)
-    }
+    // setloading(true);
+    dispatch(setLogin(true));
+    router.push('/');
+    // try {
+    //   const response = await createPost({
+    //     endpoint: 'api/auth/login',
+    //     data: values,
+    //     tag: 'Auth',
+    //   }).unwrap();
+    //   if (response.success) {
+    //     message.success('You have successfully logged in');
+    //     dispatch(setUserData(response?.user));
+    //     dispatch(setAccessToken(response?.accessToken));
+    //     localStorage.setItem('setofshops_user_token', response?.accessToken);
+    //     dispatch(setRefreshToken(response?.refreshToken));
+    //     dispatch(setLogin(true));
+    //     if (response?.user?.role === 'influencer' || response?.user?.role === 'brand') {
+    //       router.push('/vender/dashboard');
+    //     } else {
+    //       router.push('/');
+    //     }
+    //   }
+    // } catch (error) {
+    //   message.error(error?.data?.message || 'Login failed');
+    //   console.log('console', error);
+    // } finally {
+    //   setloading(false);
+    // }
   };
 
   return (
-    <AuthLayout>
+    <AuthLayout src={'/assets/auth1.png'}>
       <>
-        <AuthHeading heading={t('auth.login.title')} subHeading={t('auth.login.subtitle')} path={'/'} />
+        <AuthHeading heading="Login" subHeading="Login to your account" path={'/'} />
         <Form
           onSubmit={handleSubmit(onSubmit)}
-          className="mt-8 grid grid-cols-6 gap-3 auth-form"
+          className="mt-12 grid grid-cols-6 gap-3 auth-form"
         >
           <div className="col-span-6">
             <Label
               for="email"
-              className="relative block overflow-hidden  rounded-lg border border-gray-400 px-3 pt-3 mb-0"
+              className="mb-2 text-sm popins_regular text_secondary2"
             >
-              <Controller
-                id="email"
-                name="email"
-                defaultValue=""
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder={t('auth.login.email')}
-                    // invalid={!!errors.email}
-                    className={`peer h-8 w-full popins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${errors.email ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
-                      }`}
-                  />
-                )}
-              />
-              <span className="absolute start-3 top-2 popins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
-                {t('auth.login.email')}
-              </span>
+              Email Address
             </Label>
+            <Controller
+              id="email"
+              name="email"
+              defaultValue=""
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  className={`h-12 w-full popins_regular sm:text-sm ${errors.email ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                    }`}
+                />
+              )}
+            />
             {errors.email && (
               <p className="text-red-500 text-xs m-1 popins_regular">{errors.email.message}</p>
             )}
@@ -120,16 +117,19 @@ const Page = () => {
           <div className="col-span-6">
             <Label
               for="password"
-              className="relative block overflow-hidden  rounded-lg border border-gray-400 px-3 pt-3 mb-0"
+              className="mb-2 text-sm popins_regular text_secondary2"
             >
+              Password
+            </Label>
+            <div className="relative">
               <button
-                className="absolute right-3 inset-y-0 my-auto"
+                className="absolute right-5 inset-y-0 my-auto"
                 onClick={togglePassword}
               >
                 {!isPasswordHidden ? (
-                  <BsEyeFill size={20} className=" text_black" />
+                  <BsEyeFill size={20} className="text_black" />
                 ) : (
-                  <BsEyeSlashFill size={20} className=" text_black" />
+                  <BsEyeSlashFill size={20} className="text_black" />
                 )}
               </button>
               <Controller
@@ -142,18 +142,14 @@ const Page = () => {
                     {...field}
                     type={isPasswordHidden ? "password" : "text"}
                     id="password"
-                    placeholder={t('auth.login.password')}
+                    placeholder="Password"
                     name="password"
-                    //     invalid={!!errors.password}
-                    className={`peer h-8 w-full popins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${errors.password ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                    className={`h-12 w-full popins_regular sm:text-sm ${errors.password ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                       }`}
                   />
                 )}
               />
-              <span className="absolute start-3 top-2 popins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
-                {t('auth.login.password')}
-              </span>
-            </Label>
+            </div>
             {errors.password && (
               <p className="text-red-500 text-xs m-1 popins_regular">{errors.password.message}</p>
             )}
@@ -161,19 +157,19 @@ const Page = () => {
           <div className="col-span-6 flex justify-end w-full">
             <Link
               href={"/auth/forgot-password"}
-              className=" popins_medium underline text_secondary2 text-sm"
+              className="popins_medium underline text_secondary2 text-sm"
             >
-              {t('auth.login.forgotPassword')}
+              Forgot Password?
             </Link>
           </div>
           <div className="col-span-6 sm:flex sm:items-center sm:gap-4 w-full">
             <button disabled={loading} type="submit" className="btn1 primary w-100">
-              {loading ? <BeatLoader color="#fff" size={10} /> : `${t('auth.login.submit')}`}
+              {loading ? <BeatLoader color="#fff" size={10} /> : "Sign In"}
             </button>
           </div>
-          <div className="col-span-6 mt-3">
+          {/* <div className="col-span-6 mt-3">
             <p className="text-lg popins_medium">
-              {t('auth.login.signInAnotherAccount')}
+              Sign in with another account
             </p>
             <div className="grid grid-cols-3 gap-x-3 mt-2">
               <button
@@ -213,15 +209,16 @@ const Page = () => {
                 />
               </button>
             </div>
-          </div>
+          </div> */}
         </Form>
         <p className="pt-3 popins_regular text_secondary2">
-          {t('auth.login.noAccount')} <Link href="/auth/signup" className=" _link_underline popins_medium">
-            {t('auth.login.signUp')}
+          Create a New Account? <Link href="/auth/signup" className="_link_underline popins_medium">
+            Sign up
           </Link>
         </p>
       </>
-    </AuthLayout>
+    </AuthLayout >
   );
 };
+
 export default Page;
