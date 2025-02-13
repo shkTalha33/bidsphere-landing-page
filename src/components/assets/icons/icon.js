@@ -36,6 +36,12 @@ import icon11dark from "../png/icon11dark.png";
 import icon12dark from "../png/icon12dark.png";
 import icon13dark from "../png/icon13dark.png";
 
+import vehicles from "../svg/vehicles.svg";
+import electronics from "../svg/electronics.svg";
+import art from "../svg/art.svg";
+
+
+
 import auctionlogo from "../png/auctionlogo.png";
 import appstore from "../png/appstore.png";
 import playstore from "../png/playstore.png";
@@ -52,4 +58,5 @@ export {
   googleicon, product1, logo,
   coveravatar,
   logout,
+  art, electronics, vehicles
 }
