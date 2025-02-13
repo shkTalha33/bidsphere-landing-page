@@ -15,8 +15,8 @@ import "./globals.css";
 
 export const metadata = {
   manifest: "/manifest.json",
-  title: "Set of Shops",
-  description: "Set of Shops Buy & Sell",
+  title: "Bid sphere",
+  description: "Bid sphere",
 };
 
 export default function RootLayout({ children }) {
@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="apple-icon" sizes="180x180" href="/apple-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="Set of Shops" />
+        <meta name="apple-mobile-web-app-title" content="Bid sphere" />
       </head>
       <body>
         <AntdRegistry>

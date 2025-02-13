@@ -1,16 +1,15 @@
 "use client";
 
+import DownloadSection from "@/components/home/DownloadSection";
+import HeroSection from "@/components/home/hero-section/hero-section";
+
 /* eslint-disable @next/next/no-img-element */
-import DownloadSection from "@/components/common/DownloadSection";
-import HeroSection from "@/components/hero-section/hero-section";
 
 export default function Home() {
 
   return (
     <>
-      <section className="">
-        <HeroSection />
-      </section>
+      <HeroSection />
       <DownloadSection />
     </>
   );

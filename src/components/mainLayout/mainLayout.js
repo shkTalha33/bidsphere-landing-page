@@ -30,7 +30,7 @@ const MainLayout = ({ children }) => {
         <>
             {!isPublicRoute && <Header />}
             {children}
-            {isMobileRoute && <MobileNav />}
+            {/* {isMobileRoute && <MobileNav />} */}
             {!isPublicRoute ? <Footer /> : null}
         </>
     )
