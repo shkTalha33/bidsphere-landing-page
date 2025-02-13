@@ -1,0 +1,28 @@
+/* Light Theme */
+:root {
+  --primary: #5B0F00;
+  --lightprimary: #003f7d;
+  --primary2: #7f61c4;
+  --secondary: #4d4d4d;
+  --secondary2: #7e7d7d;
+  --lightsecondary: #c5c5c5;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #fdfdff;
+  --dark: #343a40;
+  --white: #fff;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --primary: #17a2b8;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #007bff;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #343a40;
+  --dark: #e0e1e2;
+}

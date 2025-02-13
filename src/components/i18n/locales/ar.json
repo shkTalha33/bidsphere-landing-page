@@ -1,0 +1,378 @@
+{
+  "nav": {
+    "signIn": "تسجيل الدخول",
+    "becomePartner": "كن شريكًا",
+    "searchPlaceholder": "ابحث في جميع المنتجات",
+    "profile": "الملف الشخصي",
+    "shops": "المتاجر",
+    "home": "الرئيسية",
+    "search": "بحث",
+    "live": "مباشر",
+    "myOrder": "طلبي",
+    "trackOrder": "تتبع الطلب",
+    "logout": "تسجيل الخروج",
+    "channel": "القناة"
+  },
+  "greeting": {
+    "goodMorning": "صباح الخير"
+  },
+  "home": {
+    "section2": {
+      "title": "المنتجات المميزة"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "مرحبًا بعودتك!",
+      "subtitle": "سجل الدخول إلى حسابك",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "rememberMe": "تذكرني",
+      "forgotPassword": "هل نسيت كلمة المرور؟",
+      "submit": "تسجيل الدخول",
+      "noAccount": "ليس لديك حساب؟",
+      "signUp": "سجل الآن",
+      "signInAnotherAccount": "سجل الدخول باستخدام الشبكات الاجتماعية:"
+    },
+    "signup": {
+      "title": "مرحبًا بك في Set of Shops!",
+      "subtitle": "سجل في حسابك",
+      "form": {
+        "firstName": "الاسم الأول",
+        "lastName": "الاسم الأخير",
+        "phoneRequired": "الهاتف مطلوب",
+        "email": "البريد الإلكتروني",
+        "username": "اسم المستخدم",
+        "phone": "الهاتف",
+        "type": "نوع التسجيل",
+        "placeholderType": "اختر نوع التسجيل",
+        "password": "كلمة المرور",
+        "confirmPassword": "تأكيد كلمة المرور",
+        "country": "البلد",
+        "catalogSize": "حجم الكتالوج (الاستماع الشهري)",
+        "currentDistributor": "الموزع الحالي",
+        "spotifyUrl": "رابط الفنان على Spotify",
+        "additionalUrls": "روابط بث إضافية",
+        "additionalDetails": "تفاصيل إضافية",
+        "brandInfo": "معلومات العلامة التجارية",
+        "brandName": "اسم العلامة التجارية",
+        "brandNamePlaceholder": "أدخل اسم العلامة التجارية",
+        "brandCountryOfOperation": "بلد عمل العلامة التجارية",
+        "selectCountry": "اختر بلدًا",
+        "brandWebsite": "موقع العلامة التجارية",
+        "brandWebsitePlaceholder": "أدخل رابط الموقع",
+        "brandDescription": "وصف العلامة التجارية",
+        "brandDescriptionPlaceholder": "أدخل الوصف",
+        "brandType": "نوع العلامة التجارية",
+        "brandTypePlaceholder": "أدخل نوع العلامة التجارية",
+        "brandAnnualRevenue": "الإيرادات السنوية للعلامة التجارية",
+        "brandAnnualRevenuePlaceholder": "أدخل الإيرادات السنوية",
+        "productCategories": "فئات المنتجات",
+        "category": "الفئة",
+        "selectCategory": "اختر فئة",
+        "subMainCategory": "الفئة الفرعية الرئيسية",
+        "selectSubMainCategory": "اختر فئة فرعية رئيسية",
+        "subCategory": "الفئة الفرعية",
+        "targetAudience": "الجمهور المستهدف",
+        "ageGroup": "الفئة العمرية (18-...)",
+        "ageGroupPlaceholder": "أدخل الفئة العمرية",
+        "gender": "الجنس",
+        "selectGender": "اختر الجنس",
+        "audienceInterests": "اهتمامات الجمهور",
+        "interests": "أضف اهتمامات",
+        "brandRepInfo": "معلومات ممثل العلامة التجارية",
+        "fullName": "الاسم الكامل",
+        "fullNamePlaceholder": "أدخل الاسم الكامل",
+        "emailPlaceholder": "أدخل البريد الإلكتروني",
+        "phoneNumber": "رقم الهاتف",
+        "phoneNumberPlaceholder": "أدخل رقم الهاتف",
+        "repPosition": "منصب ممثل العلامة التجارية",
+        "repPositionPlaceholder": "أدخل المنصب",
+        "customerSupport": "دعم العملاء",
+        "taxId": "الرقم الضريبي",
+        "taxIdPlaceholder": "الرقم الضريبي",
+        "registration_certificate": "شهادة التسجيل",
+        "registrationCertificatePlaceholder": "شهادة التسجيل",
+        "logo": "شعار العلامة التجارية",
+        "logoPlaceholder": "رابط الشعار",
+        "bio": "السيرة الذاتية",
+        "bioPlaceholder": "أدخل السيرة الذاتية",
+        "dateOfBirth": "تاريخ الميلاد",
+        "dateOfBirthPlaceholder": "YYYY-MM-DD",
+        "nationality": "الجنسية",
+        "nationalityPlaceholder": "اختر بلدًا",
+        "audienceAgeGroup": "الفئة العمرية (18-...)",
+        "audienceAgeGroupPlaceholder": "الفئة العمرية (18-...)",
+        "audienceLocation": "موقع الجمهور المستهدف",
+        "audienceLocationPlaceholder": "موقع الجمهور المستهدف",
+        "audienceInterestsPlaceholder": "اهتمامات الجمهور",
+        "contentCategory": "فئة المحتوى",
+        "contentCategoryPlaceholder": "فئة المحتوى",
+        "contentType": "نوع المحتوى",
+        "contentTypePlaceholder": "نوع المحتوى",
+        "socialMediaInfo": "معلومات وسائل التواصل الاجتماعي",
+        "socialMediaInstagram": "إنستغرام",
+        "socialMediaUsername": "@اسم المستخدم",
+        "socialMediaFollowers": "المتابعون",
+        "socialMediaEngagementRate": "معدل التفاعل",
+        "socialMediaMonthlyReach": "الوصول الشهري",
+        "locationBtnLabel": "الموقع",
+        "interestsBtnLabel": "الاهتمامات",
+        "categoryBtnLabel": "الفئة",
+        "typeBtnLabel": "النوع",
+        "socialMediaBtnLabel": "وسائل التواصل الاجتماعي",
+        "taxNumber": "الرقم الضريبي",
+        "taxNumberPlaceholder": "أدخل الرقم الضريبي",
+        "nationalId": "الهوية الوطنية",
+        "nationalIdPlaceholder": "أدخل الهوية الوطنية",
+        "profilePhoto": "صورة الملف الشخصي",
+        "profilePhotoPlaceholder": "أدخل رابط صورة الملف الشخصي",
+        "businessType": "نوع العمل",
+        "businessTypePlaceholder": "أدخل نوع العمل",
+        "website": "الموقع الإلكتروني",
+        "websitePlaceholder": "أدخل رابط الموقع",
+        "serviceArea": "منطقة الخدمة",
+        "deliveryService": "خدمة التوصيل",
+        "shippingRates": {
+          "standard": "قياسي",
+          "express": "سريع",
+          "international": "دولي"
+        },
+        "primaryContact": {
+          "name": "الاسم الكامل",
+          "email": "البريد الإلكتروني",
+          "phone": "رقم الهاتف",
+          "position": "منصب ممثل العلامة التجارية"
+        },
+        "deliveryTime": {
+          "standard": "قياسي",
+          "express": "سريع",
+          "international": "دولي"
+        },
+        "packaging": {
+          "standard": "التغليف القياسي",
+          "custom": "التغليف المخصص"
+        },
+        "tracking": {
+          "is_number_provided": "تم توفير رقم التتبع",
+          "is_real_time": "تتبع في الوقت الفعلي"
+        },
+        "orderCapacity": "القدرة على الطلب يوميًا",
+        "deliveryVehicles": {
+          "fleetSize": "حجم الأسطول",
+          "vehicleTypes": "أنواع المركبات"
+        },
+        "availability": "التوفر",
+        "insuranceCoverage": {
+          "amount": "المبلغ",
+          "details": "التفاصيل"
+        },
+        "returnProcess": {
+          "is_customer_responsible": "هل العميل مسؤول؟",
+          "policy": "سياسة الإرجاع"
+        },
+        "platformTerms": "قبول شروط وأحكام المنصة",
+        "privacyPolicy": "قبول سياسة الخصوصية للمنصة"
+      },
+      "regType": {
+        "customer": "العميل",
+        "brand": "العلامة التجارية",
+        "influencer": "المؤثر",
+        "courier_company": "شركة التوصيل"
+      },
+      "stepsBrand": {
+        "1": {
+          "heading": "المعلومات الشخصية",
+          "title": "المعلومات الشخصية"
+        },
+        "2": {
+          "heading": "تفاصيل العلامة التجارية",
+          "title": "العلامة التجارية"
+        },
+        "3": {
+          "heading": "المستندات القانونية",
+          "title": "المستندات القانونية"
+        }
+      },
+      "stepsInf": {
+        "1": {
+          "heading": "المعلومات الشخصية",
+          "title": "المعلومات الشخصية"
+        },
+        "2": {
+          "heading": "تفاصيل المؤثر",
+          "title": "المؤثر"
+        },
+        "3": {
+          "heading": "المستندات",
+          "title": "المستندات"
+        }
+      },
+      "stepsRider": {
+        "1": {
+          "heading": "المعلومات الشخصية",
+          "title": "المعلومات الشخصية"
+        },
+        "2": {
+          "heading": "تفاصيل شركة التوصيل",
+          "title": "شركة التوصيل"
+        },
+        "3": {
+          "heading": "المستندات",
+          "title": "المستندات"
+        }
+      },
+      "signupBtn": "سجل الآن",
+      "loginBtn": "تسجيل الدخول",
+      "continueBtn": "متابعة",
+      "alreadyAccount": "هل لديك حساب بالفعل؟"
+    },
+    "reset_password": {
+      "title": "إعادة تعيين كلمة المرور",
+      "subtitle": "أدخل كلمة المرور الجديدة أدناه",
+      "password": "كلمة المرور الجديدة",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "btnLabel": "إعادة تعيين كلمة المرور"
+    },
+    "forgot_password": {
+      "title": "نسيت كلمة المرور!",
+      "subtitle": "أدخل عنوان البريد الإلكتروني لإعادة تعيين كلمة المرور",
+      "email": "البريد الإلكتروني",
+      "rememberPassword": "هل تذكرت كلمة المرور؟",
+      "btnLabel": "إرسال الرمز",
+      "loginBtnLabel": "تسجيل الدخول"
+    },
+    "admin": {
+      "title": "تسجيل دخول المسؤول",
+      "subtitle": "الوصول إلى لوحة تحكم المسؤول",
+      "contactAdmin": "اتصل بمسؤولك إذا كنت بحاجة إلى وصول"
+    }
+  },
+  "validation": {
+    "invalidEmail": "تنسيق البريد الإلكتروني غير صالح",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+    "passwordMatch": "يجب أن تتطابق كلمات المرور",
+    "passwordConfirm": "يرجى تأكيد كلمة المرور",
+    "passwordConfirmReq": "تأكيد كلمة المرور مطلوب",
+    "firstName": "الاسم الأول مطلوب",
+    "lastName": "الاسم الأخير مطلوب",
+    "usernameMatch": "يمكن أن يحتوي اسم المستخدم على أحرف وأرقام وشرطات سفلية فقط",
+    "usernameMin": "يجب أن يكون اسم المستخدم 3 أحرف على الأقل",
+    "usernameMax": "لا يمكن أن يتجاوز اسم المستخدم 20 حرفًا",
+    "usernameRequired": "اسم المستخدم مطلوب",
+    "type": "نوع التسجيل مطلوب",
+    "address": "العنوان مطلوب",
+    "platformTerms": "يرجى قبول الشروط والأحكام",
+    "privacyPolicy": "يرجى قبول سياسة الخصوصية",
+    "brandNameRequired": "اسم العلامة التجارية مطلوب",
+    "categoryRequired": "الفئة مطلوبة",
+    "subMainCategoryRequired": "الفئة الفرعية الرئيسية مطلوبة",
+    "subCategoryMin": "يجب تحديد فئة فرعية واحدة على الأقل",
+    "subCategoryRequired": "الفئة الفرعية مطلوبة",
+    "fullNameRequired": "الاسم الكامل مطلوب",
+    "ageGroupFormat": "يجب أن تكون الفئة العمرية بتنسيق '18-20'",
+    "websiteRequired": "الموقع الإلكتروني مطلوب",
+    "taxIdRequired": "الرقم الضريبي مطلوب",
+    "bioRequired": "السيرة الذاتية مطلوبة",
+    "dobRequired": "تاريخ الميلاد مطلوب",
+    "nationalityRequired": "الجنسية مطلوبة",
+    "followersMin": "يجب أن يكون عدد المتابعين رقمًا موجبًا",
+    "engagementRateMin": "يجب أن يكون معدل التفاعل موجبًا",
+    "monthlyReachMin": "يجب أن يكون الوصول الشهري موجبًا",
+    "nationalIdRequired": "الهوية الوطنية مطلوبة",
+    "businessTypeRequired": "نوع العمل مطلوب",
+    "serviceAreaRequired": "يجب تحديد منطقة خدمة واحدة على الأقل",
+    "deliveryServiceRequired": "يجب تحديد خدمة توصيل واحدة على الأقل",
+    "positiveNumber": "يجب أن يكون رقمًا موجبًا",
+    "positionRequired": "المنصب مطلوب",
+    "standardDeliveryTimeRequired": "وقت التوصيل القياسي مطلوب",
+    "expressDeliveryTimeRequired": "وقت التوصيل السريع مطلوب",
+    "internationalDeliveryTimeRequired": "وقت التوصيل الدولي مطلوب",
+    "vehicleTypeRequired": "يجب تحديد نوع مركبة واحد على الأقل",
+    "availabilityRequired": "التوفر مطلوب",
+    "returnPolicyRequired": "سياسة الإرجاع مطلوبة"
+  },
+  "common": {
+    "backToHome": "العودة إلى الرئيسية",
+    "readMore": "اقرأ المزيد",
+    "getStarted": "ابدأ الآن",
+    "learnMore": "تعلم المزيد",
+    "contactUs": "اتصل بنا"
+  },
+  "btnText": {
+    "addToCard": "أضف إلى السلة"
+  },
+  "hero": {
+    "heading": "حيث يلتقي الموضة بالتأثير",
+    "subHeading": "استكشف المجموعات الحصرية التي ينظمها كبار المؤثرين والعلامات التجارية.",
+    "shopNow": "تسوق الآن"
+  },
+  "products": {
+    "featured": "المنتجات المميزة",
+    "trending": "المنتجات الشائعة",
+    "recommended": "موصى به لك"
+  },
+  "logo_alt": "الشعار",
+  "description": "لوريم ايبسوم دولور سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور",
+  "social": {
+    "facebook": "فيسبوك",
+    "instagram": "إنستغرام",
+    "twitter": "تويتر",
+    "github": "جيثب",
+    "dribbble": "دريبل"
+  },
+  "services": {
+    "title": "الخدمات",
+    "coaching": "تدريب فردي",
+    "company_review": "مراجعة الشركة",
+    "accounts_review": "مراجعة الحسابات",
+    "hr_consulting": "استشارات الموارد البشرية",
+    "seo": "تحسين محركات البحث"
+  },
+  "company": {
+    "title": "الشركة",
+    "about": "عن الشركة",
+    "team": "تعرف على الفريق",
+    "accounts": "مراجعة الحسابات"
+  },
+  "helpful": {
+    "title": "روابط مفيدة",
+    "contact": "اتصل بنا",
+    "faqs": "الأسئلة الشائعة",
+    "live_chat": "الدردشة المباشرة"
+  },
+  "copyright": "© {{year}} setofshops. جميع الحقوق محفوظة.",
+  "sidebar": {
+    "dashboard": "لوحة التحكم",
+    "productOffers": "عروض المنتجات",
+    "brands": "العلامات التجارية",
+    "products": "المنتجات",
+    "influencers": "المؤثرون",
+    "createProduct": "إنشاء منتج",
+    "productsList": "قائمة المنتجات",
+    "assignProducts": "تعيين المنتجات",
+    "campaigns": "الحملات",
+    "createCampaign": "إنشاء حملة",
+    "campaignList": "قائمة الحملات",
+    "order": "الطلب",
+    "chat": "الدردشة"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "subtitle": "نظرة عامة على أداء عملك",
+    "totalEarnings": "إجمالي الأرباح",
+    "totalOrders": "إجمالي الطلبات",
+    "newOrders": "الطلبات الجديدة",
+    "readyToSend": "جاهز للإرسال",
+    "totalEarningsInfo": "مقارنة بالشهر الماضي",
+    "totalOrdersInfo": "الطلبات المعالجة",
+    "newOrdersInfo": "الطلبات المقدمة حديثًا",
+    "readyToSendInfo": "الطلبات الجاهزة للإرسال",
+    "statistics": "الإحصائيات",
+    "totalSales": "إجمالي المبيعات",
+    "totalRevenue": "إجمالي الإيرادات",
+    "totalUnpaid": "إجمالي غير المدفوع"
+  }
+}

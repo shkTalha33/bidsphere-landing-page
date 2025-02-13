@@ -1,0 +1,378 @@
+{
+  "nav": {
+    "signIn": "Iniciar sesión",
+    "becomePartner": "Convertirse en socio",
+    "searchPlaceholder": "Buscar todos los productos",
+    "profile": "Perfil",
+    "shops": "Tiendas",
+    "home": "Inicio",
+    "search": "Buscar",
+    "live": "En vivo",
+    "myOrder": "Mi pedido",
+    "trackOrder": "Seguir pedido",
+    "logout": "Cerrar sesión",
+    "channel": "Canal"
+  },
+  "greeting": {
+    "goodMorning": "Buenos días"
+  },
+  "home": {
+    "section2": {
+      "title": "Productos destacados"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "¡Bienvenido de nuevo!",
+      "subtitle": "Inicia sesión en tu cuenta",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "rememberMe": "Recuérdame",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "submit": "Iniciar sesión",
+      "noAccount": "¿No tienes una cuenta?",
+      "signUp": "Regístrate",
+      "signInAnotherAccount": "Inicia sesión con redes sociales:"
+    },
+    "signup": {
+      "title": "¡Bienvenido a Set of Shops!",
+      "subtitle": "Regístrate en tu cuenta",
+      "form": {
+        "firstName": "Nombre",
+        "lastName": "Apellido",
+        "email": "Correo electrónico",
+        "username": "Nombre de usuario",
+        "phone": "Teléfono",
+        "type": "Tipo de registro",
+        "placeholderType": "Selecciona el tipo de registro",
+        "password": "Contraseña",
+        "confirmPassword": "Confirmar contraseña",
+        "country": "País",
+        "catalogSize": "Tamaño del catálogo (streams mensuales)",
+        "currentDistributor": "Distribuidor actual",
+        "spotifyUrl": "URL del artista en Spotify",
+        "additionalUrls": "URLs de streaming adicionales",
+        "additionalDetails": "Detalles adicionales",
+        "brandInfo": "Información de la marca",
+        "brandName": "Nombre de la marca",
+        "brandNamePlaceholder": "Ingresa el nombre de la marca",
+        "brandCountryOfOperation": "País de operación de la marca",
+        "selectCountry": "Selecciona un país",
+        "brandWebsite": "Sitio web de la marca",
+        "brandWebsitePlaceholder": "Ingresa la URL del sitio web",
+        "brandDescription": "Descripción de la marca",
+        "brandDescriptionPlaceholder": "Ingresa la descripción",
+        "brandType": "Tipo de marca",
+        "brandTypePlaceholder": "Ingresa el tipo de marca",
+        "brandAnnualRevenue": "Ingresos anuales de la marca",
+        "brandAnnualRevenuePlaceholder": "Ingresa los ingresos anuales",
+        "productCategories": "Categorías de productos",
+        "category": "Categoría",
+        "selectCategory": "Selecciona una categoría",
+        "subMainCategory": "Subcategoría principal",
+        "selectSubMainCategory": "Selecciona una subcategoría principal",
+        "subCategory": "Subcategoría",
+        "targetAudience": "Audiencia objetivo",
+        "ageGroup": "Grupo de edad (18-...)",
+        "ageGroupPlaceholder": "Ingresa el grupo de edad",
+        "gender": "Género",
+        "selectGender": "Selecciona el género",
+        "audienceInterests": "Intereses de la audiencia",
+        "interests": "Agregar intereses",
+        "brandRepInfo": "Información del representante de la marca",
+        "fullName": "Nombre completo",
+        "fullNamePlaceholder": "Ingresa el nombre completo",
+        "emailPlaceholder": "Ingresa el correo electrónico",
+        "phoneNumber": "Número de teléfono",
+        "phoneNumberPlaceholder": "Ingresa el número de teléfono",
+        "repPosition": "Cargo del representante de la marca",
+        "repPositionPlaceholder": "Ingresa el cargo",
+        "customerSupport": "Soporte al cliente",
+        "taxId": "Identificación fiscal",
+        "taxIdPlaceholder": "Identificación fiscal",
+        "registration_certificate": "Certificado de registro",
+        "registrationCertificatePlaceholder": "Certificado de registro",
+        "logo": "Logo de la marca",
+        "logoPlaceholder": "URL del logo",
+        "bio": "Biografía",
+        "phoneRequired": "Se requiere teléfono",
+        "bioPlaceholder": "Ingresa la biografía",
+        "dateOfBirth": "Fecha de nacimiento",
+        "dateOfBirthPlaceholder": "AAAA-MM-DD",
+        "nationality": "Nacionalidad",
+        "nationalityPlaceholder": "Selecciona un país",
+        "audienceAgeGroup": "Grupo de edad (18-...)",
+        "audienceAgeGroupPlaceholder": "Grupo de edad (18-...)",
+        "audienceLocation": "Ubicación de la audiencia objetivo",
+        "audienceLocationPlaceholder": "Ubicación de la audiencia objetivo",
+        "audienceInterestsPlaceholder": "Intereses de la audiencia",
+        "contentCategory": "Categoría de contenido",
+        "contentCategoryPlaceholder": "Categoría de contenido",
+        "contentType": "Tipo de contenido",
+        "contentTypePlaceholder": "Tipo de contenido",
+        "socialMediaInfo": "Información de redes sociales",
+        "socialMediaInstagram": "Instagram",
+        "socialMediaUsername": "@nombre de usuario",
+        "socialMediaFollowers": "Seguidores",
+        "socialMediaEngagementRate": "Tasa de engagement",
+        "socialMediaMonthlyReach": "Alcance mensual",
+        "locationBtnLabel": "Ubicación",
+        "interestsBtnLabel": "Intereses",
+        "categoryBtnLabel": "Categoría",
+        "typeBtnLabel": "Tipo",
+        "socialMediaBtnLabel": "Redes sociales",
+        "taxNumber": "Número fiscal",
+        "taxNumberPlaceholder": "Ingresa el número fiscal",
+        "nationalId": "Identificación nacional",
+        "nationalIdPlaceholder": "Ingresa la identificación nacional",
+        "profilePhoto": "Foto de perfil",
+        "profilePhotoPlaceholder": "Ingresa la URL de la foto de perfil",
+        "businessType": "Tipo de negocio",
+        "businessTypePlaceholder": "Ingresa el tipo de negocio",
+        "website": "Sitio web",
+        "websitePlaceholder": "Ingresa la URL del sitio web",
+        "serviceArea": "Área de servicio",
+        "deliveryService": "Servicio de entrega",
+        "shippingRates": {
+          "standard": "Estándar",
+          "express": "Express",
+          "international": "Internacional"
+        },
+        "primaryContact": {
+          "name": "Nombre completo",
+          "email": "Correo electrónico",
+          "phone": "Número de teléfono",
+          "position": "Cargo del representante de la marca"
+        },
+        "deliveryTime": {
+          "standard": "Estándar",
+          "express": "Express",
+          "international": "Internacional"
+        },
+        "packaging": {
+          "standard": "Embalaje estándar",
+          "custom": "Embalaje personalizado"
+        },
+        "tracking": {
+          "is_number_provided": "Número de seguimiento proporcionado",
+          "is_real_time": "Seguimiento en tiempo real"
+        },
+        "orderCapacity": "Capacidad de pedidos por día",
+        "deliveryVehicles": {
+          "fleetSize": "Tamaño de la flota",
+          "vehicleTypes": "Tipos de vehículos"
+        },
+        "availability": "Disponibilidad",
+        "insuranceCoverage": {
+          "amount": "Monto",
+          "details": "Detalles"
+        },
+        "returnProcess": {
+          "is_customer_responsible": "¿El cliente es responsable?",
+          "policy": "Política de devolución"
+        },
+        "platformTerms": "Aceptar los términos y condiciones de la plataforma",
+        "privacyPolicy": "Aceptar la política de privacidad de la plataforma"
+      },
+      "regType": {
+        "customer": "Cliente",
+        "brand": "Marca",
+        "influencer": "Influencer",
+        "courier_company": "Empresa de mensajería"
+      },
+      "stepsBrand": {
+        "1": {
+          "heading": "Información personal",
+          "title": "Información personal"
+        },
+        "2": {
+          "heading": "Detalles de la marca",
+          "title": "Marca"
+        },
+        "3": {
+          "heading": "Documentos legales",
+          "title": "Documentos legales"
+        }
+      },
+      "stepsInf": {
+        "1": {
+          "heading": "Información personal",
+          "title": "Información personal"
+        },
+        "2": {
+          "heading": "Detalles del influencer",
+          "title": "Influencer"
+        },
+        "3": {
+          "heading": "Documentos",
+          "title": "Documentos"
+        }
+      },
+      "stepsRider": {
+        "1": {
+          "heading": "Información personal",
+          "title": "Información personal"
+        },
+        "2": {
+          "heading": "Detalles de la empresa de mensajería",
+          "title": "Empresa de mensajería"
+        },
+        "3": {
+          "heading": "Documentos",
+          "title": "Documentos"
+        }
+      },
+      "signupBtn": "Regístrate",
+      "loginBtn": "Iniciar sesión",
+      "continueBtn": "Continuar",
+      "alreadyAccount": "¿Ya tienes una cuenta?"
+    },
+    "reset_password": {
+      "title": "Restablecer contraseña",
+      "subtitle": "Ingresa tu nueva contraseña a continuación",
+      "password": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "btnLabel": "Restablecer contraseña"
+    },
+    "forgot_password": {
+      "title": "¡Olvidaste tu contraseña!",
+      "subtitle": "Ingresa tu correo electrónico para restablecer tu contraseña",
+      "email": "Correo electrónico",
+      "rememberPassword": "¿Recuerdas tu contraseña?",
+      "btnLabel": "Enviar código",
+      "loginBtnLabel": "Iniciar sesión"
+    },
+    "admin": {
+      "title": "Inicio de sesión de administrador",
+      "subtitle": "Accede al panel de administración",
+      "contactAdmin": "Contacta a tu administrador si necesitas acceso"
+    }
+  },
+  "validation": {
+    "invalidEmail": "Formato de correo electrónico inválido",
+    "emailRequired": "El correo electrónico es requerido",
+    "passwordRequired": "La contraseña es requerida",
+    "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+    "passwordMatch": "Las contraseñas deben coincidir",
+    "passwordConfirm": "Por favor, confirma tu contraseña",
+    "passwordConfirmReq": "La confirmación de la contraseña es requerida",
+    "firstName": "El nombre es requerido",
+    "lastName": "El apellido es requerido",
+    "usernameMatch": "El nombre de usuario solo puede contener letras, números y guiones bajos",
+    "usernameMin": "El nombre de usuario debe tener al menos 3 caracteres",
+    "usernameMax": "El nombre de usuario no puede exceder 20 caracteres",
+    "usernameRequired": "El nombre de usuario es requerido",
+    "type": "El tipo de registro es requerido",
+    "address": "La dirección es requerida",
+    "platformTerms": "Por favor, acepta los términos y condiciones",
+    "privacyPolicy": "Por favor, acepta la política de privacidad",
+    "brandNameRequired": "El nombre de la marca es requerido",
+    "categoryRequired": "La categoría es requerida",
+    "subMainCategoryRequired": "La subcategoría principal es requerida",
+    "subCategoryMin": "Debe seleccionarse al menos una subcategoría",
+    "subCategoryRequired": "La subcategoría es requerida",
+    "fullNameRequired": "El nombre completo es requerido",
+    "ageGroupFormat": "El grupo de edad debe estar en formato '18-20'",
+    "websiteRequired": "El sitio web es requerido",
+    "taxIdRequired": "El identificador fiscal es requerido",
+    "bioRequired": "La biografía es requerida",
+    "dobRequired": "La fecha de nacimiento es requerida",
+    "nationalityRequired": "La nacionalidad es requerida",
+    "followersMin": "El número de seguidores debe ser un número positivo",
+    "engagementRateMin": "La tasa de engagement debe ser positiva",
+    "monthlyReachMin": "El alcance mensual debe ser positivo",
+    "nationalIdRequired": "La identificación nacional es requerida",
+    "businessTypeRequired": "El tipo de negocio es requerido",
+    "serviceAreaRequired": "Se requiere al menos un área de servicio",
+    "deliveryServiceRequired": "Se requiere al menos un servicio de entrega",
+    "positiveNumber": "Debe ser un número positivo",
+    "positionRequired": "El cargo es requerido",
+    "standardDeliveryTimeRequired": "El tiempo de entrega estándar es requerido",
+    "expressDeliveryTimeRequired": "El tiempo de entrega express es requerido",
+    "internationalDeliveryTimeRequired": "El tiempo de entrega internacional es requerido",
+    "vehicleTypeRequired": "Se requiere al menos un tipo de vehículo",
+    "availabilityRequired": "La disponibilidad es requerida",
+    "returnPolicyRequired": "La política de devolución es requerida"
+  },
+  "common": {
+    "backToHome": "Volver al inicio",
+    "readMore": "Leer más",
+    "getStarted": "Comenzar",
+    "learnMore": "Aprender más",
+    "contactUs": "Contáctanos"
+  },
+  "btnText": {
+    "addToCard": "Agregar al carrito"
+  },
+  "hero": {
+    "heading": "Donde la moda se encuentra con la influencia",
+    "subHeading": "Explora colecciones exclusivas curadas por los mejores influencers y marcas.",
+    "shopNow": "Comprar ahora"
+  },
+  "products": {
+    "featured": "Productos Destacados",
+    "trending": "Productos de Tendencia",
+    "recommended": "Recomendado Para Ti"
+  },
+  "logo_alt": "Logo",
+  "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non cupiditate quae nam molestias.",
+  "social": {
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "twitter": "Twitter",
+    "github": "GitHub",
+    "dribbble": "Dribbble"
+  },
+  "services": {
+    "title": "Servicios",
+    "coaching": "Coaching 1 a 1",
+    "company_review": "Revisión de Empresa",
+    "accounts_review": "Revisión de Cuentas",
+    "hr_consulting": "Consultoría de RRHH",
+    "seo": "Optimización SEO"
+  },
+  "company": {
+    "title": "Empresa",
+    "about": "Acerca de",
+    "team": "Conoce al Equipo",
+    "accounts": "Revisión de Cuentas"
+  },
+  "helpful": {
+    "title": "Enlaces Útiles",
+    "contact": "Contacto",
+    "faqs": "Preguntas Frecuentes",
+    "live_chat": "Chat en Vivo"
+  },
+  "copyright": "© {{year}} setofshops. Todos los derechos reservados.",
+  "sidebar": {
+    "dashboard": "Panel de control",
+    "productOffers": "Ofertas de productos",
+    "brands": "Marcas",
+    "products": "Productos",
+    "influencers": "Influenciadores",
+    "createProduct": "Crear producto",
+    "productsList": "Lista de productos",
+    "assignProducts": "Asignar productos",
+    "campaigns": "Campañas",
+    "createCampaign": "Crear campaña",
+    "campaignList": "Lista de campañas",
+    "order": "Pedido",
+    "chat": "Chat"
+  },
+  "dashboard": {
+    "title": "Panel de control",
+    "subtitle": "Resumen del rendimiento de tu negocio",
+    "totalEarnings": "Ganancias totales",
+    "totalOrders": "Pedidos totales",
+    "newOrders": "Nuevos pedidos",
+    "readyToSend": "Listo para enviar",
+    "totalEarningsInfo": "Comparado con el mes pasado",
+    "totalOrdersInfo": "Pedidos procesados",
+    "newOrdersInfo": "Pedidos recientemente realizados",
+    "readyToSendInfo": "Pedidos listos para enviar",
+    "statistics": "Estadísticas",
+    "totalSales": "Ventas totales",
+    "totalRevenue": "Ingresos totales",
+    "totalUnpaid": "Total no pagado"
+  }
+}

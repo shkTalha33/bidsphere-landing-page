@@ -1,0 +1,56 @@
+/* ---------------------popins ::Start---------------------- */
+@font-face {
+  font-family: "popins_bold";
+  src: url("./Popins/Poppins-Bold.ttf");
+}
+
+@font-face {
+  font-family: "popins_medium";
+  src: url("./Popins/Poppins-Medium.ttf");
+}
+
+@font-face {
+  font-family: "popins_regular";
+  src: url("./Popins/Poppins-Regular.ttf");
+}
+
+@font-face {
+  font-family: "popins_semibold";
+  src: url("./Popins/Poppins-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "popins_light";
+  src: url("./Popins/Poppins-Light.ttf");
+}
+
+/*-------------------- PLUS JAKARA ::start ---------------*/
+@font-face {
+  font-family: "plusJakara_bold";
+  src: url("./Plus_Jakarta_Sans/PlusJakartaSans-Bold.ttf");
+}
+
+@font-face {
+  font-family: "plusJakara_medium";
+  src: url("./Plus_Jakarta_Sans/PlusJakartaSans-Medium.ttf");
+}
+
+@font-face {
+  font-family: "plusJakara_regular";
+  src: url("./Plus_Jakarta_Sans/PlusJakartaSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: "plusJakara_semibold";
+  src: url("./Plus_Jakarta_Sans/PlusJakartaSans-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "plusJakara_light";
+  src: url("./Plus_Jakarta_Sans/PlusJakartaSans-Light.ttf");
+}
+
+@font-face {
+  font-family: "font-orange";
+  src: url("./Orange-Squash.otf") format("opentype");
+}

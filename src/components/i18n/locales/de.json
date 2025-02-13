@@ -1,0 +1,150 @@
+{
+  "nav": {
+    "features": "Funktionen",
+    "dashboard": "Dashboard",
+    "testimonials": "Referenzen",
+    "signIn": "Anmelden"
+  },
+  "hero": {
+    "title": "Heben Sie Ihre Musik auf",
+    "subtitle": "Legendären Status",
+    "description": "Treten Sie der Elite-Plattform bei, auf der ernsthafte Künstler ihre Leidenschaft in Platin verwandeln. Premium-Distribution, unübertroffene Analysen, vollständige kreative Kontrolle.",
+    "cta": {
+      "primary": "Starten Sie Ihr Vermächtnis",
+      "secondary": "Demo ansehen"
+    },
+    "announcement": {
+      "new": "Neu",
+      "feature": "KI-gestütztes Mastering",
+      "action": "Demo ansehen"
+    }
+  },
+  "features": {
+    "distribution": {
+      "title": "Vertrieb auf Allen Wichtigen Plattformen",
+      "description": "Bringen Sie Ihre Musik auf Spotify, Apple Music und alle weltweiten Streaming-Plattformen."
+    },
+    "rights": {
+      "title": "Behalten Sie 100% Ihrer Rechte",
+      "description": "Behalten Sie die vollständige Kontrolle über Ihre Musik und erreichen Sie ein globales Publikum."
+    },
+    "earnings": {
+      "title": "Echtzeit-Einnahmenverfolgung",
+      "description": "Überwachen Sie Ihre Streams und Einnahmen mit detaillierten Analysen."
+    }
+  },
+  "dashboard": {
+    "title": "Leistungsstarkes Künstler-Dashboard",
+    "subtitle": "Alles, was Sie für Ihre Musikkarriere an einem Ort benötigen",
+    "overview": "Übersicht",
+    "analytics": "Analysen",
+    "catalog": "Katalog",
+    "profile": "Profil",
+    "tryNow": "Jetzt Testen",
+    "stats": {
+      "monthlyListeners": {
+        "label": "Monatliche Hörer",
+        "value": "24.5K",
+        "change": "+12%"
+      },
+      "totalStreams": {
+        "label": "Gesamte Streams",
+        "value": "1.2M",
+        "change": "+8%"
+      },
+      "playlistAdds": {
+        "label": "Playlist-Hinzufügungen",
+        "value": "2.8K",
+        "change": "+15%"
+      },
+      "trackSaves": {
+        "label": "Track-Speicherungen",
+        "value": "15.3K",
+        "change": "+10%"
+      }
+    },
+    "charts": {
+      "streamingTrends": "Streaming-Trends",
+      "listeningPlatforms": "Hörplattformen"
+    }
+  },
+  "cta": {
+    "title": "Bereit, Ihre Musik Global zu Verbreiten?",
+    "subtitle": "Schließen Sie sich Tausenden von Künstlern an, die Millionen von Hörern weltweit erreichen",
+    "primary": "Starten Sie Ihre Reise",
+    "secondary": "Demo Vereinbaren"
+  },
+  "testimonials": {
+    "stevie": {
+      "quote": "Die Distributions- und Analysemöglichkeiten der Plattform haben die Art und Weise, wie ich Musik veröffentliche, verändert. Ein Game-Changer für unabhängige Künstler.",
+      "role": "Sänger, Songwriter, Produzent"
+    },
+    "sarah": {
+      "quote": "Diese Plattform hat meine Karriere verändert! Der Vertriebsprozess ist nahtlos und die Analysen sind unglaublich.",
+      "role": "Unabhängige Künstlerin"
+    },
+    "james": {
+      "quote": "Ich habe noch nie so einfach Tantiemen verfolgt. Die Plattform ist intuitiv und leistungsstark.",
+      "role": "Musikproduzent"
+    },
+    "elena": {
+      "quote": "Die globale Reichweite ist erstaunlich. Meine Musik wird jetzt in Ländern gestreamt, in denen ich noch nie war!",
+      "role": "Singer-Songwriterin"
+    }
+  },
+  "footer": {
+    "quickLinks": "Schnelllinks",
+    "connect": "Verbinden Sie sich mit uns",
+    "contact": "Kontakt",
+    "links": {
+      "about": "Über uns",
+      "privacy": "Datenschutz",
+      "terms": "Nutzungsbedingungen",
+      "contact": "Kontakt"
+    },
+    "copyright": "© {{year}} DistroWorld. Alle Rechte vorbehalten."
+  },
+  "auth": {
+    "login": {
+      "title": "Willkommen zurück!",
+      "subtitle": "Setzen Sie Ihre Reise fort.",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "rememberMe": "Angemeldet bleiben",
+      "forgotPassword": "Passwort vergessen?",
+      "submit": "Anmelden",
+      "noAccount": "Noch kein Konto?",
+      "signUp": "Registrieren"
+    },
+    "signup": {
+      "title": "Künstlerkonto erstellen",
+      "subtitle": "Beginnen Sie Ihre Reise zum globalen Erfolg",
+      "form": {
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "password": "Passwort",
+        "confirmPassword": "Passwort bestätigen",
+        "country": "Land",
+        "catalogSize": "Katalogumfang (Monatliche Streams)",
+        "currentDistributor": "Aktueller Distributor",
+        "spotifyUrl": "Spotify-Künstler-URL",
+        "additionalUrls": "Weitere Streaming-URLs",
+        "additionalDetails": "Weitere Details"
+      }
+    },
+    "admin": {
+      "title": "Admin-Login",
+      "subtitle": "Zugang zum Admin-Dashboard",
+      "contactAdmin": "Kontaktieren Sie Ihren Administrator, wenn Sie Zugang benötigen"
+    }
+  },
+  "common": {
+    "backToHome": "Zurück zur Startseite",
+    "readMore": "Weiterlesen",
+    "getStarted": "Jetzt Starten",
+    "learnMore": "Mehr Erfahren",
+    "contactUs": "Kontaktieren Sie Uns"
+  }
+}

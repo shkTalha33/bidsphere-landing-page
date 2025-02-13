@@ -1,0 +1,11 @@
+{
+  "github": {
+    "enabled": true,
+    "silent": true
+  },
+  "build": {
+    "env": {
+      "NPM_FLAGS": "--legacy-peer-deps"
+    }
+  }
+}
