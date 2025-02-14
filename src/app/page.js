@@ -5,6 +5,7 @@ import DownloadSection from "@/components/home/DownloadSection";
 import ForYou from "@/components/home/ForYou";
 import HeroSection from "@/components/home/hero-section/hero-section";
 import OurOffers from "@/components/home/OurOffers";
+import Services from "@/components/home/Services";
 
 /* eslint-disable @next/next/no-img-element */
 
@@ -16,6 +17,7 @@ export default function Home() {
       <OurOffers />
       <ForYou />
       <AuctionEvents />
+      <Services />
       <DownloadSection />
     </>
   );

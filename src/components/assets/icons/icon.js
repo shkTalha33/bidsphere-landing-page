@@ -39,6 +39,11 @@ import icon13dark from "../png/icon13dark.png";
 import vehicles from "../svg/vehicles.svg";
 import electronics from "../svg/electronics.svg";
 import art from "../svg/art.svg";
+import shipping from "../svg/shipping.svg";
+import deal from "../svg/deal.svg";
+import returnMoney from "../svg/return.svg";
+import secure from "../svg/sercure.svg";
+
 
 
 
@@ -69,4 +74,5 @@ export {
   coveravatar,
   logout,
   art, electronics, vehicles, image1, image2, image3, image4, image5, event1, event2, event3, event4, event5,
+  secure, returnMoney, deal, shipping
 }
