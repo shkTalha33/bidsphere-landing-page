@@ -29,7 +29,7 @@ const Footer = () => {
             </p>
           </div>
           <Link href="#" className="inline-block">
-            <button className="bg-white text-black px-10 py-3 rounded-md font-medium">
+            <button className="bg-white text_dark px-10 py-3 rounded-md font-medium">
               bid now
             </button>
           </Link>
@@ -58,16 +58,16 @@ const Footer = () => {
         <div className="space-y-8">
           <div className="flex gap-4">
             <Link href="#" className="bg-white p-3 rounded-full">
-              <BsTwitter className="w-6 h-6 text-[#500000]" />
+              <BsTwitter className="w-6 h-6 text_primary" />
             </Link>
             <Link href="#" className="bg-white p-3 rounded-full">
-              <FaFacebookF className="w-6 h-6 text-[#500000]" />
+              <FaFacebookF className="w-6 h-6 text_primary" />
             </Link>
             <Link href="#" className="bg-white p-3 rounded-full">
-              <FaLinkedinIn className="w-6 h-6 text-[#500000]" />
+              <FaLinkedinIn className="w-6 h-6 text_primary" />
             </Link>
             <Link href="#" className="bg-white p-3 rounded-full">
-              <FaYoutube className="w-6 h-6 text-[#500000]" />
+              <FaYoutube className="w-6 h-6 text_primary" />
             </Link>
           </div>
 
