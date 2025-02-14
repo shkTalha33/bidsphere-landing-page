@@ -59,6 +59,10 @@ import event2 from "../png/event2.jpg";
 import event3 from "../png/event3.jpg";
 import event4 from "../png/event4.jpg";
 import event5 from "../png/event5.jpg";
+import experience from "../png/experience.png";
+import downloadApp from "../png/downloadApp.png";
+import googlePlay from "../png/googlePlay.png";
+import appleStore from "../png/appleStore.png";
 
 export {
   avataruser, fashion1, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage,
@@ -71,5 +75,5 @@ export {
   coveravatar,
   logout,
   art, electronics, vehicles, image1, image2, image3, image4, image5, event1, event2, event3, event4, event5,
-  secure, returnMoney, deal, shipping
+  secure, returnMoney, deal, shipping, experience, downloadApp, appleStore, googlePlay
 }
