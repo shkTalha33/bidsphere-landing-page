@@ -74,7 +74,7 @@ export default function AuctionEvents() {
                 Control
                 </div>
               </div>
-              <button className="poppins_regular text-sm rounded-xl h-10 text-[#1B212C] w-36">
+              <button className="bg_darkprimary poppins_regular text-sm rounded-xl h-10 text-white w-36">
                 Bid Now
               </button>
             </div>
