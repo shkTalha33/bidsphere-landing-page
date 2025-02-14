@@ -36,12 +36,12 @@ export default function Services() {
                 {servicesData.map((service, index) => {
                   return (
                     <div className="flex items-start justify-start  gap-3" key={index}>
-                      <Image src={service?.image} width={50} alt="shipping" />
+                      <Image src={service?.image} width={50} alt={service?.image} />
                       <div className="">
-                        <p className="text-[#1B212C] text-2xl poppins_medium">
+                        <p className="text-[#1B212C] text-xl poppins_medium">
                           {service?.title}
                         </p>
-                        <p className="poppins_regular text-base text-[#d4d4d4]">
+                        <p className="poppins_regular text-sm text-[#d4d4d4]">
                           {service?.description}
                         </p>
                       </div>

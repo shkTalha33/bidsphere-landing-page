@@ -42,10 +42,7 @@ import art from "../svg/art.svg";
 import shipping from "../svg/shipping.svg";
 import deal from "../svg/deal.svg";
 import returnMoney from "../svg/return.svg";
-import secure from "../svg/sercure.svg";
-
-
-
+import secure from "../svg/secure.svg";
 
 import auctionlogo from "../png/auctionlogo.png";
 import appstore from "../png/appstore.png";
