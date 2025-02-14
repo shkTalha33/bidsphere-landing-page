@@ -110,7 +110,7 @@ const ChatMessage = () => {
                   </button>
                   <div className="position-relative w-full">
                     <span className="position-absolute mt-[10px] ms-2"> <Search style={{ color: "#d3d3d3" }} size={20} /> </span>
-                    <input type="text" placeholder="Search" className="py-[10px] form-control popins_regular text-sm border rounded-3 ps-[2rem] w-100" name="" id="" />
+                    <input type="text" placeholder="Search" className="py-[10px] form-control poppins_regular text-sm border rounded-3 ps-[2rem] w-100" name="" id="" />
                   </div>
                 </div>
                 <hr style={{ color: "#EDEEF0" }} className="my-1" />
@@ -128,7 +128,7 @@ const ChatMessage = () => {
                   <h4 className="ms-2 my-0 msg_s00">Select a message</h4>
                   <h6
                     style={{ color: "#2D3D38" }}
-                    className="text-center popins_regular mt-2"
+                    className="text-center poppins_regular mt-2"
                   >
                     Choose from your existing conversations, start a new one,
                     or just keep swimming.

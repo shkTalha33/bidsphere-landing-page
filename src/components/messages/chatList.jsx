@@ -73,7 +73,7 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, type, loading, status, d
                 <Image src={img || avataruser} alt="" width={45} height={45} className="chat_profile_img" />
                 <span>
                   <span
-                    className={`noti_badges popins_regular text-xs ${badge && 'd-block'}`}
+                    className={`noti_badges poppins_regular text-xs ${badge && 'd-block'}`}
                     id="chatbadge"
                   >
                   </span>
@@ -82,12 +82,12 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, type, loading, status, d
             </div>
             <div className="d-flex justify-content-between align-items-center w-100 pe-1">
               <div className="ps-3 mt-1">
-                <h4 className="my-0 chat_name00 text-sm line-clamp-1 popins_regular">{name}</h4>
-                <div className="chat_detail00 text-xs popins_regular line-clamp-1">{type === 'text' ? discrip : type === 'video' ? 'Video' : 'File'}</div>
+                <h4 className="my-0 chat_name00 text-sm line-clamp-1 poppins_regular">{name}</h4>
+                <div className="chat_detail00 text-xs poppins_regular line-clamp-1">{type === 'text' ? discrip : type === 'video' ? 'Video' : 'File'}</div>
               </div>
               <div className="time_div00">
-                <h6 className="chat_detail00 text-xs popins_regular line-clamp-1" style={{ whiteSpace: "nowrap" }}>
-                  <Moment unix fromNow className="popins_medium">
+                <h6 className="chat_detail00 text-xs poppins_regular line-clamp-1" style={{ whiteSpace: "nowrap" }}>
+                  <Moment unix fromNow className="poppins_medium">
                     {timestamp}
                   </Moment>
                 </h6>
@@ -181,7 +181,7 @@ const ChatList = () => {
           )}
           {!loading && chatListData.length === 0 && (
             <div className="w-full my-5 text-center">
-              <p className="popins_medium text_primary">No chats found</p>
+              <p className="poppins_medium text_primary">No chats found</p>
             </div>
           )}
           {chatListData?.length > 0 &&

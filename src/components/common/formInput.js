@@ -24,12 +24,12 @@ const FormInput = ({ name, label, control, errors, directlyError, placeholder, t
                                 placeholder={placeholder}
                                 rows={rows}
                                 invalid={!!directlyError}
-                                className={`peer ${rows ? '' : 'h-8'} resize-none w-full popins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${directlyError || (errors?.[name]?.message ? "border-red-500 ring-red-500 focus:ring-red-500" : "")}`}
+                                className={`peer ${rows ? '' : 'h-8'} resize-none w-full poppins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${directlyError || (errors?.[name]?.message ? "border-red-500 ring-red-500 focus:ring-red-500" : "")}`}
                             />
                         )
                     }}
                 />
-                <span className={`absolute start-3 top-2 popins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs`}>
+                <span className={`absolute start-3 top-2 poppins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs`}>
                     {label}
                 </span>
             </Label>

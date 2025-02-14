@@ -45,7 +45,7 @@ const LanguageSwitcher = () => {
         className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-50"
       >
         <span className='text-sm'>{lang.flag}</span>
-        <span className="popins_regular text-xs md:text-sm">{lang.name}</span>
+        <span className="poppins_regular text-xs md:text-sm">{lang.name}</span>
         <ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
@@ -55,11 +55,11 @@ const LanguageSwitcher = () => {
             <button
               key={language.code}
               onClick={() => handleLanguageChange(language)}
-              className={`flex items-center  text-sm gap-2 w-full p-2 hover:bg-gray-100 transition ${lang.code === language.code ? 'bg-gray-200 popins_medium' : ''
+              className={`flex items-center  text-sm gap-2 w-full p-2 hover:bg-gray-100 transition ${lang.code === language.code ? 'bg-gray-200 poppins_medium' : ''
                 }`}
             >
               <span className='text-sm' >{language.flag}</span>
-              <span className="popins_regular text-xs md:text-sm">{language.name}</span>
+              <span className="poppins_regular text-xs md:text-sm">{language.name}</span>
             </button>
           ))}
         </div>

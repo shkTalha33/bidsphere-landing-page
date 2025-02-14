@@ -1,6 +1,6 @@
 /* Light Theme */
 :root {
-  --primary: #5B0F00;
+  --primary: #21CD9D;
   --lightprimary: #003f7d;
   --primary2: #7f61c4;
   --secondary: #4d4d4d;
@@ -12,7 +12,7 @@
   --warning: #ffc107;
   --danger: #dc3545;
   --light: #fdfdff;
-  --dark: #343a40;
+  --dark: #1C201F;
   --white: #fff;
 }
 

@@ -75,7 +75,7 @@ export function LineChart() {
     return (
         <>
             <div className="flex justify-between items-center w-full  mb-[24px] lg:mb-[48px]">
-                <span className='text-[#6C7278] popins_semibold text-sm'>Average Customer Visit</span>
+                <span className='text-[#6C7278] poppins_semibold text-sm'>Average Customer Visit</span>
             </div>
             <div className="w-full flex justify-center">
                 <Line options={options} data={data} className='h-full lg:max-h-[15rem] w-full' />

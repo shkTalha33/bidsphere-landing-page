@@ -76,17 +76,17 @@ const Page = () => {
         <AuthHeading heading={'Phone Number'} subHeading={'Please enter your Mobile number'} />
         <Form onSubmit={handleSubmit(onSubmit)} className="mt-8 gap-6 auth-form">
           <div className="flex flex-col gap-1">
-            <Label className="text-gray-600 popins_regular">Phone number</Label>
+            <Label className="text-gray-600 poppins_regular">Phone number</Label>
             <PhoneInput
               country={"ae"}
               enableSearch={true}
               value={phone}
-              className={`phon_inp popins_regular ${errors.phoneNumber ? "border-red-500" : ""}`}
+              className={`phon_inp poppins_regular ${errors.phoneNumber ? "border-red-500" : ""}`}
               onChange={handlePhoneChange}
               placeholder="Enter phone number"
             />
             {errors.phoneNumber && (
-              <span className="text-red-500 text-xs popins_regular ms-1">{errors.phoneNumber.message}</span>
+              <span className="text-red-500 text-xs poppins_regular ms-1">{errors.phoneNumber.message}</span>
             )}
           </div>
           <div className="col-span-6 mt-5 sm:flex sm:items-center sm:gap-4 w-full">

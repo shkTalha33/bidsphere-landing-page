@@ -116,17 +116,17 @@ const Page = () => {
                     placeholder={t("auth.reset_password.password")}
                     name="password"
                     //     invalid={!!errors.password}
-                    className={`peer h-8 w-full popins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${errors.password ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                    className={`peer h-8 w-full poppins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${errors.password ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                       }`}
                   />
                 )}
               />
-              <span className="absolute start-3 top-2 popins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
-              {t("auth.reset_password.password")}
+              <span className="absolute start-3 top-2 poppins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
+                {t("auth.reset_password.password")}
               </span>
             </Label>
             {errors.password && (
-              <p className="text-red-500 text-xs m-1 popins_regular">{errors.password.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.password.message}</p>
             )}
           </div>
 
@@ -158,17 +158,17 @@ const Page = () => {
                     placeholder={t("auth.reset_password.confirmPassword")}
                     name="confirmPassword"
                     // invalid={!!errors.confirmPassword}
-                    className={`peer h-8 w-full popins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${errors.confirmPassword ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                    className={`peer h-8 w-full poppins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${errors.confirmPassword ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                       }`}
                   />
                 )}
               />
-              <span className="absolute start-3 top-2 popins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
-              {t("auth.reset_password.confirmPassword")}
+              <span className="absolute start-3 top-2 poppins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
+                {t("auth.reset_password.confirmPassword")}
               </span>
             </Label>
             {errors.confirmPassword && (
-              <p className="text-red-500 text-xs m-1 popins_regular">{errors.confirmPassword.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.confirmPassword.message}</p>
             )}
           </div>
 

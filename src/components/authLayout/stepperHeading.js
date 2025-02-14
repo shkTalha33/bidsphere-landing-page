@@ -13,12 +13,12 @@ const StepperHeading = ({ heading, subHeading, path, currentStep, email, isSmall
             </div>
             {heading &&
                 <div className={`lg:text-start ${isSmall ? 'pt-1' : 'pt-4'}`}>
-                    <h1 className={`${isSmall ? 'sm:text-2xl text-xl' : 'text-2xl md:text-3xl  lg:text-4xl '} popins_semibold`}>{heading}</h1>
-                    {email ? <p className="md:text-lg text-base popins_regular mt-1">
+                    <h1 className={`${isSmall ? 'sm:text-2xl text-xl' : 'text-2xl md:text-3xl  lg:text-4xl '} poppins_semibold`}>{heading}</h1>
+                    {email ? <p className="md:text-lg text-base poppins_regular mt-1">
                         {subHeading} <br />
-                        <span className="popins_medium"> {email} </span>
+                        <span className="poppins_medium"> {email} </span>
                     </p> :
-                        <p className="md:text-lg text-base popins_regular mt-1">{subHeading}</p>}
+                        <p className="md:text-lg text-base poppins_regular mt-1">{subHeading}</p>}
                 </div>}
         </>
     )

@@ -173,7 +173,7 @@ const SidebarMenu = () => {
                           alt=""
                         />}
                         label={item.items}
-                        className={`w-full popins_semibold mb-1 text_secondary`}
+                        className={`w-full poppins_semibold mb-1 text_secondary`}
                       >
                         {item.subItems.map((subItem, j) => (
                           <MenuItem
@@ -182,10 +182,10 @@ const SidebarMenu = () => {
                               handleLinkClick(`${i}-${j}`, subItem.path)
                             }
                             component={<Link href={subItem.path} />}
-                            className={`w-full text-sm mb-1 ${isChildPath(subItem.path, pathname) ? `${userData?.role === 'brand' ? 'bg-[#CCA0FD]' : 'bg-[#5B3DD0]'} text_black popins_bold border-r-4 border-r-[#7f55df]` : 'popins_semibold'}`}
+                            className={`w-full text-sm mb-1 ${isChildPath(subItem.path, pathname) ? `${userData?.role === 'brand' ? 'bg-[#CCA0FD]' : 'bg-[#5B3DD0]'} text_black poppins_bold border-r-4 border-r-[#7f55df]` : 'poppins_semibold'}`}
                           >
                             <div className="flex items-center gap-4">
-                              <div className={`w-full ${isChildPath(subItem.path, pathname) ? 'popins_medium' : 'popins_regular'}`}>
+                              <div className={`w-full ${isChildPath(subItem.path, pathname) ? 'poppins_medium' : 'poppins_regular'}`}>
                                 {subItem.label}
                               </div>
                             </div>
@@ -199,7 +199,7 @@ const SidebarMenu = () => {
                           handleLinkClick(i.toString(), item.path)
                         }
                         component={<Link href={item.path} />}
-                        className={`w-full mb-1 ${isChildPath(item.path, pathname) ? `${userData?.role === 'brand' ? 'bg-[#CCA0FD]' : 'bg-[#5B3DD0]'} text_black popins_bold border-r-4 border-r-[#7f55df]` : 'popins_semibold'}`}
+                        className={`w-full mb-1 ${isChildPath(item.path, pathname) ? `${userData?.role === 'brand' ? 'bg-[#CCA0FD]' : 'bg-[#5B3DD0]'} text_black poppins_bold border-r-4 border-r-[#7f55df]` : 'poppins_semibold'}`}
                       >
                         <div className="flex items-center gap-3">
                           <Image
@@ -209,7 +209,7 @@ const SidebarMenu = () => {
                             alt=""
                           />
 
-                          <div className={`w-full ${isChildPath(item.path, pathname) ? 'popins_medium text_white' : 'popins_regular'}`}>{item.items}</div>
+                          <div className={`w-full ${isChildPath(item.path, pathname) ? 'poppins_medium text_white' : 'poppins_regular'}`}>{item.items}</div>
                         </div>
                       </MenuItem>
                     )}

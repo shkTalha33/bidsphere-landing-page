@@ -89,7 +89,7 @@ const Page = () => {
           <div className="col-span-6">
             <Label
               for="email"
-              className="mb-2 text-sm popins_regular text_secondary2"
+              className="mb-2 text-sm poppins_regular text_secondary2"
             >
               Email Address
             </Label>
@@ -105,19 +105,19 @@ const Page = () => {
                   id="email"
                   name="email"
                   placeholder="Email"
-                  className={`h-12 w-full popins_regular sm:text-sm ${errors.email ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                  className={`h-12 w-full poppins_regular sm:text-sm ${errors.email ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                     }`}
                 />
               )}
             />
             {errors.email && (
-              <p className="text-red-500 text-xs m-1 popins_regular">{errors.email.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.email.message}</p>
             )}
           </div>
           <div className="col-span-6">
             <Label
               for="password"
-              className="mb-2 text-sm popins_regular text_secondary2"
+              className="mb-2 text-sm poppins_regular text_secondary2"
             >
               Password
             </Label>
@@ -144,20 +144,20 @@ const Page = () => {
                     id="password"
                     placeholder="Password"
                     name="password"
-                    className={`h-12 w-full popins_regular sm:text-sm ${errors.password ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                    className={`h-12 w-full poppins_regular sm:text-sm ${errors.password ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                       }`}
                   />
                 )}
               />
             </div>
             {errors.password && (
-              <p className="text-red-500 text-xs m-1 popins_regular">{errors.password.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.password.message}</p>
             )}
           </div>
           <div className="col-span-6 flex justify-end w-full">
             <Link
               href={"/auth/forgot-password"}
-              className="popins_medium underline text_secondary2 text-sm"
+              className="poppins_medium underline text_secondary2 text-sm"
             >
               Forgot Password?
             </Link>
@@ -168,7 +168,7 @@ const Page = () => {
             </button>
           </div>
           {/* <div className="col-span-6 mt-3">
-            <p className="text-lg popins_medium">
+            <p className="text-lg poppins_medium">
               Sign in with another account
             </p>
             <div className="grid grid-cols-3 gap-x-3 mt-2">
@@ -211,8 +211,8 @@ const Page = () => {
             </div>
           </div> */}
         </Form>
-        <p className="pt-3 popins_regular text_secondary2">
-          Create a New Account? <Link href="/auth/signup" className="_link_underline popins_medium">
+        <p className="pt-3 poppins_regular text_secondary2">
+          Create a New Account? <Link href="/auth/signup" className="_link_underline poppins_medium">
             Sign up
           </Link>
         </p>

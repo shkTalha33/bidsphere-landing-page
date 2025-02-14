@@ -9,8 +9,8 @@ const AuthLayout = ({ children, src, isCenter, description, title }) => {
                 <section className={`relative bg-black w-100 min-[1440px]:max-w-[55%] d-md-block d-none`}>
                     <div className="flex absolute h-screen items-center justify-center gap-2 w-full">
                         <div className="flex flex-col gap-2 max-w-md w-full">
-                            <h1 className="text-white popins_semibold text-4xl">{title}</h1>
-                            <p className="text-white popins_regular text-lg">{description}</p>
+                            <h1 className="text-white poppins_semibold text-4xl">{title}</h1>
+                            <p className="text-white poppins_regular text-lg">{description}</p>
                         </div>
                     </div>
                     <img

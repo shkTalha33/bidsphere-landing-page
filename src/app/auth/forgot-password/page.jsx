@@ -100,17 +100,17 @@ const Page = () => {
                     name="email"
                     placeholder={t("auth.forgot_password.email")}
                     // invalid={!!errors.email}
-                    className={`peer h-8 w-full popins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${errors.email ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                    className={`peer h-8 w-full poppins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${errors.email ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                       }`}
                   />
                 )}
               />
-              <span className="absolute start-3 top-2 popins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
-              {t("auth.forgot_password.email")}
+              <span className="absolute start-3 top-2 poppins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
+                {t("auth.forgot_password.email")}
               </span>
             </Label>
             {errors.email && (
-              <p className="text-red-500 text-xs m-1 popins_regular">{errors.email.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.email.message}</p>
             )}
           </div>
           <div className="col-span-6 sm:flex sm:items-center sm:gap-4 w-full">
@@ -119,10 +119,10 @@ const Page = () => {
             </button>
           </div>
         </Form>
-        <p className="pt-3 popins_medium text_secondary2">
-        {t("auth.forgot_password.rememberPassword")}{" "}
-          <Link href="/auth/login" className="no-underline popins_semibold">
-          {t("auth.forgot_password.loginBtnLabel")}
+        <p className="pt-3 poppins_medium text_secondary2">
+          {t("auth.forgot_password.rememberPassword")}{" "}
+          <Link href="/auth/login" className="no-underline poppins_semibold">
+            {t("auth.forgot_password.loginBtnLabel")}
           </Link>
         </p>
       </>

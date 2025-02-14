@@ -19,9 +19,8 @@ const SelectInput = ({ name, label, control, errors, placeholder, options }) => 
                         id={name}
                         name={name}
                         type="select"
-                        className={`peer h-8 w-full popins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${
-                            errors[name] ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
-                        }`}
+                        className={`peer h-8 w-full poppins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${errors[name] ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                            }`}
                     >
                         <option value="" disabled className="text-gray-400">
                             {placeholder}
@@ -38,7 +37,7 @@ const SelectInput = ({ name, label, control, errors, placeholder, options }) => 
                     </Input>
                 )}
             />
-            <span className="absolute start-3 top-2 popins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
+            <span className="absolute start-3 top-2 poppins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
                 {label}
             </span>
         </Label>

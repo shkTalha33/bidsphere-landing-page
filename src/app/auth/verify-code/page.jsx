@@ -194,6 +194,7 @@ const Page = () => {
         }
       }
     }
+    router.push('/auth/choose-location')
   };
 
   const handleKeyUp = (e, index) => {
@@ -208,7 +209,7 @@ const Page = () => {
         <AuthHeading heading={' Verify Your Email'} subHeading={'We have sent you an verification code with a code to this email'} email={tempData?.email || forgotCode?.email} />
         <Form onSubmit={handleSubmit(onSubmit)} className="mt-8 gap-6">
           <div className="mt-5">
-            <label className="text_secondary2 popins_regular">
+            <label className="text_secondary2 poppins_regular">
               Enter Your OPT Code Here
             </label>
             <div ref={fieldsRef} className="mt-3 flex mb-2 items-center gap-x-2">
@@ -226,17 +227,17 @@ const Page = () => {
             </div>
             <div className="login_main py-3">
               {!showResendLink && (
-                <h6 className="resend_buton text_secondary2 popins_medium">
+                <h6 className="resend_buton text_secondary2 poppins_medium">
                   Resend Code in{" "}
-                  <span className="text_dark popins_semibold"> {timer}s</span>
+                  <span className="text_dark poppins_semibold"> {timer}s</span>
                 </h6>
               )}
               <div className="mt-3">
                 {showResendLink ? (
-                  <h6 className="counter_con popins_regular flex-wrap">
+                  <h6 className="counter_con poppins_regular flex-wrap">
                     Didn&rsquo;t receive the Code?
                     <span
-                      className="text_primary underline ms-1 popins_medium"
+                      className="text_primary underline ms-1 poppins_medium"
                       onClick={handleResendCode}
                       style={{
                         cursor: "pointer",

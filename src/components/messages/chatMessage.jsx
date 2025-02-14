@@ -11,7 +11,7 @@ const ChatMessage = ({ message, data, timestamp, left, type }) => {
       <div className={`pb-3 ${left ? "chat-message-left " : "chat-message-right"}`}>
         <div>
           <div
-            className={`flex-shrink-1 popins_regular ${left ? "chat_card_left" : "chat_card_right"
+            className={`flex-shrink-1 poppins_regular ${left ? "chat_card_left" : "chat_card_right"
               }`}
             style={{ padding: "0.7rem 0.9rem", marginBottom: "0.2rem", wordWrap: "break-word" }}
           >
@@ -25,33 +25,33 @@ const ChatMessage = ({ message, data, timestamp, left, type }) => {
               </div>
             ) : type === 'doc' ? (
               <div className="position-relative">
-                <a href={message} target="__blank" className="text_white popins_regular">
-                  <span className={`text-sm popins_regular`}>
+                <a href={message} target="__blank" className="text_white poppins_regular">
+                  <span className={`text-sm poppins_regular`}>
                     {message}
                   </span>
                 </a>
               </div>
             ) : (
-              <span className={`text-sm popins_regular`}>
+              <span className={`text-sm poppins_regular`}>
                 {message}
               </span>
             )}
           </div>
           <div
-            className={`text-nowrap popins_regular text-xs ${left ? "chat-message-left" : "chat-message-right"
+            className={`text-nowrap poppins_regular text-xs ${left ? "chat-message-left" : "chat-message-right"
               }`}
             style={{ color: "#848FAC", fontSize: '12px' }}
           >
-            <Moment unix fromNow className="popins_medium text-xs">
+            <Moment unix fromNow className="poppins_medium text-xs">
               {timestamp}
             </Moment>
           </div>
           {/* {data?.isOffer && (
             <div style={{ width: '100%', maxWidth: '250px' }} className="my-2 flex gap-1 flex-col items-start">
-              <span className="popins_regular text-xs text_secondary2">This message is related to: </span>
+              <span className="poppins_regular text-xs text_secondary2">This message is related to: </span>
               <Link href={`/all-products/${data?.post?._id}`} className="flex gap-2 w-full hover:underline items-center border rounded-2 p-2">
                 <Image src={data?.post?.images[0]} alt="" width={80} height={60} className="rounded-1 object-cover" />
-                <span className="popins_medium text_primary line-clamp-3 text-xs">
+                <span className="poppins_medium text_primary line-clamp-3 text-xs">
                   {data?.post?.title}
                 </span>
               </Link>

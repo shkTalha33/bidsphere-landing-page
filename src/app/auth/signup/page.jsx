@@ -96,7 +96,7 @@ const Page = () => {
           <div className="col-span-6">
             <Label
               for="firstName"
-              className="mb-2 text-sm popins_regular text_secondary2"
+              className="mb-2 text-sm poppins_regular text_secondary2"
             >
               First Name
             </Label>
@@ -111,20 +111,20 @@ const Page = () => {
                   type="text"
                   id="firstName"
                   placeholder="Your first name"
-                  className={`h-12 w-full popins_regular sm:text-sm ${errors.firstName ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                  className={`h-12 w-full poppins_regular sm:text-sm ${errors.firstName ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                     }`}
                 />
               )}
             />
             {errors.firstName && (
-              <p className="text-red-500 text-xs m-1 popins_regular">{errors.firstName.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.firstName.message}</p>
             )}
           </div>
 
           <div className="col-span-6">
             <Label
               for="lastName"
-              className="mb-2 text-sm popins_regular text_secondary2"
+              className="mb-2 text-sm poppins_regular text_secondary2"
             >
               Last Name
             </Label>
@@ -139,20 +139,20 @@ const Page = () => {
                   type="text"
                   id="lastName"
                   placeholder="Your last name"
-                  className={`h-12 w-full popins_regular sm:text-sm ${errors.lastName ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                  className={`h-12 w-full poppins_regular sm:text-sm ${errors.lastName ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                     }`}
                 />
               )}
             />
             {errors.lastName && (
-              <p className="text-red-500 text-xs m-1 popins_regular">{errors.lastName.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.lastName.message}</p>
             )}
           </div>
 
           <div className="col-span-6">
             <Label
               for="phoneNumber"
-              className="mb-2 text-sm popins_regular text_secondary2"
+              className="mb-2 text-sm poppins_regular text_secondary2"
             >
               Phone Number
             </Label>
@@ -160,19 +160,19 @@ const Page = () => {
               country={"ae"}
               enableSearch={true}
               value={phone}
-              className={`phon_inp popins_regular ${errors.phoneNumber ? "border-red-500" : ""}`}
+              className={`phon_inp poppins_regular ${errors.phoneNumber ? "border-red-500" : ""}`}
               onChange={handlePhoneChange}
               placeholder="Enter phone number"
             />
             {errors.phoneNumber && (
-              <span className="text-red-500 text-xs popins_regular ms-1">{errors.phoneNumber.message}</span>
+              <span className="text-red-500 text-xs poppins_regular ms-1">{errors.phoneNumber.message}</span>
             )}
           </div>
 
           <div className="col-span-6">
             <Label
               for="email"
-              className="mb-2 text-sm popins_regular text_secondary2"
+              className="mb-2 text-sm poppins_regular text_secondary2"
             >
               Email Address
             </Label>
@@ -187,20 +187,20 @@ const Page = () => {
                   type="email"
                   id="email"
                   placeholder="Your Email address"
-                  className={`h-12 w-full popins_regular sm:text-sm ${errors.email ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                  className={`h-12 w-full poppins_regular sm:text-sm ${errors.email ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                     }`}
                 />
               )}
             />
             {errors.email && (
-              <p className="text-red-500 text-xs m-1 popins_regular">{errors.email.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.email.message}</p>
             )}
           </div>
 
           <div className="col-span-6">
             <Label
               for="password"
-              className="mb-2 text-sm popins_regular text_secondary2"
+              className="mb-2 text-sm poppins_regular text_secondary2"
             >
               Password
             </Label>
@@ -226,14 +226,14 @@ const Page = () => {
                     type={isPasswordHidden ? "password" : "text"}
                     id="password"
                     placeholder="Password"
-                    className={`h-12 w-full popins_regular sm:text-sm ${errors.password ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                    className={`h-12 w-full poppins_regular sm:text-sm ${errors.password ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                       }`}
                   />
                 )}
               />
             </div>
             {errors.password && (
-              <p className="text-red-500 text-xs m-1 popins_regular">{errors.password.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.password.message}</p>
             )}
           </div>
 
@@ -243,8 +243,8 @@ const Page = () => {
             </button>
           </div>
         </Form>
-        <p className="pt-3 popins_regular text_secondary2">
-          Already have an Account? <Link href="/auth/login" className="_link_underline popins_medium">
+        <p className="pt-3 poppins_regular text_secondary2">
+          Already have an Account? <Link href="/auth/login" className="_link_underline poppins_medium">
             Sign in
           </Link>
         </p>

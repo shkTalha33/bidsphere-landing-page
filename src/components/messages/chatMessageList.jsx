@@ -285,7 +285,7 @@ const ChatMessageList = ({ socketRef }) => {
           ) : (
             <div className="rounded-4 w-full text_black relative flex gap-2 justify-start items-center">
               <Camera size={16} />
-              <span className="popins_medium text-xs">Upload Image</span>
+              <span className="poppins_medium text-xs">Upload Image</span>
             </div>
           )}
         </label>
@@ -313,7 +313,7 @@ const ChatMessageList = ({ socketRef }) => {
           ) : (
             <div className="rounded-4 w-full text_black relative flex gap-2 justify-start items-center">
               <IoVideocamOutline size={18} />
-              <span className="popins_medium text-xs">Upload Video</span>
+              <span className="poppins_medium text-xs">Upload Video</span>
             </div>
           )}
         </label>
@@ -332,11 +332,11 @@ const ChatMessageList = ({ socketRef }) => {
         <button type="button" className="w-full">
           <label style={{ cursor: "pointer" }} htmlFor={`fileInput3`} className="cursor-pointer w-full">
             {documentUrl ? (
-              <a href={documentUrl} target="__blank" className="text_black popins_medium text-xs hover:underline">{documentUrl}</a>
+              <a href={documentUrl} target="__blank" className="text_black poppins_medium text-xs hover:underline">{documentUrl}</a>
             ) : (
               <div className="rounded-4 w-full text_black relative flex gap-2 justify-start items-center">
                 <File size={16} />
-                <span className="popins_medium text-xs">Upload Document</span>
+                <span className="poppins_medium text-xs">Upload Document</span>
               </div>
             )}
           </label>
@@ -371,8 +371,8 @@ const ChatMessageList = ({ socketRef }) => {
               /> */}
             <Image src={(chatUser?.otherUser?.profile_image || chatUser?.otherUser?.brand?.logo) || avataruser} width={50} height={50} alt="" className="chat_profile_img" />
             <div className="d-flex  flex-column">
-              <span className=" text_black popins_medium">{`${(chatUser?.otherUser?.influencer?.name || chatUser?.otherUser?.brand?.name) || ''}`}</span>
-              <span className="popins_regular text_black text-sm ">{chatUser?.otherUser?.email}</span>
+              <span className=" text_black poppins_medium">{`${(chatUser?.otherUser?.influencer?.name || chatUser?.otherUser?.brand?.name) || ''}`}</span>
+              <span className="poppins_regular text_black text-sm ">{chatUser?.otherUser?.email}</span>
             </div>
           </div>
         </div>
@@ -384,13 +384,13 @@ const ChatMessageList = ({ socketRef }) => {
               <div className="flex gap-2 items-center w-full">
                 <Image height={60} width={60} src={postData?.post?.images[0]} alt="" className="rounded-md object-cover" style={{ height: '3.5rem', width: '3.5rem' }} />
                 <div className="flex flex-col">
-                  <h6 className="popins_semibold">{postData?.post?.title} </h6>
-                  <span className="text-muted popins_medium">${postData?.post?.price || 0} </span>
+                  <h6 className="poppins_semibold">{postData?.post?.title} </h6>
+                  <span className="text-muted poppins_medium">${postData?.post?.price || 0} </span>
                 </div>
               </div>
               <div>
                 <button
-                  className="bg_primary whitespace-nowrap text_white rounded-3 py-2 px-4 popins_medium"
+                  className="bg_primary whitespace-nowrap text_white rounded-3 py-2 px-4 poppins_medium"
                   onClick={() => router.push(`/all-products/${postData?.post?._id}`)}
                 >
                   View Ad
@@ -409,7 +409,7 @@ const ChatMessageList = ({ socketRef }) => {
                 animation="border"
                 role="status"
               >
-                <span className="popins_regular visually-hidden">Loading...</span>
+                <span className="poppins_regular visually-hidden">Loading...</span>
               </Spinner>
             </div>
           ) : (
@@ -464,7 +464,7 @@ const ChatMessageList = ({ socketRef }) => {
             </div>
           ) : type === 'doc' ? (
             <div className="position-relative">
-              <a href={documentUrl} target="__blank" className="text-black popins_regular">
+              <a href={documentUrl} target="__blank" className="text-black poppins_regular">
                 {documentUrl}
               </a>
               <button className="absolute -top-2 -right-2 bg_light p-1 rounded-full" onClick={handleClear}>
@@ -492,7 +492,7 @@ const ChatMessageList = ({ socketRef }) => {
                 disabled={isLoading3 || imageUrl || videoUrl || documentUrl}
                 id="chatInput"
                 required
-                className="form-control rounded-2 text-xs popins_regular ps-3"
+                className="form-control rounded-2 text-xs poppins_regular ps-3"
                 placeholder="Send Message..."
               />
             </div>
