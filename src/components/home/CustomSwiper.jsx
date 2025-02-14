@@ -17,7 +17,7 @@ const CustomSwiper = ({
 }) => {
   return (
     <section>
-      <div className="relative flex items-center justify-evenly">
+      <div className="relative flex items-center main_swiper justify-evenly">
         <Swiper
           spaceBetween={spaceBetween}
           loop={loop}
@@ -34,7 +34,7 @@ const CustomSwiper = ({
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
           }}
-          // style={{ padding: "30px" }}
+        // style={{ padding: "30px" }}
         >
           {children}
         </Swiper>

@@ -570,3 +570,9 @@
 }
 
 /* auction events css ends here */
+
+
+
+.main_swiper .swiper{
+  padding: 2rem !important;
+}
