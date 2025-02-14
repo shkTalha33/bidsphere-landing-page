@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 const HeroSection = () => {
     return (
         <main>
-            <Container fluid className="px-0 relative">
+            <Container fluid className="px-0 relative pb-5">
                 <div className="relative">
                     <div
                         className="w-full h-[853px] relative bg-cover bg-center"

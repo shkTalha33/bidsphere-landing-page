@@ -47,6 +47,16 @@ import appstore from "../png/appstore.png";
 import playstore from "../png/playstore.png";
 import phones from "../png/phones.png";
 import landingimage from "../png/landingimage.png";
+import image1 from "../png/image1.png";
+import image2 from "../png/image2.png";
+import image3 from "../png/image3.png";
+import image4 from "../png/image4.png";
+import image5 from "../png/image5.png";
+import event1 from "../png/event1.jpg";
+import event2 from "../png/event2.jpg";
+import event3 from "../png/event3.jpg";
+import event4 from "../png/event4.jpg";
+import event5 from "../png/event5.jpg";
 
 export {
   avataruser, fashion1, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage,
@@ -58,5 +68,5 @@ export {
   googleicon, product1, logo,
   coveravatar,
   logout,
-  art, electronics, vehicles
+  art, electronics, vehicles, image1, image2, image3, image4, image5, event1, event2, event3, event4, event5,
 }

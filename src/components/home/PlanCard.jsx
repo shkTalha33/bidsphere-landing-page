@@ -3,7 +3,7 @@ import { Col } from "reactstrap";
 
 export default function PlansCard({ plan, index, mdVal = "6", lgVal = "4" }) {
   return (
-    <Col className="flex flex-col items-center bg-white py-[4rem] px-6 h-full rounded-[15px] shadow-[0px_3px_45px_0px_rgba(0,0,0,0.09)]">
+    <Col className="flex flex-col items-center bg-white py-[4rem] px-6 h-full rounded-[15px] shadow-xl">
 
       {/* Icon Container */}
       <div className="flex justify-center items-center">
