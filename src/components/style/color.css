@@ -14,6 +14,7 @@
   --light: #fdfdff;
   --dark: #1C201F;
   --white: #fff;
+  --mainsecondary: #F7F7F7
 }
 
 /* Dark Theme */
@@ -27,4 +28,5 @@
   --danger: #dc3545;
   --light: #343a40;
   --dark: #e0e1e2;
+  --mainsecondary: #F7F7F7
 }

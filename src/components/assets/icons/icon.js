@@ -63,6 +63,12 @@ import experience from "../png/experience.png";
 import downloadApp from "../png/downloadApp.png";
 import googlePlay from "../png/googlePlay.png";
 import appleStore from "../png/appleStore.png";
+import auctionImage from "../png/auctionImage.png";
+import car1 from "../png/car1.png";
+import car2 from "../png/car2.png";
+import car3 from "../png/car3.png";
+import car4 from "../png/car4.png";
+import car5 from "../png/car5.png";
 
 export {
   avataruser, fashion1, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage,
@@ -75,5 +81,5 @@ export {
   coveravatar,
   logout,
   art, electronics, vehicles, image1, image2, image3, image4, image5, event1, event2, event3, event4, event5,
-  secure, returnMoney, deal, shipping, experience, downloadApp, appleStore, googlePlay
+  secure, returnMoney, deal, shipping, experience, downloadApp, appleStore, googlePlay, auctionImage, car1, car2, car3, car4, car5
 }
