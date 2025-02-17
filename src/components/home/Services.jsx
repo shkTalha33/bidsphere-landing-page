@@ -2,6 +2,8 @@ import React from "react";
 import { Col, Container, Row } from "reactstrap";
 import { deal, returnMoney, secure, shipping } from "../assets/icons/icon";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { fadeIn, staggerContainer } from "../utils/motion";
 
 export default function Services() {
   const servicesData = [
@@ -26,17 +28,32 @@ export default function Services() {
       description: "We provide a free in-home.",
     },
   ];
+
   return (
     <>
-      <main className="pb-[5rem] bg_white">
+      <motion.main
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.25 }}
+        className="pb-4 md:pb-[5rem] bg_white overflow-hidden"
+      >
         <Container>
           <Row>
             <Col md="12">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+              <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                 {servicesData.map((service, index) => {
                   return (
-                    <div className="flex items-start justify-start  gap-3" key={index}>
-                      <Image src={service?.image} width={50} alt={service?.image} />
+                    <motion.div
+                    variants={fadeIn("down", "tween", (index + 1)* 0.1 , 1)}
+                      className="flex items-start justify-start  gap-3"
+                      key={index}
+                    >
+                      <Image
+                        src={service?.image}
+                        className="w-10 md:w-[50px]"
+                        alt={service?.image}
+                      />
                       <div className="">
                         <p className="text-[#1B212C] text-xl poppins_medium">
                           {service?.title}
@@ -45,14 +62,14 @@ export default function Services() {
                           {service?.description}
                         </p>
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
-              </div>
+              </motion.div>
             </Col>
           </Row>
         </Container>
-      </main>
+      </motion.main>
     </>
   );
 }

@@ -1,13 +1,14 @@
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { Col } from "reactstrap";
+import { slideIn } from "../utils/motion";
 
 export default function PlansCard({ plan, index, mdVal = "6", lgVal = "4" }) {
   return (
-    <Col className="flex flex-col items-center bg-white py-[4rem] px-6 h-full rounded-[15px] shadow">
-
-      {/* Icon Container */}
+    <Col key={index}>
+      <motion.div variants={slideIn("up", "damping", 0.3, 0.5)} className="flex flex-col items-center bg-white py-[2rem] md:py-[4rem] px-1 md:px-6 h-full rounded-[15px] shadow">
       <div className="flex justify-center items-center">
-        <Image src={plan.icon} alt="Plan Icon" width={80} height={80} />
+        <Image src={plan.icon} alt="Plan Icon" className="w-16 h-16 sm:w-20 sm:h-20 "/>
       </div>
       {/* Text Content */}
       <div className="m-auto max-w-[18rem] text-center">
@@ -18,6 +19,8 @@ export default function PlansCard({ plan, index, mdVal = "6", lgVal = "4" }) {
           {plan?.description || "Default description"}
         </p>
       </div>
+
+      </motion.div>
     </Col>
   );
 }

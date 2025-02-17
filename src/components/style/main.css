@@ -576,3 +576,9 @@
 .main_swiper .swiper{
   padding: 2rem !important;
 }
+
+@media (max-width: 500px) {
+  .main_swiper .swiper{
+    padding: 1rem !important;
+  }
+}
