@@ -3,18 +3,37 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Col, Container, Form, Row, Label } from "reactstrap"; // You can use Spinner from 'reactstrap' if you want, or create a custom one.
+import { Col, Container, Form, Row, Label, Input } from "reactstrap";
 import * as Yup from "yup";
 
+// Payment method data
+const paymentMethods = [
+  { name: "googlePay", label: "Google Play", email: "aaronramsdale@gmail.com", icon: googlePay },
+  { name: "stripe", label: "Stripe", email: "aaronramsdale@gmail.com", icon: stripe },
+  { name: "paypal", label: "PayPal", email: "aaronramsdale@gmail.com", icon: paypal }
+];
+
+const PaymentMethod = ({ method, currentMethod, onClick }) => (
+  <div
+    className={`border ${currentMethod === method.name ? "border-[#5B0F001C] bg-[#E7FAF4]" : "border-[#E7FAF4]"} rounded-2xl p-3 flex gap-4 cursor-pointer items-center`}
+    onClick={() => onClick(method.name)}
+  >
+    <div className={`flex items-center justify-center h-12 w-12 rounded-full ${currentMethod === method.name ? "bg-white" : "bg-[#E7FAF4]"}`}>
+      <Image src={method.icon} alt={method.label} className="w-6 h-6" />
+    </div>
+    <div>
+      <h6 className="text-[#0D0D12] poppins_medium mb-1">{method.label}</h6>
+      <p className="text-[#818898] text-sm mb-0">{method.email}</p>
+    </div>
+  </div>
+);
 
 const PaymentDetail = ({ setProgress }) => {
   const [isLoading, setIsLoading] = useState(false);
-
-  // Separate states for each file upload section
   const [currentMethod, setCurrentMethod] = useState("");
 
   const schema = Yup.object().shape({
-    payment: Yup.string().required("Payment Method is required"),
+    // payment: Yup.string().required("Payment Method is required"),
   });
 
   const {
@@ -25,7 +44,7 @@ const PaymentDetail = ({ setProgress }) => {
   });
 
   const onSubmit = async (data) => {
-    setProgress(parseInt(100));
+    setProgress(100);
     console.log(data);
   };
 
@@ -35,73 +54,23 @@ const PaymentDetail = ({ setProgress }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="d-flex flex-column gap-2 w-100"
       >
-        <Row>
-          <Col md="12" className="flex flex-col gap-3">
+        <Row className="g-8">
+          <Col md="6">
+            <Label>Deposit Amount</Label>
+            <Input placeholder="Enter deposit amount for selected auction" className="py-3 px-2 border-[1px] border-[#D8DADC] rounded-[7px]" />
+          </Col>
+          <Col md="6" className="flex flex-col gap-3">
             <div className="mb-3">
-              <Label className="form-label" for="payment">
-                Payment Method
-              </Label>
+              <Label className="form-label" for="payment">Payment Method</Label>
               <div className="flex flex-col gap-2">
-                <div
-                  className={`border ${
-                    currentMethod === "googlePay"
-                      ? "border-[#5B0F001C] border-1 bg-[#EDE5E3]"
-                      : "border-[#ECEFF3]"
-                  } rounded-2xl p-3 flex gap-4 cursor-pointer items-center`}
-                  onClick={() => setCurrentMethod("googlePay")}
-                >
-                  <div className="flex items-center justify-center bg_secondary h-12 w-12 rounded-full">
-                    <Image src={googlePay} alt="google pay" className="w-6 h-6" />
-                  </div>
-                  <div className="">
-                    <h6 className="text-[#0D0D12] poppins_medium mb-1">
-                      Google Play
-                    </h6>
-                    <p className="text-[#818898] text-sm mb-0">
-                      aaronramsdale@gmail.com
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`border ${
-                    currentMethod === "stripe"
-                      ? "border-[#5B0F001C] border-1 bg-[#EDE5E3]"
-                      : "border-[#ECEFF3]"
-                  } rounded-2xl p-3 flex gap-4 cursor-pointer items-center`}
-                  onClick={() => setCurrentMethod("stripe")}
-                >
-                  <div className="flex items-center justify-center bg_secondary h-12 w-12 rounded-full">
-                    <Image src={stripe} alt="stripe" className="w-6 h-6" />
-                  </div>
-                  <div className="">
-                    <h6 className="text-[#0D0D12] poppins_medium mb-1">
-                      Google Play
-                    </h6>
-                    <p className="text-[#818898] text-sm mb-0">
-                      aaronramsdale@gmail.com
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`border ${
-                    currentMethod === "paypal"
-                      ? "border-[#5B0F001C] border-1 bg-[#EDE5E3]"
-                      : "border-[#ECEFF3]"
-                  } rounded-2xl p-3 flex gap-4 cursor-pointer items-center`}
-                  onClick={() => setCurrentMethod("paypal")}
-                >
-                  <div className="flex items-center justify-center bg_secondary h-12 w-12 rounded-full">
-                    <Image src={paypal} alt="paypal" className="w-6 h-6" />
-                  </div>
-                  <div className="">
-                    <h6 className="text-[#0D0D12] poppins_medium mb-1">
-                      Google Play
-                    </h6>
-                    <p className="text-[#818898] text-sm mb-0">
-                      aaronramsdale@gmail.com
-                    </p>
-                  </div>
-                </div>
+                {paymentMethods.map((method) => (
+                  <PaymentMethod 
+                    key={method.name} 
+                    method={method} 
+                    currentMethod={currentMethod} 
+                    onClick={setCurrentMethod} 
+                  />
+                ))}
               </div>
             </div>
           </Col>
@@ -111,7 +80,7 @@ const PaymentDetail = ({ setProgress }) => {
             type="submit"
             className="bg_primary text-white px-6 py-3 rounded-lg w-[50%] poppins_semibold text-[22px]"
           >
-            Continue
+            Confirm Payment
           </button>
         </Col>
       </Form>
