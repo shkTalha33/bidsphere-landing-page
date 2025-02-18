@@ -7,6 +7,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import cartSlice from "./cart";
 import { ChatSlice } from './chat-message';
+import { auctionRegistrationSlice } from './auctionRegistration';
 
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   sidebar: sidebarSlice,
   cart: cartSlice,
   chat: ChatSlice.reducer,
+  auctionRegistration : auctionRegistrationSlice.reducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
   [apiSlice2.reducerPath]: apiSlice2.reducer,
 });

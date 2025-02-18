@@ -1356,3 +1356,29 @@ $sm: 640px;
 .scrollbar-hide::-webkit-scrollbar {
     display: none; /* Chrome, Safari, and Opera */
 }
+
+// Form CSS starts here
+.custom_form {
+    label {
+        font-size: 20px;
+    }
+    input,
+    select,
+    textarea {
+      padding: 14px;
+      width: 100%;
+      
+      &:focus,
+      &.is-invalid:focus {
+        border-color: #D8DADC !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+  
+      &.is-invalid {
+        border-color: #D8DADC !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+    }
+  }
