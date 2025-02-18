@@ -69,6 +69,14 @@ import car2 from "../png/car2.png";
 import car3 from "../png/car3.png";
 import car4 from "../png/car4.png";
 import car5 from "../png/car5.png";
+import winBid from "../png/winBid.png";
+import confirmBid from "../png/confirmBid.png";
+import uploadfileIcon from "../png/uploadfileIcon.png";
+import googlePay from "../png/google-pay.png";
+import paypal from "../png/paypal.png";
+import stripe from "../png/stripe.png";
+
+
 
 export {
   avataruser, fashion1, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage,
@@ -81,5 +89,5 @@ export {
   coveravatar,
   logout,
   art, electronics, vehicles, image1, image2, image3, image4, image5, event1, event2, event3, event4, event5,
-  secure, returnMoney, deal, shipping, experience, downloadApp, appleStore, googlePlay, auctionImage, car1, car2, car3, car4, car5
+  secure, returnMoney, deal, shipping, experience, downloadApp, appleStore, googlePlay, auctionImage, car1, car2, car3, car4, car5, winBid, confirmBid, uploadfileIcon, stripe, paypal, googlePay
 }
