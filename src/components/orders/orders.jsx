@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable jsx-a11y/alt-text */
 "use client";
 import Image from "next/image";
 import { useState } from "react";
@@ -121,13 +123,12 @@ export default function Orders() {
       maxWidth: "200px",
       cell: (row) => (
         <div
-          className={`flex items-center justify-center capitalize whitespace-nowrap rounded-full cursor-pointer bg-[#EAF5F2] px-4 py-1 ${
-            row?.status === "shipped"
-              ? "text-[#56CDAD] bg-[#EAF5F2]"
-              : row.status === "intransit"
+          className={`flex items-center justify-center capitalize whitespace-nowrap rounded-full cursor-pointer bg-[#EAF5F2] px-4 py-1 ${row?.status === "shipped"
+            ? "text-[#56CDAD] bg-[#EAF5F2]"
+            : row.status === "intransit"
               ? "text-[#4640DE] bg-[#E8E7F7]"
               : " bg-[#EAF5F2] text-[#6DC1FE]"
-          } capitalize`}
+            } capitalize`}
         >
           {row?.status}
         </div>
@@ -139,78 +140,78 @@ export default function Orders() {
       maxWidth: "120px",
       cell: (row) => (
         <div className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#21CD9D] poppins_medium capitalize cursor-pointer" onClick={() => router.push("/orders/detail")}>
-            view details
+          view details
         </div>
       ),
     },
   ];
 
-const data = [
-  {
-    name: "Tesla Model 3",
-    category: "Electric",
-    invoice: "INV-2001",
-    date: "2024-02-19 10:30 AM",
-    payment: "$45,000",
-    status: "shipped",
-  },
-  {
-    name: "Ford Mustang",
-    category: "Sports",
-    invoice: "INV-2002",
-    date: "2024-02-18 03:45 PM",
-    payment: "$55,000",
-    status: "intransit",
-  },
-  {
-    name: "Toyota Prius",
-    category: "Hybrid",
-    invoice: "INV-2003",
-    date: "2024-02-17 12:15 PM",
-    payment: "$30,000",
-    status: "delivered",
-  },
-  {
-    name: "BMW X5",
-    category: "SUV",
-    invoice: "INV-2004",
-    date: "2024-02-16 09:00 AM",
-    payment: "$60,000",
-    status: "shipped",
-  },
-  {
-    name: "Honda Civic",
-    category: "Sedan",
-    invoice: "INV-2005",
-    date: "2024-02-15 06:20 PM",
-    payment: "$25,000",
-    status: "intransit",
-  },
-  {
-    name: "Mercedes-Benz GLE",
-    category: "Luxury",
-    invoice: "INV-2006",
-    date: "2024-02-14 02:10 PM",
-    payment: "$75,000",
-    status: "delivered",
-  },
-  {
-    name: "Chevrolet Camaro",
-    category: "Sports",
-    invoice: "INV-2007",
-    date: "2024-02-13 11:30 AM",
-    payment: "$50,000",
-    status: "shipped",
-  },
-  {
-    name: "Audi Q7",
-    category: "SUV",
-    invoice: "INV-2008",
-    date: "2024-02-12 08:45 AM",
-    payment: "$68,000",
-    status: "intransit",
-  },
-];
+  const data = [
+    {
+      name: "Tesla Model 3",
+      category: "Electric",
+      invoice: "INV-2001",
+      date: "2024-02-19 10:30 AM",
+      payment: "$45,000",
+      status: "shipped",
+    },
+    {
+      name: "Ford Mustang",
+      category: "Sports",
+      invoice: "INV-2002",
+      date: "2024-02-18 03:45 PM",
+      payment: "$55,000",
+      status: "intransit",
+    },
+    {
+      name: "Toyota Prius",
+      category: "Hybrid",
+      invoice: "INV-2003",
+      date: "2024-02-17 12:15 PM",
+      payment: "$30,000",
+      status: "delivered",
+    },
+    {
+      name: "BMW X5",
+      category: "SUV",
+      invoice: "INV-2004",
+      date: "2024-02-16 09:00 AM",
+      payment: "$60,000",
+      status: "shipped",
+    },
+    {
+      name: "Honda Civic",
+      category: "Sedan",
+      invoice: "INV-2005",
+      date: "2024-02-15 06:20 PM",
+      payment: "$25,000",
+      status: "intransit",
+    },
+    {
+      name: "Mercedes-Benz GLE",
+      category: "Luxury",
+      invoice: "INV-2006",
+      date: "2024-02-14 02:10 PM",
+      payment: "$75,000",
+      status: "delivered",
+    },
+    {
+      name: "Chevrolet Camaro",
+      category: "Sports",
+      invoice: "INV-2007",
+      date: "2024-02-13 11:30 AM",
+      payment: "$50,000",
+      status: "shipped",
+    },
+    {
+      name: "Audi Q7",
+      category: "SUV",
+      invoice: "INV-2008",
+      date: "2024-02-12 08:45 AM",
+      payment: "$68,000",
+      status: "intransit",
+    },
+  ];
 
   const filterButtons = ["all", "pending", "approve", "review"];
 
@@ -224,28 +225,26 @@ const data = [
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white p-5 rounded-[9px] mt-4">
+      <Container className="bg_white p-3 p-md-5 rounded-[9px] mt-4">
         <Row className="rounded-[9px] g-3">
           <Col md="3">
             <div className="flex flex-col gap-4 items-center justify-center">
               {sideButtons.map((button) => {
                 return (
                   <button
-                    className={`${
-                      currentActiveButton === button?.title
-                        ? "bg_primary text-white"
-                        : "bg-[#F5F5F5] text-[#909495]"
-                    } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
+                    className={`${currentActiveButton === button?.title
+                      ? "bg_primary text-white"
+                      : "bg-[#F5F5F5] text-[#909495]"
+                      } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
                     onClick={() => setCurrentActiveButton(button?.title)}
                   >
                     <div className="flex items-center w-full justify-between">
                       <div className="flex gap-3 items-center">
                         <div
-                          className={`w-9 h-9 ${
-                            currentActiveButton === button?.title
-                              ? "bg-white"
-                              : "bg_primary"
-                          } flex items-center justify-center p-2 rounded-full`}
+                          className={`w-9 h-9 ${currentActiveButton === button?.title
+                            ? "bg-white"
+                            : "bg_primary"
+                            } flex items-center justify-center p-2 rounded-full`}
                         >
                           <Image
                             src={
@@ -259,11 +258,10 @@ const data = [
                         {button?.title}
                       </div>
                       <div
-                        className={`${
-                          currentActiveButton === button?.title
-                            ? "bg-white text_dark"
-                            : "bg_primary text-white"
-                        } flex items-center justify-center p-1 rounded-full`}
+                        className={`${currentActiveButton === button?.title
+                          ? "bg-white text_dark"
+                          : "bg_primary text-white"
+                          } flex items-center justify-center p-1 rounded-full`}
                       >
                         {<FaArrowRight size={15} />}
                       </div>
@@ -274,15 +272,14 @@ const data = [
             </div>
           </Col>
           <Col md="9" className="">
-            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-5 rounded-[11px]">
+            <div className="flex items-center w-full overflow-auto no-scrollbar justify-start gap-4 md:gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px]">
               {filterButtons.map((button) => {
                 return (
                   <button
-                    className={`${
-                      filterStatics === button
-                        ? "bg_primary text_white"
-                        : "bg-[#E2F5F0] text_primary"
-                    } rounded-[16px] px-5 py-2 poppins_regular capitalize`}
+                    className={`${filterStatics === button
+                      ? "bg_primary text_white"
+                      : "bg-[#E2F5F0] text_primary"
+                      } rounded-[16px] px-5 py-2 poppins_regular capitalize`}
                     onClick={() => setFilterStatics(button)}
                   >
                     {button}
@@ -290,25 +287,20 @@ const data = [
                 );
               })}
             </div>
-            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-5 rounded-[11px] mt-3">
-              <Col md="12" className="">
-                <div className="bg-[#FAFAFA]">
-                  <ProductTable
-                    className="flex items-center justify-between flex-wrap p-6 md:gap-3 w-full bg-[#FAFAFA]"
-                    rowHeading="all orders"
-                    count={count}
-                    loading={loading}
-                    setCurrentPage={setPage}
-                    currentPage={page}
-                    columns={columns}
-                    data={data}
-                    setPageNumber={setPage}
-                    type="search"
-                    setLastId={setLastId}
-                    itemsPerPage={itemsPerPage}
-                  />
-                </div>
-              </Col>
+            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px] mt-3">
+              <ProductTable
+                rowHeading="all orders"
+                count={count}
+                loading={loading}
+                setCurrentPage={setPage}
+                currentPage={page}
+                columns={columns}
+                data={data}
+                setPageNumber={setPage}
+                type="search"
+                setLastId={setLastId}
+                itemsPerPage={itemsPerPage}
+              />
             </div>
           </Col>
         </Row>
