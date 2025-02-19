@@ -66,7 +66,7 @@ export default function PaymentDetail() {
     },
     {
       image: payment2,
-      cardNumber: "mailaddress@mail.com",
+      cardNumber: "**** **** **** 8970",
       expiryDate: "12/26",
       title: "paypal",
     },
@@ -83,46 +83,44 @@ export default function PaymentDetail() {
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white p-5 rounded-[9px] mt-4">
-        <Row className="bg_primary p-4 rounded-[9px]">
-          <Col md="12" className="!px-0">
-            <div className="flex items-center justify-between">
-              <div className="flex gap-4 items-center">
-                <p className="poppins_semibold text-[56px] text-white mb-0">
-                  $450.54
-                </p>
-                <p className="poppins_regular text-3xl text-white mb-0">
-                  is Available balance
-                </p>
-              </div>
-              <button className="flex gap-3 py-2 px-4 items-center justify-center bg-white rounded-[9px]">
-                <Image src={topupWallet} className="w-7 h-7" alt="wallet" />
-                <p className="mb-0 poppins_semibold text-[14px] text_primary">
-                  Topup
-                </p>
-                <div className="bg_primary p-1 rounded-full">
-                  {<FaArrowRight size={10} color="#fff" />}
-                </div>
-              </button>
+      <Container className="bg_white p-3 p-md-5 rounded-[9px] mt-4">
+        <div className="bg_primary p-4 rounded-[9px]">
+          <div className="flex items-center flex-wrap gap-3 justify-between">
+            <div className="flex gap-4 flex-wrap items-center">
+              <p className="poppins_semibold text-3xl md:text-4xl text-white mb-0">
+                $450.54
+              </p>
+              <p className="poppins_regular text-xl md:text-2xl text-white mb-0">
+                is Available balance
+              </p>
             </div>
-          </Col>
-        </Row>
+            <button className="flex gap-3 py-2 px-4 items-center justify-center bg-white rounded-[9px]">
+              <Image src={topupWallet} className="w-7 h-7" alt="wallet" />
+              <p className="mb-0 poppins_semibold text-[14px] text_primary">
+                Topup
+              </p>
+              <div className="bg_primary p-1 rounded-full">
+                {<FaArrowRight size={10} color="#fff" />}
+              </div>
+            </button>
+          </div>
+        </div>
         <Row className="bg-[#FAFAFA] p-4 rounded-[9px] mt-5">
           <Col md="12" className="!px-0">
             <p className="text_dark poppins_medium mb-4 text-[22px]">Topup</p>
           </Col>
           <Col md="12" className="!px-0">
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center flex-wrap justify-between gap-2 mb-3 mb-md-5">
               <input
                 type="text"
                 placeholder="Enter Amount"
-                className="poppins_medium text-[#D0D0D0] w-[400px] border-1 border-gray-200 text-base p-4 rounded-lg"
+                className="poppins_medium text-[#D0D0D0] w-[400px] border-1 border-gray-200 text-base p-3 p-md-4 rounded-lg"
               />
               <p className="poppins_medium text-[14px] mb-0 text_primary underline cursor-pointer">
                 Add Payment Method
               </p>
             </div>
-            <p className="text_dark poppins_medium mb-5 text-[22px] capitalize">
+            <p className="text_dark poppins_medium mb-3 mb-md-5 text-[22px] capitalize">
               Select Payment Method
             </p>
           </Col>
@@ -133,14 +131,13 @@ export default function PaymentDetail() {
                   md="12"
                   key={index}
                   onClick={() => setCurrentPaymentMethod(method?.title)}
-                  className={`${
-                    currentPaymentMethod === method?.title
-                      ? "bg_primary"
-                      : "bg_white"
-                  }  rounded-md py-4 px-4 cursor-pointer`}
+                  className={`${currentPaymentMethod === method?.title
+                    ? "bg_primary"
+                    : "bg_white"
+                    }  rounded-md py-4 px-4 cursor-pointer`}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 justify-between">
+                    <div className="flex items-center gap-2">
                       <Image
                         src={method?.image}
                         alt={method?.title}
@@ -149,11 +146,10 @@ export default function PaymentDetail() {
                       <p className={`mb-0`}>{method?.cardNumber}</p>
                     </div>
                     <p
-                      className={`poppins_medium text-[14px] mb-0 ${
-                        currentPaymentMethod === method?.title
-                          ? "text_white"
-                          : "text_primary"
-                      } cursor-pointer`}
+                      className={`poppins_medium text-[14px] mb-0 ${currentPaymentMethod === method?.title
+                        ? "text_white"
+                        : "text_primary"
+                        } cursor-pointer`}
                     >
                       Expires: {method?.expiryDate}
                     </p>
@@ -167,7 +163,7 @@ export default function PaymentDetail() {
           <Col md="6" className="text-end ml-auto mt-4 px-0">
             <button
               type="submit"
-              className="bg_primary text-white px-6 py-3 rounded-lg w-[50%] poppins_semibold text-[22px]"
+              className="bg_primary text-white px-6 py-3 rounded-lg w-[50%] poppins_semibold text-lg md:text-[22px]"
               onClick={() => router.push("/payments/statics")}
             >
               Done

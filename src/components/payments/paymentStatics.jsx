@@ -228,36 +228,34 @@ export default function PaymentStatics() {
         <Row>
           <Col md="12" className="">
             <Breadcrumbs pageTitle={"Payment"} />
-            <h3 className="text-3xl poppins_medium text-[#1C201F]">Payment</h3>
+            <h3 className="text-2xl md:text-3xl poppins_medium text-[#1C201F]">Payment</h3>
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white p-5 rounded-[9px] mt-4">
-        <Row className="bg_primary p-4 rounded-[9px]">
-          <Col md="12" className="!px-0">
-            <div className="flex items-center justify-between">
-              <div className="flex gap-4 items-center">
-                <p className="poppins_semibold text-[56px] text-white mb-0">
-                  $450.54
-                </p>
-                <p className="poppins_regular text-3xl text-white mb-0">
-                  is Available balance
-                </p>
-              </div>
-              <button className="flex gap-3 py-2 px-4 items-center justify-center bg-white rounded-[9px]">
-                <Image src={topupWallet} className="w-7 h-7" alt="wallet" />
-                <p className="mb-0 poppins_semibold text-[14px] text_primary">
-                  Topup
-                </p>
-                <div className="bg_primary p-1 rounded-full">
-                  {<FaArrowRight size={10} color="#fff" />}
-                </div>
-              </button>
+      <Container className="bg_white p-3 p-md-4 rounded-[9px] mt-4">
+        <div className="bg_primary p-4 rounded-[9px]">
+          <div className="flex items-center flex-wrap gap-3 justify-between">
+            <div className="flex gap-4 flex-wrap items-center">
+              <p className="poppins_semibold text-3xl md:text-4xl text-white mb-0">
+                $450.54
+              </p>
+              <p className="poppins_regular text-xl md:text-2xl text-white mb-0">
+                is Available balance
+              </p>
             </div>
-          </Col>
-        </Row>
+            <button className="flex gap-3 py-2 px-4 items-center justify-center bg-white rounded-[9px]">
+              <Image src={topupWallet} className="w-7 h-7" alt="wallet" />
+              <p className="mb-0 poppins_semibold text-[14px] text_primary">
+                Topup
+              </p>
+              <div className="bg_primary p-1 rounded-full">
+                {<FaArrowRight size={10} color="#fff" />}
+              </div>
+            </button>
+          </div>
+        </div>
         <Row className="rounded-[9px] mt-5 g-3">
-          <Col md="3">
+          <Col lg="3">
             <div className="flex flex-col gap-4 items-center justify-center">
               {sideButtons.map((button) => {
                 return (
@@ -301,8 +299,8 @@ export default function PaymentStatics() {
               })}
             </div>
           </Col>
-          <Col md="9" className="">
-            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-5 rounded-[11px]">
+          <Col lg="9" className="">
+            <div className="flex items-center justify-start gap-4 md:gap-10 w-full no-scrollbar overflow-auto bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px]">
               {filterButtons.map((button) => {
                 return (
                   <button
@@ -317,25 +315,20 @@ export default function PaymentStatics() {
                 );
               })}
             </div>
-            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-5 rounded-[11px] mt-3">
-              <Col md="12" className="">
-                <div className="bg-[#FAFAFA]">
-                  <ProductTable
-                    className="flex items-center justify-between flex-wrap p-6 md:gap-3 w-full bg-[#FAFAFA]"
-                    rowHeading="deposit tracking"
-                    count={count}
-                    loading={loading}
-                    setCurrentPage={setPage}
-                    currentPage={page}
-                    columns={columns}
-                    data={data}
-                    setPageNumber={setPage}
-                    type="search"
-                    setLastId={setLastId}
-                    itemsPerPage={itemsPerPage}
-                  />
-                </div>
-              </Col>
+            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px] mt-3">
+              <ProductTable
+                rowHeading="deposit tracking"
+                count={count}
+                loading={loading}
+                setCurrentPage={setPage}
+                currentPage={page}
+                columns={columns}
+                data={data}
+                setPageNumber={setPage}
+                type="search"
+                setLastId={setLastId}
+                itemsPerPage={itemsPerPage}
+              />
             </div>
           </Col>
         </Row>
