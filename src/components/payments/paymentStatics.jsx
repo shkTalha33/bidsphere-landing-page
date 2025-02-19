@@ -17,7 +17,7 @@ import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 
-export default function PaymentDetail() {
+export default function PaymentStatics() {
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState();
   const onChange = (key) => {
     console.log(key);
@@ -77,7 +77,7 @@ export default function PaymentDetail() {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px] mt-20 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+        <Container className="bg_white rounded-[9px] mt-20 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12" className="">
             <Breadcrumbs pageTitle={"Payment"} />
@@ -170,7 +170,6 @@ export default function PaymentDetail() {
             <button
               type="submit"
               className="bg_primary text-white px-6 py-3 rounded-lg w-[50%] poppins_semibold text-[22px]"
-              onClick={() => router.push("/payments/statics")}
             >
               Done
             </button>
