@@ -1,14 +1,13 @@
 "use client";
-import React from "react";
-import { Col, Container, Row } from "reactstrap";
-import Breadcrumbs from "../common/Breadcrumbs";
 import { Tabs } from "antd";
+import { Col, Container, Row } from "reactstrap";
 import { auctionImage } from "../assets/icons/icon";
+import Breadcrumbs from "../common/Breadcrumbs";
 import AuctionItems from "./auctionItems";
-import TopSection from "../common/TopSection";
 
 export default function AllAuction() {
   const onChange = (key) => {
+    console.log(key);
   };
 
   const auctionItems = [
@@ -24,7 +23,7 @@ export default function AllAuction() {
   const items = [
     {
       key: "all",
-      label: "All auctions",
+      label: "All Auctions",
       children: <AuctionItems items={auctionItems} />,
     },
     {
@@ -41,11 +40,11 @@ export default function AllAuction() {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px] mt-20 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container className="bg_white rounded-[9px] mt-20 p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12" className="">
             <Breadcrumbs pageTitle={"Auctions"} />
-            <h3 className="text-3xl poppins_medium text-[#1C201F]">
+            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text-[#1C201F]">
               All Auctions
             </h3>
           </Col>
@@ -55,12 +54,14 @@ export default function AllAuction() {
       <Container className="bg_mainsecondary rounded-[9px] mt-4">
         <Row>
           <Col md="12" className="!px-0">
-            <Tabs
-              defaultActiveKey="all"
-              size="large"
-              items={items}
-              onChange={onChange}
-            />
+            <div className="">
+              <Tabs
+                defaultActiveKey="all"
+                size="large"
+                items={items}
+                onChange={onChange}
+              />
+            </div>
           </Col>
         </Row>
       </Container>

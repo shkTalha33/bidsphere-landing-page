@@ -55,10 +55,10 @@ export default function Page() {
     },
   ];
   const button = {
-    icon: <Heart className="w-5 h-5 text-white" />,
+    icon: <Heart className="w-4 h-4 md:w-5 md:h-5 text-white" />,
     onClick: () => console.log("Heart clicked!"),
     className:
-      "w-10 h-10 bg-black rounded-full flex items-center justify-center",
+      "w-8 h-8 md:w-10 md:h-10 bg-black rounded-full flex items-center justify-center",
   };
 
   const selectedItem = {
@@ -108,7 +108,7 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
   const priceOptions = ["$20k", "$21k", "$22k", "$23k"];
 
   return (
-    <main className="bg_mainsecondary p-4">
+    <main className="bg_mainsecondary p-2  md:py-4">
       <TopSection
         title={"Good morning, Adnan"}
         description={"Here are your auctions whom you can join."}
@@ -182,7 +182,7 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
             </div>
             <div className="w-[90%] mx-auto relative -mt-10 mb-11">
               <Row className="py-4 bg-[#F3F2F2] rounded-[10px]">
-                <Col md="6" className="border-r border-gray-300 pr-4">
+                <Col sm="6" className="border-r border-gray-300 pr-4">
                   <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
                     Starting price
                   </p>
@@ -212,11 +212,11 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                   </div>
                 </Col>
 
-                <Col md="6" className="pl-4">
-                  <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
+                <Col sm="6" className="pl-4">
+                  <p className="text-[#1B212C] mb-0 text-base sm:text-lg poppins_semibold capitalize">
                     Current Bid Price
                   </p>
-                  <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
+                  <p className="text-[#1B212C] mb-0 text-xs sm:text-sm poppins_regular capitalize">
                     $24,500
                   </p>
                   <p className="text-[#1B212C] mb-0 mt-2 text-[15px] poppins_regular capitalize flex items-center justify-start gap-2">

@@ -607,3 +607,13 @@
   box-shadow: 0px 4px 22.9px 0px #0000000D;
 }
 /* custom tabs css override ends here*/
+.ant-tabs-nav-more{
+  display: none;
+}
+
+.ant-tabs-top >.ant-tabs-nav .ant-tabs-nav-wrap::after{
+  box-shadow: none !important;
+}
+.ant-tabs-top >.ant-tabs-nav .ant-tabs-nav-wrap::before{
+  box-shadow: none !important;
+}

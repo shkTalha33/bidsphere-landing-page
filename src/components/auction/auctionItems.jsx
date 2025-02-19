@@ -1,39 +1,38 @@
-"use client"; 
+"use client";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Heart } from "react-feather";
 import { useRouter } from "next/navigation";
-
 
 export default function AuctionItems({ items }) {
   const router = useRouter();
   const [likedItems, setLikedItems] = useState({});
 
   const toggleLike = (index) => {
-    setLikedItems(prev => ({
+    setLikedItems((prev) => ({
       ...prev,
-      [index]: !prev[index]
+      [index]: !prev[index],
     }));
   };
 
   const handleAuctionDetail = () => {
-    router.push("/auctions/67890")
-  }
-  
+    router.push("/auctions/67890");
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       {items.map((item, index) => {
         return (
-          <div 
-            key={index} 
-            className="space-y-3 p-3 bg_white shadow-sm rounded-lg border-[1px] border-[#ECEFF3]" 
-            style={{ boxShadow: '0px 8px 24px rgba(149, 157, 165, 0.2)' }}
+          <div
+            key={index}
+            className="space-y-3 p-3 bg_white shadow-sm rounded-lg border-[1px] border-[#ECEFF3]"
+            style={{ boxShadow: "0px 8px 24px rgba(149, 157, 165, 0.2)" }}
           >
             <div className="relative">
-              <Image 
-                src={item?.image} 
-                alt={item?.title} 
-                className="w-full rounded-md" 
+              <Image
+                src={item?.image}
+                alt={item?.title}
+                className="w-full rounded-md"
                 onClick={handleAuctionDetail}
               />
               {/* New Offer Tag */}
@@ -43,7 +42,7 @@ export default function AuctionItems({ items }) {
                 </span>
               </div>
               {/* Heart Icon */}
-              <button 
+              <button
                 onClick={() => toggleLike(index)}
                 className="absolute top-4 right-4 p-1 rounded-full bg-[#433F46] transition-colors"
               >
@@ -62,7 +61,7 @@ export default function AuctionItems({ items }) {
                 <p className="poppins_medium text-[16.6px]">{item?.title}</p>
                 <p className="poppins_medium text-sm">{item?.price}</p>
               </div>
-              <button className="bg_primary text_white text-center py-2 xl:py-3 rounded-lg px-7 lg:px-8 xl:px-10">
+              <button className="bg_primary whitespace-nowrap text_white text-center py-2 xl:py-3 rounded-lg px-7 lg:px-8 xl:px-10">
                 Join Auction
               </button>
             </div>
