@@ -196,7 +196,7 @@ const ProfilePage = () => {
                                             ))
                                         )}
                                     </div>
-                                    <div className='contact-help-center rounded-2 bg-blue-700 mt-6'>
+                                    <div className='hidden lg:block contact-help-center rounded-2 bg-blue-700 mt-6'>
                                         <div className='p-4'>
                                             <p className='mb-2 sm:text-[12px] md:text-[15px] lg:text-[18px] poppins_medium text_white'>
                                                 Didn't find what you were looking for?

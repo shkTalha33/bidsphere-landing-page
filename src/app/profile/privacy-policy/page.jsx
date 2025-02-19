@@ -88,24 +88,6 @@ const PrivacyPolicyPage = () => {
                                     ))}
                                 </div>
                             )}
-
-                            <div className="mt-10 border-t pt-6">
-                                <p className="text-gray-700 mb-4">
-                                    If you have any questions about our Privacy Policy, please contact us at:
-                                </p>
-
-                                <div className="bg-blue-50 border border-blue-200 p-4 rounded-md">
-                                    <p className="font-medium text-blue-800 mb-2">Contact Information:</p>
-                                    <p className="text-blue-700">Email: privacy@example.com</p>
-                                    <p className="text-blue-700">Phone: +1 (555) 123-4567</p>
-                                    <button
-                                        onClick={() => navigate('/contact-us')}
-                                        className="mt-4 bg-blue-700 text-white px-5 py-2 rounded hover:bg-blue-800 transition-colors"
-                                    >
-                                        Contact Us
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
