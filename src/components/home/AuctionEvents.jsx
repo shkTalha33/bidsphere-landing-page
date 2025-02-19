@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unescaped-entities */
+"use client"
+
 import { motion } from "framer-motion";
 import React from "react";
 import { Col, Container, Row } from "reactstrap";

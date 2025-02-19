@@ -54,16 +54,16 @@ const Footer = () => {
         <div className="space-y-8">
           <div className="flex gap-4">
             <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
-              <BsTwitter className="text_primary" />
+              <BsTwitter size={20} className="text_primary" />
             </Link>
             <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
-              <FaFacebookF className="text_primary" />
+              <FaFacebookF size={20} className="text_primary" />
             </Link>
             <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
-              <FaLinkedinIn className="text_primary" />
+              <FaLinkedinIn size={20} className="text_primary" />
             </Link>
             <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
-              <FaYoutube className="text_primary" />
+              <FaYoutube size={20} className="text_primary" />
             </Link>
           </div>
 

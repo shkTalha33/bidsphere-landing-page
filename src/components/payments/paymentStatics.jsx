@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable jsx-a11y/alt-text */
 "use client";
 import Image from "next/image";
 import { useState } from "react";
@@ -6,7 +8,7 @@ import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { Col, Container, Row } from "reactstrap";
 import {
-    car1,
+  car1,
   ClockDark,
   ClockWhite,
   depositDark,
@@ -113,13 +115,12 @@ export default function PaymentStatics() {
       maxWidth: "200px",
       cell: (row) => (
         <div
-          className={`flex items-center justify-center capitalize whitespace-nowrap rounded-full cursor-pointer bg-[#EAF5F2] px-4 py-1 ${
-            row?.status === "approved"
-              ? "text-[#56CDAD] bg-[#EAF5F2]"
-              : row.status === "pending"
+          className={`flex items-center justify-center capitalize whitespace-nowrap rounded-full cursor-pointer bg-[#EAF5F2] px-4 py-1 ${row?.status === "approved"
+            ? "text-[#56CDAD] bg-[#EAF5F2]"
+            : row.status === "pending"
               ? "text-[#4640DE] bg-[#E8E7F7]"
               : " bg-[#EAF5F2] text-[#6DC1FE]"
-          } capitalize`}
+            } capitalize`}
         >
           {row?.status}
         </div>
@@ -133,7 +134,7 @@ export default function PaymentStatics() {
         <div className="flex  items-center justify-between">
           <div
             className="p-1 bg_mainsecondary rounded-full ml-3 w-9 h-9 cursor-pointer flex items-center justify-center"
-            //  onClick={() => handleLeadDetails(row)}
+          //  onClick={() => handleLeadDetails(row)}
           >
             <div className="w-6 h-6 rounded-full bg-[#1ECD2D] flex items-center justify-center text-white">
               <IoMdCheckmark size={18} className="text_primary" color="#fff" />
@@ -141,7 +142,7 @@ export default function PaymentStatics() {
           </div>
           <div
             className="p-1 bg_mainsecondary rounded-full ml-3 w-9 h-9 cursor-pointer flex items-center justify-center"
-            //  onClick={() => handleLeadDetails(row)}
+          //  onClick={() => handleLeadDetails(row)}
           >
             <div className="w-6 h-6 rounded-full bg-[#FF0000] flex items-center justify-center text-white">
               <RxCross2 size={18} className="text_primary" color="#fff" />
@@ -261,21 +262,19 @@ export default function PaymentStatics() {
               {sideButtons.map((button) => {
                 return (
                   <button
-                    className={`${
-                      currentActiveButton === button?.title
-                        ? "bg_primary text-white"
-                        : "bg-[#F5F5F5] text-[#909495]"
-                    } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
+                    className={`${currentActiveButton === button?.title
+                      ? "bg_primary text-white"
+                      : "bg-[#F5F5F5] text-[#909495]"
+                      } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
                     onClick={() => setCurrentActiveButton(button?.title)}
                   >
                     <div className="flex items-center w-full justify-between">
                       <div className="flex gap-3 items-center">
                         <div
-                          className={`w-9 h-9 ${
-                            currentActiveButton === button?.title
-                              ? "bg-white"
-                              : "bg_primary"
-                          } flex items-center justify-center p-2 rounded-full`}
+                          className={`w-9 h-9 ${currentActiveButton === button?.title
+                            ? "bg-white"
+                            : "bg_primary"
+                            } flex items-center justify-center p-2 rounded-full`}
                         >
                           <Image
                             src={
@@ -289,11 +288,10 @@ export default function PaymentStatics() {
                         {button?.title}
                       </div>
                       <div
-                        className={`${
-                          currentActiveButton === button?.title
-                            ? "bg-white text_dark"
-                            : "bg_primary text-white"
-                        } flex items-center justify-center p-1 rounded-full`}
+                        className={`${currentActiveButton === button?.title
+                          ? "bg-white text_dark"
+                          : "bg_primary text-white"
+                          } flex items-center justify-center p-1 rounded-full`}
                       >
                         {<FaArrowRight size={15} />}
                       </div>
@@ -308,11 +306,10 @@ export default function PaymentStatics() {
               {filterButtons.map((button) => {
                 return (
                   <button
-                    className={`${
-                      filterStatics === button
-                        ? "bg_primary text_white"
-                        : "bg-[#E2F5F0] text_primary"
-                    } rounded-[16px] px-5 py-2 poppins_regular capitalize`}
+                    className={`${filterStatics === button
+                      ? "bg_primary text_white"
+                      : "bg-[#E2F5F0] text_primary"
+                      } rounded-[16px] px-5 py-2 poppins_regular capitalize`}
                     onClick={() => setFilterStatics(button)}
                   >
                     {button}

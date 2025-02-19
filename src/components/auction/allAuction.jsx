@@ -9,7 +9,6 @@ import TopSection from "../common/TopSection";
 
 export default function AllAuction() {
   const onChange = (key) => {
-    console.log(key);
   };
 
   const auctionItems = [

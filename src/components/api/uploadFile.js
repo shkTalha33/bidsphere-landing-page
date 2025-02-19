@@ -1,8 +1,8 @@
 /* eslint-disable no-throw-literal */
 
 import imageCompression from "browser-image-compression";
-import { axiosInstance, } from "./axiosInstance";
 import { isValidFileType } from "./isValidType";
+import axiosInstance from "./axiosInstance";
 // import { imageUpload } from "./ApiRoutesFile";
 const imageUpload = "image/upload"
 const header = {

@@ -82,7 +82,7 @@ export default function Header() {
         <button >
           <Image src='/assets/chat.png' width={30} height={30} alt="" />
         </button>
-        <button >
+        <button onClick={() => router.push("/favorite")}>
           <Image src='/assets/heart.png' width={30} height={30} alt="" />
         </button>
         <div onClick={() => router.push("/profile/personal-information")} className="flex cursor-pointer ms-2 gap-2 items-center w-fit">
@@ -137,11 +137,8 @@ export default function Header() {
           >
             <h2 className="poppins_medium text-2xl text_primary">BidSphere</h2>
           </div>
-
-          {/* Conditional rendering based on login status */}
           {isLogin ? <AuthenticatedNav /> : <NonAuthenticatedNav />}
 
-          {/* Hamburger Menu for Mobile */}
           <div className="flex md:hidden">
             <button onClick={toggleMenu} aria-label="Toggle menu">
               <svg
@@ -162,62 +159,103 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Mobile Menu */}
+        {/* Improved Mobile Menu - Centered and Full-Featured with consistent text coloring */}
         <div
-          className={`flex flex-col items-start mt-0 space-y-2 overflow-hidden transition-all duration-300 ease-in-out md:hidden 
-            ${isMenuOpen ? "max-h-[280px] opacity-100" : "max-h-0 opacity-0"}`}
+          className={`flex flex-col items-center justify-center w-full mt-0 space-y-4 overflow-hidden transition-all duration-300 ease-in-out md:hidden 
+            ${isMenuOpen ? "max-h-[400px] opacity-100 py-4" : "max-h-0 opacity-0"}`}
         >
           {isLogin ? (
             <>
               <Link
                 href="/auctions"
-                className="no-underline mt-[1.25rem] text_dark cursor-pointer"
+                className={`no-underline text-center w-full py-2 ${pathname === "/auctions" ? "text_primary poppins_medium" :
+                  isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
                 Auctions
               </Link>
               <Link
                 href="/payments"
-                className="no-underline text_dark cursor-pointer"
+                className={`no-underline text-center w-full py-2 ${pathname === "/payments" ? "text_primary poppins_medium" :
+                  isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
                 Payments
               </Link>
               <Link
                 href="/orders"
-                className="no-underline text_dark cursor-pointer"
+                className={`no-underline text-center w-full py-2 ${pathname === "/orders" ? "text_primary poppins_medium" :
+                  isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
                 Orders
               </Link>
-              <div className="flex cursor-pointer gap-2 items-center w-fit">
-                <div>
-                  <Image src={avataruser} width={30} height={30} style={{ borderRadius: '50%', objectFit: 'cover' }} alt="" />
+
+              {/* Mobile Action Icons */}
+              <div className="flex justify-center gap-6 w-full mt-2">
+                <button>
+                  <Image src='/assets/notification.png' width={26} height={26} alt="" />
+                </button>
+                <button>
+                  <Image src='/assets/chat.png' width={26} height={26} alt="" />
+                </button>
+                <button onClick={() => router.push("/favorite")}>
+                  <Image src='/assets/heart.png' width={26} height={26} alt="" />
+                </button>
+              </div>
+              {/* Mobile User Profile Section with consistent text coloring */}
+              <div className="flex flex-col items-center w-full mt-2">
+                <div onClick={() => router.push("/profile/personal-information")} className="flex justify-center cursor-pointer gap-2 items-center w-full py-2">
+                  <div>
+                    <Image src={avataruser} width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} alt="" />
+                  </div>
+                  <div className="flex flex-col">
+                    <h6 className={`${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} mb-0 text-sm poppins_regular`}>User</h6>
+                    <span className={`${isHomeOrHashRoute && !isScrolled ? "text_light" : "text_dark"} text-xs poppins_regular`}>15A, James Street</span>
+                  </div>
                 </div>
-                <h6 className="popins_medium mb-0 text-sm text-[#818181] max-lg:hidden whitespace-nowrap">User</h6>
               </div>
             </>
           ) : (
-            <>
-              <button
-                onClick={() => {
-                  router.push('/auth/login');
-                  handleNavClose();
-                }}
-                className="px-[1.25rem] py-[0.33rem] border-[1px] rounded-[2rem] text-[0.75rem] cursor-pointer poppins_bold no-underline"
+            <div className="flex flex-col items-center w-full gap-3">
+              <Link
+                href="/"
+                className={`no-underline text-center w-full py-2 ${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"
+                  } cursor-pointer poppins_regular`}
+                onClick={handleNavClose}
               >
-                Login
-              </button>
-              <button
-                onClick={() => {
-                  router.push('/auth/signup');
-                  handleNavClose();
-                }}
-                className="px-[1.25rem] py-[0.33rem] rounded-[2rem] text-[0.75rem] text_white cursor-pointer poppins_bold bg_primary no-underline primary_hover"
+                Home
+              </Link>
+              <Link
+                href="/auctions"
+                className={`no-underline text-center w-full py-2 ${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"
+                  } cursor-pointer poppins_regular`}
+                onClick={handleNavClose}
               >
-                Sign Up
-              </button>
-            </>
+                Auctions
+              </Link>
+              <div className="flex justify-center gap-3 w-full mt-3">
+                <button
+                  onClick={() => {
+                    router.push('/auth/login');
+                    handleNavClose();
+                  }}
+                  className={`px-[1.5rem] py-[0.5rem] border-[1px] rounded-3 text-[0.85rem] cursor-pointer poppins_medium no-underline ${isHomeOrHashRoute && !isScrolled ? "border-white text_white" : "border-gray-300"
+                    }`}
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => {
+                    router.push('/auth/signup');
+                    handleNavClose();
+                  }}
+                  className="px-[1.5rem] py-[0.5rem] rounded-3 text-[0.85rem] text_white cursor-pointer poppins_medium bg_primary no-underline primary_hover"
+                >
+                  Sign Up
+                </button>
+              </div>
+            </div>
           )}
         </div>
       </Container>
