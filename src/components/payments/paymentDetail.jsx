@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { FaArrowRight } from "react-icons/fa6";
 import { Col, Container, Row } from "reactstrap";
-import Breadcrumbs from "../common/Breadcrumbs";
-import { Tabs } from "antd";
 import {
   auctionImage,
   payment,
@@ -12,10 +13,7 @@ import {
   topupWallet,
 } from "../assets/icons/icon";
 import AuctionItems from "../auction/auctionItems";
-import { BiRightArrow } from "react-icons/bi";
-import Image from "next/image";
-import { FaArrowRight } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
+import Breadcrumbs from "../common/Breadcrumbs";
 
 export default function PaymentDetail() {
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState();

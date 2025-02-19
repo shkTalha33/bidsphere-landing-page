@@ -1,10 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { Fragment, useState } from "react";
 import DataTable from "react-data-table-component";
-import { ArrowLeft, ArrowRight, ChevronDown, Filter, Search } from "react-feather";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronDown,
+  Filter,
+  Search,
+} from "react-feather";
 import ReactPaginate from "react-paginate";
 import { HashLoader } from "react-spinners";
-import { Card, Input } from "reactstrap";
+import { Input } from "reactstrap";
 
 // const BootstrapCheckbox = forwardRef((props, ref) => (
 //     <div className='form-check'>
@@ -131,19 +137,15 @@ const ProductTable = ({
   return (
     <>
       <Fragment>
-        <Card className="border border-white w-full mt-4 rounded-xl">
+        <div className="w-full mt-4 rounded-xl">
+          <h6 className="poppins_semibold text-[#16161D] text-lg capitalize">
+            {rowHeading}
+          </h6>
           {showRow && (
             <div className="flex items-center justify-between flex-wrap p-3 max-md:gap-3 w-full">
-              <div className="">
-                <h6 className="plusJakara_semibold text-[#f2f3f4]">
-                  {rowHeading}
-                </h6>
-              </div>
               <div className="flex items-center flex-wrap gap-[12px]">
                 <div className="relative">
-                  <Search
-                    className="absolute mt-[12px] ms-3"
-                  />
+                  <Search className="absolute mt-[12px] ms-3" />
                   <Input
                     className="dataTable-filter ps-5 md:pe-5 py-[8px] w-full"
                     type="text"
@@ -175,23 +177,42 @@ const ProductTable = ({
             </div>
           ) : (
             <div className="react-dataTable">
-              <DataTable
-                noHeader
-                pagination
-                selectableRowsNoSelectAll
-                // selectableRows
-                columns={columns}
-                paginationPerPage={10}
-                className="react-dataTable text-[#f2f3f4] border-b-0"
-                sortIcon={<ChevronDown size={10} />}
-                paginationDefaultPage={currentPage + 1}
-                paginationComponent={CustomPagination}
-                data={searchValue.length ? filteredData : data}
-              // selectableRowsComponent={BootstrapCheckbox}
-              />
+             <DataTable
+  noHeader
+  pagination
+  selectableRowsNoSelectAll
+  columns={columns}
+  paginationPerPage={10}
+  className="react-dataTable border-b-0"
+  sortIcon={<ChevronDown size={10} />}
+  paginationDefaultPage={currentPage + 1}
+  paginationComponent={CustomPagination}
+  data={searchValue.length ? filteredData : data}
+  customStyles={{
+    headRow: {
+      style: {
+        backgroundColor: "#FAFAFA", // Background color for the header row
+        color: "#16161D", // Text color for the header row
+      },
+    },
+    rows: {
+      style: {
+        backgroundColor: "#FAFAFA", // Background color for the table rows
+        color: "#16161D", // Text color for the rows
+      },
+    },
+    pagination: {
+      style: {
+        backgroundColor: "#1a1a2e", // Background color for the pagination
+        color: "#16161D",
+      },
+    },
+  }}
+/>
+
             </div>
           )}
-        </Card>
+        </div>
       </Fragment>
     </>
   );

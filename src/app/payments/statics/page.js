@@ -1,7 +1,3 @@
-import React from "react";
-import PaymentDetail from "@/components/payments/paymentDetail";
-import { Col, Container, Row } from "reactstrap";
-import Breadcrumbs from "@/components/common/Breadcrumbs";
 import PaymentStatics from "@/components/payments/paymentStatics";
 
 export default function Page() {

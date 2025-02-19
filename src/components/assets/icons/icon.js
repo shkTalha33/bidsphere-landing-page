@@ -81,6 +81,20 @@ import payment1 from "../png/Payment1.png";
 import payment2 from "../png/Payment2.png";
 import payment3 from "../png/Payment3.png";
 import auctionlogo2 from "../png/auctionlogo2.png";
+import ClockDark from "../png/clock-dark.png";
+import ClockWhite from "../png/clock-white.png";
+import refundDark from "../png/refund-dark.png";
+import refundWhite from "../png/refund-white.png";
+import depositWhite from "../png/deposit-white.png";
+import depositDark from "../png/deposit-dark.png";
+import allLight from "../png/allLight.png";
+import allDark from "../png/allDark.png";
+import shippedDark from "../png/shippedDark.png";
+import shippedLight from "../png/shippedLight.png";
+import transitLight from "../png/transitLight.png";
+import transitDark from "../png/transitDark.png";
+import deliveredDark from "../png/deliveredDark.png";
+import deliveredLight from "../png/deliveredLight.png";
 
 
 
@@ -95,5 +109,5 @@ export {
   coveravatar,
   logout,
   art, electronics, vehicles, image1, image2, image3, image4, image5, event1, event2, event3, event4, event5,
-  secure, returnMoney, deal, shipping, experience, downloadApp, appleStore, googlePlay, auctionImage, car1, car2, car3, car4, car5, winBid, confirmBid, uploadfileIcon, stripe, paypal, googlePay, topupWallet, payment, payment1, payment2, payment3
+  secure, returnMoney, deal, shipping, experience, downloadApp, appleStore, googlePlay, auctionImage, car1, car2, car3, car4, car5, winBid, confirmBid, uploadfileIcon, stripe, paypal, googlePay, topupWallet, payment, payment1, payment2, payment3,  depositDark, depositWhite, refundWhite, refundDark, ClockWhite, ClockDark, deliveredLight, deliveredDark, transitDark, transitLight, shippedLight, shippedDark, allDark, allLight
 }
