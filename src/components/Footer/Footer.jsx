@@ -7,7 +7,7 @@ import { appstore, auctionlogo, playstore } from '../assets/icons/icon';
 
 const Footer = () => {
   return (
-    <footer className="bg_primary text-white py-4 sm:py-12 md:py-16">
+    <footer className="bg_primary text-white py-5 sm:py-12 md:py-16">
       <div className="container mx-auto md:px-4 grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-12">
         <div className="space-y-6">
           <div>
@@ -56,13 +56,13 @@ const Footer = () => {
             <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
               <BsTwitter className="text_primary" />
             </Link>
-           <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
+            <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
               <FaFacebookF className="text_primary" />
             </Link>
-           <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
+            <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
               <FaLinkedinIn className="text_primary" />
             </Link>
-           <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
+            <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
               <FaYoutube className="text_primary" />
             </Link>
           </div>
@@ -71,7 +71,7 @@ const Footer = () => {
             <Link href="#">
               <Image
                 src={playstore}
-              className="w-28 h-8 md:w-36 md:h-11"
+                className="w-28 h-8 md:w-36 md:h-11"
                 alt="Get it on Google Play"
               />
             </Link>

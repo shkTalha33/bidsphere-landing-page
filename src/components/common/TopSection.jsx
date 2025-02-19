@@ -1,9 +1,9 @@
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
 
-export default function TopSection({ title, description, button }) {
+export default function TopSection({ title, description, button, mt = 20 }) {
   return (
-    <Container className="bg_white rounded-[9px] mt-20 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+    <Container className={`bg_white rounded-[9px] mt-${mt} p-4 shadow-[0px_4px_22.9px_0px_#0000000D]`}>
       <Row>
         <Col md="12">
           <div className="flex items-center justify-between">

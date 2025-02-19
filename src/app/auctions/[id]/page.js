@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react/jsx-key */
 "use client";
 import {
   avataruser,
@@ -27,7 +29,7 @@ export default function Page() {
   const [openBiddingConfirmationModal, setOpenBiddingConfirmationModal] =
     useState(false);
 
-    const router = useRouter()
+  const router = useRouter()
 
   const bidders = [
     {
@@ -274,11 +276,10 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                       {priceOptions.map((price) => {
                         return (
                           <button
-                            className={`py-1 px-3 rounded-md poppins_regular text-sm  ${
-                              activeButton === price
-                                ? "border border-black bg_dark text-white"
-                                : "border border-[#BDBDBD] text_dark"
-                            }`}
+                            className={`py-1 px-3 rounded-md poppins_regular text-sm  ${activeButton === price
+                              ? "border border-black bg_dark text-white"
+                              : "border border-[#BDBDBD] text_dark"
+                              }`}
                             onClick={() => setActiveButton(price)}
                           >
                             {price}
@@ -286,11 +287,10 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                         );
                       })}
                       <button
-                        className={`py-1 px-3 poppins_regular rounded-md text-sm  ${
-                          activeButton === "custom"
-                            ? "border border-black bg_dark text-white"
-                            : "border border_dark text_dark"
-                        }`}
+                        className={`py-1 px-3 poppins_regular rounded-md text-sm  ${activeButton === "custom"
+                          ? "border border-black bg_dark text-white"
+                          : "border border_dark text_dark"
+                          }`}
                         onClick={() => setActiveButton("custom")}
                       >
                         Use Custom Bid
@@ -323,7 +323,7 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                     </Col>
                   ) : (
                     <Col md="12">
-                      <button className="capitalize py-3 my-3 poppins_medium bg_primary w-full text-white rounded-lg"   onClick={() => setOpenBiddingConfirmationModal(true)}>
+                      <button className="capitalize py-3 my-3 poppins_medium bg_primary w-full text-white rounded-lg" onClick={() => setOpenBiddingConfirmationModal(true)}>
                         Place Bid For $25
                       </button>
                     </Col>

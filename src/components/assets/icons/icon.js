@@ -80,11 +80,12 @@ import payment from "../png/Payment.png";
 import payment1 from "../png/Payment1.png";
 import payment2 from "../png/Payment2.png";
 import payment3 from "../png/Payment3.png";
+import auctionlogo2 from "../png/auctionlogo2.png";
 
 
 
 export {
-  avataruser, fashion1, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage,
+  avataruser, fashion1, auctionlogo2, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage,
   icon1dark, icon2dark, icon3dark, icon4dark, icon5dark, icon6dark, icon7dark, icon8dark, icon9dark,
   icon1light, icon2light, icon3light, icon4light, icon5light, icon6light, icon7light, icon8light, icon9light, icon10light, icon11light, icon12light, icon13light,
   appleicon,

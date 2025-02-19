@@ -51,7 +51,7 @@ export default function Header() {
         <div className="gap-[1rem] lg:gap-[1.87rem] flex items-center">
           <Link
             href="/auctions"
-            className={`${pathname === "/auctions" ? "text_primary poppins_bold" :
+            className={`${pathname === "/auctions" ? "text_primary poppins_medium" :
               isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} 
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
           >
@@ -59,7 +59,7 @@ export default function Header() {
           </Link>
           <Link
             href="/payments"
-            className={`${pathname === "/payments" ? "text_primary poppins_bold" :
+            className={`${pathname === "/payments" ? "text_primary poppins_medium" :
               isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"}
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
           >
@@ -67,7 +67,7 @@ export default function Header() {
           </Link>
           <Link
             href="/orders"
-            className={`${pathname === "/orders" ? "text_primary poppins_bold" :
+            className={`${pathname === "/orders" ? "text_primary poppins_medium" :
               isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"}
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
           >
