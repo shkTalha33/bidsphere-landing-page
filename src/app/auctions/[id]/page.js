@@ -29,7 +29,7 @@ export default function Page() {
   const [openBiddingConfirmationModal, setOpenBiddingConfirmationModal] =
     useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const bidders = [
     {
@@ -81,13 +81,13 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
         btnText: "Yes, Place My Bid",
         onClick: () => router.push("/auctions/registration"),
         className:
-          "rounded-[10px] bg_primary text-white poppins_medium text-lg border border-[#21CD9D] w-full py-3",
+          "rounded-[10px] bg_primary text-white poppins_medium text-xs sm:text-base md:text-lg border border-[#21CD9D] w-full py-2 md:py-3",
       },
       {
         btnText: "Cancel",
         onClick: () => setOpenBiddingConfirmationModal(false),
         className:
-          "rounded-[10px] bg-white text_primary border border-[#21CD9D] poppins_medium text-lg w-full py-3",
+          "rounded-[10px] bg-white text_primary border border-[#21CD9D] poppins_medium text-xs sm:text-base md:text-lg w-full py-2 md:py-3",
       },
     ],
   };
@@ -118,7 +118,7 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
       <Container className="bg_mainsecondary rounded-[9px] mt-4 px-0">
         <Row className="g-2">
           {/* First Column */}
-          <Col md="4" className="h-full flex flex-col">
+          <Col md="7" lg="4" className="h-full flex flex-col">
             <div className="bg_white rounded-[10px] mb-2 flex-grow">
               <Image
                 src={car1}
@@ -150,7 +150,7 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
           </Col>
 
           {/* Second Column */}
-          <Col md="3" className="h-full flex">
+          <Col md="5" lg="3" className="h-full flex">
             <div className="bg_white rounded-[10px] w-full flex-grow">
               <Image
                 src={car5}
@@ -162,20 +162,21 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
 
           {/* Third Column */}
           <Col
-            md="5"
-            className="bg_white p-4 rounded-lg d-flex flex-column gap-3"
+            md="12"
+            lg="5"
+            className="bg_white p-2 md:p-4 rounded-lg d-flex flex-column gap-3"
           >
-            <div className="bg_primary pt-2 py-10 px-6 rounded-xl relative">
+            <div className="bg_primary pt-2 py-10 px-3 sm:px-6 rounded-xl relative">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="poppins_medium text-2xl text-white mb-0">
+                  <p className="poppins_medium text-xl sm:text-2xl text-white mb-0">
                     Fortuner new model car
                   </p>
                   <p className="poppins_regular text-sm text-white mb-0">
                     classic car auction
                   </p>
                 </div>
-                <div>
+                <div className="mb-0">
                   <ChevronRight className="text-white text-2xl" />
                 </div>
               </div>
@@ -189,7 +190,7 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                   <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                     $5000
                   </p>
-                  <div className="flex items-center justify-start mt-2 gap-2">
+                  <div className="flex items-center justify-start mb-2 md:mb-0  mt-2 gap-2">
                     <Avatar.Group
                       size="default"
                       max={{
@@ -226,17 +227,17 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                 </Col>
               </Row>
             </div>
-            <Row className="px-6 ">
-              <Col md="6" className="">
+            <Row className="px-6 items-center">
+              <Col xs="8" sm="6" className="">
                 <div className="flex items-center justify-start">
                   {<TbLivePhoto size={20} />}
-                  <p className="capitalize poppins_semibold text-lg">
+                  <p className="capitalize poppins_semibold text-lg mb-0">
                     Live Auction
                   </p>
                 </div>
               </Col>
-              <Col md="6">
-                <p className="capitalize poppins_regular text-[14px] text-end">
+              <Col xs="4" sm="6">
+                <p className="capitalize poppins_regular text-[14px] text-end mb-0">
                   14 Bids made
                 </p>
               </Col>
@@ -272,14 +273,15 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
               <div className="w-[90%] mx-auto relative mt-4 mb-11 bg-[#F3F2F2] rounded-[10px]">
                 <Row className="pt-4 ">
                   <Col md="12">
-                    <div className="flex justify-evenly items-center">
+                    <div className="flex justify-evenly items-center gap-2 overflow-auto">
                       {priceOptions.map((price) => {
                         return (
                           <button
-                            className={`py-1 px-3 rounded-md poppins_regular text-sm  ${activeButton === price
-                              ? "border border-black bg_dark text-white"
-                              : "border border-[#BDBDBD] text_dark"
-                              }`}
+                            className={`py-1 px-3 rounded-md poppins_regular whitespace-nowrap text-sm  ${
+                              activeButton === price
+                                ? "border border-black bg_dark text-white"
+                                : "border border-[#BDBDBD] text_dark"
+                            }`}
                             onClick={() => setActiveButton(price)}
                           >
                             {price}
@@ -287,10 +289,11 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                         );
                       })}
                       <button
-                        className={`py-1 px-3 poppins_regular rounded-md text-sm  ${activeButton === "custom"
-                          ? "border border-black bg_dark text-white"
-                          : "border border_dark text_dark"
-                          }`}
+                        className={`py-1 px-3 poppins_regular rounded-md text-sm whitespace-nowrap ${
+                          activeButton === "custom"
+                            ? "border border-black bg_dark text-white"
+                            : "border border_dark text_dark"
+                        }`}
                         onClick={() => setActiveButton("custom")}
                       >
                         Use Custom Bid
@@ -299,13 +302,13 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                   </Col>
                   {activeButton === "custom" ? (
                     <Col md="12">
-                      <div className="flex items-center justify-start gap-3">
+                      <div className="flex items-center justify-start gap-3 overflow-auto">
                         <input
                           placeholder="e.g 45000"
-                          className="text-center py-4 my-3 rounded-2xl poppins_semibold text-[14px] bg-transparent border-[1px] border-[21CD9D] text_primary flex flex-grow"
+                          className="text-center py-2  md:py-4 my-3 rounded-2xl poppins_semibold text-[14px] bg-transparent border-[1px] border-[21CD9D] text_primary md:flex md:flex-grow"
                         />
                         <button
-                          className="bg_primary flex items-center justify-center rounded-2xl p-4"
+                          className="bg_primary flex items-center justify-center rounded-2xl p-2 md:p-4"
                           // onClick={() => setOpenModal(true)}
                           // onClick={() => setOpenBiddingConfirmationModal(true)}
                           onClick={() => setOpenBiddingConfirmationModal(true)}
@@ -314,7 +317,7 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                         </button>
                         {console.log("openModal", openModal)}
                         <button
-                          className="bg_white flex items-center justify-center rounded-2xl p-4"
+                          className="bg_white flex items-center justify-center rounded-2xl p-2 md:p-4"
                           onClick={() => setActiveButton("")}
                         >
                           {<X size={24} className="text_primary" />}
@@ -323,7 +326,10 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                     </Col>
                   ) : (
                     <Col md="12">
-                      <button className="capitalize py-3 my-3 poppins_medium bg_primary w-full text-white rounded-lg" onClick={() => setOpenBiddingConfirmationModal(true)}>
+                      <button
+                        className="capitalize py-2 md:py-3 my-3 poppins_medium bg_primary w-full text-white rounded-lg"
+                        onClick={() => setOpenBiddingConfirmationModal(true)}
+                      >
                         Place Bid For $25
                       </button>
                     </Col>

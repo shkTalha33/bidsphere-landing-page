@@ -1,59 +1,65 @@
-'use client';
+"use client";
 
-import { setAuctionRegistrationData } from '@/components/redux/auctionRegistration';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { Col, Container, Form, FormFeedback, Input, Label, Row } from 'reactstrap';
-import * as Yup from 'yup';
+import { setAuctionRegistrationData } from "@/components/redux/auctionRegistration";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Controller, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import {
+  Col,
+  Container,
+  Form,
+  FormFeedback,
+  Input,
+  Label,
+  Row,
+} from "reactstrap";
+import * as Yup from "yup";
 
-const PersonalInfo = ({setProgress}) => {
-  const dispatch = useDispatch()
+const PersonalInfo = ({ setProgress }) => {
+  const dispatch = useDispatch();
   const schema = Yup.object().shape({
-    firstName: Yup.string()
-      .required('First name is required'),
-    lastName: Yup.string()
-      .required('Last name is required'),
-    email: Yup.string()
-      .required('Email is required'),
-    phoneNumber: Yup.string()
-      .required('Phone number is required'),
-    country: Yup.string()
-      .required('Country is required'),
-    region: Yup.string()
-      .required('Region is required')
+    firstName: Yup.string().required("First name is required"),
+    lastName: Yup.string().required("Last name is required"),
+    email: Yup.string().required("Email is required"),
+    phoneNumber: Yup.string().required("Phone number is required"),
+    country: Yup.string().required("Country is required"),
+    region: Yup.string().required("Region is required"),
   });
 
   const {
     handleSubmit,
     control,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      country: '',
-      region: ''
-    }
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      country: "",
+      region: "",
+    },
   });
 
   const onSubmit = (data) => {
-    setProgress(parseInt(33))
-    console.log(data)
-    dispatch(setAuctionRegistrationData({
-      personal: data
-    }));
+    setProgress(parseInt(33));
+    console.log(data);
+    dispatch(
+      setAuctionRegistrationData({
+        personal: data,
+      })
+    );
   };
 
   return (
-    <Container className="bg_white rounded-[9px] mt-2 p-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
+    <Container className="bg_white rounded-[9px] md:mt-2 p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
       <Form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Row className="g-4">
           <Col md="6">
-            <Label className='poppins_medium' for="firstName">First Name</Label>
+            <Label className="poppins_medium" for="firstName">
+              First Name
+            </Label>
             <Controller
               name="firstName"
               control={control}
@@ -71,7 +77,9 @@ const PersonalInfo = ({setProgress}) => {
             )}
           </Col>
           <Col md="6">
-            <Label className='poppins_medium' for="lastName">Last Name</Label>
+            <Label className="poppins_medium" for="lastName">
+              Last Name
+            </Label>
             <Controller
               name="lastName"
               control={control}
@@ -90,7 +98,9 @@ const PersonalInfo = ({setProgress}) => {
           </Col>
 
           <Col md="6">
-            <Label className='poppins_medium' for="email">Email Address</Label>
+            <Label className="poppins_medium" for="email">
+              Email Address
+            </Label>
             <Controller
               name="email"
               control={control}
@@ -109,7 +119,9 @@ const PersonalInfo = ({setProgress}) => {
             )}
           </Col>
           <Col md="6">
-            <Label className='poppins_medium' for="phoneNumber">Phone Number</Label>
+            <Label className="poppins_medium" for="phoneNumber">
+              Phone Number
+            </Label>
             <Controller
               name="phoneNumber"
               control={control}
@@ -128,7 +140,9 @@ const PersonalInfo = ({setProgress}) => {
           </Col>
 
           <Col md="6">
-            <Label className='poppins_medium' for="country">Country</Label>
+            <Label className="poppins_medium" for="country">
+              Country
+            </Label>
             <Controller
               name="country"
               control={control}
@@ -153,7 +167,9 @@ const PersonalInfo = ({setProgress}) => {
             )}
           </Col>
           <Col md="6">
-            <Label className='poppins_medium' for="region">Region</Label>
+            <Label className="poppins_medium" for="region">
+              Region
+            </Label>
             <Controller
               name="region"
               control={control}

@@ -32,7 +32,7 @@ export default function AuctionItems({ items }) {
               <Image
                 src={item?.image}
                 alt={item?.title}
-                className="w-full rounded-md"
+                className="w-full rounded-md cursor-pointer"
                 onClick={handleAuctionDetail}
               />
               {/* New Offer Tag */}
@@ -41,19 +41,11 @@ export default function AuctionItems({ items }) {
                   New Offer
                 </span>
               </div>
-              {/* Heart Icon */}
               <button
                 onClick={() => toggleLike(index)}
                 className="absolute top-4 right-4 p-1 rounded-full bg-[#433F46] transition-colors"
               >
                 <Heart className="w-5 h-5 text-white hover:text-black" />
-                {/* <Heart 
-                  className={`w-5 h-5 transition-colors ${
-                    likedItems[index] 
-                      ? 'fill-red-500 text-red-500' 
-                      : 'text-gray-600'
-                  }`}
-                /> */}
               </button>
             </div>
             <div className="flex items-center justify-between">
@@ -61,7 +53,7 @@ export default function AuctionItems({ items }) {
                 <p className="poppins_medium text-[16.6px]">{item?.title}</p>
                 <p className="poppins_medium text-sm">{item?.price}</p>
               </div>
-              <button className="bg_primary whitespace-nowrap text_white text-center py-2 xl:py-3 rounded-lg px-7 lg:px-8 xl:px-10">
+              <button className="bg_primary whitespace-nowrap text_white text-center py-2 xl:py-3 rounded-lg px-7 lg:px-8 xl:px-10" onClick={handleAuctionDetail}>
                 Join Auction
               </button>
             </div>

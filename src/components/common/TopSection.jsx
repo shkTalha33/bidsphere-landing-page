@@ -7,7 +7,7 @@ export default function TopSection({ title, description, button, mt = 20 }) {
       <Row>
         <Col md="12">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg sm:text-2xl lg:text-3xl poppins_medium text-[#1C201F] capitalize mb-2">
+            <h3 className="text-lg sm:text-2xl poppins_medium text-[#1C201F] capitalize ">
               {title}
             </h3>
             {button && (
@@ -16,7 +16,7 @@ export default function TopSection({ title, description, button, mt = 20 }) {
               </button>
             )}
           </div>
-          <p className="text-xs sm:text-base md:text-lg poppins_medium mt-2 text-[#909495] capitalize">
+          <p className="text-xs sm:text-base poppins_medium mt-2 text-[#909495] capitalize">
             {description}
           </p>
         </Col>
