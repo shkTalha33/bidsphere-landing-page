@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux'
 const navItems = [
     { label: 'Personal Information', path: '/profile/personal-information' },
     { label: 'Won Lots', path: '/profile/won-lots' },
-    { label: 'Help Centre', path: '/profile/help-centre' },
+    { label: 'Help Centre', path: '/profile/help-center' },
     { label: 'Privacy Policy', path: '/profile/privacy-policy' },
-    { label: 'Terms & Conditions', path: '/profile/terms' },
+    { label: 'Terms & Conditions', path: '/profile/terms-condition' },
 ];
 const TabHeader = () => {
     const userData = useSelector((state) => state.auth?.userData)

@@ -138,7 +138,7 @@ const ProductTable = ({
     <>
       <Fragment>
         <div className="w-full mt-4 rounded-xl">
-          <h6 className="poppins_semibold text-[#16161D] text-lg capitalize">
+          <h6 className="poppins_semibold mb-3 text-[#16161D] text-lg capitalize">
             {rowHeading}
           </h6>
           {showRow && (
@@ -177,38 +177,38 @@ const ProductTable = ({
             </div>
           ) : (
             <div className="react-dataTable">
-             <DataTable
-  noHeader
-  pagination
-  selectableRowsNoSelectAll
-  columns={columns}
-  paginationPerPage={10}
-  className="react-dataTable border-b-0"
-  sortIcon={<ChevronDown size={10} />}
-  paginationDefaultPage={currentPage + 1}
-  paginationComponent={CustomPagination}
-  data={searchValue.length ? filteredData : data}
-  customStyles={{
-    headRow: {
-      style: {
-        backgroundColor: "#FAFAFA", // Background color for the header row
-        color: "#16161D", // Text color for the header row
-      },
-    },
-    rows: {
-      style: {
-        backgroundColor: "#FAFAFA", // Background color for the table rows
-        color: "#16161D", // Text color for the rows
-      },
-    },
-    pagination: {
-      style: {
-        backgroundColor: "#1a1a2e", // Background color for the pagination
-        color: "#16161D",
-      },
-    },
-  }}
-/>
+              <DataTable
+                noHeader
+                pagination
+                selectableRowsNoSelectAll
+                columns={columns}
+                paginationPerPage={10}
+                className="react-dataTable border-b-0"
+                sortIcon={<ChevronDown size={10} />}
+                paginationDefaultPage={currentPage + 1}
+                paginationComponent={CustomPagination}
+                data={searchValue.length ? filteredData : data}
+                customStyles={{
+                  headRow: {
+                    style: {
+                      backgroundColor: "#FAFAFA", // Background color for the header row
+                      color: "#16161D", // Text color for the header row
+                    },
+                  },
+                  rows: {
+                    style: {
+                      backgroundColor: "#FAFAFA", // Background color for the table rows
+                      color: "#16161D", // Text color for the rows
+                    },
+                  },
+                  pagination: {
+                    style: {
+                      backgroundColor: "#1a1a2e", // Background color for the pagination
+                      color: "#16161D",
+                    },
+                  },
+                }}
+              />
 
             </div>
           )}

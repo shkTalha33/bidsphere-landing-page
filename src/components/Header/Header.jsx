@@ -85,7 +85,7 @@ export default function Header() {
         <button >
           <Image src='/assets/heart.png' width={30} height={30} alt="" />
         </button>
-        <div className="flex cursor-pointer ms-2 gap-2 items-center w-fit">
+        <div onClick={() => router.push("/profile/personal-information")} className="flex cursor-pointer ms-2 gap-2 items-center w-fit">
           <div>
             <Image src={avataruser} width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} alt="" />
           </div>
