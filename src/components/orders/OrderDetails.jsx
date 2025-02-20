@@ -1,8 +1,11 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable jsx-a11y/alt-text */
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
+import { TbMessage } from "react-icons/tb";
 import { Col, Container, Row } from "reactstrap";
 import {
   allDark,
@@ -15,10 +18,8 @@ import {
   transitDark,
   transitLight,
 } from "../assets/icons/icon";
-import Breadcrumbs from "../common/Breadcrumbs";
-import { BiMessage } from "react-icons/bi";
-import { TbMessage } from "react-icons/tb";
 import AlertSection from "../common/alertSection";
+import Breadcrumbs from "../common/Breadcrumbs";
 
 export default function OrderDetails() {
   const [currentActiveButton, setCurrentActiveButton] = useState("all orders");
@@ -79,21 +80,19 @@ export default function OrderDetails() {
               {sideButtons.map((button) => {
                 return (
                   <button
-                    className={`${
-                      currentActiveButton === button?.title
-                        ? "bg_primary text-white"
-                        : "bg-[#F5F5F5] text-[#909495]"
-                    } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
+                    className={`${currentActiveButton === button?.title
+                      ? "bg_primary text-white"
+                      : "bg-[#F5F5F5] text-[#909495]"
+                      } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
                     onClick={() => setCurrentActiveButton(button?.title)}
                   >
                     <div className="flex items-center w-full justify-between">
                       <div className="flex gap-3 items-center">
                         <div
-                          className={`w-9 h-9 ${
-                            currentActiveButton === button?.title
-                              ? "bg-white"
-                              : "bg_primary"
-                          } flex items-center justify-center p-2 rounded-full`}
+                          className={`w-9 h-9 ${currentActiveButton === button?.title
+                            ? "bg-white"
+                            : "bg_primary"
+                            } flex items-center justify-center p-2 rounded-full`}
                         >
                           <Image
                             src={
@@ -107,11 +106,10 @@ export default function OrderDetails() {
                         {button?.title}
                       </div>
                       <div
-                        className={`${
-                          currentActiveButton === button?.title
-                            ? "bg-white text_dark"
-                            : "bg_primary text-white"
-                        } flex items-center justify-center p-1 rounded-full`}
+                        className={`${currentActiveButton === button?.title
+                          ? "bg-white text_dark"
+                          : "bg_primary text-white"
+                          } flex items-center justify-center p-1 rounded-full`}
                       >
                         {<FaArrowRight size={15} />}
                       </div>
@@ -162,11 +160,10 @@ export default function OrderDetails() {
                     {orderDetailButtons.map((buttonDetail) => {
                       return (
                         <button
-                          className={`${
-                            currentSelectedButton === buttonDetail
-                              ? "bg_primary text-white poppins_semibold rounded-[82px]"
-                              : "text-[#6E7591]"
-                          } text-[15px] px-4 py-2 cursor-pointer capitalize`}
+                          className={`${currentSelectedButton === buttonDetail
+                            ? "bg_primary text-white poppins_semibold rounded-[82px]"
+                            : "text-[#6E7591]"
+                            } text-[15px] px-4 py-2 cursor-pointer capitalize`}
                           onClick={() => {
                             setCurrentSelectedButton(buttonDetail);
                           }}
@@ -202,16 +199,16 @@ export default function OrderDetails() {
                 </Col>
               </Row>
               <Row>
-          <Col md="6" className="text-end ml-auto mt-4 px-0">
-            <button
-              type="submit"
-              className="bg_primary text-white px-6 py-3 rounded-lg w-[50%] poppins_semibold text-[22px]"
-              onClick={() => router.push("/payments/statics")}
-            >
-              Download As PDF
-            </button>
-          </Col>
-        </Row>
+                <Col md="6" className="text-end ml-auto mt-4 px-0">
+                  <button
+                    type="submit"
+                    className="bg_primary text-white px-6 py-3 rounded-lg w-[50%] poppins_semibold text-[22px]"
+                    onClick={() => router.push("/payments/statics")}
+                  >
+                    Download As PDF
+                  </button>
+                </Col>
+              </Row>
             </div>
           </Col>
         </Row>

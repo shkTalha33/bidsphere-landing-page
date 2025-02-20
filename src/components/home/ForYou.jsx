@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
 import SectionHeadings from "../common/sectionHeadings";

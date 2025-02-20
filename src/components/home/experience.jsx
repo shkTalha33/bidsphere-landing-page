@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import Image from "next/image";
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
@@ -18,7 +19,7 @@ export default function Experience() {
   return (
     <>
       <motion.main
-      variants={staggerContainer}
+        variants={staggerContainer}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
@@ -27,12 +28,12 @@ export default function Experience() {
         <Container>
           <Row>
             <Col md="6">
-            <motion.div className="" variants={slideIn("left", "tween", 0.3, 0.8)}>
-              <Image src={experience} alt="experience" width={"90%"} />
-            </motion.div>
+              <motion.div className="" variants={slideIn("left", "tween", 0.3, 0.8)}>
+                <Image src={experience} alt="experience" width={"90%"} />
+              </motion.div>
             </Col>
             <Col md="6">
-              <motion.div className="flex justify-center flex-col h-full"  variants={slideIn("right", "tween", 0.3, 0.8)}>
+              <motion.div className="flex justify-center flex-col h-full" variants={slideIn("right", "tween", 0.3, 0.8)}>
                 <div className="flex gap-3 justify-center md:justify-start items-center  mb-[10px]">
                   <div className="w-8 h-2 bg_primary rounded-full"></div>
                   <h6 className="text-[#202020] poppins_semibold text-xl capitalize">
@@ -54,9 +55,9 @@ export default function Experience() {
                   ut labore et{" "}
                 </p>
                 <div className="grid grid-cols-2 gap-3 mb-4 md:mb-5">
-                  {features.map((feature) => {
+                  {features.map((feature, index) => {
                     return (
-                      <div className="flex items-center justify-start gap-3">
+                      <div key={index} className="flex items-center justify-start gap-3">
                         <FaCheck className="text_primary" size={20} />
                         <p className="text_primary poppins_medium text-sm sm:text-base md:text-xl">
                           {feature}

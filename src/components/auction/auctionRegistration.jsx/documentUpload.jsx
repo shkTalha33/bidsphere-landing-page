@@ -1,7 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
+"use client"
+
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import HashLoader from "react-spinners/HashLoader";
 import { Col, Container, Form, Label, Row, Spinner } from "reactstrap"; // You can use Spinner from 'reactstrap' if you want, or create a custom one.
 import * as Yup from "yup";
 
@@ -137,11 +140,10 @@ const DocumentUpload = ({ setProgress }) => {
       <Label className="">{title}</Label>
       <p className="text-[#959595] text-[14px] poppins_regular">{subtitle}</p>
       <div
-        className={`border-2 ${
-          errors?.[type === "identity" ? "identityPhotos" : "fundsPhotos"]
-            ? "border-red-500"
-            : "border-dashed"
-        } rounded-lg p-4 text-center`}
+        className={`border-2 ${errors?.[type === "identity" ? "identityPhotos" : "fundsPhotos"]
+          ? "border-red-500"
+          : "border-dashed"
+          } rounded-lg p-4 text-center`}
       >
         <input
           type="file"
@@ -181,6 +183,7 @@ const DocumentUpload = ({ setProgress }) => {
           <div key={index} className="position-relative">
             <img
               src={file}
+              key={index}
               alt={`Upload ${index + 1}`}
               className="w-24 h-24 object-cover rounded"
             />
