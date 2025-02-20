@@ -3,13 +3,14 @@
 import imageCompression from "browser-image-compression";
 import { isValidFileType } from "./isValidType";
 import axiosInstance from "./axiosInstance";
+import ApiFunction from "./apiFuntions";
 // import { imageUpload } from "./ApiRoutesFile";
-const imageUpload = "image/upload"
 const header = {
   "Content-Type": "multipart/form-data",
   // "x-auth-token": token,
 };
 export const uploadFile = async (file) => {
+  const { imageUpload } = ApiFunction()
   try {
     const check = isValidFileType(file, ['jpg', 'gif', 'svg', 'png', 'jpeg']);
     if (!check) {

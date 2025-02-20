@@ -32,7 +32,7 @@ export const SocketProvider = ({ children }) => {
         if (isLogin) {
             // Initialize the socket connection
             socketRef.current = io.connect('https://setofshopsbackend.onrender.com', {
-                query: { token: localStorage.getItem("setofshops_user_token") },
+                query: { token: localStorage.getItem("auction_user_token") },
             });
 
             const socket = socketRef.current;

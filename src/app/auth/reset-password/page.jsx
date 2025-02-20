@@ -2,17 +2,13 @@
 
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
-import { usePostMutation } from "@/components/redux/apiSlice2";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { message } from "antd";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-import { GoArrowLeft } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { Input, Label } from "reactstrap";
@@ -22,7 +18,6 @@ const Page = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const forgotCode = useSelector((state) => state.auth?.forgotCode)
   const [isConfirmPasswordHidden, setIsConfirmPasswordHidden] = useState(true);
-  const [createPost] = usePostMutation();
   const [loading, setLoading] = useState(false);
 
   const { t } = useTranslation()
@@ -62,22 +57,22 @@ const Page = () => {
       new_password: values.password,
       token: forgotCode?.token,
     }
-    try {
-      const response = await createPost({
-        endpoint: "api/auth/reset-password",
-        data: data,
-        tag: "Auth",
-      }).unwrap();
-      if (response.success) {
-        message.success("Your password has been reset successfully");
-        router.push("/auth/login");
-      }
-    } catch (error) {
-      message.error(error?.data?.message || "Password reset failed");
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
+    // try {
+    //   const response = await createPost({
+    //     endpoint: "api/auth/reset-password",
+    //     data: data,
+    //     tag: "Auth",
+    //   }).unwrap();
+    //   if (response.success) {
+    //     message.success("Your password has been reset successfully");
+    //     router.push("/auth/login");
+    //   }
+    // } catch (error) {
+    //   message.error(error?.data?.message || "Password reset failed");
+    //   console.error("Error:", error);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (

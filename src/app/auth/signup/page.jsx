@@ -1,17 +1,19 @@
 "use client";
+import ApiFunction from "@/components/api/apiFuntions";
+import { sendCode } from "@/components/api/ApiRoutesFile";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
-import { usePostMutation } from "@/components/redux/apiSlice2";
-import { setLogin } from "@/components/redux/loginForm";
+import { setLogin, setTempData } from "@/components/redux/loginForm";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import "react-phone-input-2/lib/style.css";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { useDispatch } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { Input, Label } from "reactstrap";
@@ -19,8 +21,8 @@ import * as Yup from "yup";
 
 const Page = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
-  const [createPost] = usePostMutation();
   const [loading, setloading] = useState(false);
+  const { post } = ApiFunction()
   const router = useRouter();
   const [phone, setPhone] = useState("");
   const dispatch = useDispatch();
@@ -31,13 +33,13 @@ const Page = () => {
   };
 
   const schema = Yup.object().shape({
-    firstName: Yup.string()
+    fname: Yup.string()
       .required("First name is required")
       .min(2, "First name must be at least 2 characters"),
-    lastName: Yup.string()
+    lname: Yup.string()
       .required("Last name is required")
       .min(2, "Last name must be at least 2 characters"),
-    phoneNumber: Yup
+    phone: Yup
       .string()
       .required("Phone number is required")
       .test("isValidPhone", "Invalid phone number", (value) => value && value.length >= 10),
@@ -58,30 +60,34 @@ const Page = () => {
   });
 
   const onSubmit = async (values) => {
-    dispatch(setLogin(true));
-    router.push('/auth/verify-code');
-    // try {
-    //   const response = await createPost({
-    //     endpoint: 'api/auth/signup',
-    //     data: values,
-    //     tag: 'Auth',
-    //   }).unwrap();
-    //   if (response.success) {
-    //     message.success('You have successfully signed up');
-    //     router.push('/auth/login');
-    //   }
-    // } catch (error) {
-    //   message.error(error?.data?.message || 'Signup failed');
-    //   console.log('error', error);
-    // } finally {
-    //   setloading(false);
-    // }
+    const data = {
+      email: values.email,
+      type: 'customer'
+    }
+    setloading(true)
+    try {
+      const response = await post(sendCode, data)
+      if (response.message) {
+        message.success(response?.message);
+        const newData = {
+          ...values,
+          code: response.verificationCode
+        }
+        dispatch(setTempData(newData))
+        router.push('/auth/verify-code');
+      }
+    } catch (error) {
+      message.error(error?.data?.message || 'Signup failed');
+      console.log('error', error);
+    } finally {
+      setloading(false);
+    }
   };
 
   const handlePhoneChange = (value) => {
     setPhone(value);
-    setValue("phoneNumber", "+" + value);
-    trigger("phoneNumber");
+    setValue("phone", "+" + value);
+    trigger("phone");
   };
 
   return (
@@ -94,63 +100,63 @@ const Page = () => {
         >
           <div className="col-span-6">
             <Label
-              for="firstName"
+              for="fname"
               className="mb-2 text-sm poppins_regular text_secondary2"
             >
               First Name
             </Label>
             <Controller
-              id="firstName"
-              name="firstName"
+              id="fname"
+              name="fname"
               defaultValue=""
               control={control}
               render={({ field }) => (
                 <Input
                   {...field}
                   type="text"
-                  id="firstName"
+                  id="fname"
                   placeholder="Your first name"
-                  className={`h-12 w-full poppins_regular sm:text-sm ${errors.firstName ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                  className={`h-12 w-full poppins_regular sm:text-sm ${errors.fname ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                     }`}
                 />
               )}
             />
-            {errors.firstName && (
-              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.firstName.message}</p>
+            {errors.fname && (
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.fname.message}</p>
             )}
           </div>
 
           <div className="col-span-6">
             <Label
-              for="lastName"
+              for="lname"
               className="mb-2 text-sm poppins_regular text_secondary2"
             >
               Last Name
             </Label>
             <Controller
-              id="lastName"
-              name="lastName"
+              id="lname"
+              name="lname"
               defaultValue=""
               control={control}
               render={({ field }) => (
                 <Input
                   {...field}
                   type="text"
-                  id="lastName"
+                  id="lname"
                   placeholder="Your last name"
-                  className={`h-12 w-full poppins_regular sm:text-sm ${errors.lastName ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
+                  className={`h-12 w-full poppins_regular sm:text-sm ${errors.lname ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                     }`}
                 />
               )}
             />
-            {errors.lastName && (
-              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.lastName.message}</p>
+            {errors.lname && (
+              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.lname.message}</p>
             )}
           </div>
 
           <div className="col-span-6">
             <Label
-              for="phoneNumber"
+              for="phone"
               className="mb-2 text-sm poppins_regular text_secondary2"
             >
               Phone Number
@@ -159,12 +165,12 @@ const Page = () => {
               country={"ae"}
               enableSearch={true}
               value={phone}
-              className={`phon_inp poppins_regular ${errors.phoneNumber ? "border-red-500" : ""}`}
+              className={`phon_inp poppins_regular ${errors.phone ? "border-red-500" : ""}`}
               onChange={handlePhoneChange}
               placeholder="Enter phone number"
             />
-            {errors.phoneNumber && (
-              <span className="text-red-500 text-xs poppins_regular ms-1">{errors.phoneNumber.message}</span>
+            {errors.phone && (
+              <span className="text-red-500 text-xs poppins_regular ms-1">{errors.phone.message}</span>
             )}
           </div>
 

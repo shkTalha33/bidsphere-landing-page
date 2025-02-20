@@ -4,8 +4,8 @@ const { i18n } = pkg;
 const nextConfig = {
     i18n,
     env: {
-        GoogleApiKey: '',
-        PROJECTBASEURL:'',
+        GoogleApiKey: process.env.NEXT_APP_GOOGLEAPIKEY,
+        PROJECTBASEURL: '',
         PROJECTSOCKETBASEURL: '',
     },
     images: {

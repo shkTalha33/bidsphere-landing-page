@@ -1,23 +1,30 @@
 "use client";
+import { updateUser } from "@/components/api/ApiRoutesFile";
+import ApiFunction from "@/components/api/apiFuntions";
+import { handleError } from "@/components/api/errorHandler";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
+import { setLogin, setUserData } from "@/components/redux/loginForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { message, Modal } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Search } from "react-feather";
 import GooglePlacesAutocomplete from "react-google-autocomplete";
 import { Controller, useForm } from "react-hook-form";
-import { Form } from "reactstrap";
-import { message, Modal } from "antd";
-import * as Yup from "yup";
 import { TbCurrentLocation } from "react-icons/tb";
-import { Search } from "react-feather";
-import { FaLocationPin } from "react-icons/fa6";
-import { BiSearchAlt } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { BeatLoader } from "react-spinners";
+import { Form } from "reactstrap";
+import * as Yup from "yup";
 
 const Page = () => {
     const router = useRouter();
+    const { put } = ApiFunction()
+    const [loading, setloading] = useState(false)
     const [isMapModalOpen, setIsMapModalOpen] = useState(false);
+    const dispatch = useDispatch()
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [mapCenter, setMapCenter] = useState({
         lat: 51.5074,
@@ -70,8 +77,6 @@ const Page = () => {
         setSelectedLocation({ lat, lng });
         setValue("latitude", lat);
         setValue("longitude", lng);
-
-        // Get address from coordinates using Geocoding service
         const geocoder = new window.google.maps.Geocoder();
         geocoder.geocode({ location: { lat, lng } }, (results, status) => {
             if (status === "OK" && results[0]) {
@@ -85,10 +90,28 @@ const Page = () => {
         });
     };
 
-    const onSubmit = (data) => {
-        console.log("Form data:", data);
-        message.success('Signup Successful');
-        router.push('/');
+    const onSubmit = async (data) => {
+        const formattedData = {
+            location: {
+                type: "Point",
+                coordinates: [parseFloat(data.longitude), parseFloat(data.latitude)]
+            },
+            address: data.location,
+        };
+        setloading(true)
+        try {
+            const response = await put(updateUser, formattedData)
+            if (response.success) {
+                dispatch(setUserData(response?.user))
+                dispatch(setLogin(true))
+                message.success('You have successfully Logged in');
+                router.push('/');
+            }
+        } catch (err) {
+            handleError(err)
+        } finally {
+            setloading(false)
+        }
     };
 
 
@@ -184,12 +207,10 @@ const Page = () => {
                             </button>
                         </div>
                     )}
-
                     <button
-                        type="submit"
-                        className="w-full px-4 py-3 bg_primary text-white rounded-lg"
-                    >
-                        Continue
+                        disabled={loading}
+                        type="submit" className="btn1 primary w-100">
+                        {loading ? <BeatLoader color="#fff" size={10} /> : "Continue"}
                     </button>
                 </Form>
 

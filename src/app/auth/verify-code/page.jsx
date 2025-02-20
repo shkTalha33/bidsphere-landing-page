@@ -1,9 +1,11 @@
 "use client";
+import ApiFunction from "@/components/api/apiFuntions";
+import { sendCode, signup } from "@/components/api/ApiRoutesFile";
 import axiosInstance from "@/components/api/axiosInstance";
+import { handleError } from "@/components/api/errorHandler";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
-import { usePostMutation } from "@/components/redux/apiSlice2";
-import { setAccessToken, setLogout, setRefreshToken, setUserData } from "@/components/redux/loginForm";
+import { setAccessToken, setLogin, setLogout, setRefreshToken, setUserData } from "@/components/redux/loginForm";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -11,7 +13,7 @@ import { useForm } from "react-hook-form";
 import "react-phone-input-2/lib/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
-import { Form, Input } from "reactstrap";
+import { Form } from "reactstrap";
 
 const Page = () => {
   const {
@@ -21,6 +23,7 @@ const Page = () => {
   } = useForm();
   const fieldsRef = useRef();
   const router = useRouter()
+  const { post } = ApiFunction()
   const dispatch = useDispatch()
   const [timer, setTimer] = useState(60);
   const [loading, setloading] = useState(false)
@@ -28,7 +31,6 @@ const Page = () => {
   const isForgotPassword = useSelector((state) => state.auth?.isForgotPassword)
   const forgotCode = useSelector((state) => state.auth?.forgotCode)
   const userType = useSelector((state) => state.auth?.userType)
-  const [createPost] = usePostMutation();
   const [showResendLink, setShowResendLink] = useState(false);
   const [otpCode, setOtpCode] = useState(["", "", "", ""]);
   useEffect(() => {
@@ -53,33 +55,30 @@ const Page = () => {
         email: forgotCode?.email,
         // token: forgotCode?.token,
       }
-      try {
-        const response = await createPost({
-          endpoint: 'api/auth/forget-password',
-          data: data,
-          tag: 'Auth',
-        }).unwrap();
-        if (response.success) {
-          setTimer(60);
-          setShowResendLink(false);
-          message.success('We have sent an verification code in your email');
-        }
-      } catch (error) {
-        message.error(error?.data?.message || 'Login failed');
-        console.log('console', error);
-      } finally {
-        setloading(false)
-      }
+      // try {
+      //   const response = await createPost({
+      //     endpoint: 'api/auth/forget-password',
+      //     data: data,
+      //     tag: 'Auth',
+      //   }).unwrap();
+      //   if (response.success) {
+      //     setTimer(60);
+      //     setShowResendLink(false);
+      //     message.success('We have sent an verification code in your email');
+      //   }
+      // } catch (error) {
+      //   message.error(error?.data?.message || 'Login failed');
+      //   console.log('console', error);
+      // } finally {
+      //   setloading(false)
+      // }
     } else {
       const data = {
         email: tempData?.email,
+        type: 'customer'
       }
       try {
-        const response = await createPost({
-          endpoint: 'api/auth/send-code',
-          data: data,
-          tag: 'Auth',
-        }).unwrap();
+        const response = await post(sendCode, data)
         if (response.message) {
           setTimer(60);
           setShowResendLink(false);
@@ -88,27 +87,6 @@ const Page = () => {
       } catch (error) {
         message.error(error?.data?.message || 'Login failed');
       } finally {
-      }
-    }
-  };
-
-  const inputFocus = (e) => {
-    const elements = fieldsRef.current.children;
-    const dataIndex = +e.target.getAttribute("data-index");
-    if (e.key === "Delete" || e.key === "Backspace") {
-      const next = dataIndex - 1;
-      if (next > -1) {
-        elements[next].focus();
-      }
-    } else {
-      const next = dataIndex + 1;
-      if (
-        next < elements.length &&
-        e.target.value !== " " &&
-        e.target.value !== "" &&
-        e.key.length === 1
-      ) {
-        elements[next].focus();
       }
     }
   };
@@ -149,52 +127,22 @@ const Page = () => {
     } else {
       if (tempData) {
         setloading(true)
-        const data = {
-          ...tempData,
-          verificationCode: otpCode,
-          // role: userType || 'customer'
-        }
         try {
-          const response = await createPost({
-            endpoint: 'api/auth/register',
-            data: data,
-            tag: 'Auth',
-          }).unwrap();
+          const response = await post(signup, tempData)
           if (response.success) {
-            // if (userType === 'influencer') {
-            //   router.push('/auth/store-information');
-            //   // message.success("Please create a your own shop profile")
-            // } else {
-            if (response?.user?.role !== 'customer' && response?.user?.plan) {
-              dispatch(setUserData(response?.user))
-              dispatch(setAccessToken(response?.accessToken))
-              dispatch(setRefreshToken(response?.refreshToken))
-              localStorage.setItem('setofshops_user_token', response?.accessToken)
-              await axiosInstance.post('auth/pay/registration-fee', { paymentMethod: 'paypal', redirect: 'https://setofshops-web.vercel.app/account-created', cancel_url: 'https://setofshops-web.vercel.app/', subscriptionFee: 20, plan: response?.user?.plan })
-                .then((result) => {
-                  if (result.data.success) {
-                    window.location.href = result.data.approvalLink;
-                    dispatch(setLogout())
-                    // router.replace('/auth/login');
-                  }
-                }).catch((err) => {
-                  handleError(err)
-                }).finally(() => { })
-            } else {
-              router.replace('/auth/login');
-              message.success('Sign Up Successfully!');
-            }
+            router.push('/auth/choose-location')
+            dispatch(setUserData(response?.user))
+            dispatch(setAccessToken(response?.token))
+            localStorage.setItem('auction_user_token', response?.token)
             // dispatch(setLogin(true))
-            // }
           }
         } catch (error) {
-          message.error(error?.data?.message || 'Login failed');
+          handleError(error)
         } finally {
           setloading(false)
         }
       }
     }
-    router.push('/auth/choose-location')
   };
 
   const handleKeyUp = (e, index) => {

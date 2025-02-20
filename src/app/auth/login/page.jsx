@@ -1,12 +1,8 @@
 "use client";
-import { appleicon, facebookicon, googleicon } from "@/components/assets/icons/icon";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
-import { usePostMutation } from "@/components/redux/apiSlice2";
-import { setAccessToken, setLogin, setRefreshToken, setUserData } from "@/components/redux/loginForm";
+import { setLogin } from "@/components/redux/loginForm";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { message } from "antd";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -20,7 +16,6 @@ import * as Yup from "yup";
 
 const Page = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
-  const [createPost] = usePostMutation();
   const [loading, setloading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -61,7 +56,7 @@ const Page = () => {
     //     message.success('You have successfully logged in');
     //     dispatch(setUserData(response?.user));
     //     dispatch(setAccessToken(response?.accessToken));
-    //     localStorage.setItem('setofshops_user_token', response?.accessToken);
+    //     localStorage.setItem('auction_user_token', response?.accessToken);
     //     dispatch(setRefreshToken(response?.refreshToken));
     //     dispatch(setLogin(true));
     //     if (response?.user?.role === 'influencer' || response?.user?.role === 'brand') {

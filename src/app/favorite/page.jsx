@@ -6,8 +6,6 @@ import Breadcrumbs from '@/components/common/Breadcrumbs';
 import { Col, Row } from 'react-bootstrap';
 
 export default function Page() {
-
-
     const auctionItems = [
         { title: "Demon Blast", price: "200.000", image: auctionImage },
         { title: "Demon Blast", price: "200.000", image: auctionImage },

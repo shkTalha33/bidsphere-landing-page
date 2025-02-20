@@ -117,7 +117,7 @@ export const authSlice = createSlice({
       state.subscriptionData = null;
       state.userData = null;
       state.currentLocation = null,
-      localStorage.removeItem('setofshops_user_token')
+        localStorage.removeItem('auction_user_token')
     },
     handleLogin: (state, action) => {
       state.userData = action.payload

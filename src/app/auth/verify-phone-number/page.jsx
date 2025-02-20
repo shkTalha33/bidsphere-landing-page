@@ -1,10 +1,7 @@
 "use client";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
-import { usePostMutation } from "@/components/redux/apiSlice2";
-import { setTempData } from "@/components/redux/loginForm";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { message } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,7 +21,6 @@ const schema = yup.object().shape({
 
 const Page = () => {
   const tempData = useSelector((state) => state.auth?.tempData)
-  const [createPost] = usePostMutation();
   const [loading, setloading] = useState(false)
   const router = useRouter()
   const dispatch = useDispatch()
@@ -46,22 +42,22 @@ const Page = () => {
     const data = {
       email: tempData?.email,
     }
-    try {
-      const response = await createPost({
-        endpoint: 'api/auth/send-code',
-        data: data,
-        tag: 'Auth',
-      }).unwrap();
-      if (response.message) {
-        message.success('We have sent an Code in your email.');
-        dispatch(setTempData({ ...tempData, phoneNumber: values?.phoneNumber }))
-        router.push('/auth/verify-code');
-      }
-    } catch (error) {
-      message.error(error?.data?.message || 'Login failed');
-    } finally {
-      setloading(false)
-    }
+    // try {
+    //   const response = await createPost({
+    //     endpoint: 'api/auth/send-code',
+    //     data: data,
+    //     tag: 'Auth',
+    //   }).unwrap();
+    //   if (response.message) {
+    //     message.success('We have sent an Code in your email.');
+    //     dispatch(setTempData({ ...tempData, phoneNumber: values?.phoneNumber }))
+    //     router.push('/auth/verify-code');
+    //   }
+    // } catch (error) {
+    //   message.error(error?.data?.message || 'Login failed');
+    // } finally {
+    //   setloading(false)
+    // }
   };
 
   const handlePhoneChange = (value) => {

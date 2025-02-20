@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export function middleware(request) {
-  // const token = request.cookies.get('setofshops_user_token') || null;
+  // const token = request.cookies.get('auction_user_token') || null;
   // // Exclude auth routes from middleware processing
   // const excludedPaths = ['/auth/login', '/auth/register'];
   // if (excludedPaths.includes(request.nextUrl.pathname)) {
