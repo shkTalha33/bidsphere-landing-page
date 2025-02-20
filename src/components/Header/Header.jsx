@@ -1,22 +1,34 @@
 "use client"
 
-import Link from "next/link";
+import { Dropdown, message, Space } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BiUser } from "react-icons/bi";
+import { TbLogout } from "react-icons/tb";
+import { useDispatch, useSelector } from "react-redux";
 import { Container } from "reactstrap";
-import { auctionlogo, avataruser } from "../assets/icons/icon";
-import { useSelector } from "react-redux";
+import { avataruser } from "../assets/icons/icon";
+import { setLogout } from "../redux/loginForm";
+import ApiFunction from "../api/apiFuntions";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const pathname = usePathname();
   const isLogin = useSelector((state) => state?.auth?.isLogin);
+  const { userData } = ApiFunction()
   const router = useRouter();
+  const dispatch = useDispatch()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const isHomeOrHashRoute = pathname === "/";
+
+  const handleLogoutFun = async () => {
+    dispatch(setLogout())
+    message.success('Logout Successfully')
+  }
 
   useEffect(() => {
     const protectedRoutes = ['/pricing', '/about', '/contact', '/orders'];
@@ -85,20 +97,21 @@ export default function Header() {
         <button onClick={() => router.push("/favorite")}>
           <Image src='/assets/heart.png' width={30} height={30} alt="" />
         </button>
-        <div onClick={() => router.push("/profile/personal-information")} className="flex cursor-pointer ms-2 gap-2 items-center w-fit">
-          <div>
-            <Image src={avataruser} width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} alt="" />
-          </div>
-          <div className="flex flex-col">
-
-            <h6 className={`${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"}
-            cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline mb-0 poppins_regular`}
-            >User</h6>
-            <span className={`${isHomeOrHashRoute && !isScrolled ? "text_light" : "text_dark"}
-            cursor-pointer text-xs no-underline mb-0 poppins_regular`}
-            >15A, James Street</span>
-          </div>
-        </div>
+        <Dropdown
+          menu={{ items }}
+        >
+          <Space className=''>
+            <div className="flex cursor-pointer gap-2 items-center w-fit">
+              <div>
+                <Image src={avataruser} width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} alt="" />
+              </div>
+              <div className="flex flex-col">
+                <h6 className={`${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} mb-0 text-sm poppins_regular`}>{userData?.fname + ' ' + userData?.lname}</h6>
+                <span className={`${isHomeOrHashRoute && !isScrolled ? "text_light" : "text_dark"} line-clamp-1 max-w-32 text-xs poppins_regular`}>{userData?.address}</span>
+              </div>
+            </div>
+          </Space>
+        </Dropdown>
       </div>
     </>
   );
@@ -120,6 +133,22 @@ export default function Header() {
       </button>
     </div>
   );
+
+  const items = [
+    {
+      key: '1',
+      label: <Link href={'/profile/personal-information'}>Profile</Link>,
+      icon: <BiUser size={18} />
+    },
+
+    {
+      key: '6',
+      label: <Link onClick={() => {
+        handleLogoutFun()
+      }} href={'/auth/login'}>Logout</Link>,
+      icon: <TbLogout size={18} />
+    },
+  ];
 
   return (
     <header
@@ -203,18 +232,21 @@ export default function Header() {
                   <Image src='/assets/heart.png' width={26} height={26} alt="" />
                 </button>
               </div>
-              {/* Mobile User Profile Section with consistent text coloring */}
-              <div className="flex flex-col items-center w-full mt-2">
-                <div onClick={() => router.push("/profile/personal-information")} className="flex justify-center cursor-pointer gap-2 items-center w-full py-2">
-                  <div>
-                    <Image src={avataruser} width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} alt="" />
+              <Dropdown
+                menu={{ items }}
+              >
+                <Space className=''>
+                  <div className="flex cursor-pointer gap-2 items-center w-fit">
+                    <div>
+                      <Image src={avataruser} width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} alt="" />
+                    </div>
+                    <div className="flex flex-col">
+                      <h6 className={`${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} mb-0 text-sm poppins_regular`}>{userData?.fname + ' ' + userData?.lname}</h6>
+                      <span className={`${isHomeOrHashRoute && !isScrolled ? "text_light" : "text_dark"} line-clamp-1 max-w-32 text-xs poppins_regular`}>{userData?.address}</span>
+                    </div>
                   </div>
-                  <div className="flex flex-col">
-                    <h6 className={`${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} mb-0 text-sm poppins_regular`}>User</h6>
-                    <span className={`${isHomeOrHashRoute && !isScrolled ? "text_light" : "text_dark"} text-xs poppins_regular`}>15A, James Street</span>
-                  </div>
-                </div>
-              </div>
+                </Space>
+              </Dropdown>
             </>
           ) : (
             <div className="flex flex-col items-center w-full gap-3">

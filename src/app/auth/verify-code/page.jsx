@@ -1,11 +1,10 @@
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import { sendCode, signup } from "@/components/api/ApiRoutesFile";
-import axiosInstance from "@/components/api/axiosInstance";
+import { sendCode, sendCodeForgotPassword, signup, verifyCodeForgotPassword } from "@/components/api/ApiRoutesFile";
 import { handleError } from "@/components/api/errorHandler";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
-import { setAccessToken, setLogin, setLogout, setRefreshToken, setUserData } from "@/components/redux/loginForm";
+import { setAccessToken, setUserData } from "@/components/redux/loginForm";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -17,12 +16,12 @@ import { Form } from "reactstrap";
 
 const Page = () => {
   const {
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const fieldsRef = useRef();
   const router = useRouter()
+  const [showResendLink, setShowResendLink] = useState(false)
   const { post } = ApiFunction()
   const dispatch = useDispatch()
   const [timer, setTimer] = useState(60);
@@ -30,9 +29,9 @@ const Page = () => {
   const tempData = useSelector((state) => state.auth.tempData)
   const isForgotPassword = useSelector((state) => state.auth?.isForgotPassword)
   const forgotCode = useSelector((state) => state.auth?.forgotCode)
-  const userType = useSelector((state) => state.auth?.userType)
-  const [showResendLink, setShowResendLink] = useState(false);
   const [otpCode, setOtpCode] = useState(["", "", "", ""]);
+
+
   useEffect(() => {
     let interval;
     if (timer > 0) {
@@ -53,25 +52,20 @@ const Page = () => {
     if (isForgotPassword) {
       const data = {
         email: forgotCode?.email,
-        // token: forgotCode?.token,
+        type: 'customer'
       }
-      // try {
-      //   const response = await createPost({
-      //     endpoint: 'api/auth/forget-password',
-      //     data: data,
-      //     tag: 'Auth',
-      //   }).unwrap();
-      //   if (response.success) {
-      //     setTimer(60);
-      //     setShowResendLink(false);
-      //     message.success('We have sent an verification code in your email');
-      //   }
-      // } catch (error) {
-      //   message.error(error?.data?.message || 'Login failed');
-      //   console.log('console', error);
-      // } finally {
-      //   setloading(false)
-      // }
+      try {
+        const response = await post(sendCodeForgotPassword, data)
+        if (response.success) {
+          setTimer(60);
+          setShowResendLink(false);
+          message.success('We have sent an verification code in your email');
+        }
+      } catch (error) {
+        handleError(error)
+      } finally {
+        setloading(false)
+      }
     } else {
       const data = {
         email: tempData?.email,
@@ -85,7 +79,7 @@ const Page = () => {
           message.success('We have sent an Code in your email.');
         }
       } catch (error) {
-        message.error(error?.data?.message || 'Login failed');
+        handleError(error)
       } finally {
       }
     }
@@ -102,25 +96,24 @@ const Page = () => {
     }
   };
 
+  console.log(forgotCode);
+
   const onSubmit = async (values) => {
     if (isForgotPassword) {
       setloading(true)
+      const otpString = otpCode.join("");
       const data = {
-        email: forgotCode?.email,
-        code: otpCode
+        token: forgotCode?.token,
+        code: otpString
       }
       try {
-        const response = await createPost({
-          endpoint: 'api/auth/verify-otp/forget-password',
-          data: data,
-          tag: 'Auth',
-        }).unwrap();
+        const response = await post(verifyCodeForgotPassword, data)
         if (response.success) {
           message.success('Code verified Successfully!');
           router.push('/auth/reset-password');
         }
       } catch (error) {
-        message.error(error?.data?.message || 'Login failed');
+        handleError(error)
       } finally {
         setloading(false)
       }

@@ -7,6 +7,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import ApiFunction from "@/components/api/apiFuntions";
+import { sendCodeForgotPassword } from "@/components/api/ApiRoutesFile";
+import { setForgotCode, setIsForgotPassword } from "@/components/redux/loginForm";
+import { message } from "antd";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -18,6 +22,7 @@ const Page = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [loading, setloading] = useState(false)
   const { t } = useTranslation()
+  const { post } = ApiFunction()
 
   const router = useRouter()
   const dispatch = useDispatch()
@@ -28,7 +33,7 @@ const Page = () => {
   };
 
   const schema = Yup.object().shape({
-    email: Yup.string().email(t("auth.validation.invalidEmail")).required(t("auth.validation.emailRequired")),
+    email: Yup.string().email("Email is required").required("Please enter your email"),
   });
 
   const {
@@ -43,35 +48,38 @@ const Page = () => {
 
   const onSubmit = async (values) => {
     setloading(true)
-    // try {
-    //   const response = await createPost({
-    //     endpoint: 'api/auth/forget-password',
-    //     data: values,
-    //     tag: 'Auth',
-    //   }).unwrap();
-    //   if (response.success) {
-    //     dispatch(setIsForgotPassword(true))
-    //     const data = {
-    //       email: values?.email,
-    //       token: response?.token
-    //     }
-    //     dispatch(setForgotCode(data))
-    //     message.success('We have sent an verification code in your email');
-    //     router.push('/auth/verify-code');
-    //   }
-    // } catch (error) {
-    //   message.error(error?.data?.message || 'Login failed');
-    //   console.log('console', error);
-    // } finally {
-    //   setloading(false)
-    // }
+    const data = {
+      email: values.email,
+      type: 'customer'
+    }
+    try {
+      const response = await post(sendCodeForgotPassword, data)
+      if (response.success) {
+        console.log(response);
+
+        dispatch(setIsForgotPassword(true))
+        const data = {
+          email: values?.email,
+          token: response?.token,
+          code: response?.verificationCode
+        }
+        dispatch(setForgotCode(data))
+        message.success(response?.message);
+        router.push('/auth/verify-code');
+      }
+    } catch (error) {
+      message.error(error?.data?.message || 'Login failed');
+      console.log('console', error);
+    } finally {
+      setloading(false)
+    }
   };
 
 
   return (
     <AuthLayout>
       <>
-        <AuthHeading heading={t("auth.forgot_password.title")} subHeading={t("auth.forgot_password.subtitle")} />
+        <AuthHeading heading={'Forgot Password!'} subHeading={'Please enter the email address to reset your password'} />
         <Form
           onSubmit={handleSubmit(onSubmit)}
           className="mt-8 grid grid-cols-6 gap-4 auth-form"
@@ -92,7 +100,7 @@ const Page = () => {
                     type="email"
                     id="email"
                     name="email"
-                    placeholder={t("auth.forgot_password.email")}
+                    placeholder={'Email address'}
                     // invalid={!!errors.email}
                     className={`peer h-8 w-full poppins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${errors.email ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
                       }`}
@@ -100,7 +108,7 @@ const Page = () => {
                 )}
               />
               <span className="absolute start-3 top-2 poppins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
-                {t("auth.forgot_password.email")}
+                {'Email address'}
               </span>
             </Label>
             {errors.email && (
@@ -109,14 +117,14 @@ const Page = () => {
           </div>
           <div className="col-span-6 sm:flex sm:items-center sm:gap-4 w-full">
             <button disabled={loading} type="submit" className="btn1 primary w-100">
-              {loading ? <BeatLoader color="#fff" size={10} /> : t("auth.forgot_password.btnLabel")}
+              {loading ? <BeatLoader color="#fff" size={10} /> : 'Send Code'}
             </button>
           </div>
         </Form>
         <p className="pt-3 poppins_medium text_secondary2">
-          {t("auth.forgot_password.rememberPassword")}{" "}
+          Remembered your password? {" "}
           <Link href="/auth/login" className="no-underline poppins_semibold">
-            {t("auth.forgot_password.loginBtnLabel")}
+            Login
           </Link>
         </p>
       </>

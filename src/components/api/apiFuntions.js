@@ -2,17 +2,16 @@
 
 /* eslint-disable no-unused-vars */
 
-import { useDispatch, useSelector } from "react-redux";
 import { message } from 'antd';
-import { setLogout } from '../redux/loginForm'
 import { useRouter } from "next/navigation";
-import axiosInstance from "./axiosInstance";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogout } from '../redux/loginForm';
 import { imageUpload } from "./ApiRoutesFile";
-import { decryptData } from "../redux/localStorageSecure";
+import axiosInstance from "./axiosInstance";
 
 const ApiFunction = () => {
-    const encryptedUser = useSelector(state => state.auth?.userData);
-    const userData = decryptData(encryptedUser)
+    const userData = useSelector(state => state.auth?.userData);
+    // const userData = decryptData(encryptedUser)
     const dispatch = useDispatch()
     const router = useRouter()
 

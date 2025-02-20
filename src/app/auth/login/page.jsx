@@ -1,8 +1,12 @@
 "use client";
+import ApiFunction from "@/components/api/apiFuntions";
+import { login } from "@/components/api/ApiRoutesFile";
+import { handleError } from "@/components/api/errorHandler";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
-import { setLogin } from "@/components/redux/loginForm";
+import { setAccessToken, setLogin, setUserData } from "@/components/redux/loginForm";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,6 +22,7 @@ const Page = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [loading, setloading] = useState(false);
   const router = useRouter();
+  const { post } = ApiFunction()
   const dispatch = useDispatch();
 
   const togglePassword = (e) => {
@@ -43,34 +48,27 @@ const Page = () => {
   });
 
   const onSubmit = async (values) => {
-    // setloading(true);
-    dispatch(setLogin(true));
-    router.push('/');
-    // try {
-    //   const response = await createPost({
-    //     endpoint: 'api/auth/login',
-    //     data: values,
-    //     tag: 'Auth',
-    //   }).unwrap();
-    //   if (response.success) {
-    //     message.success('You have successfully logged in');
-    //     dispatch(setUserData(response?.user));
-    //     dispatch(setAccessToken(response?.accessToken));
-    //     localStorage.setItem('auction_user_token', response?.accessToken);
-    //     dispatch(setRefreshToken(response?.refreshToken));
-    //     dispatch(setLogin(true));
-    //     if (response?.user?.role === 'influencer' || response?.user?.role === 'brand') {
-    //       router.push('/vender/dashboard');
-    //     } else {
-    //       router.push('/');
-    //     }
-    //   }
-    // } catch (error) {
-    //   message.error(error?.data?.message || 'Login failed');
-    //   console.log('console', error);
-    // } finally {
-    //   setloading(false);
-    // }
+    setloading(true);
+    const data = {
+      email: values.email,
+      password: values.password,
+      type: 'customer'
+    }
+    try {
+      const response = await post(login, data)
+      if (response.success) {
+        message.success('You have successfully logged in');
+        dispatch(setLogin(true));
+        dispatch(setAccessToken(response?.token));
+        dispatch(setUserData(response?.user));
+        localStorage.setItem('auction_user_token', response?.token);
+        router.push('/');
+      }
+    } catch (error) {
+      handleError(error)
+    } finally {
+      setloading(false);
+    }
   };
 
   return (
