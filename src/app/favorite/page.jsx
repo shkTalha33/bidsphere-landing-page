@@ -23,7 +23,7 @@ export default function Page() {
                     <Row>
                         <Col md="12" className="">
                             <Breadcrumbs pageTitle={"Favourite"} />
-                            <h3 className="text-3xl poppins_medium text-[#1C201F]">
+                            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
                                 Favourite Auctions
                             </h3>
                         </Col>

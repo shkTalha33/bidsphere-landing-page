@@ -16,14 +16,14 @@ export default function AlertSection({ type, message, description, buttons = [] 
     <Alert
       className="flex flex-col md:flex-row items-start gap-2 gap-md-2"
       message={
-        <span className="text-sm md:text-[1rem] poppins_semibold">
+        <span className="text-sm md:text-[1rem] poppins_semibold mb-0">
           {message}
         </span>
       }
       showIcon
       icon={customIcons[type]} // Use the custom icon
       description={
-        <span className="text-sm lg:text-base text_primary">
+        <span className="text-xs sm:text-sm lg:text-base text_primary mb-0">
           {description}
         </span>
       }

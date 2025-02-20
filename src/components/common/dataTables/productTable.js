@@ -125,7 +125,7 @@ const ProductTable = ({
         previousClassName="page-item prev-item"
         containerClassName="pagination react-paginate separated-pagination pagination-sm pe-4 justify-end mt-4"
       />
-      <div>
+      <div className="text-xs sm:text-base poppins_medium mt-4">
         {`Showing ${currentPage * 10 + 1} to ${Math.min(
           (currentPage + 1) * 10,
           count
@@ -137,8 +137,8 @@ const ProductTable = ({
   return (
     <>
       <Fragment>
-        <div className="w-full mt-4 rounded-xl">
-          <h6 className="poppins_semibold mb-3 text-[#16161D] text-lg capitalize">
+        <div className="w-full mt-2 mt-md-4 rounded-xl">
+          <h6 className="poppins_semibold mb-1 mb-md-3 text-[#16161D] text-sm sm:text-lg capitalize">
             {rowHeading}
           </h6>
           {showRow && (

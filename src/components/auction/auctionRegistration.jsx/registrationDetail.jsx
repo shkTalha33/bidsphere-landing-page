@@ -54,7 +54,7 @@ const RegistrationDetail = () => {
         <Row>
           <Col md="12" className="">
             <Breadcrumbs pageTitle={"Registration"} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text-[#1C201F]">
+            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
               Auction Registration
             </h3>
           </Col>

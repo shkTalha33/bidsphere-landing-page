@@ -317,7 +317,7 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                         </button>
                         {console.log("openModal", openModal)}
                         <button
-                          className="bg_white flex items-center justify-center rounded-2xl p-2 md:p-4"
+                          className="bg_white flex items-center justify-center rounded-2xl p-2 :p-4"
                           onClick={() => setActiveButton("")}
                         >
                           {<X size={24} className="text_primary" />}
@@ -327,7 +327,7 @@ Orci, non sit tempus pellentesque nunc. Ac neque, sagittis cursus nec eu. At int
                   ) : (
                     <Col md="12">
                       <button
-                        className="capitalize py-2 md:py-3 my-3 poppins_medium bg_primary w-full text-white rounded-lg"
+                        className="capitalize py-2 py-md-3 my-3 poppins_medium bg_primary w-full text-white rounded-lg"
                         onClick={() => setOpenBiddingConfirmationModal(true)}
                       >
                         Place Bid For $25

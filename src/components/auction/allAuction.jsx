@@ -44,7 +44,7 @@ export default function AllAuction() {
         <Row>
           <Col md="12" className="">
             <Breadcrumbs pageTitle={"Auctions"} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text-[#1C201F]">
+            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
               All Auctions
             </h3>
           </Col>

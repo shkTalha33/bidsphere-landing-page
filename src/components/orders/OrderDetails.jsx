@@ -69,13 +69,13 @@ export default function OrderDetails() {
         <Row>
           <Col md="12" className="">
             <Breadcrumbs pageTitle={"Orders"} />
-            <h3 className="text-3xl poppins_medium text-[#1C201F]">Orders</h3>
+            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">Orders</h3>
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white p-5 rounded-[9px] mt-4">
+      <Container className="bg_white p-2 p-md-3 p-lg-5 rounded-[9px] mt-4">
         <Row className="rounded-[9px] g-3">
-          <Col md="3">
+          <Col md="4" lg="3">
             <div className="flex flex-col gap-4 items-center justify-center">
               {sideButtons.map((button) => {
                 return (
@@ -119,29 +119,29 @@ export default function OrderDetails() {
               })}
             </div>
           </Col>
-          <Col md="9" className="">
+          <Col md="8" lg="9" className="">
             <div className="bg-[#FAFAFA] p-4 rounded-[11px] flex flex-col">
-              <h4 className="poppins_semibold text-xl text-[#202020] capitalize">
+              <h4 className="poppins_semibold text-base md:text-xl text-[#202020] capitalize">
                 order details
               </h4>
 
               <Row className="bg_white rounded-[7px] border-1 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3 mt-4">
-                <Col md="10">
+                <Col xs="10">
                   <div className="flex items-start gap-4">
-                    <Image src={car1} className="w-[72px]" />
-                    <div className="">
-                      <p className="text-[#25324B] poppins_semibold text-[22px] capitalize">
+                    <Image src={car1} className="w-14 md:w-[72px]" />
+                    <div className="flex justify-center flex-col">
+                      <p className="text-[#25324B] poppins_semibold text-sm sm:text-base md:text-[22px] capitalize mb-0">
                         Classic Cars Auction.
                       </p>
-                      <p className="text-[#7C8493] poppins_medium text-[10px] capitalize">
+                      <p className="text-[#7C8493] poppins_medium text-[10px] capitalize mb-0">
                         here is order detail
                       </p>
                     </div>
                   </div>
                 </Col>
-                <Col md="2" className="">
+                <Col xs="2" className="">
                   <div className="bg_lightsecondary flex items-center justify-center w-9 h-9 rounded-full ml-auto cursor-pointer">
-                    <TbMessage color="#21CD9D" size={28} />
+                    <TbMessage color="#21CD9D" size={24} />
                   </div>
                 </Col>
               </Row>
@@ -156,14 +156,14 @@ export default function OrderDetails() {
               </Row>
               <Row className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
                 <Col md="12">
-                  <div className="border-1 border-[#DCE1EF] rounded-[43px] p-2 flex items-center justify-start gap-2">
+                  <div className="border-1 border-[#DCE1EF] rounded-[43px] p-2 flex items-center justify-start gap-2 overflow-auto no-scrollbar">
                     {orderDetailButtons.map((buttonDetail) => {
                       return (
                         <button
                           className={`${currentSelectedButton === buttonDetail
                             ? "bg_primary text-white poppins_semibold rounded-[82px]"
-                            : "text-[#6E7591]"
-                            } text-[15px] px-4 py-2 cursor-pointer capitalize`}
+                            : "text-[#6E7591] poppins_medium"
+                            } text-sm sm:text-[15px] px-3 px-md-4 py-1 py-md-2 cursor-pointer capitalize whitespace-nowrap`}
                           onClick={() => {
                             setCurrentSelectedButton(buttonDetail);
                           }}
@@ -202,7 +202,7 @@ export default function OrderDetails() {
                 <Col md="6" className="text-end ml-auto mt-4 px-0">
                   <button
                     type="submit"
-                    className="bg_primary text-white px-6 py-3 rounded-lg w-[50%] poppins_semibold text-[22px]"
+                       className="bg_primary text-white px-6 py-2 py-sm-3 rounded-lg w-full  poppins_semibold text-base sm:text-[22px] whitespace-nowrap"
                     onClick={() => router.push("/payments/statics")}
                   >
                     Download As PDF

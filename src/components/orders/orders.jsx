@@ -217,31 +217,31 @@ export default function Orders() {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px] mt-20 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container className="bg_white rounded-[9px] mt-20 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12" className="">
             <Breadcrumbs pageTitle={"Orders"} />
-            <h3 className="text-3xl poppins_medium text-[#1C201F]">Orders</h3>
+            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">Orders</h3>
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white p-3 p-md-5 rounded-[9px] mt-4">
+      <Container className="bg_white p-2 p-md-5 rounded-[9px] mt-2 md:mt-4">
         <Row className="rounded-[9px] g-3">
           <Col md="3">
-            <div className="flex flex-col gap-4 items-center justify-center">
+            <div className="flex flex-col gap-2 gap-md-4 items-center justify-center">
               {sideButtons.map((button) => {
                 return (
                   <button
                     className={`${currentActiveButton === button?.title
                       ? "bg_primary text-white"
                       : "bg-[#F5F5F5] text-[#909495]"
-                      } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
+                      } rounded-[10px] w-full flex items-center justify-start gap-4 p-2 p-md-4 capitalize`}
                     onClick={() => setCurrentActiveButton(button?.title)}
                   >
                     <div className="flex items-center w-full justify-between">
                       <div className="flex gap-3 items-center">
                         <div
-                          className={`w-9 h-9 ${currentActiveButton === button?.title
+                          className={`w-7 h-7 sm:w-9 sm:h-9 ${currentActiveButton === button?.title
                             ? "bg-white"
                             : "bg_primary"
                             } flex items-center justify-center p-2 rounded-full`}
@@ -255,7 +255,7 @@ export default function Orders() {
                             className=""
                           />
                         </div>
-                        {button?.title}
+                        <div className="text-sm sm:text-base"> {button?.title}</div>
                       </div>
                       <div
                         className={`${currentActiveButton === button?.title
@@ -279,7 +279,7 @@ export default function Orders() {
                     className={`${filterStatics === button
                       ? "bg_primary text_white"
                       : "bg-[#E2F5F0] text_primary"
-                      } rounded-[16px] px-5 py-2 poppins_regular capitalize`}
+                      } rounded-[16px] px-4 px-md-5 py-1 text-sm sm:text-base py-md-2 poppins_regular capitalize`}
                     onClick={() => setFilterStatics(button)}
                   >
                     {button}
@@ -287,7 +287,7 @@ export default function Orders() {
                 );
               })}
             </div>
-            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px] mt-3">
+            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px] mt-3">
               <ProductTable
                 rowHeading="all orders"
                 count={count}
