@@ -60,7 +60,6 @@ const Page = () => {
   const onSubmit = async (values) => {
     dispatch(setLogin(true));
     router.push('/auth/verify-code');
-    // Commented API integration code as per original file
     // try {
     //   const response = await createPost({
     //     endpoint: 'api/auth/signup',
