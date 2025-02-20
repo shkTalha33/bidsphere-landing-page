@@ -49,7 +49,7 @@ const PaymentDetail = ({ setProgress }) => {
   };
 
   return (
-    <Container className="bg_white rounded-[9px] mt-2 p-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
+    <Container className="bg_white rounded-[9px] mt-2 p-2 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
       <Form
         onSubmit={handleSubmit(onSubmit)}
         className="d-flex flex-column gap-2 w-100"
@@ -76,9 +76,9 @@ const PaymentDetail = ({ setProgress }) => {
           </Col>
         </Row>
         <Col md="6" className="text-end ml-auto">
-          <button
+        <button
             type="submit"
-            className="bg_primary text-white px-6 py-3 rounded-lg w-[50%] poppins_semibold text-[22px]"
+            className="bg_primary text-white px-6 py-2 py-sm-3 rounded-lg w-full sm:w-[50%] poppins_semibold text-base sm:text-[22px]"
           >
             Confirm Payment
           </button>

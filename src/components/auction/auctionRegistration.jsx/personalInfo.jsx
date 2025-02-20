@@ -198,7 +198,7 @@ const PersonalInfo = ({ setProgress }) => {
         <Col md="6" className="text-end ml-auto">
           <button
             type="submit"
-            className="bg_primary text-white px-6 py-3 rounded-lg w-[50%] poppins_semibold text-[22px]"
+            className="bg_primary text-white px-6 py-2 py-sm-3 rounded-lg w-full sm:w-[50%] poppins_semibold text-base sm:text-[22px]"
           >
             Continue
           </button>

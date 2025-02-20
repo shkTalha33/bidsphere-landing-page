@@ -157,13 +157,12 @@ const DocumentUpload = ({ setProgress }) => {
           <Image
             src={uploadfileIcon}
             alt="uploadfileIcon"
-            width={120}
-            className="mx-auto my-4"
+            className="mx-auto my-2 md:my-4 w-20 sm:w-24 md:w-32"
           />
-          <p className="mb-2 text_darkprimary inter_bold text-xl">
+          <p className="mb-2 text_darkprimary inter_bold text-base sm:text-lg md:text-xl">
             Select Files
           </p>
-          <p className="mb-2 text-[#637381]">
+          <p className="mb-2 text-xs sm:text-sm md:text-base text-[#637381]">
             Drop files here or click{" "}
             <span className="text-[#24292E]">browse</span> through your machine
           </p>
@@ -218,12 +217,12 @@ const DocumentUpload = ({ setProgress }) => {
   };
 
   return (
-    <Container className="bg_white rounded-[9px] mt-2 p-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
+    <Container className="bg_white rounded-[9px] mt-2 p-2 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
       <Form
         onSubmit={handleSubmit(onSubmit)}
         className="d-flex flex-column gap-2 w-100"
       >
-        <Row className="mb-[30px] mt-[70px]">
+        <Row className="mb-[30px] md:mt-[70px]">
           <FileUploadSection
             type="identity"
             title="Upload Identity Proof"
@@ -242,9 +241,9 @@ const DocumentUpload = ({ setProgress }) => {
           />
         </Row>
         <Col md="6" className="text-end ml-auto">
-          <button
+        <button
             type="submit"
-            className="bg_primary text-white px-6 py-3 rounded-lg w-[50%] poppins_semibold text-[22px]"
+            className="bg_primary text-white px-6 py-2 py-sm-3 rounded-lg w-full sm:w-[50%] poppins_semibold text-base sm:text-[22px]"
           >
             Continue
           </button>
