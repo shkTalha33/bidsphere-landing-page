@@ -241,7 +241,7 @@ export default function Header() {
                       <Image src={avataruser} width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} alt="" />
                     </div>
                     <div className="flex flex-col">
-                      <h6 className={`${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} mb-0 text-sm poppins_regular`}>{userData?.fname + ' ' + userData?.lname}</h6>
+                      <h6 className={`${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} mb-0 text-sm poppins_regular`}>{(userData?.fname || '') + ' ' + (userData?.lname || '')}</h6>
                       <span className={`${isHomeOrHashRoute && !isScrolled ? "text_light" : "text_dark"} line-clamp-1 max-w-32 text-xs poppins_regular`}>{userData?.address}</span>
                     </div>
                   </div>
