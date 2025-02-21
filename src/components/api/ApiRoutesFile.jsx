@@ -17,5 +17,5 @@ const imageUpload = "image/upload"
 
 export {
   login,
-  imageUpload, sendCode, verifyCode, changePassword, checkMail, checkPhone, signup, deleteUser, updateUser, sendCodeForgotPassword, verifyCodeForgotPassword, forgotPassword,
+  imageUpload, sendCode, verifyCode, changePassword, checkMail, checkPhone, signup, deleteUser, updateUser, sendCodeForgotPassword, verifyCodeForgotPassword, forgotPassword, 
 };
