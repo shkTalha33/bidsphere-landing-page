@@ -248,8 +248,8 @@ const Page = () => {
             </button>
           </div>
         </Form>
-        <p className="pt-3 poppins_regular text_secondary2">
-          Already have an Account? <Link href="/auth/login" className="_link_underline poppins_medium">
+        <p className="pt-3 poppins_regular">
+          Already have an Account? <Link href="/auth/login" className="_link_underline poppins_medium text_primary">
             Sign in
           </Link>
         </p>

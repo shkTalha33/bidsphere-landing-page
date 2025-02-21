@@ -276,7 +276,7 @@ const ChatMessageList = ({ socketRef }) => {
       label: <button type="button" className="w-full">
         <label htmlFor={`fileInput1`} style={{ cursor: "pointer" }} className="cursor-pointer w-full">
           {imageUrl ? (
-            <img
+            <Image
               src={imageUrl}
               alt="Preview"
               style={{ height: "100px", objectFit: "cover" }}
@@ -450,7 +450,7 @@ const ChatMessageList = ({ socketRef }) => {
             </div>
           ) : type === 'image' ? (
             <div className=' relative selected_img bg-[#f4f4f4] rounded-3'>
-              <img src={imageUrl} alt="Selected" className="w-100 rounded-3 h-100" />
+              <Image src={imageUrl} alt="Selected" className="w-100 rounded-3 h-100" />
               <button className="absolute -top-2 -right-2 bg_light p-1 rounded-full" onClick={handleClear}>
                 <X />
               </button>

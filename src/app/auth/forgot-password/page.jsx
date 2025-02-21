@@ -121,9 +121,9 @@ const Page = () => {
             </button>
           </div>
         </Form>
-        <p className="pt-3 poppins_medium text_secondary2">
+        <p className="pt-3 poppins_medium">
           Remembered your password? {" "}
-          <Link href="/auth/login" className="no-underline poppins_semibold">
+          <Link href="/auth/login" className="poppins_regular _link_underline text_primary">
             Login
           </Link>
         </p>

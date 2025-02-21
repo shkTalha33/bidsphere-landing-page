@@ -150,7 +150,7 @@ const Page = () => {
           <div className="col-span-6 flex justify-end w-full">
             <Link
               href={"/auth/forgot-password"}
-              className="poppins_medium underline text_secondary2 text-sm"
+              className="poppins_medium underline text_primary text-sm"
             >
               Forgot Password?
             </Link>
@@ -204,8 +204,8 @@ const Page = () => {
             </div>
           </div> */}
         </Form>
-        <p className="pt-3 poppins_regular text_secondary2">
-          Create a New Account? <Link href="/auth/signup" className="_link_underline poppins_medium">
+        <p className="pt-3 poppins_regular">
+          Create a New Account? <Link href="/auth/signup" className="_link_underline poppins_medium text_primary">
             Sign up
           </Link>
         </p>

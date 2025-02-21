@@ -4,6 +4,7 @@
 /* eslint-disable no-unused-vars */
 import Moment from "react-moment";
 import { avataruser } from "../assets/icons/icon";
+import Image from "next/image";
 
 const ChatMessage = ({ message, data, timestamp, left, type }) => {
   return (
@@ -17,7 +18,7 @@ const ChatMessage = ({ message, data, timestamp, left, type }) => {
           >
             {type === 'image' ? (
               <div className='relative selected_img'>
-                <img width={1000} height={1000} src={message || avataruser} alt="Selected" className="w-100 rounded-3 h-100" />
+                <Image width={1000} height={1000} src={message || avataruser} alt="Selected" className="w-100 rounded-3 h-100" />
               </div>
             ) : type === 'video' ? (
               <div className='relative selected_img'>

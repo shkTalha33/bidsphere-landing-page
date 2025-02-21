@@ -180,7 +180,7 @@ const DocumentUpload = ({ setProgress }) => {
       <div className="mt-3 d-flex gap-2 flex-wrap">
         {files.map((file, index) => (
           <div key={index} className="position-relative">
-            <img
+            <Image
               src={file}
               key={index}
               alt={`Upload ${index + 1}`}

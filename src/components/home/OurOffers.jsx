@@ -65,7 +65,7 @@ export default function OurOffers() {
             >
               {features.map((feature, index) => (
                 <SwiperSlide key={index}>
-                  <PlansCard key={index} plan={feature} />
+                  <PlansCard index={index} plan={feature} />
                 </SwiperSlide>
               ))}
             </CustomSwiper>

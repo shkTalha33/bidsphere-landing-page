@@ -1,6 +1,7 @@
 "use client"
 
 import TabHeader from '@/components/tabHeader';
+import Image from 'next/image';
 /* eslint-disable @next/next/no-img-element */
 import { useState, useRef } from 'react';
 import { Check, Edit2, X } from 'react-feather';
@@ -148,7 +149,7 @@ const ProfilePage = () => {
                                 <div className="w-full md:w-1/2 flex items-center gap-6 mt-6 md:mt-0">
                                     <div className="min-w-24">
                                         <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-300">
-                                            <img
+                                            <Image
                                                 src={profileImage}
                                                 alt="Profile"
                                                 className="w-full h-full object-cover"

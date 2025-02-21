@@ -3,7 +3,7 @@ import { Col, Container, Row } from "reactstrap";
 import { deal, returnMoney, secure, shipping } from "../assets/icons/icon";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { fadeIn, staggerContainer } from "../utils/motion";
+import { fadeIn, slideIn, staggerChildren, staggerContainer } from "../utils/motion";
 
 export default function Services() {
   const servicesData = [
@@ -45,7 +45,7 @@ export default function Services() {
                 {servicesData.map((service, index) => {
                   return (
                     <motion.div
-                    variants={fadeIn("down", "tween", (index + 1)* 0.1 , 1)}
+                    variants={fadeIn("down", "tween", 0.3* (index + 1) , 1)}
                       className="flex items-start justify-start  gap-3"
                       key={index}
                     >
