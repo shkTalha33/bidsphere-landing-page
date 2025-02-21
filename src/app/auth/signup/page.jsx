@@ -110,13 +110,14 @@ const Page = () => {
         message: "Please enter a valid email address.",
       });
       return;
+    }else{
+      clearErrors('email')
     }
 
     await post(checkMail, { email: value, type: "customer" })
       .then((result) => {
         setValue('email', value)
         clearErrors('email')
-        // setError('email', null)
       })
       .catch((err) => {
         setError("email", {
