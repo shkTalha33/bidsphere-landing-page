@@ -37,7 +37,7 @@ export default function Experience() {
                 <div className="flex gap-3 justify-center md:justify-start items-center  mb-[10px]">
                   <div className="w-8 h-2 bg_primary rounded-full"></div>
                   <h6 className="text-[#202020] poppins_semibold text-xl capitalize">
-                    about our bidsphere
+                    about Castle Auction
                   </h6>
                 </div>
                 <h4 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center text-md-start text_primary poppins_medium capitalize mb-2 md:mb-8">

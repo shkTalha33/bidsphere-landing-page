@@ -164,7 +164,7 @@ export default function Header() {
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => router.push("/")}
           >
-            <h2 className="poppins_medium text-2xl text_primary">BidSphere</h2>
+            <h2 className="poppins_medium text-2xl text_primary">Castle Auction</h2>
           </div>
           {isLogin ? <AuthenticatedNav /> : <NonAuthenticatedNav />}
 

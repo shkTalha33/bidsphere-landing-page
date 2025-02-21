@@ -96,12 +96,14 @@ const Page = () => {
     }
   };
 
-  console.log(forgotCode);
-
   const onSubmit = async (values) => {
+    const otpString = otpCode.join("");
     if (isForgotPassword) {
+      if (otpString !== forgotCode?.verificationCode) {
+        message.error('Incorrect Code');
+        return
+      }
       setloading(true)
-      const otpString = otpCode.join("");
       const data = {
         token: forgotCode?.token,
         code: otpString
@@ -119,6 +121,10 @@ const Page = () => {
       }
     } else {
       if (tempData) {
+        if (otpString !== tempData?.code) {
+          message.error('Incorrect Code');
+          return
+        }
         setloading(true)
         try {
           const response = await post(signup, tempData)

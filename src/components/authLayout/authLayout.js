@@ -21,8 +21,8 @@ const AuthLayout = ({ children, src, isCenter, description, title }) => {
                     />
                 </section>
 
-                <main className={` ${isCenter && 'flex'} min-[1440px]:max-w-[45%] md:max-w-[603px] md:overflow-auto w-100 py-3 px-md-5 px-3 h-100 mx-md-0 mx-auto`}>
-                    <div className={`max-w-[600px] mx-auto`}>
+                <main className={` ${isCenter && 'flex'} md:items-center flex w-full min-[1440px]:max-w-[45%] md:max-w-[603px] md:overflow-auto w-100 py-3 px-md-5 px-3 h-100 mx-md-0 mx-auto`}>
+                    <div className={`max-w-[600px] w-full mx-auto`}>
                         {children}
                     </div>
                 </main>

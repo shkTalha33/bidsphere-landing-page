@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { message, Modal } from "antd";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "react-feather";
 import GooglePlacesAutocomplete from "react-google-autocomplete";
 import { Controller, useForm } from "react-hook-form";
@@ -30,6 +30,7 @@ const Page = () => {
         lat: 51.5074,
         lng: -0.1278
     });
+    const [locationLoading, setLocationLoading] = useState(true);
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.GoogleApiKey,
@@ -55,6 +56,54 @@ const Page = () => {
             longitude: ""
         }
     });
+
+    useEffect(() => {
+        // Request location permission as soon as the component mounts
+        if (navigator.geolocation) {
+            setLocationLoading(true);
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const location = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    setSelectedLocation(location);
+                    setMapCenter(location);
+                    setValue("latitude", location.lat);
+                    setValue("longitude", location.lng);
+
+                    // Get address from coordinates using geocoding
+                    if (isLoaded && window.google) {
+                        const geocoder = new window.google.maps.Geocoder();
+                        geocoder.geocode({ location }, (results, status) => {
+                            if (status === "OK" && results[0]) {
+                                const address = results[0].formatted_address;
+                                setValue("location", address);
+                                setSelectedLocation({
+                                    ...location,
+                                    address
+                                });
+                            }
+                        });
+                    }
+                    setLocationLoading(false);
+                },
+                (error) => {
+                    console.error("Error getting location:", error);
+                    message.error("Could not get your location. Please allow location access.");
+                    setLocationLoading(false);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        } else {
+            message.error("Geolocation is not supported by this browser.");
+            setLocationLoading(false);
+        }
+    }, [isLoaded, setValue]);
 
     const handlePlaceSelect = (place) => {
         if (place.geometry) {
@@ -134,7 +183,7 @@ const Page = () => {
                                     apiKey={process.env.GoogleApiKey}
                                     onPlaceSelected={handlePlaceSelect}
                                     className={`w-full h-12 ps-5 pe-4 border rounded-lg ${errors.location ? "border-red-500" : "border-gray-300"}`}
-                                    placeholder="Search location"
+                                    placeholder={locationLoading ? "Getting your location..." : "Search location"}
                                     defaultValue={field.value}
                                     onChange={(e) => field.onChange(e.target.value)}
                                 />
@@ -154,34 +203,45 @@ const Page = () => {
                         Set Location on Map
                     </button>
 
-                    {selectedLocation && (
+                    {(selectedLocation || locationLoading) && (
                         <div className="mt-6">
                             <h3 className="text-lg font-medium mb-4">Current Location</h3>
                             <div className="h-[200px] w-full rounded-lg overflow-hidden">
-                                {isLoaded && (
-                                    <GoogleMap
-                                        zoom={15}
-                                        center={mapCenter}
-                                        mapContainerClassName="w-full h-full"
-                                    >
-                                        {selectedLocation && (
-                                            <Marker
-                                                icon={{
-                                                    url: "/assets/locationmarker.png",
-                                                    scaledSize: new window.google.maps.Size(32, 37)
-                                                }}
-                                                position={{
-                                                    lat: selectedLocation.lat,
-                                                    lng: selectedLocation.lng
-                                                }}
-                                            />
-                                        )}
-                                    </GoogleMap>
+                                {isLoaded ? (
+                                    locationLoading ? (
+                                        <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                                            <BeatLoader color="#21CD9D" size={10} />
+                                        </div>
+                                    ) : (
+                                        <GoogleMap
+                                            zoom={15}
+                                            center={mapCenter}
+                                            mapContainerClassName="w-full h-full"
+                                        >
+                                            {selectedLocation && (
+                                                <Marker
+                                                    icon={{
+                                                        url: "/assets/locationmarker.png",
+                                                        scaledSize: new window.google.maps.Size(32, 37)
+                                                    }}
+                                                    position={{
+                                                        lat: selectedLocation.lat,
+                                                        lng: selectedLocation.lng
+                                                    }}
+                                                />
+                                            )}
+                                        </GoogleMap>
+                                    )
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                                        <BeatLoader color="#21CD9D" size={10} />
+                                    </div>
                                 )}
                             </div>
                             <button
                                 type="button"
                                 onClick={() => {
+                                    setLocationLoading(true);
                                     if (navigator.geolocation) {
                                         navigator.geolocation.getCurrentPosition((position) => {
                                             const location = {
@@ -197,18 +257,24 @@ const Page = () => {
                                                 if (status === "OK" && results[0]) {
                                                     setValue("location", results[0].formatted_address);
                                                 }
+                                                setLocationLoading(false);
                                             });
-                                        });
+                                        },
+                                            (error) => {
+                                                console.error("Error getting location:", error);
+                                                message.error("Could not get your location. Please allow location access.");
+                                                setLocationLoading(false);
+                                            });
                                     }
                                 }}
                                 className="w-full mt-4 px-4 py-3 bg_primary text-white rounded-lg"
                             >
-                                Use Current Location
+                                {locationLoading ? <BeatLoader color="#fff" size={10} /> : "Use Current Location"}
                             </button>
                         </div>
                     )}
                     <button
-                        disabled={loading}
+                        disabled={loading || locationLoading}
                         type="submit" className="btn1 primary w-100">
                         {loading ? <BeatLoader color="#fff" size={10} /> : "Continue"}
                     </button>
