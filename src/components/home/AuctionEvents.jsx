@@ -36,7 +36,7 @@ export default function AuctionEvents() {
           </Col>
 
           <Col md="6" className="d-flex">
-            <motion.div variants={slideIn("right", "damping", 0.3, 0.8)} className="event_2 w-full rounded-2xl flex flex-col justify-between p-16">
+            <motion.div variants={slideIn("up", "damping", 0.3, 0.8)} className="event_2 w-full rounded-2xl flex flex-col justify-between p-16">
               <div>
                 <div className="poppins_semibold text_white text-lg mb-4 text-center max-w-[10.5rem] px-2 py-1 bg-[#F31C28] rounded-xl">
                   start from 45$
@@ -54,7 +54,7 @@ export default function AuctionEvents() {
             </motion.div>
           </Col>
           <Col md="4">
-            <motion.div variants={slideIn("left", "damping", 0.3, 0.8)} className="event_3 w-full rounded-2xl flex flex-col justify-between px-8 py-16">
+            <motion.div variants={slideIn("up", "damping", 0.3, 0.8)} className="event_3 w-full rounded-2xl flex flex-col justify-between px-8 py-16">
               <div>
                 <div className="poppins_semibold text_white text-lg mb-4 text-center max-w-[10.5rem] px-2 py-1 bg-[#F31C28] rounded-xl">
                   start from 45$
