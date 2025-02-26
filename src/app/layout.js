@@ -13,8 +13,8 @@ import 'swiper/css/zoom';
 import "./globals.css";
 
 export const metadata = {
-  title: "Bid sphere",
-  description: "Bid sphere",
+  title: "Castle Auction",
+  description: "Castle Auction",
 };
 
 export default function RootLayout({ children }) {

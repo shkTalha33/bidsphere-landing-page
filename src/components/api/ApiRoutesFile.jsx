@@ -11,11 +11,12 @@ const signup = "users/signup"
 const changePassword = "users/change-password"
 const updateUser = "users/update-user"
 const deleteUser = "users"
+const getAuctions = "auction/all/"
 
 // "upload files"
 const imageUpload = "image/upload"
 
 export {
   login,
-  imageUpload, sendCode, verifyCode, changePassword, checkMail, checkPhone, signup, deleteUser, updateUser, sendCodeForgotPassword, verifyCodeForgotPassword, forgotPassword, 
+  imageUpload, sendCode, verifyCode, changePassword, checkMail, checkPhone, signup, deleteUser, updateUser, sendCodeForgotPassword, verifyCodeForgotPassword, forgotPassword, getAuctions,
 };
