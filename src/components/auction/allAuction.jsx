@@ -60,7 +60,7 @@ export default function AllAuction() {
       setHasMore(true)
     }
     fetchAuctions();
-  }, [lastId, activeTab]);
+  }, [lastId, activeTab, count, fetchAuctions]);
 
   const items = [
     {

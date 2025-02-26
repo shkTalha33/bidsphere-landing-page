@@ -1,11 +1,11 @@
 import { Skeleton } from "antd";
 import React from "react";
 
-export default function SkeletonLayout({index, title}) {
+export default function SkeletonLayout({index, title, key}) {
   return (
     <>
       <div
-        key={index}
+        key={key}
         className="space-y-3 p-3 bg_white shadow-sm rounded-lg border-[1px] border-[#ECEFF3]"
         style={{ boxShadow: "0px 8px 24px rgba(149, 157, 165, 0.2)" }}
       >

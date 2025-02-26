@@ -32,7 +32,7 @@ export default function ForYou() {
 
   useEffect(() => {
     fetchAuctions();
-  }, []);
+  }, [fetchAuctions]);
 
   console.log("data", data);
 

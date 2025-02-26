@@ -39,7 +39,7 @@ export default function AuctionItems({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-5">
         {loading ? (
           Array.from({ length: 8 }).map((_, index) => (
-            <SkeletonLayout index={index} />
+            <SkeletonLayout key={index} index={index} />
           ))
         ) : (
           <>
@@ -90,7 +90,7 @@ export default function AuctionItems({
             ))}
             {isLoadMore &&
               Array.from({ length: 8 }).map((_, index) => (
-                <SkeletonLayout index={index} />
+                <SkeletonLayout key={index} index={index} />
               ))}
           </>
         )}
