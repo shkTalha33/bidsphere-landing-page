@@ -29,7 +29,7 @@ export default function Page() {
                         </Col>
                     </Row>
                 </div>
-                <AuctionItems items={auctionItems} />
+                {/* <AuctionItems items={auctionItems} /> */}
             </div>
         </main>
     )
