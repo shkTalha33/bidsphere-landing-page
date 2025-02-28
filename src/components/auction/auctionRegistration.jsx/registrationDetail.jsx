@@ -1,7 +1,7 @@
 "use client";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import { Progress, Tabs } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Container, Row } from "reactstrap";
 import AuctionItems from "../auctionItems";
 import { auctionImage } from "@/components/assets/icons/icon";
@@ -9,45 +9,90 @@ import { useState } from "react";
 import PersonalInfo from "./personalInfo";
 import DocumentUpload from "./documentUpload";
 import PaymentDetail from "./paymentDetail";
+import { useSearchParams } from "next/navigation";
+import ReviewAndSubmit from "./ReviewAndSubmit";
 
 const RegistrationDetail = () => {
   const [progress, setProgress] = useState(0);
+  const [data, setData] = useState({});
+  const [active, setActive] = useState("personal");
+  const searchParams = useSearchParams();
 
-  const onChange = (key) => {
-    console.log(key);
-  };
+  console.log('data', data)
 
-  const auctionItems = [
-    { title: "Demon Blast", price: "200.000", image: auctionImage },
-    { title: "Demon Blast", price: "200.000", image: auctionImage },
-    { title: "Demon Blast", price: "200.000", image: auctionImage },
-    { title: "Demon Blast", price: "200.000", image: auctionImage },
-    { title: "Demon Blast", price: "200.000", image: auctionImage },
-    { title: "Demon Blast", price: "200.000", image: auctionImage },
-    { title: "Demon Blast", price: "200.000", image: auctionImage },
-  ];
   const items = [
     {
       key: "personal",
       label: "Personal Information",
-      children: <PersonalInfo setProgress={setProgress} />,
+      children: (
+        <PersonalInfo setProgress={setProgress} data={data} setData={setData} />
+      ),
     },
     {
       key: "document",
       label: "Document Upload",
-      children: <DocumentUpload setProgress={setProgress} />,
+      children: (
+        <DocumentUpload
+          setProgress={setProgress}
+          data={data}
+          setData={setData}
+        />
+      ),
     },
     {
       key: "security",
       label: "Security Deposit Payment",
-      children: <PaymentDetail setProgress={setProgress} />,
+      children: (
+        <PaymentDetail
+          setProgress={setProgress}
+          data={data}
+          setData={setData}
+        />
+      ),
     },
     {
       key: "review",
       label: "Review & Submit",
-      children: <AuctionItems items={auctionItems} />,
+      children: (
+        <ReviewAndSubmit
+          setProgress={setProgress}
+          data={data}
+          setData={setData}
+        />
+      ),
     },
   ];
+
+  const onChange = (tab) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("selected", tab);
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?${params}`
+    );
+    setActive(tab);
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const selectedTab = params.get("selected");
+    console.log("selectedTab", selectedTab);
+    if (selectedTab) {
+      setActive(selectedTab);
+    } else {
+      params.set("selected", "personal");
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?${params}`
+      );
+      setActive("personal");
+    }
+  }, []);
+
+  console.log("activeTab", active);
+
   return (
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
@@ -78,7 +123,12 @@ const RegistrationDetail = () => {
               {progress}% to complete
             </h3>
             <div className="">
-            <Progress percent={progress} strokeColor={"#21CD9D"}  size={['100%', 8]} showInfo={false} />
+              <Progress
+                percent={progress}
+                strokeColor={"#21CD9D"}
+                size={["100%", 8]}
+                showInfo={false}
+              />
             </div>
           </Col>
         </Row>
@@ -87,7 +137,7 @@ const RegistrationDetail = () => {
         <Row>
           <Col md="12" className="!px-0">
             <Tabs
-              defaultActiveKey="personal"
+              activeKey={active}
               size="large"
               items={items}
               onChange={onChange}

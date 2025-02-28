@@ -24,60 +24,60 @@ export const SocketProvider = ({ children }) => {
     const notificationRef = useRef(notificationData);
 
     // Update the ref whenever notificationData changes
-    useEffect(() => {
-        notificationRef.current = notificationData;
-    }, [notificationData]);
+    // useEffect(() => {
+    //     notificationRef.current = notificationData;
+    // }, [notificationData]);
 
-    useEffect(() => {
-        if (isLogin) {
-            // Initialize the socket connection
-            socketRef.current = io.connect('https://setofshopsbackend.onrender.com', {
-                query: { token: localStorage.getItem("auction_user_token") },
-            });
+    // useEffect(() => {
+    //     if (isLogin) {
+    //         // Initialize the socket connection
+    //         socketRef.current = io.connect('https://setofshopsbackend.onrender.com', {
+    //             query: { token: localStorage.getItem("auction_user_token") },
+    //         });
 
-            const socket = socketRef.current;
+    //         const socket = socketRef.current;
 
-            socket.on("connect", () => {
-                console.log("Socket connected");
-                setSocket(socket);
-            });
+    //         socket.on("connect", () => {
+    //             console.log("Socket connected");
+    //             setSocket(socket);
+    //         });
 
-            socket.on("notification", (notification) => {
-                const newNotification = [notification, ...notificationRef.current]
-                dispatch(setNotificationData(newNotification))
-                // Update Redux store with the new notification
-            });
+    //         socket.on("notification", (notification) => {
+    //             const newNotification = [notification, ...notificationRef.current]
+    //             dispatch(setNotificationData(newNotification))
+    //             // Update Redux store with the new notification
+    //         });
 
-            socket.on("notification-count", (count) => {
-                dispatch(setNotificationCount(count));
-            });
+    //         socket.on("notification-count", (count) => {
+    //             dispatch(setNotificationCount(count));
+    //         });
 
-            socket.on("conversation-count", (count) => {
-                dispatch(setConversationCount(count));
-            });
+    //         socket.on("conversation-count", (count) => {
+    //             dispatch(setConversationCount(count));
+    //         });
 
-            socket.on("authentication", (authData) => {
-                console.log("Authentication data:", authData);
-            });
+    //         socket.on("authentication", (authData) => {
+    //             console.log("Authentication data:", authData);
+    //         });
 
-            socket.on("disconnected", () => {
-                console.log("Socket disconnected");
-            });
+    //         socket.on("disconnected", () => {
+    //             console.log("Socket disconnected");
+    //         });
 
-            socket.on("connect_error", (error) => {
-                console.error("WebSocket connection error:", error);
-            });
-        }
+    //         socket.on("connect_error", (error) => {
+    //             console.error("WebSocket connection error:", error);
+    //         });
+    //     }
 
-        // Cleanup when `isLogin` changes or component unmounts
-        return () => {
-            if (socketRef.current) {
-                socketRef.current.disconnect();
-                socketRef.current = null;
-                setSocket(null);
-            }
-        };
-    }, [isLogin]);
+    //     // Cleanup when `isLogin` changes or component unmounts
+    //     return () => {
+    //         if (socketRef.current) {
+    //             socketRef.current.disconnect();
+    //             socketRef.current = null;
+    //             setSocket(null);
+    //         }
+    //     };
+    // }, [isLogin]);
 
     return (
         <SocketContext.Provider value={socket}>

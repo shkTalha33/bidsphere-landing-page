@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 
-const PersonalInfo = ({ setProgress }) => {
+const PersonalInfo = ({ setProgress, data, setData }) => {
   const dispatch = useDispatch();
   const schema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
@@ -43,17 +43,16 @@ const PersonalInfo = ({ setProgress }) => {
   });
 
   const onSubmit = (data) => {
-    setProgress(parseInt(33));
     console.log(data);
-    dispatch(
-      setAuctionRegistrationData({
-        personal: data,
-      })
-    );
+    setProgress(33);
+    setData((prev) => ({
+      ...prev,
+      ...data,
+    }));
   };
 
   return (
-    <Container className="bg_white rounded-[9px] md:mt-2 p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
+    <Container className="bg_white rounded-[9px] md:mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
       <Form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Row className="g-4">
           <Col md="6">
@@ -200,7 +199,7 @@ const PersonalInfo = ({ setProgress }) => {
             type="submit"
             className="bg_primary text-white px-6 py-2 py-sm-3 rounded-lg w-full sm:w-[50%] poppins_semibold text-base sm:text-[22px]"
           >
-            Continue
+            Next
           </button>
         </Col>
       </Form>

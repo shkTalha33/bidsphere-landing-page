@@ -11,6 +11,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
 import 'swiper/css/zoom';
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "Castle Auction",
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
         <AntdRegistry>
           <ProviderLayout>
             {/* <SocketProvider> */}
+            <Toaster position="top-center" />
             {children}
             {/* </SocketProvider> */}
           </ProviderLayout>

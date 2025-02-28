@@ -4,7 +4,12 @@ import Image from "next/image";
 import { fadeIn } from "../utils/motion";
 import { format, differenceInDays, differenceInHours } from "date-fns";
 import { formatPrice } from "../utils/formatPrice";
+import { useDispatch } from "react-redux";
+import { setAuctionProduct } from "../redux/auctionProduct";
+import { useRouter } from "next/navigation";
 export default function AuctionCard({ item, index }) {
+  const router  = useRouter()
+  const dispatch = useDispatch()
   const formatTimeLeft = (endTime) => {
     const now = new Date();
     const end = new Date(endTime);
@@ -14,12 +19,17 @@ export default function AuctionCard({ item, index }) {
   
     return `Time left ${days}d ${hours}h (${format(end, "EEE, hh:mm a")})`;
   };
+
+    const handleAuctionDetail = (item) => {
+      dispatch(setAuctionProduct(item));
+      router.push(`/auctions/${item?._id}`);
+    };
   return (
     <motion.div
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.25 }}
-      className="bg-[#F3F3F3F2] p-2 rounded-xl"
+      className="bg-[#F3F3F3F2] rounded-xl overflow-hidden"
       variants={fadeIn("down", "tween", (index + 1) * 0.1, 1)}
     >
       <Image
@@ -27,9 +37,10 @@ export default function AuctionCard({ item, index }) {
         alt={item?.name}
         width={300}
         height={200}
-        className="w-full !h-[200px] max-h-[200px] object-cover rounded-xl"
+        className="w-full !h-[200px] max-h-[200px] object-cover cursor-pointer"
+        onClick={() => {handleAuctionDetail(item)}}
       />
-
+      <div className="p-2">
       <Divider className="my-4" />
       <p className="poppins_regular text_darkprimary text-[10px]">
         {formatTimeLeft(item?.end_date)}
@@ -40,6 +51,7 @@ export default function AuctionCard({ item, index }) {
       <div className="flex items-center justify-start gap-2">
         <p className="mb-0 text_darkprimary text-lg"> {formatPrice(item?.lots[0]?.minprice)}</p>
         <p className="mb-0 text_seccondary text-sm">{formatPrice(item?.lots[0]?.minincrement)}</p>
+      </div>
       </div>
     </motion.div>
   );

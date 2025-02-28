@@ -12,11 +12,13 @@ const changePassword = "users/change-password"
 const updateUser = "users/update-user"
 const deleteUser = "users"
 const getAuctions = "auction/all/"
+const getAuctionLot = "lot/details/"
 
 // "upload files"
 const imageUpload = "image/upload"
+const auctionDetail = "auction/details/"
 
 export {
   login,
-  imageUpload, sendCode, verifyCode, changePassword, checkMail, checkPhone, signup, deleteUser, updateUser, sendCodeForgotPassword, verifyCodeForgotPassword, forgotPassword, getAuctions,
+  imageUpload, sendCode, verifyCode, changePassword, checkMail, checkPhone, signup, deleteUser, updateUser, sendCodeForgotPassword, verifyCodeForgotPassword, forgotPassword, getAuctions, auctionDetail, getAuctionLot,
 };

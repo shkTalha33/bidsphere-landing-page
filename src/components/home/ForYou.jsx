@@ -34,8 +34,6 @@ export default function ForYou() {
     fetchAuctions();
   }, [fetchAuctions]);
 
-  console.log("data", data);
-
   return (
     <>
       <motion.main

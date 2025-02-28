@@ -35,6 +35,7 @@ import icon10dark from "../png/icon10dark.png";
 import icon11dark from "../png/icon11dark.png";
 import icon12dark from "../png/icon12dark.png";
 import icon13dark from "../png/icon13dark.png";
+import pdfIcon from "../png/pdfIcon.png";
 
 import vehicles from "../svg/vehicles.svg";
 import electronics from "../svg/electronics.svg";
@@ -99,7 +100,7 @@ import deliveredLight from "../png/deliveredLight.png";
 
 
 export {
-  avataruser, fashion1, auctionlogo2, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage,
+  avataruser, fashion1, auctionlogo2, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage, pdfIcon,
   icon1dark, icon2dark, icon3dark, icon4dark, icon5dark, icon6dark, icon7dark, icon8dark, icon9dark,
   icon1light, icon2light, icon3light, icon4light, icon5light, icon6light, icon7light, icon8light, icon9light, icon10light, icon11light, icon12light, icon13light,
   appleicon,

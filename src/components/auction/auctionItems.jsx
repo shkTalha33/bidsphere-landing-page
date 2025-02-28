@@ -1,13 +1,12 @@
 "use client";
-import { Skeleton } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Heart } from "react-feather";
 import { useDispatch } from "react-redux";
+import SkeletonLayout from "../common/SkeletonLayout";
 import { setAuctionProduct } from "../redux/auctionProduct";
 import { formatPrice } from "../utils/formatPrice";
-import SkeletonLayout from "../common/SkeletonLayout";
 
 export default function AuctionItems({
   items,
@@ -32,6 +31,11 @@ export default function AuctionItems({
   const handleAuctionDetail = (item) => {
     dispatch(setAuctionProduct(item));
     router.push(`/auctions/${item?._id}`);
+  };
+
+  const handleContinue = (item) => {
+    dispatch(setAuctionProduct(item));
+    router.push(`/auctions/lot?auctionId=${item?._id}`);
   };
 
   return (
@@ -60,7 +64,7 @@ export default function AuctionItems({
                   />
                   <div className="absolute top-4 left-4">
                     <span className="bg_primary text-white px-2 py-1 rounded-[4px] text-sm poppins_regular">
-                      New Offer
+                      {`${item?.lots?.length} Lots`}
                     </span>
                   </div>
                   <button
@@ -81,9 +85,9 @@ export default function AuctionItems({
                   </div>
                   <button
                     className="bg_primary whitespace-nowrap text_white text-center py-2 xl:py-3 rounded-lg px-7 lg:px-8 xl:px-9"
-                    onClick={() => handleAuctionDetail(item)}
+                    onClick={() => handleContinue(item)}
                   >
-                    Join Auction
+                    Continue
                   </button>
                 </div>
               </div>

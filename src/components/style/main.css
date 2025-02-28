@@ -617,3 +617,14 @@
 .ant-tabs-top >.ant-tabs-nav .ant-tabs-nav-wrap::before{
   box-shadow: none !important;
 }
+
+/* removing scrollbar */
+/* Hide scrollbar but allow scrolling */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Optional: Prevent horizontal scrolling */
+html, body {
+  overflow-x: hidden;
+}
