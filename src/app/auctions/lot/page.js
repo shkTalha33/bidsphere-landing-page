@@ -76,23 +76,15 @@ export default function Page() {
                     </button>
                   </div>
                     <p
-                      className="poppins_regular text-xs md:text-sm md:w-[80%] text_primary mb-0 sm:mb-3 capitalize "
-                      dangerouslySetInnerHTML={{
-                        __html: items?.additionalinfo,
-                      }}
-                    ></p>
+                      className="poppins_regular text-xs md:text-sm md:w-[80%] text_primary mb-0 sm:mb-3 capitalize ">
+                        you can see auction detail here
+                      </p>
               
                 </div>
               </>
             )}
           </Col>
         </Row>
-      </Container>
-      <Container className="bg_white rounded-[9px] mt-4 p-3 p-sm-4 ">
-        <h3 className="text_dark poppins_medium text-base">Category</h3>
-        <h3 className="text_primary poppins_medium text-base capitalize">
-          {items?.category?.name}
-        </h3>
       </Container>
       <Container className="bg_mainsecondary rounded-[9px] mt-4 !px-0">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-5">
