@@ -1,9 +1,12 @@
 "use client";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Heart } from "react-feather";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { IoHeartSharp } from "react-icons/io5";
 import { useDispatch } from "react-redux";
+import ApiFunction from "../api/apiFuntions";
+import { likeAuction } from "../api/ApiRoutesFile";
+import { handleError } from "../api/errorHandler";
 import SkeletonLayout from "../common/SkeletonLayout";
 import { setAuctionProduct } from "../redux/auctionProduct";
 import { formatPrice } from "../utils/formatPrice";
@@ -11,21 +14,45 @@ import { formatPrice } from "../utils/formatPrice";
 export default function AuctionItems({
   items,
   loading,
-  hasMore,
   setLastId,
   count,
-  setIsLoadMore,
   isLoadMore,
+  pageType = "",
+  lastId,
+  setData,
 }) {
   const router = useRouter();
-  const [likedItems, setLikedItems] = useState({});
   const dispatch = useDispatch();
+  const { put } = ApiFunction();
 
-  const toggleLike = (index) => {
-    setLikedItems((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
+  const [likedItems, setLikedItems] = useState({});
+
+  useEffect(() => {
+    if (items?.length) {
+      const initialLikes = {};
+      items.forEach((item) => {
+        initialLikes[item._id] = item.likes || false; // Ensure liked state is set
+      });
+      setLikedItems(initialLikes);
+    }
+  }, [items]);
+
+  const toggleLike = async (auctionId) => {
+    const isLiked = !likedItems[auctionId];
+    setLikedItems((prev) => {
+      const isLiked = !prev[auctionId];
+      return { ...prev, [auctionId]: isLiked };
+    });
+
+    if (pageType === "favourites" && !isLiked) {
+      setData((prevData) => prevData.filter((item) => item._id !== auctionId));
+    }
+
+    try {
+      await put(`${likeAuction}${auctionId}`);
+    } catch (err) {
+      handleError(err);
+    }
   };
 
   const handleAuctionDetail = (item) => {
@@ -47,10 +74,10 @@ export default function AuctionItems({
           ))
         ) : (
           <>
-            {items.map((item, index) => (
+            {items.map((item) => (
               <div
-                key={item?._id}
-                className="space-y-3 p-3 bg_white shadow-sm rounded-lg border-[1px] border-[#ECEFF3]"
+                key={item._id}
+                className="space-y-3 p-3 bg_white shadow-sm rounded-lg border border-[#ECEFF3]"
                 style={{ boxShadow: "0px 8px 24px rgba(149, 157, 165, 0.2)" }}
               >
                 <div className="relative">
@@ -59,7 +86,7 @@ export default function AuctionItems({
                     alt={item?.title || item?.name}
                     width={300}
                     height={200}
-                    className="w-full !h-[200px] max-h-[200px] object-cover rounded-xl cursor-pointer"
+                    className="w-full h-[200px] object-cover rounded-xl cursor-pointer"
                     onClick={() => handleAuctionDetail(item)}
                   />
                   <div className="absolute top-4 left-4">
@@ -67,24 +94,31 @@ export default function AuctionItems({
                       {`${item?.lots?.length} Lots`}
                     </span>
                   </div>
+                  {/* Like Button */}
                   <button
-                    onClick={() => toggleLike(index)}
-                    className="absolute top-4 right-4 p-1 rounded-full bg-[#433F46] transition-colors"
+                    onClick={() => toggleLike(item._id)}
+                    className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#433F46] transition-colors flex items-center justify-center border-2 border-transparent"
                   >
-                    <Heart className="w-5 h-5 text-white hover:text-black" />
+                    <IoHeartSharp
+                      className={`w-5 h-5 ${
+                        likedItems[item._id]
+                          ? "text-red-500 border-red-500"
+                          : "text-white border-white"
+                      }`}
+                    />
                   </button>
                 </div>
-                <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center justify-between gap-2 mt-4">
                   <div>
                     <p className="poppins_medium text-base capitalize">
-                      {item?.name}
+                      {item.name}
                     </p>
                     <p className="poppins_medium text-sm">
-                      {formatPrice(item?.lots[0]?.minprice)}
+                      {formatPrice(item.depositamount)}
                     </p>
                   </div>
                   <button
-                    className="bg_primary whitespace-nowrap text_white text-center py-2 xl:py-3 rounded-lg px-7 lg:px-8 xl:px-9"
+                    className="bg_primary text_white text-center py-2 xl:py-3 rounded-lg px-7 lg:px-8 xl:px-9"
                     onClick={() => handleContinue(item)}
                   >
                     Continue
@@ -99,7 +133,9 @@ export default function AuctionItems({
           </>
         )}
       </div>
-      {count !== 0 && hasMore && (
+      {console.log(count)}
+      {console.log(lastId)}
+      {(count !== 0 && count !== lastId && count !== 1) && (
         <div className="py-5 text-center w-full">
           <button
             className="bg_primary text_white py-2 text-base px-5 text-center rounded-md"

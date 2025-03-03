@@ -16,7 +16,6 @@ export default function AllAuction() {
   const [isLoadMore, setIsLoadMore] = useState(false);
   const [count, setCount] = useState(0);
   const [lastId, setLastId] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
   const [activeTab, setActiveTab] = useState("all"); // Track active tab
 
   const onChange = (key) => {
@@ -25,40 +24,32 @@ export default function AllAuction() {
     setCount(0);
     setData([]); // Reset data to default
     setLoading(true); // Set loading state to true before fetching new data
-    setHasMore(true)
   };
 
   const fetchAuctions = debounce(async () => {
     if (loading) {
-      setLoading(true)
-    }else{
-      setIsLoadMore(true)
+      setLoading(true);
+    } else {
+      setIsLoadMore(true);
     }
     await get(`${getAuctions}${lastId}`)
       .then((result) => {
-        if (result?.success) {
-          setData((prev) => [...prev, ...result?.auctions] );
-          setCount(result?.count?.totalPage || 0);
-        }
+        setData((prev) => [...prev, ...result?.auctions]);
+        setCount(result?.count?.totalPage || 0);
       })
       .catch((err) => {
         handleError(err);
       })
       .finally(() => {
         if (loading) {
-          setLoading(false)
-        }else{
-          setIsLoadMore(false)
+          setLoading(false);
+        } else {
+          setIsLoadMore(false);
         }
       });
   }, 300);
 
   useEffect(() => {
-    if (count === lastId) {
-      setHasMore(false)
-    }else{
-      setHasMore(true)
-    }
     fetchAuctions();
   }, [lastId, activeTab]);
 
@@ -73,8 +64,8 @@ export default function AllAuction() {
           setLastId={setLastId}
           isLoadMore={isLoadMore}
           setIsLoadMore={setIsLoadMore}
-          hasMore={hasMore}
           count={count}
+          lastId={lastId}
         />
       ),
     },
@@ -88,8 +79,8 @@ export default function AllAuction() {
           setLastId={setLastId}
           isLoadMore={isLoadMore}
           setIsLoadMore={setIsLoadMore}
-          hasMore={hasMore}
           count={count}
+          lastId={lastId}
         />
       ),
     },
@@ -103,8 +94,8 @@ export default function AllAuction() {
           isLoadMore={isLoadMore}
           setIsLoadMore={setIsLoadMore}
           setLastId={setLastId}
-          hasMore={hasMore}
           count={count}
+          lastId={lastId}
         />
       ),
     },

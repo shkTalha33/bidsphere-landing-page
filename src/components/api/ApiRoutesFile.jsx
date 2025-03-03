@@ -17,8 +17,11 @@ const getAuctionLot = "lot/details/"
 // "upload files"
 const imageUpload = "image/upload"
 const auctionDetail = "auction/details/"
+const likeAuction = "auction/like/"
+const getFavouriteAuctions = "/auction/fav/me/"
+const auctionRegistration = "auction/registration/"
 
 export {
   login,
-  imageUpload, sendCode, verifyCode, changePassword, checkMail, checkPhone, signup, deleteUser, updateUser, sendCodeForgotPassword, verifyCodeForgotPassword, forgotPassword, getAuctions, auctionDetail, getAuctionLot,
+  imageUpload, sendCode, verifyCode, changePassword, checkMail, checkPhone, signup, deleteUser, updateUser, sendCodeForgotPassword, verifyCodeForgotPassword, forgotPassword, getAuctions, auctionDetail, getAuctionLot, likeAuction, getFavouriteAuctions, auctionRegistration,
 };
