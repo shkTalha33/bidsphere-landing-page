@@ -15,8 +15,8 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 
-const PersonalInfo = ({ setProgress, data, setData }) => {
-  const dispatch = useDispatch();
+const PersonalInfo = ({ setProgress, data, setData, setActive }) => {
+  const dispatch = useDispatch()
   const schema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
@@ -42,13 +42,14 @@ const PersonalInfo = ({ setProgress, data, setData }) => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    setProgress(33);
+  const onSubmit = (formData) => {
+    setProgress((prev) => Math.round(parseInt(prev) + 33.3 ))
     setData((prev) => ({
       ...prev,
-      ...data,
+      ...formData,
     }));
+    dispatch(setAuctionRegistrationData(formData))
+    setActive("document")
   };
 
   return (

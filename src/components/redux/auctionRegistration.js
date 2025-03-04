@@ -3,14 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 export const auctionRegistrationSlice = createSlice({
   name: "auctionRegistration",
   initialState: {
-    auctionRegistrationData: [],
+    auctionRegistrationData: {},
   },
   reducers: {
     setAuctionRegistrationData: (state, action) => {
-        state.auctionRegistrationData = {
-          ...state.auctionRegistrationData,
-          ...action.payload
-        };
+        state.auctionRegistrationData = {...state.auctionRegistrationData, ...action.payload}
       },
   },
 });

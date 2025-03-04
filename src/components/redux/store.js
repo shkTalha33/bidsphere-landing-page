@@ -6,6 +6,7 @@ import { ChatSlice } from './chat-message';
 import authSlice from "./loginForm";
 import sidebarSlice from "./sidebarRedux";
 import { auctionProductSlice } from './auctionProduct';
+import { auctionRegistrationSlice } from './auctionRegistration';
 
 
 const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   sidebar: sidebarSlice,
   cart: cartSlice,
   chat: ChatSlice.reducer,
-  auctionProduct: auctionProductSlice.reducer
+  auctionProduct: auctionProductSlice.reducer,
+  auctionRegistration: auctionRegistrationSlice.reducer
 });
 
 const persistConfig = {

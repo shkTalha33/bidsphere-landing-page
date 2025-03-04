@@ -1,7 +1,9 @@
 import { googlePay, paypal, stripe } from "@/components/assets/icons/icon";
+import { setAuctionRegistrationData } from "@/components/redux/auctionRegistration";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import {
   Col,
   Container,
@@ -57,9 +59,10 @@ const PaymentMethod = ({ method, currentMethod, onClick }) => (
   </div>
 );
 
-const PaymentDetail = ({ setProgress, data, setData }) => {
+const PaymentDetail = ({ setProgress, data, setData, setActive }) => {
+  const dispatch = useDispatch()
   const schema = Yup.object().shape({
-    payment: Yup.string().required("Payment Method is required"),
+    paymentId: Yup.string().required("Payment Method is required"),
     amount: Yup.number()
       .required("Deposit amount is required")
       .positive("Amount must be positive")
@@ -76,21 +79,25 @@ const PaymentDetail = ({ setProgress, data, setData }) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      payment: "",
+      paymentId: "",
       amount: "",
     },
   });
 
-  const currentMethod = watch("payment");
+  const currentMethod = watch("paymentId");
 
   const handleMethodSelect = (methodName) => {
-    setValue("payment", methodName, { shouldValidate: true });
+    setValue("paymentId", methodName, { shouldValidate: true });
   };
 
   const onSubmit = async (formData) => {
-    setProgress(100);
+    setProgress((prev) => Math.ceil(parseInt(prev) + 33.3 ))
     setData((prev) => ({ ...prev, ...formData }));
+    dispatch(setAuctionRegistrationData(formData))
+    setActive("review")
   };
+
+  console.log(data)
 
   return (
     <Container className="bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
@@ -121,7 +128,7 @@ const PaymentDetail = ({ setProgress, data, setData }) => {
           </Col>
           <Col md="6" className="flex flex-col gap-3">
             <div className="mb-3">
-              <Label className="form-label" for="payment">
+              <Label className="form-label" for="paymentId">
                 Payment Method
               </Label>
               <div className="flex flex-col gap-2">
@@ -134,9 +141,9 @@ const PaymentDetail = ({ setProgress, data, setData }) => {
                   />
                 ))}
               </div>
-              {errors.payment && (
+              {errors.paymentId && (
                 <p className="text-red-500 mt-1 text-sm">
-                  {errors.payment.message}
+                  {errors.paymentId.message}
                 </p>
               )}
             </div>

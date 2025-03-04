@@ -26,8 +26,8 @@ export default function Page() {
 
   const id = params.get("auctionId");
 
-  const handleAuctionDetail = (id) => {
-    router.push(`/auctions/lot/${id}`);
+  const handleRegistration = () => {
+    router.push(`/auctions/${id}/registration`);
   };
 
   const fetchAuctionDetail = debounce(async () => {
@@ -75,7 +75,7 @@ export default function Page() {
                     <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark capitalize">
                       {items?.name}
                     </h3>
-                    <button className="rounded-md bg_primary text_white py-2 text-sm md:text-base px-3 px-md-4 text-center">
+                    <button className="rounded-md bg_primary text_white py-2 text-sm md:text-base px-3 px-md-4 text-center" onClick={handleRegistration}>
                       Join Auction
                     </button>
                   </div>

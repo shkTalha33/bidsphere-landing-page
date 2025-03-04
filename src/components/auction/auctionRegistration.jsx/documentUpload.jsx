@@ -13,20 +13,22 @@ import { pdfIcon, uploadfileIcon } from "@/components/assets/icons/icon";
 import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { setAuctionRegistrationData } from "@/components/redux/auctionRegistration";
+import { useDispatch } from "react-redux";
 
-const DocumentUpload = ({ setProgress, data, setData }) => {
+const DocumentUpload = ({ setProgress, data, setData, setActive }) => {
   const [selectedData, setSelectedData] = useState(null);
-
+  const dispatch = useDispatch()
   const [fileLoadingIdentity, setFileLoadingIdentity] = useState(false);
   const [fileLoadingFunds, setFileLoadingFunds] = useState(false);
   const [selectedIdentityFiles, setSelectedIdentityFiles] = useState([]);
   const [selectedFundsFiles, setSelectedFundsFiles] = useState([]);
 
   const schema = Yup.object().shape({
-    identityPhotos: Yup.array()
+    id_proof: Yup.array()
       .min(1, "At least one identity proof photo is required")
       .required("Identity proof photos are required"),
-    fundsPhotos: Yup.array()
+    funds_proof: Yup.array()
       .min(1, "At least one proof of funds photo is required")
       .required("Proof of funds photos are required"),
   });
@@ -39,34 +41,34 @@ const DocumentUpload = ({ setProgress, data, setData }) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      identityPhotos: [],
-      fundsPhotos: [],
+      id_proof: [],
+      funds_proof: [],
     },
   });
 
   useEffect(() => {
     if (selectedData) {
-      if (selectedData?.identityPhotos?.length > 0) {
-        setSelectedIdentityFiles(selectedData.identityPhotos);
-        setValue("identityPhotos", selectedData.identityPhotos, {
+      if (selectedData?.id_proof?.length > 0) {
+        setSelectedIdentityFiles(selectedData.id_proof);
+        setValue("id_proof", selectedData.id_proof, {
           shouldValidate: true,
         });
       }
-      if (selectedData?.fundsPhotos?.length > 0) {
-        setSelectedFundsFiles(selectedData.fundsPhotos);
-        setValue("fundsPhotos", selectedData.fundsPhotos, {
+      if (selectedData?.funds_proof?.length > 0) {
+        setSelectedFundsFiles(selectedData.funds_proof);
+        setValue("funds_proof", selectedData.funds_proof, {
           shouldValidate: true,
         });
       }
-      trigger(["identityPhotos", "fundsPhotos"]);
+      trigger(["id_proof", "funds_proof"]);
     }
   }, [selectedData, setValue, trigger]);
 
   function getFileDetails(filename) {
     let parts = filename.split(".");
     return {
-      name: parts.slice(0, -1).join("."),
-      extension: parts.pop(),
+      title: parts.slice(0, -1).join("."),
+      type: parts.pop(),
     };
   }
 
@@ -101,7 +103,7 @@ const DocumentUpload = ({ setProgress, data, setData }) => {
     const currentFiles = isIdentity
       ? selectedIdentityFiles
       : selectedFundsFiles;
-    const fieldName = isIdentity ? "identityPhotos" : "fundsPhotos";
+    const fieldName = isIdentity ? "id_proof" : "funds_proof";
 
     
     try {
@@ -109,12 +111,12 @@ const DocumentUpload = ({ setProgress, data, setData }) => {
       let acceptPdf = true;
       setLoading(true);
       for (const file of files) {
-        const { name, extension } = getFileDetails(file?.name);
+        const { title, type } = getFileDetails(file?.name);
         const response = await uploadFile(file, acceptPdf);
         const imageData = {
-          name,
-          extension,
-          image: response.data.image,
+          title,
+          type,
+          url: response.data.image,
         };
         uploadedUrls.push(imageData);
       }
@@ -136,7 +138,7 @@ const DocumentUpload = ({ setProgress, data, setData }) => {
     const currentFiles = isIdentity
       ? selectedIdentityFiles
       : selectedFundsFiles;
-    const fieldName = isIdentity ? "identityPhotos" : "fundsPhotos";
+    const fieldName = isIdentity ? "id_proof" : "funds_proof";
 
     const updatedFiles = currentFiles.filter((_, i) => i !== index);
     setFiles(updatedFiles);
@@ -148,7 +150,7 @@ const DocumentUpload = ({ setProgress, data, setData }) => {
     const setFiles = isIdentity
       ? setSelectedIdentityFiles
       : setSelectedFundsFiles;
-    const fieldName = isIdentity ? "identityPhotos" : "fundsPhotos";
+    const fieldName = isIdentity ? "id_proof" : "funds_proof";
 
     setFiles([]);
     setValue(fieldName, [], { shouldValidate: true });
@@ -168,7 +170,7 @@ const DocumentUpload = ({ setProgress, data, setData }) => {
       <p className="text-[#959595] text-[14px] poppins_regular">{subtitle}</p>
       <div
         className={`border-2 ${
-          errors?.[type === "identity" ? "identityPhotos" : "fundsPhotos"]
+          errors?.[type === "identity" ? "id_proof" : "funds_proof"]
             ? "border-red-500"
             : "border-dashed"
         } rounded-lg p-4 text-center`}
@@ -198,10 +200,10 @@ const DocumentUpload = ({ setProgress, data, setData }) => {
           </p>
         </label>
 
-        {errors?.[type === "identity" ? "identityPhotos" : "fundsPhotos"] && (
+        {errors?.[type === "identity" ? "id_proof" : "funds_proof"] && (
           <p className="text-red-500 mt-2">
             {
-              errors[type === "identity" ? "identityPhotos" : "fundsPhotos"]
+              errors[type === "identity" ? "id_proof" : "funds_proof"]
                 .message
             }
           </p>
@@ -211,8 +213,8 @@ const DocumentUpload = ({ setProgress, data, setData }) => {
         {files.map((file, index) => (
           <div key={index} className="position-relative">
             <>
-              <Link href={file?.image} target="_blank">
-                {file?.extension === "pdf" ? (
+              <Link href={file?.url} target="_blank">
+                {file?.type === "pdf" ? (
                   <Image
                     src={pdfIcon}
                     key={index}
@@ -223,7 +225,7 @@ const DocumentUpload = ({ setProgress, data, setData }) => {
                   />
                 ) : (
                   <Image
-                    src={file?.image}
+                    src={file?.url}
                     key={index}
                     width={96}
                     height={96}
@@ -259,10 +261,13 @@ const DocumentUpload = ({ setProgress, data, setData }) => {
   );
 
   const onSubmit = async (data) => {
+    setProgress((prev) => Math.round(parseInt(prev) + 33.3 ))
     setData((prev) => ({
       ...prev,
       ...data,
     }));
+    dispatch(setAuctionRegistrationData(data))
+    setActive("security")
   };
 
   return (

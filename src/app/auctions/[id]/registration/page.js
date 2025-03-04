@@ -1,3 +1,4 @@
+
 import RegistrationDetail from '@/components/auction/auctionRegistration.jsx/registrationDetail'
 import React from 'react'
 

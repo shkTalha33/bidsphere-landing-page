@@ -1,15 +1,12 @@
 "use client";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import { Progress, Tabs } from "antd";
-import React, { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
-import AuctionItems from "../auctionItems";
-import { auctionImage } from "@/components/assets/icons/icon";
-import { useState } from "react";
-import PersonalInfo from "./personalInfo";
 import DocumentUpload from "./documentUpload";
 import PaymentDetail from "./paymentDetail";
-import { useSearchParams } from "next/navigation";
+import PersonalInfo from "./personalInfo";
 import ReviewAndSubmit from "./ReviewAndSubmit";
 
 const RegistrationDetail = () => {
@@ -17,15 +14,14 @@ const RegistrationDetail = () => {
   const [data, setData] = useState({});
   const [active, setActive] = useState("personal");
   const searchParams = useSearchParams();
-
-  console.log('data', data)
+  const completedState = []
 
   const items = [
     {
       key: "personal",
       label: "Personal Information",
       children: (
-        <PersonalInfo setProgress={setProgress} data={data} setData={setData} />
+        <PersonalInfo setProgress={setProgress} data={data} setData={setData} setActive={setActive} />
       ),
     },
     {
@@ -36,6 +32,7 @@ const RegistrationDetail = () => {
           setProgress={setProgress}
           data={data}
           setData={setData}
+          setActive={setActive}
         />
       ),
     },
@@ -47,6 +44,7 @@ const RegistrationDetail = () => {
           setProgress={setProgress}
           data={data}
           setData={setData}
+          setActive={setActive}
         />
       ),
     },
@@ -58,6 +56,7 @@ const RegistrationDetail = () => {
           setProgress={setProgress}
           data={data}
           setData={setData}
+          progress={progress}
         />
       ),
     },
@@ -75,9 +74,8 @@ const RegistrationDetail = () => {
   };
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(searchParams);
     const selectedTab = params.get("selected");
-    console.log("selectedTab", selectedTab);
     if (selectedTab) {
       setActive(selectedTab);
     } else {
@@ -90,8 +88,6 @@ const RegistrationDetail = () => {
       setActive("personal");
     }
   }, []);
-
-  console.log("activeTab", active);
 
   return (
     <>
