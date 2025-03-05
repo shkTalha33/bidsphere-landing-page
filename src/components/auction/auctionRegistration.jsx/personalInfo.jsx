@@ -1,5 +1,4 @@
 "use client";
-
 import { setAuctionRegistrationData } from "@/components/redux/auctionRegistration";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
@@ -14,17 +13,38 @@ import {
   Row,
 } from "reactstrap";
 import * as Yup from "yup";
+import { allCountries  } from "country-region-data";
+import { useState } from "react";
 
-const PersonalInfo = ({ setProgress, data, setData, setActive }) => {
-  const dispatch = useDispatch()
+const PersonalInfo = ({
+  setProgress,
+  setIsCompleted,
+  isCompleted,
+  setActive,
+}) => {
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [regions, setRegions] = useState([]);
+  const dispatch = useDispatch();
+
   const schema = Yup.object().shape({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
+    fname: Yup.string().required("First name is required"),
+    lname: Yup.string().required("Last name is required"),
     email: Yup.string().required("Email is required"),
-    phoneNumber: Yup.string().required("Phone number is required"),
+    phone: Yup.string().required("Phone number is required"),
     country: Yup.string().required("Country is required"),
     region: Yup.string().required("Region is required"),
   });
+
+  const handleCountryChange = (e, field) => {
+    const country = e.target.value;
+    field.onChange(country);
+    setSelectedCountry(country);
+
+    const countryData = allCountries .find(
+      ([name, code]) => code === country
+    );
+    setRegions(countryData ? countryData[2]?.map(([region]) => region) : []);
+  };
 
   const {
     handleSubmit,
@@ -33,23 +53,22 @@ const PersonalInfo = ({ setProgress, data, setData, setActive }) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      fname: "",
+      lname: "",
       email: "",
-      phoneNumber: "",
+      phone: "",
       country: "",
       region: "",
     },
   });
 
   const onSubmit = (formData) => {
-    setProgress((prev) => Math.round(parseInt(prev) + 33.3 ))
-    setData((prev) => ({
-      ...prev,
-      ...formData,
-    }));
-    dispatch(setAuctionRegistrationData(formData))
-    setActive("document")
+    if (!isCompleted?.personal) {
+      setProgress((prev) => parseInt(prev) + 33.3);
+      setIsCompleted((prev) => ({ ...prev, personal: true }));
+    }
+    dispatch(setAuctionRegistrationData(formData));
+    setActive("document");
   };
 
   return (
@@ -57,43 +76,43 @@ const PersonalInfo = ({ setProgress, data, setData, setActive }) => {
       <Form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Row className="g-4">
           <Col md="6">
-            <Label className="poppins_medium" for="firstName">
+            <Label className="poppins_medium" for="fname">
               First Name
             </Label>
             <Controller
-              name="firstName"
+              name="fname"
               control={control}
               render={({ field }) => (
                 <Input
                   {...field}
-                  id="firstName"
+                  id="fname"
                   placeholder="Enter Here"
-                  invalid={!!errors.firstName}
+                  invalid={!!errors.fname}
                 />
               )}
             />
-            {errors.firstName && (
-              <FormFeedback>{errors.firstName.message}</FormFeedback>
+            {errors.fname && (
+              <FormFeedback>{errors.fname.message}</FormFeedback>
             )}
           </Col>
           <Col md="6">
-            <Label className="poppins_medium" for="lastName">
+            <Label className="poppins_medium" for="lname">
               Last Name
             </Label>
             <Controller
-              name="lastName"
+              name="lname"
               control={control}
               render={({ field }) => (
                 <Input
                   {...field}
-                  id="lastName"
+                  id="lname"
                   placeholder="Enter Here"
-                  invalid={!!errors.lastName}
+                  invalid={!!errors.lname}
                 />
               )}
             />
-            {errors.lastName && (
-              <FormFeedback>{errors.lastName.message}</FormFeedback>
+            {errors.lname && (
+              <FormFeedback>{errors.lname.message}</FormFeedback>
             )}
           </Col>
 
@@ -119,23 +138,23 @@ const PersonalInfo = ({ setProgress, data, setData, setActive }) => {
             )}
           </Col>
           <Col md="6">
-            <Label className="poppins_medium" for="phoneNumber">
+            <Label className="poppins_medium" for="phone">
               Phone Number
             </Label>
             <Controller
-              name="phoneNumber"
+              name="phone"
               control={control}
               render={({ field }) => (
                 <Input
                   {...field}
-                  id="phoneNumber"
+                  id="phone"
                   placeholder="Enter Here"
-                  invalid={!!errors.phoneNumber}
+                  invalid={!!errors.phone}
                 />
               )}
             />
-            {errors.phoneNumber && (
-              <FormFeedback>{errors.phoneNumber.message}</FormFeedback>
+            {errors.phone && (
+              <FormFeedback>{errors.phone.message}</FormFeedback>
             )}
           </Col>
 
@@ -151,14 +170,16 @@ const PersonalInfo = ({ setProgress, data, setData, setActive }) => {
                   {...field}
                   id="country"
                   type="select"
-                  placeholder="Enter Here"
+                  placeholder="Select Country"
                   invalid={!!errors.country}
+                  onChange={(e) => handleCountryChange(e, field)}
                 >
                   <option value="">Select Country</option>
-                  <option value="us">United States</option>
-                  <option value="uk">United Kingdom</option>
-                  <option value="ca">Canada</option>
-                  {/* Add more countries as needed */}
+                  {allCountries ?.map(([name, code]) => (
+                    <option key={code} value={code}>
+                      {name}
+                    </option>
+                  ))}
                 </Input>
               )}
             />
@@ -166,6 +187,7 @@ const PersonalInfo = ({ setProgress, data, setData, setActive }) => {
               <FormFeedback>{errors.country.message}</FormFeedback>
             )}
           </Col>
+
           <Col md="6">
             <Label className="poppins_medium" for="region">
               Region
@@ -178,14 +200,16 @@ const PersonalInfo = ({ setProgress, data, setData, setActive }) => {
                   {...field}
                   id="region"
                   type="select"
-                  placeholder="Enter Here"
+                  placeholder="Select Region"
                   invalid={!!errors.region}
+                  disabled={!selectedCountry}
                 >
                   <option value="">Select Region</option>
-                  <option value="north">North</option>
-                  <option value="south">South</option>
-                  <option value="east">East</option>
-                  <option value="west">West</option>
+                  {regions?.map((region) => (
+                    <option key={region} value={region}>
+                      {region}
+                    </option>
+                  ))}
                 </Input>
               )}
             />
@@ -198,7 +222,7 @@ const PersonalInfo = ({ setProgress, data, setData, setActive }) => {
         <Col md="6" className="text-end ml-auto">
           <button
             type="submit"
-            className="bg_primary text-white px-6 py-2 py-sm-3 rounded-lg w-full sm:w-[50%] poppins_semibold text-base sm:text-[22px]"
+             className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
           >
             Next
           </button>

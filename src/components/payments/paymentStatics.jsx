@@ -4,31 +4,22 @@
 import Image from "next/image";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
-import { IoMdCheckmark } from "react-icons/io";
-import { RxCross2 } from "react-icons/rx";
 import { Col, Container, Row } from "reactstrap";
 import {
-  car1,
   ClockDark,
   ClockWhite,
   depositDark,
   depositWhite,
   refundDark,
   refundWhite,
-  topupWallet,
+  topupWallet
 } from "../assets/icons/icon";
 import Breadcrumbs from "../common/Breadcrumbs";
-import ProductTable from "../common/dataTables/productTable";
+import DepositTracking from "./depositTracking";
 
 export default function PaymentStatics() {
   const [currentActiveButton, setCurrentActiveButton] =
     useState("deposit tracking");
-  const [filterStatics, setFilterStatics] = useState("all");
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(0);
-  const [lastId, setLastId] = useState(0);
-  const [count, setCount] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
   const onChange = (key) => {
     console.log(key);
   };
@@ -47,180 +38,6 @@ export default function PaymentStatics() {
     },
   ];
 
-  const columns = [
-    {
-      name: "#",
-      minWidth: "20px",
-      maxWidth: "60px",
-      cell: (_, index) => (
-        <span className="text-center flex items-center justify-center">
-          {index + 1 || "1"}
-        </span>
-      ),
-    },
-    {
-      name: "Item Name",
-      minWidth: "150px",
-      maxWidth: "350px",
-      cell: (row) => (
-        <div className="flex items-center justify-center capitalize gap-2">
-          <Image src={car1} className="w-8" />
-          {row?.name || "John"}
-        </div>
-      ),
-    },
-    {
-      name: "Category",
-      minWidth: "120px",
-      maxWidth: "250px",
-      cell: (row) => (
-        <div className="flex items-center justify-center">
-          {row?.category || "Hybrid"}
-        </div>
-      ),
-    },
-    {
-      name: "Invoice#",
-      minWidth: "120px",
-      maxWidth: "250px",
-      cell: (row) => (
-        <div className="flex items-center justify-center">
-          {row?.invoice || "Hybrid"}
-        </div>
-      ),
-    },
-    {
-      name: "Date & Time",
-      minWidth: "150px",
-      maxWidth: "350px",
-      cell: (row) => (
-        <div className="flex items-center justify-center capitalize">
-          {row?.date || "12/12/2000"}
-        </div>
-      ),
-    },
-    {
-      name: "Deposit Amount",
-      minWidth: "120px",
-      maxWidth: "200px",
-      cell: (row) => (
-        <div className="flex items-center justify-center capitalize cursor-pointer">
-          {row?.depositAmount}
-        </div>
-      ),
-    },
-    {
-      name: "Status",
-      minWidth: "120px",
-      maxWidth: "200px",
-      cell: (row) => (
-        <div
-          className={`flex items-center justify-center capitalize whitespace-nowrap rounded-full cursor-pointer bg-[#EAF5F2] px-4 py-1 ${row?.status === "approved"
-            ? "text-[#56CDAD] bg-[#EAF5F2]"
-            : row.status === "pending"
-              ? "text-[#4640DE] bg-[#E8E7F7]"
-              : " bg-[#EAF5F2] text-[#6DC1FE]"
-            } capitalize`}
-        >
-          {row?.status}
-        </div>
-      ),
-    },
-    {
-      name: "Action",
-      minWidth: "80px",
-      maxWidth: "100px",
-      cell: (row) => (
-        <div className="flex  items-center justify-between">
-          <div
-            className="p-1 bg_mainsecondary rounded-full ml-3 w-9 h-9 cursor-pointer flex items-center justify-center"
-          //  onClick={() => handleLeadDetails(row)}
-          >
-            <div className="w-6 h-6 rounded-full bg-[#1ECD2D] flex items-center justify-center text-white">
-              <IoMdCheckmark size={18} className="text_primary" color="#fff" />
-            </div>
-          </div>
-          <div
-            className="p-1 bg_mainsecondary rounded-full ml-3 w-9 h-9 cursor-pointer flex items-center justify-center"
-          //  onClick={() => handleLeadDetails(row)}
-          >
-            <div className="w-6 h-6 rounded-full bg-[#FF0000] flex items-center justify-center text-white">
-              <RxCross2 size={18} className="text_primary" color="#fff" />
-            </div>
-          </div>
-        </div>
-      ),
-    },
-  ];
-
-  const data = [
-    {
-      name: "Laptop",
-      category: "Electronics",
-      invoice: "INV-1001",
-      date: "2024-02-19 10:30 AM",
-      depositAmount: "$1200",
-      status: "approved",
-    },
-    {
-      name: "Smartphone",
-      category: "Electronics",
-      invoice: "INV-1002",
-      date: "2024-02-18 03:45 PM",
-      depositAmount: "$800",
-      status: "completed",
-    },
-    {
-      name: "Coffee Table",
-      category: "Furniture",
-      invoice: "INV-1003",
-      date: "2024-02-17 12:15 PM",
-      depositAmount: "$300",
-      status: "pending",
-    },
-    {
-      name: "Washing Machine",
-      category: "Appliances",
-      invoice: "INV-1004",
-      date: "2024-02-16 09:00 AM",
-      depositAmount: "$950",
-      status: "approved",
-    },
-    {
-      name: "Gaming Chair",
-      category: "Furniture",
-      invoice: "INV-1005",
-      date: "2024-02-15 06:20 PM",
-      depositAmount: "$450",
-      status: "completed",
-    },
-    {
-      name: "Headphones",
-      category: "Electronics",
-      invoice: "INV-1006",
-      date: "2024-02-14 02:10 PM",
-      depositAmount: "$150",
-      status: "pending",
-    },
-    {
-      name: "Microwave Oven",
-      category: "Appliances",
-      invoice: "INV-1007",
-      date: "2024-02-13 11:30 AM",
-      depositAmount: "$500",
-      status: "approved",
-    },
-    {
-      name: "Office Desk",
-      category: "Furniture",
-      invoice: "INV-1008",
-      date: "2024-02-12 08:45 AM",
-      depositAmount: "$700",
-      status: "completed",
-    },
-  ];
-
-  const filterButtons = ["all", "pending", "approve", "review"];
 
   return (
     <>
@@ -299,38 +116,7 @@ export default function PaymentStatics() {
               })}
             </div>
           </Col>
-          <Col lg="9" className="">
-            <div className="flex items-center justify-start gap-4 md:gap-10 w-full no-scrollbar overflow-auto bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px]">
-              {filterButtons.map((button) => {
-                return (
-                  <button
-                    className={`${filterStatics === button
-                      ? "bg_primary text_white"
-                      : "bg-[#E2F5F0] text_primary"
-                      } rounded-[16px] px-5 py-2 poppins_regular capitalize`}
-                    onClick={() => setFilterStatics(button)}
-                  >
-                    {button}
-                  </button>
-                );
-              })}
-            </div>
-            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px] mt-3">
-              <ProductTable
-                rowHeading="deposit tracking"
-                count={count}
-                loading={loading}
-                setCurrentPage={setPage}
-                currentPage={page}
-                columns={columns}
-                data={data}
-                setPageNumber={setPage}
-                type="search"
-                setLastId={setLastId}
-                itemsPerPage={itemsPerPage}
-              />
-            </div>
-          </Col>
+          <DepositTracking />
         </Row>
       </Container>
     </>

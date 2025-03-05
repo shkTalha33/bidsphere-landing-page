@@ -20,8 +20,10 @@ const auctionDetail = "auction/details/"
 const likeAuction = "auction/like/"
 const getFavouriteAuctions = "/auction/fav/me/"
 const auctionRegistration = "auction/registration/"
+const editAuctionRegistration = "auction/edit-registration/"
+const registrationTracking = "auction/me/registration/"
 
 export {
   login,
-  imageUpload, sendCode, verifyCode, changePassword, checkMail, checkPhone, signup, deleteUser, updateUser, sendCodeForgotPassword, verifyCodeForgotPassword, forgotPassword, getAuctions, auctionDetail, getAuctionLot, likeAuction, getFavouriteAuctions, auctionRegistration,
+  imageUpload, sendCode, verifyCode, changePassword, checkMail, checkPhone, signup, deleteUser, updateUser, sendCodeForgotPassword, verifyCodeForgotPassword, forgotPassword, getAuctions, auctionDetail, getAuctionLot, likeAuction, getFavouriteAuctions, auctionRegistration, registrationTracking, editAuctionRegistration
 };

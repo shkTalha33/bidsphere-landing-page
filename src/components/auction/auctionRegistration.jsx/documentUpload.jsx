@@ -16,9 +16,14 @@ import toast from "react-hot-toast";
 import { setAuctionRegistrationData } from "@/components/redux/auctionRegistration";
 import { useDispatch } from "react-redux";
 
-const DocumentUpload = ({ setProgress, data, setData, setActive }) => {
+const DocumentUpload = ({
+  setProgress,
+  setIsCompleted,
+  isCompleted,
+  setActive,
+}) => {
   const [selectedData, setSelectedData] = useState(null);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [fileLoadingIdentity, setFileLoadingIdentity] = useState(false);
   const [fileLoadingFunds, setFileLoadingFunds] = useState(false);
   const [selectedIdentityFiles, setSelectedIdentityFiles] = useState([]);
@@ -73,23 +78,23 @@ const DocumentUpload = ({ setProgress, data, setData, setActive }) => {
   }
 
   const handleFileChange = async (event, type) => {
-    console.log("selectedFundsFiles.length", selectedFundsFiles.length)
-    console.log("selectedIdentityFiles.length", selectedIdentityFiles.length)
+    console.log("selectedFundsFiles.length", selectedFundsFiles.length);
+    console.log("selectedIdentityFiles.length", selectedIdentityFiles.length);
     // if ((selectedIdentityFiles.length || selectedFundsFiles.length) >= 5) {
     //   toast.error("You cannot upload more than 5 files")
     //   return
     // }
     let files = Array.from(event.target.files);
     if (type === "identity") {
-      const totalFiles = selectedIdentityFiles.length + files.length
+      const totalFiles = selectedIdentityFiles.length + files.length;
       if (totalFiles > 5) {
-        return toast.error("Cannot upload more than 5 files")
+        return toast.error("Cannot upload more than 5 files");
       }
     }
     if (type === "funds") {
-      const totalFiles = selectedFundsFiles.length + files.length
+      const totalFiles = selectedFundsFiles.length + files.length;
       if (totalFiles > 5) {
-        return toast.error("Cannot upload more than 5 files")
+        return toast.error("Cannot upload more than 5 files");
       }
     }
     if (files.length === 0) return;
@@ -105,7 +110,6 @@ const DocumentUpload = ({ setProgress, data, setData, setActive }) => {
       : selectedFundsFiles;
     const fieldName = isIdentity ? "id_proof" : "funds_proof";
 
-    
     try {
       const uploadedUrls = [...currentFiles];
       let acceptPdf = true;
@@ -202,10 +206,7 @@ const DocumentUpload = ({ setProgress, data, setData, setActive }) => {
 
         {errors?.[type === "identity" ? "id_proof" : "funds_proof"] && (
           <p className="text-red-500 mt-2">
-            {
-              errors[type === "identity" ? "id_proof" : "funds_proof"]
-                .message
-            }
+            {errors[type === "identity" ? "id_proof" : "funds_proof"].message}
           </p>
         )}
       </div>
@@ -261,13 +262,12 @@ const DocumentUpload = ({ setProgress, data, setData, setActive }) => {
   );
 
   const onSubmit = async (data) => {
-    setProgress((prev) => Math.round(parseInt(prev) + 33.3 ))
-    setData((prev) => ({
-      ...prev,
-      ...data,
-    }));
-    dispatch(setAuctionRegistrationData(data))
-    setActive("security")
+    if (!isCompleted?.document) {
+      setProgress((prev) => parseInt(prev) + 33.3);
+      setIsCompleted((prev) => ({ ...prev, document: true }));
+    }
+    dispatch(setAuctionRegistrationData(data));
+    setActive("security");
   };
 
   return (
@@ -298,7 +298,7 @@ const DocumentUpload = ({ setProgress, data, setData, setActive }) => {
           <button
             type="submit"
             disabled={fileLoadingFunds || fileLoadingIdentity}
-            className="bg_primary text-white px-6 py-2 py-sm-3 rounded-lg w-full sm:w-[50%] poppins_semibold text-base sm:text-[22px]"
+            className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
           >
             Next
           </button>

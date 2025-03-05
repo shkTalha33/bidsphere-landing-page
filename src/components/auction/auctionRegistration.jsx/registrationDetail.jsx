@@ -14,43 +14,55 @@ const RegistrationDetail = () => {
   const [data, setData] = useState({});
   const [active, setActive] = useState("personal");
   const searchParams = useSearchParams();
-  const completedState = []
+  const [isCompleted, setIsCompleted] = useState({
+    personal: false,
+    document: false,
+    security: false,
+  });
 
   const items = [
     {
       key: "personal",
       label: "Personal Information",
       children: (
-        <PersonalInfo setProgress={setProgress} data={data} setData={setData} setActive={setActive} />
+        <PersonalInfo
+          setProgress={setProgress}
+          setActive={setActive}
+          setIsCompleted={setIsCompleted}
+          isCompleted={isCompleted}
+        />
       ),
     },
     {
       key: "document",
       label: "Document Upload",
+      disabled: progress < 33,
       children: (
         <DocumentUpload
           setProgress={setProgress}
-          data={data}
-          setData={setData}
           setActive={setActive}
+          setIsCompleted={setIsCompleted}
+          isCompleted={isCompleted}
         />
       ),
     },
     {
       key: "security",
       label: "Security Deposit Payment",
+      disabled: progress < 66,
       children: (
         <PaymentDetail
           setProgress={setProgress}
-          data={data}
-          setData={setData}
           setActive={setActive}
+          setIsCompleted={setIsCompleted}
+          isCompleted={isCompleted}
         />
       ),
     },
     {
       key: "review",
       label: "Review & Submit",
+      disabled: progress < 100,
       children: (
         <ReviewAndSubmit
           setProgress={setProgress}

@@ -59,7 +59,7 @@ const PaymentMethod = ({ method, currentMethod, onClick }) => (
   </div>
 );
 
-const PaymentDetail = ({ setProgress, data, setData, setActive }) => {
+const PaymentDetail = ({setProgress, setIsCompleted, isCompleted, setActive}) => {
   const dispatch = useDispatch()
   const schema = Yup.object().shape({
     paymentId: Yup.string().required("Payment Method is required"),
@@ -91,13 +91,13 @@ const PaymentDetail = ({ setProgress, data, setData, setActive }) => {
   };
 
   const onSubmit = async (formData) => {
-    setProgress((prev) => Math.ceil(parseInt(prev) + 33.3 ))
-    setData((prev) => ({ ...prev, ...formData }));
+    if (!isCompleted?.security) {
+      setProgress((prev) => parseInt(prev) + 34);
+     setIsCompleted((prev) => ({ ...prev, security: true }));
+    }
     dispatch(setAuctionRegistrationData(formData))
     setActive("review")
   };
-
-  console.log(data)
 
   return (
     <Container className="bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
@@ -152,7 +152,7 @@ const PaymentDetail = ({ setProgress, data, setData, setActive }) => {
         <Col md="6" className="text-end ml-auto">
           <button
             type="submit"
-            className="bg_primary text-white px-6 py-2 py-sm-3 rounded-lg w-full sm:w-[50%] poppins_semibold text-base sm:text-[22px]"
+            className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
           >
             Confirm Payment
           </button>

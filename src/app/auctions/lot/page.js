@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, Container, Row } from "reactstrap";
 
 export default function Page() {
-  const { get } = ApiFunction();
+  const { get, userData } = ApiFunction();
   const params = useSearchParams();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -25,9 +25,16 @@ export default function Page() {
   );
 
   const id = params.get("auctionId");
+  console.log(userData)
 
   const handleRegistration = () => {
-    router.push(`/auctions/${id}/registration`);
+    if (items?.applications) {
+      if (items?.applications?.status === "approved") {
+        router.push(`/auctions/${id}/registration`);
+      }
+    }else{
+      router.push(`/auctions/${id}/registration`);
+    }
   };
 
   const fetchAuctionDetail = debounce(async () => {
@@ -54,6 +61,8 @@ export default function Page() {
     }
   }, []);
 
+  console.log('items', items?.applications)
+
   return (
     <main className="bg_mainsecondary p-2 py-md-4">
       <Container className="bg_white rounded-[9px] mt-20 p-3 p-sm-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
@@ -76,7 +85,7 @@ export default function Page() {
                       {items?.name}
                     </h3>
                     <button className="rounded-md bg_primary text_white py-2 text-sm md:text-base px-3 px-md-4 text-center" onClick={handleRegistration}>
-                      Join Auction
+                      {items?.applications ? items?.applications?.status === "approved" ? "Join Auction" : "Registration Pending" : "Resgister Auction"}
                     </button>
                   </div>
                   <p className="poppins_regular text-xs md:text-sm md:w-[80%] text_primary mb-0 sm:mb-3 capitalize ">
