@@ -16,7 +16,7 @@ import { format } from "date-fns";
 import { formatPrice } from "../utils/formatPrice";
 
 export default function DepositTracking() {
-  const [filterStatics, setFilterStatics] = useState("all");
+  const [filterStatics, setFilterStatics] = useState("");
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [lastId, setLastId] = useState(1);
@@ -133,21 +133,19 @@ export default function DepositTracking() {
   ];
 
   const filterButtons = [
-    { name: "All", value: "all" },
+    { name: "All", value: "" },
     { name: "Pending", value: "pending" },
     { name: "Under Review", value: "under-review" },
     { name: "Approved", value: "approved" },
     { name: "Rejected", value: "rejected" },
   ];
 
-  const fetchAuctionDetail = debounce(async () => {
+  const fetchAuctionRegistrations = debounce(async () => {
     setLoading(true);
-    await get(`${registrationTracking}${lastId}`)
+    await get(`${registrationTracking}${lastId}?status=${filterStatics}`)
       .then((result) => {
         console.log(result);
-        if (result?.success) {
           setData(result?.applications);
-        }
       })
       .catch((err) => {
         handleError(err);
@@ -158,8 +156,8 @@ export default function DepositTracking() {
   }, 300);
 
   useEffect(() => {
-    fetchAuctionDetail();
-  }, []);
+    fetchAuctionRegistrations();
+  }, [filterStatics]);
 
   return (
     <>

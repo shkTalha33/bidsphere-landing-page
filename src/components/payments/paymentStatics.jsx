@@ -116,7 +116,8 @@ export default function PaymentStatics() {
               })}
             </div>
           </Col>
-          <DepositTracking />
+          
+          {currentActiveButton === "deposit tracking" && <DepositTracking />}
         </Row>
       </Container>
     </>

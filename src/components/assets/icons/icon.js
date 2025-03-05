@@ -96,11 +96,10 @@ import transitLight from "../png/transitLight.png";
 import transitDark from "../png/transitDark.png";
 import deliveredDark from "../png/deliveredDark.png";
 import deliveredLight from "../png/deliveredLight.png";
-
-
+import noData from "../png/noData.webp";
 
 export {
-  avataruser, fashion1, auctionlogo2, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage, pdfIcon,
+  avataruser, fashion1, auctionlogo2, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage, pdfIcon, noData,
   icon1dark, icon2dark, icon3dark, icon4dark, icon5dark, icon6dark, icon7dark, icon8dark, icon9dark,
   icon1light, icon2light, icon3light, icon4light, icon5light, icon6light, icon7light, icon8light, icon9light, icon10light, icon11light, icon12light, icon13light,
   appleicon,

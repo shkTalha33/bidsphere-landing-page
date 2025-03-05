@@ -11,6 +11,7 @@ import {
 import ReactPaginate from "react-paginate";
 import { HashLoader } from "react-spinners";
 import { Input } from "reactstrap";
+import NoData from "../NoDataComponent";
 
 // const BootstrapCheckbox = forwardRef((props, ref) => (
 //     <div className='form-check'>
@@ -173,13 +174,14 @@ const ProductTable = ({
               className="py-5"
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <HashLoader size={18} />
+              <HashLoader size={18} color="#21CD9D" />
             </div>
           ) : (
             <div className="react-dataTable">
               <DataTable
                 noHeader
                 pagination
+                noDataComponent={<NoData description={"No records to show..."} />}
                 selectableRowsNoSelectAll
                 columns={columns}
                 paginationPerPage={10}
