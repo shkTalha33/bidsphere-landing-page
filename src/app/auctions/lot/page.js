@@ -15,23 +15,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, Container, Row } from "reactstrap";
 
 export default function Page() {
-  const { get, userData } = ApiFunction();
+  const { get } = ApiFunction();
   const params = useSearchParams();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const items = useSelector(
     (state) => state?.auctionProduct?.auctionProductData
   );
 
   const id = params.get("auctionId");
-  console.log(userData)
 
   const handleRegistration = () => {
     if (items?.applications) {
-      if (items?.applications?.status === "approved") {
-        router.push(`/auctions/${id}/registration`);
-      }
+      router.push(`/auctions/${id}/detail`);
     }else{
       router.push(`/auctions/${id}/registration`);
     }

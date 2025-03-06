@@ -78,12 +78,6 @@ const DocumentUpload = ({
   }
 
   const handleFileChange = async (event, type) => {
-    console.log("selectedFundsFiles.length", selectedFundsFiles.length);
-    console.log("selectedIdentityFiles.length", selectedIdentityFiles.length);
-    // if ((selectedIdentityFiles.length || selectedFundsFiles.length) >= 5) {
-    //   toast.error("You cannot upload more than 5 files")
-    //   return
-    // }
     let files = Array.from(event.target.files);
     if (type === "identity") {
       const totalFiles = selectedIdentityFiles.length + files.length;

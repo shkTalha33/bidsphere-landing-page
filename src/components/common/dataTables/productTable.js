@@ -181,7 +181,9 @@ const ProductTable = ({
               <DataTable
                 noHeader
                 pagination
-                noDataComponent={<NoData description={"No records to show..."} />}
+                noDataComponent={
+                  <NoData description={"No records to show..."} />
+                }
                 selectableRowsNoSelectAll
                 columns={columns}
                 paginationPerPage={10}
@@ -211,7 +213,6 @@ const ProductTable = ({
                   },
                 }}
               />
-
             </div>
           )}
         </div>

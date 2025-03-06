@@ -1,7 +1,14 @@
+"use client"
+import ApiFunction from "@/components/api/apiFuntions";
+import { auctionDetail } from "@/components/api/ApiRoutesFile";
+import { handleError } from "@/components/api/errorHandler";
 import { googlePay, paypal, stripe } from "@/components/assets/icons/icon";
 import { setAuctionRegistrationData } from "@/components/redux/auctionRegistration";
 import { yupResolver } from "@hookform/resolvers/yup";
+import debounce from "debounce";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import {
@@ -60,17 +67,38 @@ const PaymentMethod = ({ method, currentMethod, onClick }) => (
 );
 
 const PaymentDetail = ({setProgress, setIsCompleted, isCompleted, setActive}) => {
+  const [item, setItem] = useState([])
+  const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
+  const { id } = useParams();
+  const { get} = ApiFunction()
   const schema = Yup.object().shape({
     paymentId: Yup.string().required("Payment Method is required"),
-    amount: Yup.number()
-      .required("Deposit amount is required")
-      .positive("Amount must be positive")
-      .typeError("Please enter a valid number"),
   });
 
+
+const fetchAuctionDetail = debounce(async () => {
+  setLoading(true);
+  await get(`${auctionDetail}${id}`)
+    .then((result) => {
+      console.log(result)
+      // if (result?.success) {
+        setItem(result?.auction);
+      // }
+    })
+    .catch((err) => {
+      handleError(err);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+}, 300);
+
+useEffect(() => {
+  fetchAuctionDetail();
+}, []);
+
   const {
-    register,
     handleSubmit,
     setValue,
     watch,
@@ -91,12 +119,23 @@ const PaymentDetail = ({setProgress, setIsCompleted, isCompleted, setActive}) =>
   };
 
   const onSubmit = async (formData) => {
-    if (!isCompleted?.security) {
-      setProgress((prev) => parseInt(prev) + 34);
-     setIsCompleted((prev) => ({ ...prev, security: true }));
+    const data = {
+      paymentId: formData?.paymentId,
+      amount: item?.depositamount
     }
-    dispatch(setAuctionRegistrationData(formData))
-    setActive("review")
+    setProgress((prev) => {
+      const newProgress = !isCompleted?.security ? parseInt(prev) + 34 : prev;
+      if (newProgress >= 100) {
+        setActive("review");
+      }
+      return newProgress;
+    });
+  
+    if (!isCompleted?.security) {
+      setIsCompleted((prev) => ({ ...prev, security: true }));
+    }
+  
+    dispatch(setAuctionRegistrationData(data));
   };
 
   return (
@@ -117,6 +156,8 @@ const PaymentDetail = ({setProgress, setIsCompleted, isCompleted, setActive}) =>
                 <Input
                   {...field}
                   id="amount"
+                  disabled
+                  value={item?.depositamount}
                   placeholder="Enter Here"
                   invalid={!!errors.amount}
                 />
@@ -152,6 +193,7 @@ const PaymentDetail = ({setProgress, setIsCompleted, isCompleted, setActive}) =>
         <Col md="6" className="text-end ml-auto">
           <button
             type="submit"
+            disabled={loading}
             className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
           >
             Confirm Payment

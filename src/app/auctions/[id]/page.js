@@ -93,8 +93,6 @@ const AuctionDetailPage = () => {
     }
   }, [item]);
 
-  console.log(item);
-
   useEffect(() => {
     if (selectedData) {
       setSelectedFiles(selectedData?.images?.slice(0, 3) || []);

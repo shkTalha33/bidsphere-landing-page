@@ -56,6 +56,7 @@ const RegistrationDetail = () => {
           setActive={setActive}
           setIsCompleted={setIsCompleted}
           isCompleted={isCompleted}
+          progress={progress}
         />
       ),
     },

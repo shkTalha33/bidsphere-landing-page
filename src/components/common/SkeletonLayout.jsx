@@ -9,7 +9,7 @@ export default function SkeletonLayout({index, title, key}) {
         className="space-y-3 p-3 bg_white shadow-sm rounded-lg border-[1px] border-[#ECEFF3]"
         style={{ boxShadow: "0px 8px 24px rgba(149, 157, 165, 0.2)" }}
       >
-        <Skeleton.Image
+        <Skeleton.Node
           className="!w-full !h-[200px] max-h-[200px] object-cover rounded-xl"
           active
           style={{
