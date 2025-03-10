@@ -12,18 +12,20 @@ const AuctionItemDetailModal = ({ item, openModal, setOpenModal }) => {
       footer={null}
       centered
       width={700}
-      bodyStyle={{ 
-        maxHeight: '90vh',
-        overflowY: 'auto',
-        paddingRight: '16px'
+      bodyStyle={{
+        maxHeight: "90vh",
+        overflowY: "auto",
+        paddingRight: "16px",
       }}
       maskClosable={true}
     >
       <div className="flex flex-col gap-4">
         <div className="w-full h-[380px] relative">
-          <Image 
-            src={item?.image} 
-            alt={item?.title} 
+          <Image
+            src={item?.image}
+            alt={item?.title}
+            width={"100%"}
+            height={380}
             className="object-cover rounded-lg"
             fill
           />

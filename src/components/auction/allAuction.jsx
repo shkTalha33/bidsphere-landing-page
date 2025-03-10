@@ -1,25 +1,18 @@
 "use client";
 import { Tabs } from "antd";
-import debounce from "debounce";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Col, Container, Row } from "reactstrap";
-import ApiFunction from "../api/apiFuntions";
 import { getAuctions } from "../api/ApiRoutesFile";
-import { handleError } from "../api/errorHandler";
 import Breadcrumbs from "../common/Breadcrumbs";
+import { useRequestQuery } from "../redux/apiSlice";
 import AuctionItems from "./auctionItems";
-import { useDispatch, useSelector } from "react-redux";
-import { setAllAuctions } from "../redux/auctionProduct";
 
 export default function AllAuction() {
-  const { get } = ApiFunction();
   const [loading, setLoading] = useState(true);
   const [isLoadMore, setIsLoadMore] = useState(false);
   const [count, setCount] = useState(0);
   const [lastId, setLastId] = useState(1);
   const [activeTab, setActiveTab] = useState("all");
-  const dispatch = useDispatch();
-  const data = useSelector((state) => state?.auctionProduct?.allAuctions);
 
   const onChange = (key) => {
     setActiveTab(key);
@@ -28,36 +21,9 @@ export default function AllAuction() {
     setLoading(true);
   };
 
-  const fetchAuctions = debounce(async () => {
-    if (loading) {
-      setLoading(true);
-    } else {
-      setIsLoadMore(true);
-    }
-    await get(`${getAuctions}${lastId}`)
-      .then((result) => {
-        dispatch(setAllAuctions(result?.auctions));
-        setCount(result?.count?.totalPage || 0);
-      })
-      .catch((err) => {
-        handleError(err);
-      })
-      .finally(() => {
-        if (loading) {
-          setLoading(false);
-        } else {
-          setIsLoadMore(false);
-        }
-      });
-  }, 300);
-
-  useEffect(() => {
-    if (data?.length === 0 || lastId > 1) {
-      fetchAuctions();
-    } else {
-      setLoading(false);
-    }
-  }, [lastId, activeTab]);
+  const { data, isLoading, error } = useRequestQuery({
+    endpoint: `${getAuctions}${lastId}`,
+  });
 
   const items = [
     {
@@ -65,8 +31,8 @@ export default function AllAuction() {
       label: "All Auctions",
       children: (
         <AuctionItems
-          items={data}
-          loading={loading}
+          items={data?.auctions}
+          loading={isLoading}
           setLastId={setLastId}
           isLoadMore={isLoadMore}
           setIsLoadMore={setIsLoadMore}
@@ -80,8 +46,8 @@ export default function AllAuction() {
       label: "Trending Auctions",
       children: (
         <AuctionItems
-          items={data}
-          loading={loading}
+          items={data?.auctions}
+          loading={isLoading}
           setLastId={setLastId}
           isLoadMore={isLoadMore}
           setIsLoadMore={setIsLoadMore}
@@ -95,8 +61,8 @@ export default function AllAuction() {
       label: "Popular Auctions",
       children: (
         <AuctionItems
-          items={data}
-          loading={loading}
+          items={data?.auctions}
+          loading={isLoading}
           isLoadMore={isLoadMore}
           setIsLoadMore={setIsLoadMore}
           setLastId={setLastId}

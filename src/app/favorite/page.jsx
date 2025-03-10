@@ -5,6 +5,7 @@ import { getFavouriteAuctions } from "@/components/api/ApiRoutesFile";
 import { handleError } from "@/components/api/errorHandler";
 import AuctionItems from "@/components/auction/auctionItems";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
+import { useRequestQuery } from "@/components/redux/apiSlice";
 import { setFavouriteAuctions } from "@/components/redux/auctionProduct";
 import debounce from "debounce";
 import { useEffect, useState } from "react";
@@ -18,38 +19,42 @@ export default function Page() {
   const [isLoadMore, setIsLoadMore] = useState(false);
   const { get } = ApiFunction();
   const dispatch = useDispatch();
-  const data = useSelector((state) => state?.auctionProduct?.favirouteAuctions);
+  // const data = useSelector((state) => state?.auctionProduct?.favirouteAuctions);
 
-  const fetchAuctions = debounce(async () => {
-    if (loading) {
-      setLoading(true);
-    } else {
-      setIsLoadMore(true);
-    }
-    await get(`${getFavouriteAuctions}${lastId}`)
-      .then((result) => {
-        dispatch(setFavouriteAuctions(result?.auctions));
-        setCount(result?.count?.totalPage || 0);
-      })
-      .catch((err) => {
-        handleError(err);
-      })
-      .finally(() => {
-        if (loading) {
-          setLoading(false);
-        } else {
-          setIsLoadMore(false);
-        }
-      });
-  }, 300);
+  const { data, isLoading, error } = useRequestQuery({
+    endpoint: `${getFavouriteAuctions}${lastId}`,
+  });
 
-  useEffect(() => {
-    if (data?.length === 0 || lastId > 1) {
-      fetchAuctions();
-    } else {
-      setLoading(false);
-    }
-  }, [lastId]);
+  // const fetchAuctions = debounce(async () => {
+  //   if (loading) {
+  //     setLoading(true);
+  //   } else {
+  //     setIsLoadMore(true);
+  //   }
+  //   await get(`${getFavouriteAuctions}${lastId}`)
+  //     .then((result) => {
+  //       dispatch(setFavouriteAuctions(result?.auctions));
+  //       setCount(result?.count?.totalPage || 0);
+  //     })
+  //     .catch((err) => {
+  //       handleError(err);
+  //     })
+  //     .finally(() => {
+  //       if (loading) {
+  //         setLoading(false);
+  //       } else {
+  //         setIsLoadMore(false);
+  //       }
+  //     });
+  // }, 300);
+
+  // useEffect(() => {
+  //   if (data?.length === 0 || lastId > 1) {
+  //     fetchAuctions();
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // }, [lastId]);
 
   return (
     <main className="bg_mainsecondary p-4">
@@ -65,10 +70,10 @@ export default function Page() {
           </Row>
         </div>
         <AuctionItems
-          items={data}
+          items={data?.auctions}
           count={count}
           isLoadMore={isLoadMore}
-          loading={loading}
+          loading={isLoading}
           setIsLoadMore={setIsLoadMore}
           setLastId={setLastId}
           lastId={lastId}

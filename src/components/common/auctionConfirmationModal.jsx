@@ -20,7 +20,7 @@ const AuctionConfirmationModal = ({ item, openModal, setOpenModal }) => {
     >
       <div className="flex flex-col gap-2 gap-md-4 items-center justify-center py-5">
         <div className="w-20 md:w-[160px] relative">
-          <Image src={item?.image} alt={item?.title} />
+          <Image src={item?.image} width={80} height={80} alt={item?.title} />
         </div>
         <h6 className="capitalize text-2xl sm:text-2xl md:text-3xl lg:text-[44px] text-[#14181B] poppins_semibold mt-1 mb-1 mb-md-2">
           {item?.title}

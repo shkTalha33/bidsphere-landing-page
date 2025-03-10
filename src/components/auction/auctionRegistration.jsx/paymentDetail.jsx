@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import ApiFunction from "@/components/api/apiFuntions";
 import { auctionDetail } from "@/components/api/ApiRoutesFile";
 import { handleError } from "@/components/api/errorHandler";
@@ -57,7 +57,13 @@ const PaymentMethod = ({ method, currentMethod, onClick }) => (
         currentMethod === method.name ? "bg-white" : "bg-[#E7FAF4]"
       }`}
     >
-      <Image src={method.icon} alt={method.label} className="w-6 h-6" />
+      <Image
+        src={method.icon}
+        width={24}
+        height={24}
+        alt={method.label}
+        className="w-6 h-6"
+      />
     </div>
     <div>
       <h6 className="text-[#0D0D12] poppins_medium mb-1">{method.label}</h6>
@@ -66,37 +72,41 @@ const PaymentMethod = ({ method, currentMethod, onClick }) => (
   </div>
 );
 
-const PaymentDetail = ({setProgress, setIsCompleted, isCompleted, setActive}) => {
-  const [item, setItem] = useState([])
-  const [loading, setLoading] = useState(true)
-  const dispatch = useDispatch()
+const PaymentDetail = ({
+  setProgress,
+  setIsCompleted,
+  isCompleted,
+  setActive,
+}) => {
+  const [item, setItem] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
   const { id } = useParams();
-  const { get} = ApiFunction()
+  const { get } = ApiFunction();
   const schema = Yup.object().shape({
     paymentId: Yup.string().required("Payment Method is required"),
   });
 
-
-const fetchAuctionDetail = debounce(async () => {
-  setLoading(true);
-  await get(`${auctionDetail}${id}`)
-    .then((result) => {
-      console.log(result)
-      // if (result?.success) {
+  const fetchAuctionDetail = debounce(async () => {
+    setLoading(true);
+    await get(`${auctionDetail}${id}`)
+      .then((result) => {
+        console.log(result);
+        // if (result?.success) {
         setItem(result?.auction);
-      // }
-    })
-    .catch((err) => {
-      handleError(err);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
-}, 300);
+        // }
+      })
+      .catch((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, 300);
 
-useEffect(() => {
-  fetchAuctionDetail();
-}, []);
+  useEffect(() => {
+    fetchAuctionDetail();
+  }, []);
 
   const {
     handleSubmit,
@@ -121,8 +131,8 @@ useEffect(() => {
   const onSubmit = async (formData) => {
     const data = {
       paymentId: formData?.paymentId,
-      amount: item?.depositamount
-    }
+      amount: item?.depositamount,
+    };
     setProgress((prev) => {
       const newProgress = !isCompleted?.security ? parseInt(prev) + 34 : prev;
       if (newProgress >= 100) {
@@ -130,11 +140,11 @@ useEffect(() => {
       }
       return newProgress;
     });
-  
+
     if (!isCompleted?.security) {
       setIsCompleted((prev) => ({ ...prev, security: true }));
     }
-  
+
     dispatch(setAuctionRegistrationData(data));
   };
 
