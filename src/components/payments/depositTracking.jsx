@@ -1,18 +1,17 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
+import { format } from "date-fns";
+import debounce from "debounce";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { Col } from "reactstrap";
-import { car1 } from "../assets/icons/icon";
-import ProductTable from "../common/dataTables/productTable";
 import ApiFunction from "../api/apiFuntions";
-import { handleError } from "../api/errorHandler";
-import debounce from "debounce";
 import { registrationTracking } from "../api/ApiRoutesFile";
-import { format } from "date-fns";
+import { handleError } from "../api/errorHandler";
+import ProductTable from "../common/dataTables/productTable";
 import { formatPrice } from "../utils/formatPrice";
 
 export default function DepositTracking() {
@@ -42,7 +41,13 @@ export default function DepositTracking() {
       maxWidth: "350px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize gap-2">
-          <Image src={row?.auction?.images[0]} width={32} height={32} alt={row?.auction?.name} className="w-8 rounded-full h-8" />
+          <Image
+            src={row?.auction?.images[0]}
+            width={32}
+            height={32}
+            alt={row?.auction?.name}
+            className="w-8 rounded-full h-8"
+          />
           {row?.auction?.name || "N/A"}
         </div>
       ),
@@ -73,7 +78,9 @@ export default function DepositTracking() {
       maxWidth: "350px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize">
-          {row?.createdAt ? format(new Date(row?.createdAt), "dd/MM/yyyy") : "12/12/2000"}
+          {row?.createdAt
+            ? format(new Date(row?.createdAt), "dd/MM/yyyy")
+            : "12/12/2000"}
         </div>
       ),
     },
@@ -145,7 +152,7 @@ export default function DepositTracking() {
     await get(`${registrationTracking}${lastId}?status=${filterStatics}`)
       .then((result) => {
         console.log(result);
-          setData(result?.applications);
+        setData(result?.applications);
       })
       .catch((err) => {
         handleError(err);
@@ -162,7 +169,7 @@ export default function DepositTracking() {
   return (
     <>
       <Col lg="9" className="">
-        <div className="flex items-center justify-start gap-4 md:gap-10 w-full no-scrollbar overflow-auto bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px]">
+        <div className="flex items-center justify-start gap-4 md:gap-10 w-full no-scrollbar overflow-auto bg-[#FAFAFA] py-3 px-3 px-md-5 rounded-[11px]">
           {filterButtons.map((button) => {
             return (
               <button

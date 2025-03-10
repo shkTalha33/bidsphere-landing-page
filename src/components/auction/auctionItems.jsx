@@ -8,8 +8,12 @@ import ApiFunction from "../api/apiFuntions";
 import { likeAuction } from "../api/ApiRoutesFile";
 import { handleError } from "../api/errorHandler";
 import SkeletonLayout from "../common/SkeletonLayout";
-import { setAuctionProduct } from "../redux/auctionProduct";
+import {
+  setAuctionProduct,
+  setFavouriteAuctions,
+} from "../redux/auctionProduct";
 import { formatPrice } from "../utils/formatPrice";
+import NoData from "../common/NoDataComponent";
 
 export default function AuctionItems({
   items,
@@ -19,7 +23,6 @@ export default function AuctionItems({
   isLoadMore,
   pageType = "",
   lastId,
-  setData,
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -31,7 +34,7 @@ export default function AuctionItems({
     if (items?.length) {
       const initialLikes = {};
       items.forEach((item) => {
-        initialLikes[item._id] = item.likes || false; // Ensure liked state is set
+        initialLikes[item._id] = item.likes || false;
       });
       setLikedItems(initialLikes);
     }
@@ -45,7 +48,8 @@ export default function AuctionItems({
     });
 
     if (pageType === "favourites" && !isLiked) {
-      setData((prevData) => prevData.filter((item) => item._id !== auctionId));
+      const updatedData = items?.filter((item) => item?._id !== auctionId);
+      dispatch(setFavouriteAuctions(updatedData));
     }
 
     try {
@@ -133,9 +137,12 @@ export default function AuctionItems({
           </>
         )}
       </div>
-      {console.log(count)}
-      {console.log(lastId)}
-      {(count !== 0 && count !== lastId && count !== 1) && (
+      <div className="">
+        {items?.length === 0 && (
+          <NoData description={"There are no auctions to display"} />
+        )}
+      </div>
+      {count > lastId && (
         <div className="py-5 text-center w-full">
           <button
             className="bg_primary text_white py-2 text-base px-5 text-center rounded-md"

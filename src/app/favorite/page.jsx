@@ -5,17 +5,20 @@ import { getFavouriteAuctions } from "@/components/api/ApiRoutesFile";
 import { handleError } from "@/components/api/errorHandler";
 import AuctionItems from "@/components/auction/auctionItems";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
+import { setFavouriteAuctions } from "@/components/redux/auctionProduct";
 import debounce from "debounce";
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Page() {
   const [count, setCount] = useState(0);
   const [lastId, setLastId] = useState(1);
   const [loading, setLoading] = useState(1);
   const [isLoadMore, setIsLoadMore] = useState(false);
-  const [data, setData] = useState([]);
-  const { get } = ApiFunction()
+  const { get } = ApiFunction();
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state?.auctionProduct?.favirouteAuctions);
 
   const fetchAuctions = debounce(async () => {
     if (loading) {
@@ -25,9 +28,8 @@ export default function Page() {
     }
     await get(`${getFavouriteAuctions}${lastId}`)
       .then((result) => {
-        console.log(result)
-          setData((prev) => [...prev, ...result?.auctions]);
-          setCount(result?.count?.totalPage || 0);
+        dispatch(setFavouriteAuctions(result?.auctions));
+        setCount(result?.count?.totalPage || 0);
       })
       .catch((err) => {
         handleError(err);
@@ -42,7 +44,11 @@ export default function Page() {
   }, 300);
 
   useEffect(() => {
-    fetchAuctions();
+    if (data?.length === 0 || lastId > 1) {
+      fetchAuctions();
+    } else {
+      setLoading(false);
+    }
   }, [lastId]);
 
   return (
@@ -67,7 +73,6 @@ export default function Page() {
           setLastId={setLastId}
           lastId={lastId}
           pageType="favourites"
-          setData={setData}
         />
       </div>
     </main>

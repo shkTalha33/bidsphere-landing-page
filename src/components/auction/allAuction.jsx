@@ -8,22 +8,24 @@ import { getAuctions } from "../api/ApiRoutesFile";
 import { handleError } from "../api/errorHandler";
 import Breadcrumbs from "../common/Breadcrumbs";
 import AuctionItems from "./auctionItems";
+import { useDispatch, useSelector } from "react-redux";
+import { setAllAuctions } from "../redux/auctionProduct";
 
 export default function AllAuction() {
   const { get } = ApiFunction();
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isLoadMore, setIsLoadMore] = useState(false);
   const [count, setCount] = useState(0);
   const [lastId, setLastId] = useState(1);
-  const [activeTab, setActiveTab] = useState("all"); // Track active tab
+  const [activeTab, setActiveTab] = useState("all");
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state?.auctionProduct?.allAuctions);
 
   const onChange = (key) => {
-    setActiveTab(key); // Update active tab
-    setLastId(1); // Reset lastId to default
+    setActiveTab(key);
+    setLastId(1);
     setCount(0);
-    setData([]); // Reset data to default
-    setLoading(true); // Set loading state to true before fetching new data
+    setLoading(true);
   };
 
   const fetchAuctions = debounce(async () => {
@@ -34,7 +36,7 @@ export default function AllAuction() {
     }
     await get(`${getAuctions}${lastId}`)
       .then((result) => {
-        setData((prev) => [...prev, ...result?.auctions]);
+        dispatch(setAllAuctions(result?.auctions));
         setCount(result?.count?.totalPage || 0);
       })
       .catch((err) => {
@@ -50,7 +52,11 @@ export default function AllAuction() {
   }, 300);
 
   useEffect(() => {
-    fetchAuctions();
+    if (data?.length === 0 || lastId > 1) {
+      fetchAuctions();
+    } else {
+      setLoading(false);
+    }
   }, [lastId, activeTab]);
 
   const items = [

@@ -9,17 +9,22 @@ import { handleError } from "../api/errorHandler";
 import AuctionCard from "../common/AuctionCard";
 import SectionHeadings from "../common/sectionHeadings";
 import SkeletonLayout2 from "../common/SkeletonLayout2";
+import { setAuctionProduct } from "../redux/auctionProduct";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ForYou() {
   const { get } = ApiFunction();
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const data = useSelector(
+    (state) => state?.auctionProduct?.auctionProductData
+  );
 
   const fetchAuctions = debounce(async () => {
     await get(`${getAuctions}1`)
       .then((result) => {
         if (result?.success) {
-          setData(result?.auctions);
+          dispatch(setAuctionProduct(result?.auctions));
         }
       })
       .catch((err) => {
@@ -31,8 +36,12 @@ export default function ForYou() {
   }, 300);
 
   useEffect(() => {
-    fetchAuctions();
-  }, [fetchAuctions]);
+    if (data.length === 0) {
+      fetchAuctions();
+    } else {
+      setLoading(false);
+    }
+  }, [data]);
 
   return (
     <>
@@ -53,15 +62,15 @@ export default function ForYou() {
               }
             />
             {loading ? (
-               <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
-                { Array.from({ length: 10 }).map((_, index) => (
-                   <SkeletonLayout2 index={index} />
-                 ))}
-               </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
+                {Array.from({ length: 10 }).map((_, index) => (
+                  <SkeletonLayout2 index={index} />
+                ))}
+              </div>
             ) : (
               <Col md="12">
                 <motion.div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
-                  {data.map((item, index) => {
+                  {data?.map((item, index) => {
                     return <AuctionCard item={item} index={index} />;
                   })}
                 </motion.div>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Dropdown, message, Space } from "antd";
 import Image from "next/image";
@@ -18,22 +18,22 @@ export default function Header() {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const pathname = usePathname();
   const isLogin = useSelector((state) => state?.auth?.isLogin);
-  const { userData } = ApiFunction()
+  const { userData } = ApiFunction();
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const isHomeOrHashRoute = pathname === "/";
 
   const handleLogoutFun = async () => {
-    dispatch(setLogout())
-    message.success('Logout Successfully')
-  }
+    dispatch(setLogout());
+    message.success("Logout Successfully");
+  };
 
   useEffect(() => {
-    const protectedRoutes = ['/pricing', '/about', '/contact', '/orders'];
+    const protectedRoutes = ["/pricing", "/about", "/contact", "/orders"];
     if (!isLogin && protectedRoutes.includes(pathname)) {
-      router.push('/');
+      router.push("/");
     }
   }, [isLogin, pathname, router]);
 
@@ -63,24 +63,39 @@ export default function Header() {
         <div className="gap-[1rem] lg:gap-[1.87rem] flex items-center">
           <Link
             href="/auctions"
-            className={`${pathname === "/auctions" ? "text_primary poppins_medium" :
-              isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} 
+            className={`${
+              pathname === "/auctions"
+                ? "text_primary poppins_medium"
+                : isHomeOrHashRoute && !isScrolled
+                ? "text_white"
+                : "text_dark"
+            } 
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
           >
             Auctions
           </Link>
           <Link
             href="/payments"
-            className={`${pathname === "/payments" ? "text_primary poppins_medium" :
-              isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"}
+            className={`${
+              pathname === "/payments"
+                ? "text_primary poppins_medium"
+                : isHomeOrHashRoute && !isScrolled
+                ? "text_white"
+                : "text_dark"
+            }
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
           >
             Payments
           </Link>
           <Link
             href="/orders"
-            className={`${pathname === "/orders" ? "text_primary poppins_medium" :
-              isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"}
+            className={`${
+              pathname === "/orders"
+                ? "text_primary poppins_medium"
+                : isHomeOrHashRoute && !isScrolled
+                ? "text_white"
+                : "text_dark"
+            }
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
           >
             Orders
@@ -88,26 +103,46 @@ export default function Header() {
         </div>
       </div>
       <div className="hidden d-md-flex items-center gap-[0.5rem]">
-        <button >
-          <Image src='/assets/notification.png' width={30} height={30} alt="" />
+        <button>
+          <Image src="/assets/notification.png" width={30} height={30} alt="" />
         </button>
-        <button >
-          <Image src='/assets/chat.png' width={30} height={30} alt="" />
+        <button>
+          <Image src="/assets/chat.png" width={30} height={30} alt="" />
         </button>
         <button onClick={() => router.push("/favorite")}>
-          <Image src='/assets/heart.png' width={30} height={30} alt="" />
+          <Image src="/assets/heart.png" width={30} height={30} alt="" />
         </button>
-        <Dropdown
-          menu={{ items }}
-        >
-          <Space className=''>
+        <Dropdown menu={{ items }}>
+          <Space className="">
             <div className="flex cursor-pointer gap-2 items-center w-fit">
               <div>
-                <Image src={avataruser} width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} alt="" />
+                <Image
+                  src={avataruser}
+                  width={40}
+                  height={40}
+                  style={{ borderRadius: "50%", objectFit: "cover" }}
+                  alt=""
+                />
               </div>
               <div className="flex flex-col">
-                <h6 className={`${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} mb-0 text-sm poppins_regular`}>{userData?.fname + ' ' + userData?.lname}</h6>
-                <span className={`${isHomeOrHashRoute && !isScrolled ? "text_light" : "text_dark"} line-clamp-1 max-w-32 text-xs poppins_regular`}>{userData?.address}</span>
+                <h6
+                  className={`${
+                    isHomeOrHashRoute && !isScrolled
+                      ? "text_white"
+                      : "text_dark"
+                  } mb-0 text-sm poppins_regular`}
+                >
+                  {userData?.fname + " " + userData?.lname}
+                </h6>
+                <span
+                  className={`${
+                    isHomeOrHashRoute && !isScrolled
+                      ? "text_light"
+                      : "text_dark"
+                  } line-clamp-1 max-w-32 text-xs poppins_regular`}
+                >
+                  {userData?.address}
+                </span>
               </div>
             </div>
           </Space>
@@ -120,13 +155,13 @@ export default function Header() {
   const NonAuthenticatedNav = () => (
     <div className="hidden d-md-flex items-center gap-[0.5rem] lg:gap-[0.8rem]">
       <button
-        onClick={() => router.push('/auth/login')}
+        onClick={() => router.push("/auth/login")}
         className="px-[2rem] py-2 border-[1px] transition-colors bg_white duration-300 ease-in-out rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline"
       >
         Login
       </button>
       <button
-        onClick={() => router.push('/auth/signup')}
+        onClick={() => router.push("/auth/signup")}
         className="px-[2rem] py-2 bg_primary text_white rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline primary_hover"
       >
         Sign Up
@@ -136,17 +171,24 @@ export default function Header() {
 
   const items = [
     {
-      key: '1',
-      label: <Link href={'/profile/personal-information'}>Profile</Link>,
-      icon: <BiUser size={18} />
+      key: "1",
+      label: <Link href={"/profile/personal-information"}>Profile</Link>,
+      icon: <BiUser size={18} />,
     },
 
     {
-      key: '6',
-      label: <Link onClick={() => {
-        handleLogoutFun()
-      }} href={'/auth/login'}>Logout</Link>,
-      icon: <TbLogout size={18} />
+      key: "6",
+      label: (
+        <Link
+          onClick={() => {
+            handleLogoutFun();
+          }}
+          href={"/auth/login"}
+        >
+          Logout
+        </Link>
+      ),
+      icon: <TbLogout size={18} />,
     },
   ];
 
@@ -164,14 +206,18 @@ export default function Header() {
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => router.push("/")}
           >
-            <h2 className="poppins_medium text-2xl text_primary">Castle Auction</h2>
+            <h2 className="poppins_medium text-2xl text_primary">
+              Castle Auction
+            </h2>
           </div>
           {isLogin ? <AuthenticatedNav /> : <NonAuthenticatedNav />}
 
           <div className="flex md:hidden">
             <button onClick={toggleMenu} aria-label="Toggle menu">
               <svg
-                className={`${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} w-6 h-6 cursor-pointer`}
+                className={`${
+                  isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"
+                } w-6 h-6 cursor-pointer`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -191,30 +237,49 @@ export default function Header() {
         {/* Improved Mobile Menu - Centered and Full-Featured with consistent text coloring */}
         <div
           className={`flex flex-col items-center justify-center w-full mt-0 space-y-4 overflow-hidden transition-all duration-300 ease-in-out md:hidden 
-            ${isMenuOpen ? "max-h-[400px] opacity-100 py-4" : "max-h-0 opacity-0"}`}
+            ${
+              isMenuOpen
+                ? "max-h-[400px] opacity-100 py-4"
+                : "max-h-0 opacity-0"
+            }`}
         >
           {isLogin ? (
             <>
               <Link
                 href="/auctions"
-                className={`no-underline text-center w-full py-2 ${pathname === "/auctions" ? "text_primary poppins_medium" :
-                  isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} cursor-pointer poppins_regular`}
+                className={`no-underline text-center w-full py-2 ${
+                  pathname === "/auctions"
+                    ? "text_primary poppins_medium"
+                    : isHomeOrHashRoute && !isScrolled
+                    ? "text_white"
+                    : "text_dark"
+                } cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
                 Auctions
               </Link>
               <Link
                 href="/payments"
-                className={`no-underline text-center w-full py-2 ${pathname === "/payments" ? "text_primary poppins_medium" :
-                  isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} cursor-pointer poppins_regular`}
+                className={`no-underline text-center w-full py-2 ${
+                  pathname === "/payments"
+                    ? "text_primary poppins_medium"
+                    : isHomeOrHashRoute && !isScrolled
+                    ? "text_white"
+                    : "text_dark"
+                } cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
                 Payments
               </Link>
               <Link
                 href="/orders"
-                className={`no-underline text-center w-full py-2 ${pathname === "/orders" ? "text_primary poppins_medium" :
-                  isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} cursor-pointer poppins_regular`}
+                className={`no-underline text-center w-full py-2 ${
+                  pathname === "/orders"
+                    ? "text_primary poppins_medium"
+                    : isHomeOrHashRoute && !isScrolled
+                    ? "text_white"
+                    : "text_dark"
+                } cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
                 Orders
@@ -223,26 +288,58 @@ export default function Header() {
               {/* Mobile Action Icons */}
               <div className="flex justify-center gap-6 w-full mt-2">
                 <button>
-                  <Image src='/assets/notification.png' width={26} height={26} alt="" />
+                  <Image
+                    src="/assets/notification.png"
+                    width={26}
+                    height={26}
+                    alt=""
+                  />
                 </button>
                 <button>
-                  <Image src='/assets/chat.png' width={26} height={26} alt="" />
+                  <Image src="/assets/chat.png" width={26} height={26} alt="" />
                 </button>
                 <button onClick={() => router.push("/favorite")}>
-                  <Image src='/assets/heart.png' width={26} height={26} alt="" />
+                  <Image
+                    src="/assets/heart.png"
+                    width={26}
+                    height={26}
+                    alt=""
+                  />
                 </button>
               </div>
-              <Dropdown
-                menu={{ items }}
-              >
-                <Space className=''>
+              <Dropdown menu={{ items }}>
+                <Space className="">
                   <div className="flex cursor-pointer gap-2 items-center w-fit">
                     <div>
-                      <Image src={avataruser} width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover' }} alt="" />
+                      <Image
+                        src={avataruser}
+                        width={40}
+                        height={40}
+                        style={{ borderRadius: "50%", objectFit: "cover" }}
+                        alt=""
+                      />
                     </div>
                     <div className="flex flex-col">
-                      <h6 className={`${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"} mb-0 text-sm poppins_regular`}>{(userData?.fname || '') + ' ' + (userData?.lname || '')}</h6>
-                      <span className={`${isHomeOrHashRoute && !isScrolled ? "text_light" : "text_dark"} line-clamp-1 max-w-32 text-xs poppins_regular`}>{userData?.address}</span>
+                      <h6
+                        className={`${
+                          isHomeOrHashRoute && !isScrolled
+                            ? "text_white"
+                            : "text_dark"
+                        } mb-0 text-sm poppins_regular`}
+                      >
+                        {(userData?.fname || "") +
+                          " " +
+                          (userData?.lname || "")}
+                      </h6>
+                      <span
+                        className={`${
+                          isHomeOrHashRoute && !isScrolled
+                            ? "text_light"
+                            : "text_dark"
+                        } line-clamp-1 max-w-32 text-xs poppins_regular`}
+                      >
+                        {userData?.address}
+                      </span>
                     </div>
                   </div>
                 </Space>
@@ -252,16 +349,18 @@ export default function Header() {
             <div className="flex flex-col items-center w-full gap-3">
               <Link
                 href="/"
-                className={`no-underline text-center w-full py-2 ${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"
-                  } cursor-pointer poppins_regular`}
+                className={`no-underline text-center w-full py-2 ${
+                  isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"
+                } cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
                 Home
               </Link>
               <Link
                 href="/auctions"
-                className={`no-underline text-center w-full py-2 ${isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"
-                  } cursor-pointer poppins_regular`}
+                className={`no-underline text-center w-full py-2 ${
+                  isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"
+                } cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
                 Auctions
@@ -269,17 +368,20 @@ export default function Header() {
               <div className="flex justify-center gap-3 w-full mt-3">
                 <button
                   onClick={() => {
-                    router.push('/auth/login');
+                    router.push("/auth/login");
                     handleNavClose();
                   }}
-                  className={`px-[1.5rem] py-[0.5rem] border-[1px] rounded-3 text-[0.85rem] cursor-pointer poppins_medium no-underline ${isHomeOrHashRoute && !isScrolled ? "border-white text_white" : "border-gray-300"
-                    }`}
+                  className={`px-[1.5rem] py-[0.5rem] border-[1px] rounded-3 text-[0.85rem] cursor-pointer poppins_medium no-underline ${
+                    isHomeOrHashRoute && !isScrolled
+                      ? "border-white text_white"
+                      : "border-gray-300"
+                  }`}
                 >
                   Login
                 </button>
                 <button
                   onClick={() => {
-                    router.push('/auth/signup');
+                    router.push("/auth/signup");
                     handleNavClose();
                   }}
                   className="px-[1.5rem] py-[0.5rem] rounded-3 text-[0.85rem] text_white cursor-pointer poppins_medium bg_primary no-underline primary_hover"
