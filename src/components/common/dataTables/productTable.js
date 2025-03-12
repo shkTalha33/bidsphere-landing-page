@@ -46,6 +46,8 @@ const ProductTable = ({
 
   const handleModal = () => setModal(!modal);
 
+  console.log("{Math.ceil(count / 10)}", Math.ceil(count / 10));
+
   const handleFilter = (e) => {
     const value = e.target.value;
     let updatedData = [];
@@ -105,13 +107,13 @@ const ProductTable = ({
   };
   // ** Custom Pagination
   const CustomPagination = () => (
-    <div className="flex justify-between items-center p-3">
+    <div className="flex justify-center items-center p-3">
       <ReactPaginate
         previousLabel={<Previous size={15} />}
         nextLabel={<Next size={15} />}
         forcePage={currentPage}
         onPageChange={(page) => handlePagination(page)}
-        pageCount={Math.ceil(count / 10)}
+        pageCount={count}
         breakLabel="..."
         pageRangeDisplayed={2}
         marginPagesDisplayed={2}
@@ -126,12 +128,12 @@ const ProductTable = ({
         previousClassName="page-item prev-item"
         containerClassName="pagination react-paginate separated-pagination pagination-sm pe-4 justify-end mt-4"
       />
-      <div className="text-xs sm:text-base poppins_medium mt-4">
+      {/* <div className="text-xs sm:text-base poppins_medium mt-4">
         {`Showing ${currentPage * 10 + 1} to ${Math.min(
           (currentPage + 1) * 10,
           count
         )} of ${count} entries`}
-      </div>
+      </div> */}
     </div>
   );
 

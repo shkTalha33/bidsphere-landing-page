@@ -12,32 +12,37 @@ import {
   depositWhite,
   refundDark,
   refundWhite,
-  topupWallet
+  topupWallet,
 } from "../assets/icons/icon";
 import Breadcrumbs from "../common/Breadcrumbs";
 import DepositTracking from "./depositTracking";
 
 export default function PaymentStatics() {
-  const [currentActiveButton, setCurrentActiveButton] =
-    useState("deposit tracking");
+  const [currentActiveButton, setCurrentActiveButton] = useState("deposit");
   const onChange = (key) => {
     console.log(key);
   };
 
   const sideButtons = [
     {
+      key: "deposit",
       title: "deposit tracking",
       lightImage: depositWhite,
       darkImage: depositDark,
     },
-    { title: "payment history", lightImage: ClockWhite, darkImage: ClockDark },
     {
+      key: "payment",
+      title: "payment history",
+      lightImage: ClockWhite,
+      darkImage: ClockDark,
+    },
+    {
+      key: "refund",
       title: "refund requests",
       lightImage: refundWhite,
       darkImage: refundDark,
     },
   ];
-
 
   return (
     <>
@@ -45,7 +50,9 @@ export default function PaymentStatics() {
         <Row>
           <Col md="12" className="">
             <Breadcrumbs pageTitle={"Payment"} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">Payment</h3>
+            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+              Payment
+            </h3>
           </Col>
         </Row>
       </Container>
@@ -77,19 +84,21 @@ export default function PaymentStatics() {
               {sideButtons.map((button) => {
                 return (
                   <button
-                    className={`${currentActiveButton === button?.title
-                      ? "bg_primary text-white"
-                      : "bg-[#F5F5F5] text-[#909495]"
-                      } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
-                    onClick={() => setCurrentActiveButton(button?.title)}
+                    className={`${
+                      currentActiveButton === button?.key
+                        ? "bg_primary text-white"
+                        : "bg-[#F5F5F5] text-[#909495]"
+                    } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
+                    onClick={() => setCurrentActiveButton(button?.key)}
                   >
                     <div className="flex items-center w-full justify-between">
                       <div className="flex gap-3 items-center">
                         <div
-                          className={`w-9 h-9 ${currentActiveButton === button?.title
-                            ? "bg-white"
-                            : "bg_primary"
-                            } flex items-center justify-center p-2 rounded-full`}
+                          className={`w-9 h-9 ${
+                            currentActiveButton === button?.title
+                              ? "bg-white"
+                              : "bg_primary"
+                          } flex items-center justify-center p-2 rounded-full`}
                         >
                           <Image
                             src={
@@ -103,10 +112,11 @@ export default function PaymentStatics() {
                         {button?.title}
                       </div>
                       <div
-                        className={`${currentActiveButton === button?.title
-                          ? "bg-white text_dark"
-                          : "bg_primary text-white"
-                          } flex items-center justify-center p-1 rounded-full`}
+                        className={`${
+                          currentActiveButton === button?.title
+                            ? "bg-white text_dark"
+                            : "bg_primary text-white"
+                        } flex items-center justify-center p-1 rounded-full`}
                       >
                         {<FaArrowRight size={15} />}
                       </div>
@@ -116,8 +126,8 @@ export default function PaymentStatics() {
               })}
             </div>
           </Col>
-          
-          {currentActiveButton === "deposit tracking" && <DepositTracking />}
+
+          {currentActiveButton === "deposit" && <DepositTracking />}
         </Row>
       </Container>
     </>

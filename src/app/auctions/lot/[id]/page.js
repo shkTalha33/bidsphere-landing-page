@@ -1,14 +1,8 @@
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import {
-  getAuctionLot
-} from "@/components/api/ApiRoutesFile";
+import { getAuctionLot } from "@/components/api/ApiRoutesFile";
 import { handleError } from "@/components/api/errorHandler";
-import {
-  avataruser,
-  confirmBid,
-  winBid
-} from "@/components/assets/icons/icon";
+import { avataruser, confirmBid, winBid } from "@/components/assets/icons/icon";
 import AuctionConfirmationModal from "@/components/common/auctionConfirmationModal";
 import TopSection from "@/components/common/TopSection";
 import { Avatar } from "antd";
@@ -425,7 +419,7 @@ export default function Page() {
                 src={selectedImage}
                 width={1200}
                 height={800}
-                className="w-[80vw] !max-h-[600px]"
+                className="w-full h-full !object-contain"
                 alt="Preview"
               />
             </div>

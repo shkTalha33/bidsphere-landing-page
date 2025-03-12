@@ -271,9 +271,9 @@ const AuctionDetailPage = () => {
           </Container>
           <Container>
             <div className="">
-            <p className="poppins_medium text-2xl mb-0 ">
-              All Lots({item?.lots?.length})
-            </p>
+              <p className="poppins_medium text-2xl mb-0 ">
+                All Lots({item?.lots?.length})
+              </p>
             </div>
           </Container>
           <AuctionLots loading={loading} items={item} />
@@ -295,26 +295,25 @@ const AuctionDetailPage = () => {
         centered
         contentClassName="bg-transparent border-0"
       >
-     <ModalBody className="p-0 flex items-center justify-center">
-  <div className="relative !max-w-[90vw] !max-h-[90vh]">
-    <button
-      className="absolute top-4 right-5 bg-black/70 hover:bg-black rounded-full p-2 z-10 transition-colors duration-300"
-      onClick={() => setPreviewModal(false)}
-    >
-      <X className="text-white" />
-    </button>
-    <div className="flex items-center justify-center">
-      <Image
-        src={selectedImage}
-        width={1200}
-        height={600}
-        className="!max-w-[90vw] !max-h-[90vh] object-fill"
-        alt="Preview"
-      />
-    </div>
-  </div>
-</ModalBody>
-
+        <ModalBody className="p-0 flex items-center justify-center">
+          <div className="relative !max-w-[90vw] !max-h-[90vh]">
+            <button
+              className="absolute top-4 right-5 bg-black/70 hover:bg-black rounded-full p-2 z-10 transition-colors duration-300"
+              onClick={() => setPreviewModal(false)}
+            >
+              <X className="text-white" />
+            </button>
+            <div className="flex items-center justify-center">
+              <Image
+                src={selectedImage}
+                width={1200}
+                height={600}
+                className="w-full h-full !object-contain"
+                alt="Preview"
+              />
+            </div>
+          </div>
+        </ModalBody>
       </Modal>
     </main>
   );

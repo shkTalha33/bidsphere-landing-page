@@ -1,58 +1,25 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { IoHeartSharp } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { useLikeAuctionMutation } from "../redux/apiSlice";
-import SkeletonLayout from "../common/SkeletonLayout";
-import { setAuctionProduct } from "../redux/auctionProduct";
-import { formatPrice } from "../utils/formatPrice";
-import NoData from "../common/NoDataComponent";
+import NoData from "@/components/common/NoDataComponent";
+import SkeletonLayout from "@/components/common/SkeletonLayout";
+import { setAuctionProduct } from "@/components/redux/auctionProduct";
+import { formatPrice } from "@/components/utils/formatPrice";
 
-export default function AuctionItems({
-  items,
+export default function FavoriteAuctionItems({
+  items = [],
   loading,
   count,
   lastId,
   handleLoadMore,
+  toggleFavorite,
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // Use the mutation hook from our updated API slice
-  const [likeAuction, { isLoading: isLiking }] = useLikeAuctionMutation();
-
-  const [likedItems, setLikedItems] = useState({});
-
-  // Reset the state when the items change (tab change)
-  useEffect(() => {
-    if (items?.length) {
-      const initialLikes = {};
-      items.forEach((item) => {
-        initialLikes[item._id] = item.likes || false;
-      });
-      setLikedItems(initialLikes);
-    } else {
-      setLikedItems({});
-    }
-  }, [items]);
-
-  const toggleLike = async (auctionId, event) => {
-    event.stopPropagation(); // Prevent triggering other click handlers
-
-    // Optimistic UI update
-    setLikedItems((prev) => ({ ...prev, [auctionId]: !prev[auctionId] }));
-
-    try {
-      // Call the mutation
-      await likeAuction(auctionId);
-    } catch (err) {
-      // If there's an error, revert the optimistic update
-      setLikedItems((prev) => ({ ...prev, [auctionId]: !prev[auctionId] }));
-      console.error("Error liking auction:", err);
-    }
-  };
+  // No need for likedItems state as all items are liked in favorites view
 
   const handleAuctionDetail = (item) => {
     dispatch(setAuctionProduct(item));
@@ -63,6 +30,42 @@ export default function AuctionItems({
     event.stopPropagation(); // Prevent triggering the parent card click
     dispatch(setAuctionProduct(item));
     router.push(`/auctions/lot?auctionId=${item._id}`);
+  };
+
+  const handleToggleFavorite = async (auctionId, event) => {
+    event.stopPropagation(); // Prevent triggering other click handlers
+
+    // Apply a visual transition effect for item removal
+    const itemDiv = event.target.closest(`[data-auction-id="${auctionId}"]`);
+    if (itemDiv) {
+      itemDiv.style.opacity = "0";
+      itemDiv.style.height = `${itemDiv.offsetHeight}px`;
+      itemDiv.style.marginBottom = "0";
+      itemDiv.style.padding = "0";
+      itemDiv.style.overflow = "hidden";
+      itemDiv.style.transition = "all 0.3s ease";
+
+      // After animation completes, set to zero height
+      setTimeout(() => {
+        itemDiv.style.height = "0";
+      }, 300);
+    }
+
+    try {
+      // Call the toggle favorite mutation
+      await toggleFavorite(auctionId);
+    } catch (err) {
+      // If there's an error, revert the animation
+      console.error("Error toggling favorite:", err);
+
+      if (itemDiv) {
+        itemDiv.style.opacity = "1";
+        itemDiv.style.height = "";
+        itemDiv.style.marginBottom = "";
+        itemDiv.style.padding = "";
+        itemDiv.style.overflow = "";
+      }
+    }
   };
 
   return (
@@ -78,6 +81,7 @@ export default function AuctionItems({
           {items.map((item) => (
             <div
               key={item._id}
+              data-auction-id={item._id}
               className="space-y-3 p-3 bg_white shadow-sm rounded-lg border border-[#ECEFF3] transition-all hover:shadow-md cursor-pointer"
               style={{ boxShadow: "0px 8px 24px rgba(149, 157, 165, 0.2)" }}
               onClick={() => handleAuctionDetail(item)}
@@ -95,17 +99,12 @@ export default function AuctionItems({
                     {`${item?.lots?.length || 0} Lots`}
                   </span>
                 </div>
-                {/* Like Button */}
+                {/* Unlike Button (always filled heart in favorites) */}
                 <button
-                  onClick={(e) => toggleLike(item._id, e)}
+                  onClick={(e) => handleToggleFavorite(item._id, e)}
                   className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#433F46] flex items-center justify-center transition-all hover:bg-[#2D2A30]"
-                  disabled={isLiking}
                 >
-                  <IoHeartSharp
-                    className={`w-5 h-5 ${
-                      likedItems[item._id] ? "text-red-500" : "text-white"
-                    }`}
-                  />
+                  <IoHeartSharp className="w-5 h-5 text-red-500" />
                 </button>
               </div>
               <div className="flex items-center justify-between gap-2 mt-4">
@@ -128,7 +127,7 @@ export default function AuctionItems({
           ))}
         </div>
       ) : (
-        <NoData description="There are no auctions to display" />
+        <NoData description="You haven't favorited any auctions yet" />
       )}
 
       {/* Loading indicator when fetching more data */}

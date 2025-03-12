@@ -11,7 +11,7 @@ const signup = "users/signup";
 const changePassword = "users/change-password";
 const updateUser = "users/update-user";
 const deleteUser = "users";
-const getAuctions = "auction/all/";
+const getAuctions = "auction/all";
 const getAuctionLot = "lot/details/";
 
 // "upload files"

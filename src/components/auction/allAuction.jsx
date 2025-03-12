@@ -1,84 +1,117 @@
 "use client";
 import { Tabs } from "antd";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Col, Container, Row } from "reactstrap";
 import { getAuctions } from "../api/ApiRoutesFile";
 import Breadcrumbs from "../common/Breadcrumbs";
-import { useRequestQuery } from "../redux/apiSlice";
+import { useGetAuctionsQuery } from "../redux/apiSlice";
 import AuctionItems from "./auctionItems";
 
 export default function AllAuction() {
-  const [loading, setLoading] = useState(true);
-  const [isLoadMore, setIsLoadMore] = useState(false);
-  const [count, setCount] = useState(0);
-  const [lastId, setLastId] = useState(1);
   const [activeTab, setActiveTab] = useState("all");
+  const [lastId, setLastId] = useState({
+    all: 1,
+    popular: 1,
+    trending: 1,
+  });
+
+  // Define query parameters for all tabs
+  const allQueryParams = useMemo(
+    () => ({
+      endpoint: getAuctions,
+      id: lastId.all,
+      params: {},
+    }),
+    [lastId.all]
+  );
+
+  const trendingQueryParams = useMemo(
+    () => ({
+      endpoint: getAuctions,
+      id: lastId.trending,
+      params: { trending: true },
+    }),
+    [lastId.trending]
+  );
+
+  const popularQueryParams = useMemo(
+    () => ({
+      endpoint: getAuctions,
+      id: lastId.popular,
+      params: { popular: true },
+    }),
+    [lastId.popular]
+  );
+
+  // Use separate queries for each tab to ensure data isolation
+  const allResults = useGetAuctionsQuery(allQueryParams);
+  const trendingResults = useGetAuctionsQuery(trendingQueryParams);
+  const popularResults = useGetAuctionsQuery(popularQueryParams);
+
+  // Select the correct query results based on active tab
+  const getActiveTabResults = () => {
+    switch (activeTab) {
+      case "trending":
+        return trendingResults;
+      case "popular":
+        return popularResults;
+      default:
+        return allResults;
+    }
+  };
+
+  const { data, isFetching } = getActiveTabResults();
+
+  const handleLoadMore = () => {
+    setLastId((prev) => ({
+      ...prev,
+      [activeTab]: prev[activeTab] + 1,
+    }));
+  };
 
   const onChange = (key) => {
     setActiveTab(key);
-    setLastId(1);
-    setCount(0);
-    setLoading(true);
   };
-
-  const { data, isLoading, error } = useRequestQuery({
-    endpoint: `${getAuctions}${lastId}`,
-  });
 
   const items = [
     {
       key: "all",
       label: "All Auctions",
-      children: (
-        <AuctionItems
-          items={data?.auctions}
-          loading={isLoading}
-          setLastId={setLastId}
-          isLoadMore={isLoadMore}
-          setIsLoadMore={setIsLoadMore}
-          count={count}
-          lastId={lastId}
-        />
-      ),
+      data: allResults.data,
+      loading: allResults.isFetching,
     },
     {
       key: "trending",
       label: "Trending Auctions",
-      children: (
-        <AuctionItems
-          items={data?.auctions}
-          loading={isLoading}
-          setLastId={setLastId}
-          isLoadMore={isLoadMore}
-          setIsLoadMore={setIsLoadMore}
-          count={count}
-          lastId={lastId}
-        />
-      ),
+      data: trendingResults.data,
+      loading: trendingResults.isFetching,
     },
     {
       key: "popular",
       label: "Popular Auctions",
-      children: (
-        <AuctionItems
-          items={data?.auctions}
-          loading={isLoading}
-          isLoadMore={isLoadMore}
-          setIsLoadMore={setIsLoadMore}
-          setLastId={setLastId}
-          count={count}
-          lastId={lastId}
-        />
-      ),
+      data: popularResults.data,
+      loading: popularResults.isFetching,
     },
-  ];
+  ].map((tab) => ({
+    key: tab.key,
+    label: tab.label,
+    children: (
+      <AuctionItems
+        items={tab.data?.auctions || []}
+        loading={tab.loading}
+        count={tab.data?.count?.totalPage || 0}
+        lastId={lastId[tab.key]}
+        handleLoadMore={handleLoadMore}
+      />
+    ),
+  }));
 
   return (
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12">
-            <Breadcrumbs pageTitle={"Auctions"} />
+            <Breadcrumbs pageTitle="Auctions" />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
               All Auctions
             </h3>

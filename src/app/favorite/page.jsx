@@ -1,60 +1,34 @@
 "use client";
 
-import ApiFunction from "@/components/api/apiFuntions";
-import { getFavouriteAuctions } from "@/components/api/ApiRoutesFile";
-import { handleError } from "@/components/api/errorHandler";
-import AuctionItems from "@/components/auction/auctionItems";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
-import { useRequestQuery } from "@/components/redux/apiSlice";
-import { setFavouriteAuctions } from "@/components/redux/auctionProduct";
-import debounce from "debounce";
+import {
+  useGetFavoriteAuctionsQuery,
+  useToggleFavoriteAuctionMutation,
+} from "@/components/redux/apiSlice";
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import FavoriteAuctionItems from "./FavoriteAuctionItems"; // We'll create this next
 
-export default function Page() {
-  const [count, setCount] = useState(0);
+export default function FavoritesPage() {
   const [lastId, setLastId] = useState(1);
-  const [loading, setLoading] = useState(1);
-  const [isLoadMore, setIsLoadMore] = useState(false);
-  const { get } = ApiFunction();
-  const dispatch = useDispatch();
-  // const data = useSelector((state) => state?.auctionProduct?.favirouteAuctions);
 
-  const { data, isLoading, error } = useRequestQuery({
-    endpoint: `${getFavouriteAuctions}${lastId}`,
-  });
+  // Use the new favorites query
+  const { data, isFetching, isError, error } =
+    useGetFavoriteAuctionsQuery(lastId);
 
-  // const fetchAuctions = debounce(async () => {
-  //   if (loading) {
-  //     setLoading(true);
-  //   } else {
-  //     setIsLoadMore(true);
-  //   }
-  //   await get(`${getFavouriteAuctions}${lastId}`)
-  //     .then((result) => {
-  //       dispatch(setFavouriteAuctions(result?.auctions));
-  //       setCount(result?.count?.totalPage || 0);
-  //     })
-  //     .catch((err) => {
-  //       handleError(err);
-  //     })
-  //     .finally(() => {
-  //       if (loading) {
-  //         setLoading(false);
-  //       } else {
-  //         setIsLoadMore(false);
-  //       }
-  //     });
-  // }, 300);
+  // Get the toggle mutation
+  const [toggleFavorite] = useToggleFavoriteAuctionMutation();
 
-  // useEffect(() => {
-  //   if (data?.length === 0 || lastId > 1) {
-  //     fetchAuctions();
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [lastId]);
+  const handleLoadMore = () => {
+    setLastId((prevId) => prevId + 1);
+  };
+
+  // Log any errors
+  useEffect(() => {
+    if (isError) {
+      console.error("Error fetching favorites:", error);
+    }
+  }, [isError, error]);
 
   return (
     <main className="bg_mainsecondary p-4">
@@ -69,15 +43,13 @@ export default function Page() {
             </Col>
           </Row>
         </div>
-        <AuctionItems
-          items={data?.auctions}
-          count={count}
-          isLoadMore={isLoadMore}
-          loading={isLoading}
-          setIsLoadMore={setIsLoadMore}
-          setLastId={setLastId}
+        <FavoriteAuctionItems
+          items={data?.auctions || []}
+          count={data?.count?.totalPage || 0}
+          loading={isFetching}
           lastId={lastId}
-          pageType="favourites"
+          handleLoadMore={handleLoadMore}
+          toggleFavorite={toggleFavorite}
         />
       </div>
     </main>

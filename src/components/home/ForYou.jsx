@@ -6,11 +6,11 @@ import { handleError } from "../api/errorHandler";
 import AuctionCard from "../common/AuctionCard";
 import SectionHeadings from "../common/sectionHeadings";
 import SkeletonLayout2 from "../common/SkeletonLayout2";
-import { useRequestQuery } from "../redux/apiSlice";
+import { useGetAuctionsQuery } from "../redux/apiSlice";
 
 export default function ForYou() {
-  const { data, isLoading, error } = useRequestQuery({
-    endpoint: `${getAuctions}1`,
+  const { data, isLoading, error } = useGetAuctionsQuery({
+    endpoint: `${getAuctions}/1`,
   });
 
   if (error) {

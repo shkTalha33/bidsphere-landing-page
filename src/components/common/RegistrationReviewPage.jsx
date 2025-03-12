@@ -21,7 +21,7 @@ export default function RegistrationReviewPage({
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const { post } = ApiFunction();
-  const router = useRouter()
+  const router = useRouter();
   const handleSubmit = async () => {
     if (parseInt(progress) < 100) {
       toast.error("Please Fill All The Fields");

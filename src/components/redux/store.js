@@ -8,6 +8,7 @@ import sidebarSlice from "./sidebarRedux";
 import { auctionProductSlice } from "./auctionProduct";
 import { auctionRegistrationSlice } from "./auctionRegistration";
 import { apiSlice } from "./apiSlice";
+import { apiSlice2 } from "./apiSlice2";
 
 const rootReducer = combineReducers({
   auth: authSlice,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   auctionProduct: auctionProductSlice.reducer,
   auctionRegistration: auctionRegistrationSlice.reducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
+  [apiSlice2.reducerPath]: apiSlice2.reducer,
 });
 
 const persistConfig = {
@@ -33,7 +35,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(apiSlice.middleware),
+    }).concat(apiSlice.middleware, apiSlice2.middleware),
   devTools: process.env.NODE_ENV !== "production",
 });
 export const persistor = persistStore(store);

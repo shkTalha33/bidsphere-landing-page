@@ -13,6 +13,7 @@ import { registrationTracking } from "../api/ApiRoutesFile";
 import { handleError } from "../api/errorHandler";
 import ProductTable from "../common/dataTables/productTable";
 import { formatPrice } from "../utils/formatPrice";
+import { usePaymentQuery } from "../redux/apiSlice2";
 
 export default function DepositTracking() {
   const [filterStatics, setFilterStatics] = useState("");
@@ -21,8 +22,12 @@ export default function DepositTracking() {
   const [lastId, setLastId] = useState(1);
   const [count, setCount] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [data, setData] = useState([]);
-  const { get } = ApiFunction();
+
+  const { data, isFetching, error } = usePaymentQuery({
+    endpoint: registrationTracking,
+    id: lastId,
+    params: `status=${filterStatics}`,
+  });
 
   const columns = [
     {
@@ -147,23 +152,10 @@ export default function DepositTracking() {
     { name: "Rejected", value: "rejected" },
   ];
 
-  const fetchAuctionRegistrations = debounce(async () => {
-    setLoading(true);
-    await get(`${registrationTracking}${lastId}?status=${filterStatics}`)
-      .then((result) => {
-        console.log(result);
-        setData(result?.applications);
-      })
-      .catch((err) => {
-        handleError(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, 300);
-
+  // Add a useEffect to reset lastId when filterStatics changes
   useEffect(() => {
-    fetchAuctionRegistrations();
+    setLastId(1); // Reset to first page
+    setPage(0); // Reset page counter as well
   }, [filterStatics]);
 
   return (
@@ -188,12 +180,12 @@ export default function DepositTracking() {
         <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px] mt-3">
           <ProductTable
             rowHeading="deposit tracking"
-            count={count}
-            loading={loading}
+            count={data?.count?.totalPage}
+            loading={isFetching}
             setCurrentPage={setPage}
             currentPage={page}
             columns={columns}
-            data={data}
+            data={data?.applications}
             setPageNumber={setPage}
             type="search"
             setLastId={setLastId}
