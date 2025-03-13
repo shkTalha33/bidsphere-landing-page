@@ -153,20 +153,63 @@ export default function Header() {
 
   // Non-authenticated navigation items
   const NonAuthenticatedNav = () => (
-    <div className="hidden d-md-flex items-center gap-[0.5rem] lg:gap-[0.8rem]">
-      <button
-        onClick={() => router.push("/auth/login")}
-        className="px-[2rem] py-2 border-[1px] transition-colors bg_white duration-300 ease-in-out rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline"
-      >
-        Login
-      </button>
-      <button
-        onClick={() => router.push("/auth/signup")}
-        className="px-[2rem] py-2 bg_primary text_white rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline primary_hover"
-      >
-        Sign Up
-      </button>
-    </div>
+    <>
+      <div className="gap-[1rem] lg:gap-[1.87rem] flex items-center">
+        <Link
+          href="/auctions"
+          className={`${
+            pathname === "/auctions"
+              ? "text_primary poppins_medium"
+              : isHomeOrHashRoute && !isScrolled
+              ? "text_white"
+              : "text_dark"
+          } 
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+        >
+          Auctions
+        </Link>
+        {/* <Link
+          href="/payments"
+          className={`${
+            pathname === "/payments"
+              ? "text_primary poppins_medium"
+              : isHomeOrHashRoute && !isScrolled
+              ? "text_white"
+              : "text_dark"
+          }
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+        >
+          Payments
+        </Link>
+        <Link
+          href="/orders"
+          className={`${
+            pathname === "/orders"
+              ? "text_primary poppins_medium"
+              : isHomeOrHashRoute && !isScrolled
+              ? "text_white"
+              : "text_dark"
+          }
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+        >
+          Orders
+        </Link> */}
+      </div>
+      <div className="hidden d-md-flex items-center gap-[0.5rem] lg:gap-[0.8rem]">
+        <button
+          onClick={() => router.push("/auth/login")}
+          className="px-[2rem] py-2 border-[1px] transition-colors bg_white duration-300 ease-in-out rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline"
+        >
+          Login
+        </button>
+        <button
+          onClick={() => router.push("/auth/signup")}
+          className="px-[2rem] py-2 bg_primary text_white rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline primary_hover"
+        >
+          Sign Up
+        </button>
+      </div>
+    </>
   );
 
   const items = [
