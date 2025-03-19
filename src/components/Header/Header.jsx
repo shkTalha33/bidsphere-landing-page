@@ -6,12 +6,15 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BiUser } from "react-icons/bi";
+import { MdOutlineCurrencyExchange } from "react-icons/md";
 import { TbLogout } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { Container } from "reactstrap";
+import ApiFunction from "../api/apiFuntions";
 import { avataruser } from "../assets/icons/icon";
 import { setLogout } from "../redux/loginForm";
-import ApiFunction from "../api/apiFuntions";
+import { worldCurrencies } from "../utils/WorldCurrency";
+import useCurrency from "../hooks/useCurrency";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,6 +25,7 @@ export default function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { currency } = useCurrency();
 
   const isHomeOrHashRoute = pathname === "/";
 
@@ -218,7 +222,13 @@ export default function Header() {
       label: <Link href={"/profile/personal-information"}>Profile</Link>,
       icon: <BiUser size={18} />,
     },
-
+    {
+      key: "1",
+      label: (
+        <Link href={"/profile/change-currency"}>Currency {currency?.code}</Link>
+      ),
+      icon: <MdOutlineCurrencyExchange size={18} />,
+    },
     {
       key: "6",
       label: (

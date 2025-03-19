@@ -1,16 +1,17 @@
-import React from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import { Col, Container, Row } from "reactstrap";
 import { deal, returnMoney, secure, shipping } from "../assets/icons/icon";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { fadeIn, slideIn, staggerChildren, staggerContainer } from "../utils/motion";
+import useCurrency from "../hooks/useCurrency";
+import { fadeIn, staggerContainer } from "../utils/motion";
 
 export default function Services() {
+  const { formatPrice, convert } = useCurrency();
   const servicesData = [
     {
       image: shipping,
       title: "Free Shipping",
-      description: "Free Ship Over $150",
+      description: `Free Ship Over ${formatPrice(convert(150, "LBP"))}`,
     },
     {
       image: deal,
@@ -45,7 +46,7 @@ export default function Services() {
                 {servicesData.map((service, index) => {
                   return (
                     <motion.div
-                    variants={fadeIn("down", "tween", 0.3* (index + 1) , 1)}
+                      variants={fadeIn("down", "tween", 0.3 * (index + 1), 1)}
                       className="flex items-start justify-start  gap-3"
                       key={index}
                     >

@@ -31,7 +31,7 @@ export default function Orders() {
   const [lastId, setLastId] = useState(0);
   const [count, setCount] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const router = useRouter()
+  const router = useRouter();
   const onChange = (key) => {
     console.log(key);
   };
@@ -123,12 +123,13 @@ export default function Orders() {
       maxWidth: "200px",
       cell: (row) => (
         <div
-          className={`flex items-center justify-center capitalize whitespace-nowrap rounded-full cursor-pointer bg-[#EAF5F2] px-4 py-1 ${row?.status === "shipped"
-            ? "text-[#56CDAD] bg-[#EAF5F2]"
-            : row.status === "intransit"
+          className={`flex items-center justify-center capitalize whitespace-nowrap rounded-full cursor-pointer bg-[#EAF5F2] px-4 py-1 ${
+            row?.status === "shipped"
+              ? "text-[#56CDAD] bg-[#EAF5F2]"
+              : row.status === "intransit"
               ? "text-[#4640DE] bg-[#E8E7F7]"
               : " bg-[#EAF5F2] text-[#6DC1FE]"
-            } capitalize`}
+          } capitalize`}
         >
           {row?.status}
         </div>
@@ -139,7 +140,10 @@ export default function Orders() {
       minWidth: "100px",
       maxWidth: "120px",
       cell: (row) => (
-        <div className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#21CD9D] poppins_medium capitalize cursor-pointer" onClick={() => router.push("/orders/detail")}>
+        <div
+          className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#21CD9D] poppins_medium capitalize cursor-pointer"
+          onClick={() => router.push("/orders/detail")}
+        >
           view details
         </div>
       ),
@@ -152,7 +156,7 @@ export default function Orders() {
       category: "Electric",
       invoice: "INV-2001",
       date: "2024-02-19 10:30 AM",
-      payment: "$45,000",
+      payment: "45,000",
       status: "shipped",
     },
     {
@@ -160,7 +164,7 @@ export default function Orders() {
       category: "Sports",
       invoice: "INV-2002",
       date: "2024-02-18 03:45 PM",
-      payment: "$55,000",
+      payment: "55,000",
       status: "intransit",
     },
     {
@@ -168,7 +172,7 @@ export default function Orders() {
       category: "Hybrid",
       invoice: "INV-2003",
       date: "2024-02-17 12:15 PM",
-      payment: "$30,000",
+      payment: "30,000",
       status: "delivered",
     },
     {
@@ -176,7 +180,7 @@ export default function Orders() {
       category: "SUV",
       invoice: "INV-2004",
       date: "2024-02-16 09:00 AM",
-      payment: "$60,000",
+      payment: "60,000",
       status: "shipped",
     },
     {
@@ -184,7 +188,7 @@ export default function Orders() {
       category: "Sedan",
       invoice: "INV-2005",
       date: "2024-02-15 06:20 PM",
-      payment: "$25,000",
+      payment: "25,000",
       status: "intransit",
     },
     {
@@ -192,7 +196,7 @@ export default function Orders() {
       category: "Luxury",
       invoice: "INV-2006",
       date: "2024-02-14 02:10 PM",
-      payment: "$75,000",
+      payment: "75,000",
       status: "delivered",
     },
     {
@@ -200,7 +204,7 @@ export default function Orders() {
       category: "Sports",
       invoice: "INV-2007",
       date: "2024-02-13 11:30 AM",
-      payment: "$50,000",
+      payment: "50,000",
       status: "shipped",
     },
     {
@@ -208,7 +212,7 @@ export default function Orders() {
       category: "SUV",
       invoice: "INV-2008",
       date: "2024-02-12 08:45 AM",
-      payment: "$68,000",
+      payment: "68,000",
       status: "intransit",
     },
   ];
@@ -221,7 +225,9 @@ export default function Orders() {
         <Row>
           <Col md="12" className="">
             <Breadcrumbs pageTitle={"Orders"} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">Orders</h3>
+            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+              Orders
+            </h3>
           </Col>
         </Row>
       </Container>
@@ -232,19 +238,21 @@ export default function Orders() {
               {sideButtons.map((button) => {
                 return (
                   <button
-                    className={`${currentActiveButton === button?.title
-                      ? "bg_primary text-white"
-                      : "bg-[#F5F5F5] text-[#909495]"
-                      } rounded-[10px] w-full flex items-center justify-start gap-4 p-2 p-md-4 capitalize`}
+                    className={`${
+                      currentActiveButton === button?.title
+                        ? "bg_primary text-white"
+                        : "bg-[#F5F5F5] text-[#909495]"
+                    } rounded-[10px] w-full flex items-center justify-start gap-4 p-2 p-md-4 capitalize`}
                     onClick={() => setCurrentActiveButton(button?.title)}
                   >
                     <div className="flex items-center w-full justify-between">
                       <div className="flex gap-3 items-center">
                         <div
-                          className={`w-7 h-7 sm:w-9 sm:h-9 ${currentActiveButton === button?.title
-                            ? "bg-white"
-                            : "bg_primary"
-                            } flex items-center justify-center p-2 rounded-full`}
+                          className={`w-7 h-7 sm:w-9 sm:h-9 ${
+                            currentActiveButton === button?.title
+                              ? "bg-white"
+                              : "bg_primary"
+                          } flex items-center justify-center p-2 rounded-full`}
                         >
                           <Image
                             src={
@@ -255,13 +263,17 @@ export default function Orders() {
                             className=""
                           />
                         </div>
-                        <div className="text-sm sm:text-base"> {button?.title}</div>
+                        <div className="text-sm sm:text-base">
+                          {" "}
+                          {button?.title}
+                        </div>
                       </div>
                       <div
-                        className={`${currentActiveButton === button?.title
-                          ? "bg-white text_dark"
-                          : "bg_primary text-white"
-                          } flex items-center justify-center p-1 rounded-full`}
+                        className={`${
+                          currentActiveButton === button?.title
+                            ? "bg-white text_dark"
+                            : "bg_primary text-white"
+                        } flex items-center justify-center p-1 rounded-full`}
                       >
                         {<FaArrowRight size={15} />}
                       </div>
@@ -276,10 +288,11 @@ export default function Orders() {
               {filterButtons.map((button) => {
                 return (
                   <button
-                    className={`${filterStatics === button
-                      ? "bg_primary text_white"
-                      : "bg-[#E2F5F0] text_primary"
-                      } rounded-[16px] px-4 px-md-5 py-1 text-sm sm:text-base py-md-2 poppins_regular capitalize`}
+                    className={`${
+                      filterStatics === button
+                        ? "bg_primary text_white"
+                        : "bg-[#E2F5F0] text_primary"
+                    } rounded-[16px] px-4 px-md-5 py-1 text-sm sm:text-base py-md-2 poppins_regular capitalize`}
                     onClick={() => setFilterStatics(button)}
                   >
                     {button}

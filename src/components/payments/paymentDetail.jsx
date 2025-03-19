@@ -12,8 +12,10 @@ import {
   topupWallet,
 } from "../assets/icons/icon";
 import Breadcrumbs from "../common/Breadcrumbs";
+import useCurrency from "../hooks/useCurrency";
 
 export default function PaymentDetail() {
+  const { formatPrice, convert } = useCurrency();
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState();
   const onChange = (key) => {
     console.log(key);
@@ -60,7 +62,7 @@ export default function PaymentDetail() {
           <div className="flex items-center flex-wrap gap-2 gap-md-3 justify-between">
             <div className="flex gap-2 gap-md-4 flex-wrap items-center">
               <p className="poppins_semibold text-2xl sm:text-3xl md:text-4xl text-white mb-0">
-                $450.54
+                {formatPrice(convert(450.54, "LBP"))}
               </p>
               <p className="poppins_regular text-sm sm:text-xl md:text-2xl text-white mb-0">
                 is Available balance

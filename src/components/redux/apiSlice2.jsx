@@ -3,7 +3,7 @@ const { createApi, fetchBaseQuery } = require("@reduxjs/toolkit/query/react");
 export const apiSlice2 = createApi({
   reducerPath: "api2",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://auctionhousebackend.onrender.com/api/",
+    baseUrl: "https://api.castle-auction.com/api/",
     prepareHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
       const token = localStorage.getItem("auction_user_token");

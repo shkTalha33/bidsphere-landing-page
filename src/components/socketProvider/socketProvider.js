@@ -1,87 +1,73 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import io from "socket.io-client";
-import { setConversationCount, setNotificationCount, setNotificationData } from "../redux/chat-message";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useDispatch } from "react-redux";
+import { io } from "socket.io-client";
 
-// Create a Context for the socket
-const SocketContext = createContext(null);
+const SocketContext = createContext();
 
-export const useSocket = () => {
-    return useContext(SocketContext);
-};
+export const useSocket = () => useContext(SocketContext);
 
-// Socket Provider component
 export const SocketProvider = ({ children }) => {
-    const socketRef = useRef(null);
-    const [socket, setSocket] = useState(null);
-    const dispatch = useDispatch();
-    const isLogin = useSelector((state) => state.auth.isLogin);
-    const notificationData = useSelector((state) => state.chat?.notificationData) || [];
+  const token =
+    typeof window !== "undefined"
+      ? localStorage.getItem("auction_user_token")
+      : null;
+  const [socket, setSocket] = useState(null);
+  const socketRef = useRef(null);
+  const dispatch = useDispatch(null);
 
-    // Mutable ref to always hold the latest value of notificationData
-    const notificationRef = useRef(notificationData);
+  useEffect(() => {
+    const initializeSocket = async () => {
+      try {
+        const newSocket = io("https://api.castle-auction.com/", {
+          reconnectionAttempts: 15,
+          transports: ["websocket"],
+        });
+        newSocket.emit("authenticate", token);
+        newSocket.on("authenticated", (id) => {
+          setSocket(newSocket);
+        });
+        newSocket.on("connect_error", (error) => {
+          console.error("Socket connection error:", error);
+        });
 
-    // Update the ref whenever notificationData changes
-    // useEffect(() => {
-    //     notificationRef.current = notificationData;
-    // }, [notificationData]);
+        newSocket.on("unauthorized", (error) => {
+          console.error("Unauthorized socket connection:", error.message);
+        });
+        // newSocket.on("disconnect", () => {
+        //   console.log("Socket disconnected. Attempting to reconnect...");
+        //   setSocket(null);
+        //   initializeSocket();
+        // });
+        socketRef.current = newSocket;
+      } catch (error) {
+        console.error("Error initializing socket:", error);
+      }
+    };
+    if (token) {
+      initializeSocket();
+      console.log("===============Socket Initialize");
+    } else {
+      console.log("No token found for authentication");
+    }
+    return () => {
+      if (!token && socketRef.current) {
+        console.log("Disconnecting socket...");
+        socketRef.current.disconnect();
+        setSocket(null);
+      }
+    };
+  }, [token]);
 
-    // useEffect(() => {
-    //     if (isLogin) {
-    //         // Initialize the socket connection
-    //         socketRef.current = io.connect('https://setofshopsbackend.onrender.com', {
-    //             query: { token: localStorage.getItem("auction_user_token") },
-    //         });
-
-    //         const socket = socketRef.current;
-
-    //         socket.on("connect", () => {
-    //             console.log("Socket connected");
-    //             setSocket(socket);
-    //         });
-
-    //         socket.on("notification", (notification) => {
-    //             const newNotification = [notification, ...notificationRef.current]
-    //             dispatch(setNotificationData(newNotification))
-    //             // Update Redux store with the new notification
-    //         });
-
-    //         socket.on("notification-count", (count) => {
-    //             dispatch(setNotificationCount(count));
-    //         });
-
-    //         socket.on("conversation-count", (count) => {
-    //             dispatch(setConversationCount(count));
-    //         });
-
-    //         socket.on("authentication", (authData) => {
-    //             console.log("Authentication data:", authData);
-    //         });
-
-    //         socket.on("disconnected", () => {
-    //             console.log("Socket disconnected");
-    //         });
-
-    //         socket.on("connect_error", (error) => {
-    //             console.error("WebSocket connection error:", error);
-    //         });
-    //     }
-
-    //     // Cleanup when `isLogin` changes or component unmounts
-    //     return () => {
-    //         if (socketRef.current) {
-    //             socketRef.current.disconnect();
-    //             socketRef.current = null;
-    //             setSocket(null);
-    //         }
-    //     };
-    // }, [isLogin]);
-
-    return (
-        <SocketContext.Provider value={socket}>
-            {children}
-        </SocketContext.Provider>
-    );
+  return (
+    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+  );
 };

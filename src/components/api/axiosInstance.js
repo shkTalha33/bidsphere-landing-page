@@ -12,23 +12,23 @@ const headers2 = {
 
 const axiosInstance = axios.create({
   // baseURL: 'http://localhost:5333/api/',
-  baseURL: 'https://auctionhousebackend.onrender.com/api/',
+  baseURL: "https://api.castle-auction.com/api/",
   headers,
 });
 
 const axiosInstance2 = axios.create({
-  baseURL: 'https://auctionhousebackend.onrender.com/api/',
+  baseURL: "https://api.castle-auction.com/api/",
   headers: headers2,
 });
 
 // Set the x-auth-token header for axiosInstance (JSON)
 axiosInstance.interceptors.request.use(
-  config => {
-    const token = localStorage.getItem('auction_user_token')
+  (config) => {
+    const token = localStorage.getItem("auction_user_token");
     if (token) {
       config.headers["x-auth-token"] = `${token}`;
     }
-    return config
+    return config;
   },
   (error) => {
     return Promise.reject(error);
@@ -37,12 +37,12 @@ axiosInstance.interceptors.request.use(
 
 // Set the x-auth-token header for axiosInstance2 (multipart/form-data)
 axiosInstance2.interceptors.request.use(
-  config => {
-    const token = localStorage.getItem('auction_user_token')
+  (config) => {
+    const token = localStorage.getItem("auction_user_token");
     if (token) {
       config.headers["x-auth-token"] = `${token}`;
     }
-    return config
+    return config;
   },
   (error) => {
     return Promise.reject(error);

@@ -1,19 +1,20 @@
-import React from 'react'
-import { Container } from 'reactstrap'
-import SkeletonLayout from '../common/SkeletonLayout'
-import Image from 'next/image'
-import { formatPrice } from '../utils/formatPrice'
-import { useRouter } from 'next/navigation'
+import React from "react";
+import { Container } from "reactstrap";
+import SkeletonLayout from "../common/SkeletonLayout";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import useCurrency from "../hooks/useCurrency";
 
-export default function AuctionLots({items, loading}) {
-  const router = useRouter()
+export default function AuctionLots({ items, loading }) {
+  const { formatPrice, convert } = useCurrency();
+  const router = useRouter();
   const handleAuctionDetail = (id) => {
     router.push(`/auctions/lot/${id}`);
   };
 
   return (
     <>
-       <Container className="bg_mainsecondary rounded-[9px] mt-4 !px-0">
+      <Container className="bg_mainsecondary rounded-[9px] mt-4 !px-0">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-5">
           {loading ? (
             Array.from({ length: 8 }).map((_, index) => (
@@ -36,17 +37,6 @@ export default function AuctionLots({items, loading}) {
                       className="w-full !h-[200px] max-h-[200px] object-cover rounded-xl cursor-pointer"
                       onClick={() => handleAuctionDetail(item?.item?._id)}
                     />
-                    {/* <div className="absolute top-4 left-4">
-                    <span className="bg_primary text-white px-2 py-1 rounded-[4px] text-sm poppins_regular">
-                      {`${item?.length} Lots`} 
-                    </span>
-                  </div> */}
-                    {/* <button
-                    onClick={() => toggleLike(index)}
-                    className="absolute top-4 right-4 p-1 rounded-full bg-[#433F46] transition-colors"
-                  >
-                    <Heart className="w-5 h-5 text-white hover:text-black" />
-                  </button> */}
                   </div>
                   <div className="flex items-center justify-between gap-2">
                     <div>
@@ -58,7 +48,7 @@ export default function AuctionLots({items, loading}) {
                       </p>
                     </div>
                     <p className="poppins_medium text-sm">
-                      {formatPrice(item?.item?.price)}
+                      {formatPrice(convert(item?.item?.price, "LBP"))}
                     </p>
                   </div>
                 </div>
@@ -68,5 +58,5 @@ export default function AuctionLots({items, loading}) {
         </div>
       </Container>
     </>
-  )
+  );
 }

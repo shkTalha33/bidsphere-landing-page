@@ -2,26 +2,22 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
 import { format } from "date-fns";
-import debounce from "debounce";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { Col } from "reactstrap";
-import ApiFunction from "../api/apiFuntions";
 import { registrationTracking } from "../api/ApiRoutesFile";
-import { handleError } from "../api/errorHandler";
 import ProductTable from "../common/dataTables/productTable";
-import { formatPrice } from "../utils/formatPrice";
+import useCurrency from "../hooks/useCurrency";
 import { usePaymentQuery } from "../redux/apiSlice2";
 
 export default function DepositTracking() {
   const [filterStatics, setFilterStatics] = useState("");
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [lastId, setLastId] = useState(1);
-  const [count, setCount] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const { formatPrice, convert } = useCurrency();
 
   const { data, isFetching, error } = usePaymentQuery({
     endpoint: registrationTracking,
@@ -95,7 +91,7 @@ export default function DepositTracking() {
       maxWidth: "200px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize cursor-pointer">
-          {formatPrice(row?.auction?.depositamount)}
+          {formatPrice(convert(row?.auction?.depositamount, "LBP"))}
         </div>
       ),
     },

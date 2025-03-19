@@ -16,6 +16,7 @@ import {
 } from "../assets/icons/icon";
 import Breadcrumbs from "../common/Breadcrumbs";
 import DepositTracking from "./depositTracking";
+import { formatPrice } from "../utils/formatPrice";
 
 export default function PaymentStatics() {
   const [currentActiveButton, setCurrentActiveButton] = useState("deposit");
@@ -61,7 +62,7 @@ export default function PaymentStatics() {
           <div className="flex items-center flex-wrap gap-3 justify-between">
             <div className="flex gap-4 flex-wrap items-center">
               <p className="poppins_semibold text-3xl md:text-4xl text-white mb-0">
-                $450.54
+                {formatPrice(450.54)}
               </p>
               <p className="poppins_regular text-xl md:text-2xl text-white mb-0">
                 is Available balance

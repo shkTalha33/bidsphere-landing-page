@@ -4,7 +4,7 @@ import { getFavouriteAuctions, likeAuction } from "../api/ApiRoutesFile";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://auctionhousebackend.onrender.com/api/",
+    baseUrl: "https://api.castle-auction.com/api/",
     prepareHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
       const token = localStorage.getItem("auction_user_token");

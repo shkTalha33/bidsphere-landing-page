@@ -5,6 +5,7 @@ import { handleError } from "@/components/api/errorHandler";
 import { avataruser, confirmBid, winBid } from "@/components/assets/icons/icon";
 import AuctionConfirmationModal from "@/components/common/auctionConfirmationModal";
 import TopSection from "@/components/common/TopSection";
+import useCurrency from "@/components/hooks/useCurrency";
 import { Avatar } from "antd";
 import debounce from "debounce";
 import Image from "next/image";
@@ -28,6 +29,7 @@ export default function Page() {
   const dispatch = useDispatch();
   const { get } = ApiFunction();
   const router = useRouter();
+  const { formatPrice, convert } = useCurrency();
 
   const { id } = useParams();
 
@@ -223,8 +225,8 @@ export default function Page() {
                       <p className="poppins_medium text-xl sm:text-2xl text-white mb-0 capitalize">
                         {item?.name}
                       </p>
-                      <p className="poppins_regular text-sm text-white mb-0">
-                        auction
+                      <p className="poppins_regular text-sm text-white mb-0 capitalize">
+                        Auction
                       </p>
                     </div>
                     <div className="mb-0">
@@ -241,7 +243,7 @@ export default function Page() {
                         Starting price
                       </p>
                       <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
-                        $5000
+                        {formatPrice(convert(5000, "LBP"))}
                       </p>
                       <div className="flex items-center justify-start mb-2 md:mb-0 mt-2 gap-2">
                         <Avatar.Group
@@ -270,7 +272,7 @@ export default function Page() {
                         Current Bid Price
                       </p>
                       <p className="text-[#1B212C] mb-0 text-xs sm:text-sm poppins_regular capitalize">
-                        $24,500
+                        {formatPrice(convert(2500, "LBP"))}
                       </p>
                       <p className="text-[#1B212C] mb-0 mt-2 text-[15px] poppins_regular capitalize flex items-center justify-start gap-2">
                         <FaRegClock size={18} color="#1C201F" /> 01: 23s

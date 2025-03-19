@@ -1,11 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
-"use client"
+"use client";
 
 import { motion } from "framer-motion";
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
 import { slideIn, staggerContainer } from "../utils/motion";
+import useCurrency from "../hooks/useCurrency";
 export default function AuctionEvents() {
+  const { formatPrice, convert } = useCurrency();
   return (
     <motion.main
       variants={staggerContainer}
@@ -17,10 +19,13 @@ export default function AuctionEvents() {
       <Container>
         <Row className="g-3">
           <Col md="6" className="d-flex">
-            <motion.div variants={slideIn("left", "damping", 0.3, 0.8)} className="event_1 w-full rounded-2xl flex flex-col justify-between p-16">
+            <motion.div
+              variants={slideIn("left", "damping", 0.3, 0.8)}
+              className="event_1 w-full rounded-2xl flex flex-col justify-between p-16"
+            >
               <div>
-                <div className="poppins_regular text_white text-lg mb-4">
-                  start from 20$
+                <div className="poppins_semibold text_white mb-4 text-center max-w-[10.5rem] px-2 py-1  bg-[#FBD118] rounded-xl">
+                  start from {formatPrice(convert(20, "LBP"))}
                 </div>
                 <div className="poppins_semibold text_white text-4xl capitalize">
                   classic
@@ -36,10 +41,13 @@ export default function AuctionEvents() {
           </Col>
 
           <Col md="6" className="d-flex">
-            <motion.div variants={slideIn("up", "damping", 0.3, 0.8)} className="event_2 w-full rounded-2xl flex flex-col justify-between p-16">
+            <motion.div
+              variants={slideIn("up", "damping", 0.3, 0.8)}
+              className="event_2 w-full rounded-2xl flex flex-col justify-between p-16"
+            >
               <div>
-                <div className="poppins_semibold text_white text-lg mb-4 text-center max-w-[10.5rem] px-2 py-1 bg-[#F31C28] rounded-xl">
-                  start from 45$
+                <div className="poppins_semibold text_white mb-4 text-center max-w-[10.5rem] px-2 py-1 bg-[#F31C28] rounded-xl">
+                  start from {formatPrice(convert(45, "LBP"))}
                 </div>
                 <div className="poppins_regular text_white text-4xl capitalize">
                   New
@@ -54,10 +62,13 @@ export default function AuctionEvents() {
             </motion.div>
           </Col>
           <Col md="4">
-            <motion.div variants={slideIn("up", "damping", 0.3, 0.8)} className="event_3 w-full rounded-2xl flex flex-col justify-between px-8 py-16">
+            <motion.div
+              variants={slideIn("up", "damping", 0.3, 0.8)}
+              className="event_3 w-full rounded-2xl flex flex-col justify-between px-8 py-16"
+            >
               <div>
-                <div className="poppins_semibold text_white text-lg mb-4 text-center max-w-[10.5rem] px-2 py-1 bg-[#F31C28] rounded-xl">
-                  start from 45$
+                <div className="poppins_semibold text_white mb-4 text-center max-w-[10.5rem] px-2 py-1 bg-[#F31C28] rounded-xl">
+                  start from {formatPrice(convert(45, "LBP"))}
                 </div>
                 <div className="poppins_regular text_white text-4xl capitalize">
                   Sculpture
@@ -72,10 +83,13 @@ export default function AuctionEvents() {
             </motion.div>
           </Col>
           <Col md="4">
-            <motion.div variants={slideIn("up", "damping", 0.3, 0.8)} className="event_4 w-full rounded-2xl flex flex-col justify-between px-8 py-16">
+            <motion.div
+              variants={slideIn("up", "damping", 0.3, 0.8)}
+              className="event_4 w-full rounded-2xl flex flex-col justify-between px-8 py-16"
+            >
               <div>
-                <div className="poppins_semibold text_white text-lg mb-4 text-center max-w-[10.5rem] px-2 py-1 bg-[#F31C28] rounded-xl">
-                  start from 45$
+                <div className="poppins_semibold text_white mb-4 text-center max-w-[10.5rem] px-2 py-1 bg-[#F31C28] rounded-xl">
+                  start from {formatPrice(convert(45, "LBP"))}
                 </div>
                 <div className="poppins_regular text-[#161616] text-4xl capitalize">
                   Radio
@@ -90,10 +104,13 @@ export default function AuctionEvents() {
             </motion.div>
           </Col>
           <Col md="4">
-            <motion.div variants={slideIn("right", "damping", 0.3, 0.8)} className="event_5 w-full rounded-2xl flex flex-col justify-between px-8 py-16">
+            <motion.div
+              variants={slideIn("right", "damping", 0.3, 0.8)}
+              className="event_5 w-full rounded-2xl flex flex-col justify-between px-8 py-16"
+            >
               <div>
-                <div className="poppins_semibold text_white text-lg mb-4 text-center max-w-[10.5rem] px-2 py-1 bg-[#FBD118] rounded-xl">
-                  start from 45$
+                <div className="poppins_semibold text_white mb-4 text-center max-w-[10.5rem] px-2 py-1 bg-[#FBD118] rounded-xl">
+                  start from {formatPrice(convert(45, "LBP"))}
                 </div>
                 <div className="poppins_semibold text_darkprimary text-4xl capitalize">
                   game panels

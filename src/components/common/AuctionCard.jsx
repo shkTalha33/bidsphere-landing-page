@@ -1,13 +1,13 @@
-import { Divider } from "antd";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { fadeIn } from "../utils/motion";
 import { format, differenceInDays, differenceInHours } from "date-fns";
-import { formatPrice } from "../utils/formatPrice";
 import { useDispatch } from "react-redux";
 import { setAuctionProduct } from "../redux/auctionProduct";
 import { useRouter } from "next/navigation";
+import useCurrency from "../hooks/useCurrency";
 export default function AuctionCard({ item, index }) {
+  const { formatPrice, convert } = useCurrency();
   const router = useRouter();
   const dispatch = useDispatch();
   const formatTimeLeft = (endTime) => {
@@ -52,10 +52,10 @@ export default function AuctionCard({ item, index }) {
         <div className="flex items-center justify-start gap-2">
           <p className="mb-0 text_darkprimary text-lg">
             {" "}
-            {formatPrice(item?.lots[0]?.minprice)}
+            {formatPrice(convert(item?.lots[0]?.minprice, "LBP"))}
           </p>
           <p className="mb-0 text_seccondary text-sm">
-            {formatPrice(item?.lots[0]?.minincrement)}
+            {formatPrice(convert(item?.lots[0]?.minincrement, "LBP"))}
           </p>
         </div>
       </div>

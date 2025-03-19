@@ -7,8 +7,8 @@ import { useDispatch } from "react-redux";
 import { useLikeAuctionMutation } from "../redux/apiSlice";
 import SkeletonLayout from "../common/SkeletonLayout";
 import { setAuctionProduct } from "../redux/auctionProduct";
-import { formatPrice } from "../utils/formatPrice";
 import NoData from "../common/NoDataComponent";
+import useCurrency from "../hooks/useCurrency";
 
 export default function AuctionItems({
   items,
@@ -19,6 +19,7 @@ export default function AuctionItems({
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { formatPrice, convert } = useCurrency();
 
   // Use the mutation hook from our updated API slice
   const [likeAuction, { isLoading: isLiking }] = useLikeAuctionMutation();
@@ -114,7 +115,7 @@ export default function AuctionItems({
                     {item.name}
                   </p>
                   <p className="poppins_medium text-sm">
-                    {formatPrice(item.depositamount)}
+                    {formatPrice(convert(item?.depositamount, "LBP"))}
                   </p>
                 </div>
                 <button

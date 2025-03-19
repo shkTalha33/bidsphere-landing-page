@@ -5,7 +5,8 @@ import { handleError } from "@/components/api/errorHandler";
 import { avataruser } from "@/components/assets/icons/icon";
 import AuctionLots from "@/components/auction/auctionLots";
 import TopSection from "@/components/common/TopSection";
-import { formatPrice } from "@/components/utils/formatPrice";
+import useCurrency from "@/components/hooks/useCurrency";
+import { useSocket } from "@/components/socketProvider/socketProvider";
 import { format } from "date-fns";
 import debounce from "debounce";
 import Image from "next/image";
@@ -21,15 +22,18 @@ const AuctionDetailPage = () => {
   const [isShowAll, setIsShowAll] = useState(true);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [item, setItem] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewModal, setPreviewModal] = useState(false);
   const [activeButton, setActiveButton] = useState("custom");
+  const [bids, setBids] = useState([]);
   const selectedData = useSelector(
     (state) => state?.auctionProduct?.auctionProductData
   );
   const { get } = ApiFunction();
   const { id } = useParams();
+  const newSocket = useSocket();
+  const { formatPrice, convert } = useCurrency();
 
   const bidders = [
     {
@@ -54,6 +58,18 @@ const AuctionDetailPage = () => {
       timeAgo: "2m",
     },
   ];
+
+  useEffect(() => {
+    if (newSocket) {
+      newSocket.emit("join_auction", selectedData?._id, (auctionResponse) => {
+        if (auctionResponse.success) {
+          console.log("Joined auction:", auctionResponse);
+        } else {
+          console.error("Auction join failed:", auctionResponse.message);
+        }
+      });
+    }
+  }, [newSocket]);
 
   const priceOptions = ["$20k", "$21k", "$22k", "$23k"];
 
@@ -110,14 +126,6 @@ const AuctionDetailPage = () => {
     return dateString
       ? format(new Date(dateString), "dd-MM-yyyy HH:mm:ss")
       : "N/A";
-  };
-
-  // Format currency
-  const formatCurrency = (value) => {
-    if (!value) return "$0.00";
-    return `$${parseFloat(value).toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-    })}`;
   };
 
   return (
@@ -246,7 +254,7 @@ const AuctionDetailPage = () => {
                   </Col>
                   <Col md="6" className="">
                     <div className="poppins_regular">
-                      {formatPrice(item?.depositamount)}
+                      {formatPrice(convert(item?.depositamount, "LBP"))}
                     </div>
                   </Col>
                 </Row>
