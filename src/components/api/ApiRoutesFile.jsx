@@ -22,6 +22,7 @@ const getFavouriteAuctions = "/auction/fav/me/";
 const auctionRegistration = "auction/registration/";
 const editAuctionRegistration = "auction/edit-registration/";
 const registrationTracking = "auction/me/registration/";
+const getLatestCurrencyRate = "users/data";
 
 export {
   login,
@@ -45,4 +46,5 @@ export {
   auctionRegistration,
   registrationTracking,
   editAuctionRegistration,
+  getLatestCurrencyRate,
 };

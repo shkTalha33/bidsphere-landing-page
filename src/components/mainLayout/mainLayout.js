@@ -1,37 +1,56 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client"
-import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import Footer from '../Footer/Footer'
-import Header from '../Header/Header'
+"use client";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import Footer from "../Footer/Footer";
+import Header from "../Header/Header";
+import axios from "axios";
+import { getLatestCurrencyRate } from "../api/ApiRoutesFile";
+import { handleError } from "../api/errorHandler";
+import debounce from "debounce";
+import ApiFunction from "../api/apiFuntions";
+import { setCurrencies } from "../redux/currency";
 
 const MainLayout = ({ children }) => {
-    const pathname = usePathname()
-    const lang = useSelector((state) => state.auth.lang);
-    const { i18n } = useTranslation();
-    const pubRoute = [
-        '/auth/',
-        '/account-created'
-    ];
-    const mobilePath = [
-        '/', '/profile', '/live', '/shop', '/product'
-    ]
-    const isMobileRoute = mobilePath.includes(pathname);
-    const isPublicRoute = pubRoute.some(item => pathname.startsWith(item));
-    useEffect(() => {
-        if (lang?.code) {
-            i18n.changeLanguage(lang.code);
-        }
-    }, []);
-    return (
-        <>
-            {!isPublicRoute && <Header />}
-            {children}
-            {!isPublicRoute ? <Footer /> : null}
-        </>
-    )
-}
+  const pathname = usePathname();
+  const lang = useSelector((state) => state.auth.lang);
+  const { i18n } = useTranslation();
+  const pubRoute = ["/auth/", "/account-created"];
+  const mobilePath = ["/", "/profile", "/live", "/shop", "/product"];
+  const isMobileRoute = mobilePath.includes(pathname);
+  const isPublicRoute = pubRoute.some((item) => pathname.startsWith(item));
+  const { get } = ApiFunction();
+  const dispatch = useDispatch();
 
-export default MainLayout
+  useEffect(() => {
+    if (lang?.code) {
+      i18n.changeLanguage(lang.code);
+    }
+  }, []);
+
+  const latestCurrency = debounce(async () => {
+    await get(getLatestCurrencyRate)
+      .then((result) => {
+        dispatch(setCurrencies(result?.ratedata?.conversion_rates));
+      })
+      .catch((err) => {
+        handleError(err);
+      });
+  }, 300);
+
+  useEffect(() => {
+    latestCurrency();
+  }, []);
+
+  return (
+    <>
+      {!isPublicRoute && <Header />}
+      {children}
+      {!isPublicRoute ? <Footer /> : null}
+    </>
+  );
+};
+
+export default MainLayout;

@@ -1,13 +1,11 @@
 "use client";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { worldCurrencies, fetchLatestRates } from "../utils/WorldCurrency";
 
 export const useCurrency = () => {
-  // Default to Lebanese Pound
-  const [currency, setCurrency] = useState(
-    worldCurrencies.find((c) => c.code === "LBP") || worldCurrencies[0]
+  const { currencies, selectedCurrency } = useSelector(
+    (state) => state.currency
   );
-  const [rates, setRates] = useState({});
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -15,88 +13,50 @@ export const useCurrency = () => {
   const formatPrice = (value) => {
     if (!mounted) return `${value}`; // Basic fallback before hydration
 
-    const formattedValue = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currency.code,
-      currencyDisplay: "symbol",
-      minimumFractionDigits: 2, // Ensures at least 2 decimal places
-      maximumFractionDigits: 2, // Limits to 2 decimal places
-    })
-      .format(value)
-      .replace(/\s/g, ""); // Removes space between currency symbol and amount
+    // Format the number part
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      style: "decimal", // Use decimal instead of currency
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
 
-    return formattedValue;
+    // Add the symbol from your data
+    return `${selectedCurrency.symbol} ${formattedNumber}`;
   };
-
   // Convert a value from one currency to another
-  const convert = (value, fromCurrencyCode, toCurrencyCode = currency.code) => {
-    if (!rates || Object.keys(rates).length === 0) {
-      // Fallback to static rates if API rates aren't loaded yet
-      const fromRate =
-        worldCurrencies.find((c) => c.code === fromCurrencyCode)?.rate || 1;
-      const toRate =
-        worldCurrencies.find((c) => c.code === toCurrencyCode)?.rate || 1;
+  const convert = (
+    value,
+    fromCurrencyCode,
+    toCurrencyCode = selectedCurrency.code
+  ) => {
+    // Find the currency objects
+    const fromCurrency = currencies.find((c) => c.code === fromCurrencyCode);
+    const toCurrency = currencies.find((c) => c.code === toCurrencyCode);
 
-      // Convert to LBP first, then to target currency
-      return (value / fromRate) * toRate;
+    if (!fromCurrency || !toCurrency) {
+      return value; // Return original value if currencies not found
     }
 
-    // Use API rates if available
-    const fromRate = rates[fromCurrencyCode] || 1;
-    const toRate = rates[toCurrencyCode] || 1;
+    // Convert using rates
+    const fromRate = fromCurrency.rate || 1;
+    const toRate = toCurrency.rate || 1;
 
     return (value / fromRate) * toRate;
   };
 
-  // Fetch the latest exchange rates
-  const refreshRates = async () => {
-    setLoading(true);
-    const result = await fetchLatestRates();
-    if (result.success) {
-      setRates(result.rates);
-    }
-    setLoading(false);
-  };
-
-  // Listen for currency changes from the CurrencyConverter component
+  // Set mounted state after component mounts
   useEffect(() => {
-    const handleCurrencyChange = (event) => {
-      setCurrency(event.detail);
-    };
-
-    // Initialize from localStorage
-    const initCurrency = () => {
-      setMounted(true);
-      if (typeof window !== "undefined") {
-        const savedCurrency = localStorage.getItem("preferredCurrency");
-        if (savedCurrency) {
-          const currency = worldCurrencies.find(
-            (c) => c.code === savedCurrency
-          );
-          if (currency) {
-            setCurrency(currency);
-          }
-        }
-      }
-    };
-
-    initCurrency();
-    refreshRates();
-    document.addEventListener("currencyChange", handleCurrencyChange);
-
-    return () => {
-      document.removeEventListener("currencyChange", handleCurrencyChange);
-    };
+    setMounted(true);
+    setLoading(false);
   }, []);
 
   return {
-    currency,
+    currency: selectedCurrency,
     formatPrice,
     convert,
     mounted,
     loading,
-    refreshRates,
-    allCurrencies: worldCurrencies,
+    allCurrencies: currencies,
   };
 };
 

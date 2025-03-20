@@ -1,7 +1,3 @@
-// data/worldCurrencies.js
-
-// World currencies with their symbols and approximate exchange rates against LBP
-// Note: Exchange rates are approximate and should be updated from an API in production
 export const worldCurrencies = [
   { code: "LBP", name: "Lebanese Pound", symbol: "ل.ل", rate: 1 },
   { code: "USD", name: "US Dollar", symbol: "$", rate: 0.000066 },
@@ -53,31 +49,8 @@ export const worldCurrencies = [
   { code: "JOD", name: "Jordanian Dinar", symbol: "JD", rate: 0.000047 },
   { code: "BHD", name: "Bahraini Dinar", symbol: ".د.ب", rate: 0.000025 },
   { code: "OMR", name: "Omani Rial", symbol: "﷼", rate: 0.000025 },
-  { code: "BTC", name: "Bitcoin", symbol: "₿", rate: 0.0000000012 },
-  { code: "ETH", name: "Ethereum", symbol: "Ξ", rate: 0.000000034 },
-  { code: "XAU", name: "Gold (troy ounce)", symbol: "XAU", rate: 0.0000000341 },
-  { code: "XAG", name: "Silver (troy ounce)", symbol: "XAG", rate: 0.00000284 },
+  // { code: "BTC", name: "Bitcoin", symbol: "₿", rate: 0.0000000012 },
+  // { code: "ETH", name: "Ethereum", symbol: "Ξ", rate: 0.000000034 },
+  // { code: "XAU", name: "Gold (troy ounce)", symbol: "XAU", rate: 0.0000000341 },
+  // { code: "XAG", name: "Silver (troy ounce)", symbol: "XAG", rate: 0.00000284 },
 ];
-
-// Function to fetch latest exchange rates from an API
-// This should be implemented for production use
-export const fetchLatestRates = async (baseCurrency = "LBP") => {
-  try {
-    // In a real application, you would fetch from an exchange rate API
-    // For example:
-    // const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${baseCurrency}`);
-    // const data = await response.json();
-
-    // For now, we'll just return the static rates
-    return {
-      success: true,
-      rates: worldCurrencies.reduce((acc, curr) => {
-        acc[curr.code] = curr.rate;
-        return acc;
-      }, {}),
-    };
-  } catch (error) {
-    console.error("Failed to fetch exchange rates:", error);
-    return { success: false, error: "Failed to fetch exchange rates" };
-  }
-};

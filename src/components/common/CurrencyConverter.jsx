@@ -1,48 +1,24 @@
-// components/CurrencyConverter.jsx
 "use client";
 import { useState, useEffect } from "react";
-import { worldCurrencies } from "../utils/WorldCurrency";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedCurrency } from "../redux/currency";
 
 const CurrencyConverter = () => {
-  // State to store the selected currency
-  const [selectedCurrency, setSelectedCurrency] = useState(
-    worldCurrencies.find((c) => c.code === "LBP") || worldCurrencies[0]
+  const dispatch = useDispatch();
+  const { currencies, selectedCurrency } = useSelector(
+    (state) => state.currency
   );
-
-  // State to track if component has mounted (for localStorage access)
   const [mounted, setMounted] = useState(false);
 
   // Handle currency change
   const handleCurrencyChange = (e) => {
     const currencyCode = e.target.value;
-    const currency = worldCurrencies.find((c) => c.code === currencyCode);
-    if (currency) {
-      setSelectedCurrency(currency);
-
-      // Save to localStorage
-      if (typeof window !== "undefined") {
-        localStorage.setItem("preferredCurrency", currencyCode);
-      }
-
-      // Dispatch event for other components
-      document.dispatchEvent(
-        new CustomEvent("currencyChange", { detail: currency })
-      );
-    }
+    dispatch(setSelectedCurrency(currencyCode));
   };
 
-  // Initialize from localStorage on component mount
+  // Set mounted state after component mounts
   useEffect(() => {
     setMounted(true);
-    if (typeof window !== "undefined") {
-      const savedCurrency = localStorage.getItem("preferredCurrency");
-      if (savedCurrency) {
-        const currency = worldCurrencies.find((c) => c.code === savedCurrency);
-        if (currency) {
-          setSelectedCurrency(currency);
-        }
-      }
-    }
   }, []);
 
   // Don't render content until after mount to avoid hydration mismatch
@@ -63,7 +39,7 @@ const CurrencyConverter = () => {
           onChange={handleCurrencyChange}
           className="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          {worldCurrencies.map((currency) => (
+          {currencies.map((currency) => (
             <option key={currency.code} value={currency.code}>
               {currency.name} ({currency.symbol})
             </option>

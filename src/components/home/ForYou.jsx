@@ -7,8 +7,11 @@ import AuctionCard from "../common/AuctionCard";
 import SectionHeadings from "../common/sectionHeadings";
 import SkeletonLayout2 from "../common/SkeletonLayout2";
 import { useGetAuctionsQuery } from "../redux/apiSlice";
+import { useSelector } from "react-redux";
 
 export default function ForYou() {
+  const currencies = useSelector((state) => state?.currency?.currencies);
+  console.log("currencies", currencies);
   const { data, isLoading, error } = useGetAuctionsQuery({
     endpoint: `${getAuctions}/1`,
   });

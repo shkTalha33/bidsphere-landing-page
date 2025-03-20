@@ -9,6 +9,7 @@ import { auctionProductSlice } from "./auctionProduct";
 import { auctionRegistrationSlice } from "./auctionRegistration";
 import { apiSlice } from "./apiSlice";
 import { apiSlice2 } from "./apiSlice2";
+import { currencySlice } from "./currency";
 
 const rootReducer = combineReducers({
   auth: authSlice,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   chat: ChatSlice.reducer,
   auctionProduct: auctionProductSlice.reducer,
   auctionRegistration: auctionRegistrationSlice.reducer,
+  currency: currencySlice.reducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
   [apiSlice2.reducerPath]: apiSlice2.reducer,
 });
