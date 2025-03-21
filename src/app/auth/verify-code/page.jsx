@@ -1,10 +1,20 @@
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import { sendCode, sendCodeForgotPassword, signup, verifyCodeForgotPassword } from "@/components/api/ApiRoutesFile";
+import {
+  sendCode,
+  sendCodeForgotPassword,
+  signup,
+  verifyCodeForgotPassword,
+} from "@/components/api/ApiRoutesFile";
 import { handleError } from "@/components/api/errorHandler";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
-import { setAccessToken, setUserData } from "@/components/redux/loginForm";
+import {
+  setAccessToken,
+  setForgotCode,
+  setTempData,
+  setUserData,
+} from "@/components/redux/loginForm";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -20,17 +30,16 @@ const Page = () => {
     formState: { errors },
   } = useForm();
   const fieldsRef = useRef();
-  const router = useRouter()
-  const [showResendLink, setShowResendLink] = useState(false)
-  const { post } = ApiFunction()
-  const dispatch = useDispatch()
+  const router = useRouter();
+  const [showResendLink, setShowResendLink] = useState(false);
+  const { post } = ApiFunction();
+  const dispatch = useDispatch();
   const [timer, setTimer] = useState(60);
-  const [loading, setloading] = useState(false)
-  const tempData = useSelector((state) => state.auth.tempData)
-  const isForgotPassword = useSelector((state) => state.auth?.isForgotPassword)
-  const forgotCode = useSelector((state) => state.auth?.forgotCode)
+  const [loading, setloading] = useState(false);
+  const tempData = useSelector((state) => state.auth.tempData);
+  const isForgotPassword = useSelector((state) => state.auth?.isForgotPassword);
+  const forgotCode = useSelector((state) => state.auth?.forgotCode);
   const [otpCode, setOtpCode] = useState(["", "", "", ""]);
-
 
   useEffect(() => {
     let interval;
@@ -52,34 +61,45 @@ const Page = () => {
     if (isForgotPassword) {
       const data = {
         email: forgotCode?.email,
-        type: 'customer'
-      }
+        type: "customer",
+      };
       try {
-        const response = await post(sendCodeForgotPassword, data)
+        const response = await post(sendCodeForgotPassword, data);
         if (response.success) {
           setTimer(60);
+          const data = {
+            ...forgotCode,
+            token: response?.token,
+            code: response?.verificationCode,
+          };
+          dispatch(setForgotCode(data));
           setShowResendLink(false);
-          message.success('We have sent an verification code in your email');
+          message.success("We have sent an verification code in your email");
         }
       } catch (error) {
-        handleError(error)
+        handleError(error);
       } finally {
-        setloading(false)
+        setloading(false);
       }
     } else {
       const data = {
         email: tempData?.email,
-        type: 'customer'
-      }
+        type: "customer",
+      };
       try {
-        const response = await post(sendCode, data)
+        const response = await post(sendCode, data);
         if (response.message) {
           setTimer(60);
           setShowResendLink(false);
-          message.success('We have sent an Code in your email.');
+          const newData = {
+            ...tempData,
+            code: response.verificationCode,
+          };
+          dispatch(setTempData(newData));
+          message.success("We have sent an Code in your email.");
         }
       } catch (error) {
-        handleError(error)
+        handleError(error);
       } finally {
       }
     }
@@ -100,45 +120,48 @@ const Page = () => {
     const otpString = otpCode.join("");
     if (isForgotPassword) {
       if (otpString !== forgotCode?.verificationCode) {
-        message.error('Incorrect Code');
-        return
+        message.error("Incorrect Code");
+        return;
       }
-      setloading(true)
+      setloading(true);
       const data = {
         token: forgotCode?.token,
-        code: otpString
-      }
+        code: otpString,
+      };
       try {
-        const response = await post(verifyCodeForgotPassword, data)
+        const response = await post(verifyCodeForgotPassword, data);
         if (response.success) {
-          message.success('Code verified Successfully!');
-          router.push('/auth/reset-password');
+          message.success("Code verified Successfully!");
+          router.push("/auth/reset-password");
         }
       } catch (error) {
-        handleError(error)
+        handleError(error);
       } finally {
-        setloading(false)
+        setloading(false);
       }
     } else {
       if (tempData) {
+        console.log(otpString, tempData?.code);
+
         if (otpString !== tempData?.code) {
-          message.error('Incorrect Code');
-          return
+          console.log("runs");
+          message.error("Incorrect Code");
+          return;
         }
-        setloading(true)
+        setloading(true);
         try {
-          const response = await post(signup, tempData)
+          const response = await post(signup, tempData);
           if (response.success) {
-            router.push('/auth/choose-location')
-            dispatch(setUserData(response?.user))
-            dispatch(setAccessToken(response?.token))
-            localStorage.setItem('auction_user_token', response?.token)
+            router.push("/auth/choose-location");
+            dispatch(setUserData(response?.user));
+            dispatch(setAccessToken(response?.token));
+            localStorage.setItem("auction_user_token", response?.token);
             // dispatch(setLogin(true))
           }
         } catch (error) {
-          handleError(error)
+          handleError(error);
         } finally {
-          setloading(false)
+          setloading(false);
         }
       }
     }
@@ -151,15 +174,27 @@ const Page = () => {
   };
 
   return (
-    <AuthLayout title='Exclusive & Diverse Listings' description='Discover rare collectibles, vehicles, and premium assets.'>
+    <AuthLayout
+      title="Exclusive & Diverse Listings"
+      description="Discover rare collectibles, vehicles, and premium assets."
+    >
       <>
-        <AuthHeading heading={' Verify Your Email'} subHeading={'We have sent you an verification code with a code to this email'} email={tempData?.email || forgotCode?.email} />
+        <AuthHeading
+          heading={" Verify Your Email"}
+          subHeading={
+            "We have sent you an verification code with a code to this email"
+          }
+          email={tempData?.email || forgotCode?.email}
+        />
         <Form onSubmit={handleSubmit(onSubmit)} className="mt-8 gap-6">
           <div className="mt-5">
             <label className="text_secondary2 poppins_regular">
               Enter Your OPT Code Here
             </label>
-            <div ref={fieldsRef} className="mt-3 flex mb-2 items-center gap-x-2">
+            <div
+              ref={fieldsRef}
+              className="mt-3 flex mb-2 items-center gap-x-2"
+            >
               {otpCode.map((value, index) => (
                 <input
                   key={index}
@@ -206,7 +241,7 @@ const Page = () => {
               disabled={loading}
               className="btn1 primary w-100"
             >
-              {loading ? <BeatLoader color="#fff" size={10} /> : 'Verify'}
+              {loading ? <BeatLoader color="#fff" size={10} /> : "Verify"}
             </button>
           </div>
         </Form>

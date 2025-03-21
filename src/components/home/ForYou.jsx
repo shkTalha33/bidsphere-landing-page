@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 
 export default function ForYou() {
   const currencies = useSelector((state) => state?.currency?.currencies);
-  console.log("currencies", currencies);
   const { data, isLoading, error } = useGetAuctionsQuery({
     endpoint: `${getAuctions}/1`,
   });
