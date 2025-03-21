@@ -30,6 +30,7 @@ const Page = () => {
     lat: 51.5074,
     lng: -0.1278,
   });
+
   const [locationLoading, setLocationLoading] = useState(true);
   const [mapExpanded, setMapExpanded] = useState(false);
 
