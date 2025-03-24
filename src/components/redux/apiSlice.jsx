@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getFavouriteAuctions, likeAuction } from "../api/ApiRoutesFile";
+import { getFavouriteAuctions, likeAuction } from "../api/ApiFile";
+import { baseURL } from "../api/axiosInstance";
 
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.castle-auction.com/api/",
+    baseUrl: baseURL,
     prepareHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
       const token = localStorage.getItem("auction_user_token");

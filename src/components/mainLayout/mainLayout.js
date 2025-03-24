@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import axios from "axios";
-import { getLatestCurrencyRate } from "../api/ApiRoutesFile";
+import { getLatestCurrencyRate } from "../api/ApiFile";
 import { handleError } from "../api/errorHandler";
 import debounce from "debounce";
 import ApiFunction from "../api/apiFuntions";
@@ -30,18 +30,18 @@ const MainLayout = ({ children }) => {
     }
   }, []);
 
-  const latestCurrency = debounce(async () => {
-    await get(getLatestCurrencyRate)
-      .then((result) => {
-        dispatch(setCurrencies(result?.ratedata?.conversion_rates));
+  const handleUser = () => {
+    get(getLatestCurrencyRate)
+      .then((res) => {
+        dispatch(setCurrencies(res?.ratedata?.conversion_rates));
       })
-      .catch((err) => {
-        handleError(err);
+      .catch((error) => {
+        handleError(error);
       });
-  }, 300);
+  };
 
   useEffect(() => {
-    latestCurrency();
+    handleUser();
   }, []);
 
   return (

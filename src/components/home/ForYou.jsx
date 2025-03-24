@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { motion } from "framer-motion";
 import { Col, Container, Row } from "reactstrap";
-import { getAuctions } from "../api/ApiRoutesFile";
+import { getAuctions } from "../api/ApiFile";
 import { handleError } from "../api/errorHandler";
 import AuctionCard from "../common/AuctionCard";
 import SectionHeadings from "../common/sectionHeadings";

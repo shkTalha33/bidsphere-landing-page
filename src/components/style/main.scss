@@ -40,6 +40,7 @@ $sm: 640px;
       }
     }
   }
+
   &.small-btn-3 {
     min-height: 30px;
     font-size: smaller;
@@ -318,6 +319,7 @@ $sm: 640px;
 }
 
 .custom-carousel {
+
   .carousel-control-next,
   .carousel-control-prev {
     width: 9% !important;
@@ -338,6 +340,7 @@ $sm: 640px;
   }
 
   @media (max-width: $sm) {
+
     .carousel-control-next-icon,
     .carousel-control-prev-icon {
       background-image: none !important;
@@ -900,7 +903,7 @@ $sm: 640px;
 
         .custom-control-input {
           &:checked {
-            ~ .custom-control-label {
+            ~.custom-control-label {
               font-size: 12px;
               font-weight: unset !important;
               font-family: "popins_medium";
@@ -1032,6 +1035,7 @@ $sm: 640px;
   }
 
   @media (max-width: $sm) {
+
     .swiper-button-next,
     .swiper-button-prev {
       display: none !important;
@@ -1286,7 +1290,7 @@ $sm: 640px;
   // color: #fff !important;
 }
 
-.css-16jesut > .ps-menu-button {
+.css-16jesut>.ps-menu-button {
   padding-left: 10px !important;
 }
 
@@ -1323,29 +1327,37 @@ $sm: 640px;
 
 /* Add this to your global CSS file or a <style> tag */
 .scrollbar-hide {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
 }
+
 .scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
+  display: none;
+  /* Chrome, Safari, and Opera */
 }
 
 // Form CSS starts here
 .custom_form {
   label {
     font-size: 1.25rem;
+
     @media (max-width: 576px) {
       font-size: 1rem !important;
     }
   }
+
   input,
   select,
   textarea {
     padding: 14px;
     width: 100%;
+
     @media (max-width: 576px) {
       padding: 10px;
     }
+
     &:focus,
     &.is-invalid:focus {
       border-color: #d8dadc !important;

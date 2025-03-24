@@ -1,6 +1,6 @@
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import { auctionDetail } from "@/components/api/ApiRoutesFile";
+import { auctionDetail } from "@/components/api/ApiFile";
 import { handleError } from "@/components/api/errorHandler";
 import RegistrationReviewPage from "@/components/common/RegistrationReviewPage";
 import TopSection from "@/components/common/TopSection";

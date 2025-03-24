@@ -2,7 +2,7 @@
 import { Tabs } from "antd";
 import { useState, useMemo } from "react";
 import { Col, Container, Row } from "reactstrap";
-import { getAuctions } from "../api/ApiRoutesFile";
+import { getAuctions } from "../api/ApiFile";
 import Breadcrumbs from "../common/Breadcrumbs";
 import { useGetAuctionsQuery } from "../redux/apiSlice";
 import AuctionItems from "./auctionItems";

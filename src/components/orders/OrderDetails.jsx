@@ -27,7 +27,7 @@ export default function OrderDetails() {
     useState("order summary");
   const router = useRouter();
   const onChange = (key) => {
-    console.log(key);
+
   };
 
   const sideButtons = [

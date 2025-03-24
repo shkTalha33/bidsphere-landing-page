@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { Col } from "reactstrap";
-import { registrationTracking } from "../api/ApiRoutesFile";
+import { registrationTracking } from "../api/ApiFile";
 import ProductTable from "../common/dataTables/productTable";
 import useCurrency from "../hooks/useCurrency";
 import { usePaymentQuery } from "../redux/apiSlice2";

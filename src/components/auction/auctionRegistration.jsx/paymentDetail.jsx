@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import { auctionDetail } from "@/components/api/ApiRoutesFile";
+import { auctionDetail } from "@/components/api/ApiFile";
 import { handleError } from "@/components/api/errorHandler";
 import { googlePay, paypal, stripe } from "@/components/assets/icons/icon";
 import { setAuctionRegistrationData } from "@/components/redux/auctionRegistration";
@@ -91,7 +92,6 @@ const PaymentDetail = ({
     setLoading(true);
     await get(`${auctionDetail}${id}`)
       .then((result) => {
-        console.log(result);
         // if (result?.success) {
         setItem(result?.auction);
         // }

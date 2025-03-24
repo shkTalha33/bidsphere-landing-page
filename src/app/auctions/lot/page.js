@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import { auctionDetail } from "@/components/api/ApiRoutesFile";
+import { auctionDetail } from "@/components/api/ApiFile";
 import { handleError } from "@/components/api/errorHandler";
 import AuctionLots from "@/components/auction/auctionLots";
 import SkeletonLayout from "@/components/common/SkeletonLayout";
@@ -29,7 +30,7 @@ export default function Page() {
   const handleRegistration = () => {
     if (items?.applications) {
       router.push(`/auctions/${id}/detail`);
-    }else{
+    } else {
       router.push(`/auctions/${id}/registration`);
     }
   };
@@ -58,8 +59,6 @@ export default function Page() {
     }
   }, []);
 
-  console.log('items', items?.applications)
-
   return (
     <main className="bg_mainsecondary p-2 py-md-4">
       <Container className="bg_white rounded-[9px] mt-20 p-3 p-sm-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
@@ -81,8 +80,15 @@ export default function Page() {
                     <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark capitalize">
                       {items?.name}
                     </h3>
-                    <button className="rounded-md bg_primary text_white py-2 text-sm md:text-base px-3 px-md-4 text-center" onClick={handleRegistration}>
-                      {items?.applications ? items?.applications?.status === "approved" ? "Join Auction" : "Registration Pending" : "Resgister Auction"}
+                    <button
+                      className="rounded-md bg_primary text_white py-2 text-sm md:text-base px-3 px-md-4 text-center"
+                      onClick={handleRegistration}
+                    >
+                      {items?.applications
+                        ? items?.applications?.status === "approved"
+                          ? "Join Auction"
+                          : "Registration Pending"
+                        : "Resgister Auction"}
                     </button>
                   </div>
                   <p className="poppins_regular text-xs md:text-sm md:w-[80%] text_primary mb-0 sm:mb-3 capitalize ">
@@ -94,7 +100,7 @@ export default function Page() {
           </Col>
         </Row>
       </Container>
-      <AuctionLots items={items} loading={loading}/>
+      <AuctionLots items={items} loading={loading} />
     </main>
   );
 }

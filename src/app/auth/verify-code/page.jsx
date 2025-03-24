@@ -5,13 +5,15 @@ import {
   sendCodeForgotPassword,
   signup,
   verifyCodeForgotPassword,
-} from "@/components/api/ApiRoutesFile";
+  verifyCode,
+} from "@/components/api/ApiFile";
 import { handleError } from "@/components/api/errorHandler";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
 import {
   setAccessToken,
   setForgotCode,
+  setLogin,
   setTempData,
   setUserData,
 } from "@/components/redux/loginForm";
@@ -119,10 +121,6 @@ const Page = () => {
   const onSubmit = async (values) => {
     const otpString = otpCode.join("");
     if (isForgotPassword) {
-      if (otpString !== forgotCode?.verificationCode) {
-        message.error("Incorrect Code");
-        return;
-      }
       setloading(true);
       const data = {
         token: forgotCode?.token,
@@ -141,30 +139,48 @@ const Page = () => {
       }
     } else {
       if (tempData) {
-        console.log(otpString, tempData?.code);
-
-        if (otpString !== tempData?.code) {
-          console.log("runs");
-          message.error("Incorrect Code");
-          return;
-        }
         setloading(true);
-        try {
-          const response = await post(signup, tempData);
-          if (response.success) {
-            router.push("/auth/choose-location");
-            dispatch(setUserData(response?.user));
-            dispatch(setAccessToken(response?.token));
-            localStorage.setItem("auction_user_token", response?.token);
-            // dispatch(setLogin(true))
-          }
-        } catch (error) {
-          handleError(error);
-        } finally {
-          setloading(false);
-        }
+        const api = verifyCode;
+        const apiData = {
+          email: tempData?.email,
+          code: otpString,
+        };
+        post(api, apiData)
+          .then((res) => {
+            if (res?.success) {
+              handleSignup();
+            }
+          })
+          .catch((error) => {
+            handleError(error);
+            setloading(false);
+          });
       }
     }
+  };
+
+  const handleSignup = () => {
+    const otpString = otpCode.join("");
+    const api = signup;
+    const apiData = { ...tempData, code: otpString };
+    post(api, apiData)
+      .then((res) => {
+        if (res?.success) {
+          router.push("/auth/choose-location");
+          dispatch(setUserData(res?.user));
+          dispatch(setAccessToken(res?.token));
+          dispatch(setTempData(null));
+          dispatch(setLogin(true));
+          localStorage.setItem("auction_user_token", res?.token);
+        }
+      })
+      .catch((error) => {
+        handleError(error);
+        setloading(false);
+      })
+      .finally(() => {
+        setloading(false);
+      });
   };
 
   const handleKeyUp = (e, index) => {
@@ -175,17 +191,19 @@ const Page = () => {
 
   return (
     <AuthLayout
+      isCenter={true}
       title="Exclusive & Diverse Listings"
       description="Discover rare collectibles, vehicles, and premium assets."
     >
       <>
         <AuthHeading
-          heading={" Verify Your Email"}
-          subHeading={
-            "We have sent you an verification code with a code to this email"
-          }
+          heading={"Verify Your Email"}
+          subHeading={<>We have sent a verification code to this email.</>}
           email={tempData?.email || forgotCode?.email}
         />
+        <span className="text-red-500 text-xs">
+          If you don’t see the OTP in your inbox, please check your SPAM folder.
+        </span>
         <Form onSubmit={handleSubmit(onSubmit)} className="mt-8 gap-6">
           <div className="mt-5">
             <label className="text_secondary2 poppins_regular">

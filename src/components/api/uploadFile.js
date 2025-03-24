@@ -4,7 +4,7 @@ import imageCompression from "browser-image-compression";
 import { isValidFileType } from "./isValidType";
 import axiosInstance from "./axiosInstance";
 import ApiFunction from "./apiFuntions";
-import { imageUpload } from "./ApiRoutesFile";
+import { imageUpload } from "./ApiFile";
 // import { imageUpload } from "./ApiRoutesFile";
 const header = {
   "Content-Type": "multipart/form-data",

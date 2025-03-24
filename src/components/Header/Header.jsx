@@ -138,7 +138,7 @@ export default function Header() {
                 >
                   {userData?.fname + " " + userData?.lname}
                 </h6>
-                <span
+                {/* <span
                   className={`${
                     isHomeOrHashRoute && !isScrolled
                       ? "text_light"
@@ -146,7 +146,7 @@ export default function Header() {
                   } line-clamp-1 max-w-32 text-xs poppins_regular`}
                 >
                   {userData?.address}
-                </span>
+                </span> */}
               </div>
             </div>
           </Space>
@@ -207,7 +207,7 @@ export default function Header() {
           Login
         </button>
         <button
-          onClick={() => router.push("/auth/signup")}
+          onClick={() => router.push("/auth/sign-up")}
           className="px-[2rem] py-2 bg_primary text_white rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline primary_hover"
         >
           Sign Up
@@ -434,7 +434,7 @@ export default function Header() {
                 </button>
                 <button
                   onClick={() => {
-                    router.push("/auth/signup");
+                    router.push("/auth/sign-up");
                     handleNavClose();
                   }}
                   className="px-[1.5rem] py-[0.5rem] rounded-3 text-[0.85rem] text_white cursor-pointer poppins_medium bg_primary no-underline primary_hover"

@@ -1,6 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import { checkMail, checkPhone, sendCode } from "@/components/api/ApiRoutesFile";
+import {
+  checkMail,
+  checkPhone,
+  checkPhoneNumber,
+  sendCode,
+} from "@/components/api/ApiFile";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
 import { setLogin, setTempData } from "@/components/redux/loginForm";
@@ -8,24 +14,25 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { Input, Label } from "reactstrap";
 import * as Yup from "yup";
+import { handleError } from "@/components/api/errorHandler";
 
 const Page = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [loading, setloading] = useState(false);
   const { post } = ApiFunction();
   const router = useRouter();
-  const [phone, setPhone] = useState("");
   const dispatch = useDispatch();
+  const tempData = useSelector((state) => state.auth.tempData);
 
   const togglePassword = (e) => {
     e.preventDefault();
@@ -59,73 +66,102 @@ const Page = () => {
     setValue,
     setError,
     clearErrors,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (values) => {
-    const data = {
-      email: values.email,
-      type: "customer",
-    };
-    setloading(true);
-    try {
-      const response = await post(sendCode, data);
-      if (response.message) {
-        message.success(response?.message);
-        const newData = {
-          ...values,
-          code: response.verificationCode,
-        };
-        dispatch(setTempData(newData));
-        router.push("/auth/verify-code");
-      }
-    } catch (error) {
-      message.error(error?.data?.message || "Signup failed");
-      console.log("error", error);
-    } finally {
-      setloading(false);
-    }
-  };
-
-  const handlePhoneChange = (value) => {
-    setPhone(value);
-    setValue("phone", "+" + value);
-    trigger("phone");
-  };
+  const emailWatch = watch("email");
 
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+  useEffect(() => {
+    if (tempData) {
+      setValue("fname", tempData?.fname);
+      setValue("lname", tempData?.lname);
+      setValue("phone", tempData?.phone);
+      setValue("email", tempData?.email);
+    }
+  }, [tempData]);
 
-  const handleEmailOnBlur = async (value) => {
+  const handlePhoneOnBlur = async (value) => {
     if (!value) {
       return;
     }
-    if (!isValidEmail(value)) {
-      setError("email", {
-        type: "manual",
-        message: "Please enter a valid email address.",
-      });
-      return;
-    }else{
-      clearErrors('email')
-    }
+    await post(checkPhoneNumber, { phone: value, type: "customer" })
+      .then((result) => {
+        setValue("phone", value);
+        clearErrors("phone");
+        setloading(false);
+      })
+      .catch((err) => {
+        setError("phone", {
+          type: "manual",
+          message:
+            err?.response?.data?.message || "Phone number already exists",
+        });
+        setloading(false);
+        throw {
+          message:
+            err?.response?.data?.message || "Phone number already exists",
+        };
 
+        setValue("phone", "");
+      });
+  };
+
+  const handleEmailOnBlur = async (value) => {
+    if (!value) return;
     await post(checkMail, { email: value, type: "customer" })
       .then((result) => {
-        setValue('email', value)
-        clearErrors('email')
+        setValue("email", value);
+        clearErrors("email");
+        setloading(false);
       })
       .catch((err) => {
         setError("email", {
           type: "manual",
-          message: err?.response?.data?.message || err?.message,
+          message: err?.response?.data?.message || "Email already exists",
         });
-        // handleError(err);
+        setloading(false);
+        throw {
+          message: err?.response?.data?.message || "Email already exists",
+        };
+        setValue("email", "");
       });
+  };
+
+  const onSubmit = async (values) => {
+    setloading(true);
+    try {
+      // Pehle phone validate hoga
+      await handlePhoneOnBlur(values.phone);
+      await handleEmailOnBlur(values.email);
+      const data = {
+        email: values.email,
+        type: "customer",
+      };
+      const response = await post(sendCode, data);
+
+      if (response.message) {
+        message.success(response?.message);
+        const newData = {
+          ...values,
+          // code: response.verificationCode,
+        };
+        dispatch(setTempData(newData));
+        router.push("/auth/verify-code");
+      }
+    } catch (error) {
+      // Agar kisi bhi validation me error aya to yah handle karega
+      message.error(error?.message || "Signup failed");
+      console.log("error", error);
+    } finally {
+      setloading(false);
+    }
   };
 
   return (
@@ -211,22 +247,28 @@ const Page = () => {
           </div>
 
           <div className="col-span-6">
-            <Label
-              for="phone"
-              className="mb-2 text-sm poppins_regular text_secondary2"
-            >
-              Phone Number
-            </Label>
-            <PhoneInput
-              country={"ae"}
-              enableSearch={true}
-              value={phone}
-              className={`phon_inp poppins_regular ${
-                errors.phone ? "border-red-500" : ""
-              }`}
-              onChange={handlePhoneChange}
-              placeholder="Enter phone number"
+            <Controller
+              name="phone"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <PhoneInput
+                  country={"ae"}
+                  enableSearch={true}
+                  value={field.value}
+                  className={`phon_inp poppins_regular ${
+                    errors.phone ? "border-red-500" : ""
+                  }`}
+                  onChange={(value) => {
+                    field.onChange(value);
+                    setValue("phone", value); // React Hook Form state update karega
+                  }}
+                  // onBlur={() => handlePhoneOnBlur(field.value)} // API call karega
+                  placeholder="Enter phone number"
+                />
+              )}
             />
+
             {errors.phone && (
               <span className="text-red-500 text-xs poppins_regular ms-1">
                 {errors.phone.message}
@@ -251,10 +293,10 @@ const Page = () => {
                   {...field}
                   type="email"
                   id="email"
-                  onBlur={(e) => {
-                    field.onChange(e);
-                    handleEmailOnBlur(e.target.value);
-                  }}
+                  // onBlur={(e) => {
+                  //   field.onChange(e);
+                  //   handleEmailOnBlur(e.target.value);
+                  // }}
                   placeholder="Your Email address"
                   className={`h-12 w-full poppins_regular sm:text-sm ${
                     errors.email

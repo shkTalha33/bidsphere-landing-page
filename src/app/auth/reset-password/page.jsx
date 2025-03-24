@@ -1,7 +1,7 @@
 "use client";
 
 import ApiFunction from "@/components/api/apiFuntions";
-import { forgotPassword } from "@/components/api/ApiRoutesFile";
+import { forgotPassword } from "@/components/api/ApiFile";
 import { handleError } from "@/components/api/errorHandler";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
@@ -52,8 +52,6 @@ const Page = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  console.log(forgotCode);
 
   const onSubmit = async (values) => {
     setLoading(true);

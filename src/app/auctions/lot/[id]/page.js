@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import { getAuctionLot } from "@/components/api/ApiRoutesFile";
+import { getAuctionLot } from "@/components/api/ApiFile";
 import { handleError } from "@/components/api/errorHandler";
 import { avataruser, confirmBid, winBid } from "@/components/assets/icons/icon";
 import AuctionConfirmationModal from "@/components/common/auctionConfirmationModal";
@@ -74,7 +75,7 @@ export default function Page() {
     buttons: [
       {
         btnText: "Yes, Place My Bid",
-        onClick: () => router.push("/auctions/registration"),
+        // onClick: () => router.push("/auctions/registration"),
         className:
           "rounded-[10px] bg_primary text-white poppins_medium text-xs sm:text-base md:text-lg border border-[#21CD9D] w-full py-2 md:py-3",
       },

@@ -1,10 +1,14 @@
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import { login } from "@/components/api/ApiRoutesFile";
+import { login } from "@/components/api/ApiFile";
 import { handleError } from "@/components/api/errorHandler";
 import AuthHeading from "@/components/authLayout/authHeading";
 import AuthLayout from "@/components/authLayout/authLayout";
-import { setAccessToken, setLogin, setUserData } from "@/components/redux/loginForm";
+import {
+  setAccessToken,
+  setLogin,
+  setUserData,
+} from "@/components/redux/loginForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { message } from "antd";
 import Link from "next/link";
@@ -22,7 +26,7 @@ const Page = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [loading, setloading] = useState(false);
   const router = useRouter();
-  const { post } = ApiFunction()
+  const { post } = ApiFunction();
   const dispatch = useDispatch();
 
   const togglePassword = (e) => {
@@ -52,29 +56,33 @@ const Page = () => {
     const data = {
       email: values.email,
       password: values.password,
-      type: 'customer'
-    }
+      type: "customer",
+    };
     try {
-      const response = await post(login, data)
+      const response = await post(login, data);
       if (response.success) {
-        message.success('You have successfully logged in');
+        message.success("You have successfully logged in");
         dispatch(setLogin(true));
         dispatch(setAccessToken(response?.token));
         dispatch(setUserData(response?.user));
-        localStorage.setItem('auction_user_token', response?.token);
-        router.push('/');
+        localStorage.setItem("auction_user_token", response?.token);
+        router.push("/");
       }
     } catch (error) {
-      handleError(error)
+      handleError(error);
     } finally {
       setloading(false);
     }
   };
 
   return (
-    <AuthLayout src={'/assets/auth1.png'}>
+    <AuthLayout isCenter={true} src={"/assets/auth1.png"}>
       <>
-        <AuthHeading heading="Login" subHeading="Login to your account" path={'/'} />
+        <AuthHeading
+          heading="Login"
+          subHeading="Login to your account"
+          path={"/"}
+        />
         <Form
           onSubmit={handleSubmit(onSubmit)}
           className="mt-12 grid grid-cols-6 gap-3 auth-form"
@@ -98,13 +106,18 @@ const Page = () => {
                   id="email"
                   name="email"
                   placeholder="Email"
-                  className={`h-12 w-full poppins_regular sm:text-sm ${errors.email ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
-                    }`}
+                  className={`h-12 w-full poppins_regular sm:text-sm ${
+                    errors.email
+                      ? "border-red-500 ring-red-500 focus:ring-red-500"
+                      : ""
+                  }`}
                 />
               )}
             />
             {errors.email && (
-              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.email.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">
+                {errors.email.message}
+              </p>
             )}
           </div>
           <div className="col-span-6">
@@ -137,14 +150,19 @@ const Page = () => {
                     id="password"
                     placeholder="Password"
                     name="password"
-                    className={`h-12 w-full poppins_regular sm:text-sm ${errors.password ? "border-red-500 ring-red-500 focus:ring-red-500" : ""
-                      }`}
+                    className={`h-12 w-full poppins_regular sm:text-sm ${
+                      errors.password
+                        ? "border-red-500 ring-red-500 focus:ring-red-500"
+                        : ""
+                    }`}
                   />
                 )}
               />
             </div>
             {errors.password && (
-              <p className="text-red-500 text-xs m-1 poppins_regular">{errors.password.message}</p>
+              <p className="text-red-500 text-xs m-1 poppins_regular">
+                {errors.password.message}
+              </p>
             )}
           </div>
           <div className="col-span-6 flex justify-end w-full">
@@ -156,7 +174,11 @@ const Page = () => {
             </Link>
           </div>
           <div className="col-span-6 sm:flex sm:items-center sm:gap-4 w-full">
-            <button disabled={loading} type="submit" className="btn1 primary w-100">
+            <button
+              disabled={loading}
+              type="submit"
+              className="btn1 primary w-100"
+            >
               {loading ? <BeatLoader color="#fff" size={10} /> : "Sign In"}
             </button>
           </div>
@@ -205,12 +227,16 @@ const Page = () => {
           </div> */}
         </Form>
         <p className="pt-3 poppins_regular">
-          Create a New Account? <Link href="/auth/signup" className="_link_underline poppins_medium text_primary">
+          Create a New Account?{" "}
+          <Link
+            href="/auth/sign-up"
+            className="_link_underline poppins_medium text_primary"
+          >
             Sign up
           </Link>
         </p>
       </>
-    </AuthLayout >
+    </AuthLayout>
   );
 };
 

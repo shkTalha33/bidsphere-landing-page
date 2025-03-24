@@ -8,7 +8,7 @@ import { formatPrice } from "../utils/formatPrice";
 import toast from "react-hot-toast";
 import ApiFunction from "../api/apiFuntions";
 import { handleError } from "../api/errorHandler";
-import { auctionRegistration } from "../api/ApiRoutesFile";
+import { auctionRegistration } from "../api/ApiFile";
 import { useParams, useRouter } from "next/navigation";
 import SkeletonLayout3 from "./SkeletonLayout3";
 

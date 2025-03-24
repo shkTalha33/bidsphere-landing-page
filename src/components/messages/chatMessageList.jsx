@@ -15,12 +15,17 @@ import { uploadFile } from "../api/uploadFile";
 import { avataruser } from "../assets/icons/icon";
 import { useSocket } from "../socketProvider/socketProvider";
 import ChatMessage from "./chatMessage";
-import { useActiveChat, useChatList, useChatUser, useResponsiveChat } from "./context";
+import {
+  useActiveChat,
+  useChatList,
+  useChatUser,
+  useResponsiveChat,
+} from "./context";
 // import { uploadDocument, uploadFile, uploadVideo } from "../ApiFunction/uploadImage";
 
 const ChatMessageList = ({ socketRef }) => {
   const [chatMsg, setChatMsg] = useState([]);
-  const router = useRouter()
+  const router = useRouter();
   const [fileLoading, setFileLoading] = useState(false);
   const [fileLoading2, setFileLoading2] = useState(false);
   const [fileLoading3, setFileLoading3] = useState(false);
@@ -28,17 +33,17 @@ const ChatMessageList = ({ socketRef }) => {
   const [documentUrl, setDocumentUrl] = useState(null);
   const [videoUrl, setVideoUrl] = useState(null);
   const [postData, setPostData] = useState(null);
-  const [type, setType] = useState('text');
+  const [type, setType] = useState("text");
   const chatMessagesRef = useRef(null);
-  const userData = useSelector((state) => state?.auth?.userData)
+  const userData = useSelector((state) => state?.auth?.userData);
   const [newMsg, setNewMsg] = useState(false);
-  const { setResponsiveChat } = useResponsiveChat()
-  const [isLoading3, setIsLoading3] = useState(false)
+  const { setResponsiveChat } = useResponsiveChat();
+  const [isLoading3, setIsLoading3] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
   //// context APi
-  const { chatUser } = useChatUser()
-  const { activeChatId } = useActiveChat()
+  const { chatUser } = useChatUser();
+  const { activeChatId } = useActiveChat();
   const { setChatListData } = useChatList();
 
   const socket = useSocket();
@@ -46,11 +51,9 @@ const ChatMessageList = ({ socketRef }) => {
   useEffect(() => {
     if (socket) {
       socket.on("message", (message) => {
-        console.log(message, 'socket message');
-
         // if (activeChatId === message?.sender || userData?._id === message?.sender) {
         setChatMsg((prevMessages) => {
-          setNewMsg(true)
+          setNewMsg(true);
           const uniqueMessagesSet = new Set(prevMessages.map(JSON.stringify));
           if (!uniqueMessagesSet.has(JSON.stringify(message))) {
             const updatedMessages = [...prevMessages, message];
@@ -61,7 +64,7 @@ const ChatMessageList = ({ socketRef }) => {
         // }
       });
       socket.on("newConversation", (newConversation) => {
-        console.log(newConversation);
+     
         setChatListData((prevChatList) => {
           // Check if the new conversation already exists
           const conversationIndex = prevChatList.findIndex(
@@ -95,28 +98,33 @@ const ChatMessageList = ({ socketRef }) => {
 
     return () => {
       if (socket) {
-        socket.off('message');
-        socket.off('newConverstion');
+        socket.off("message");
+        socket.off("newConverstion");
       }
-    }
-
+    };
   }, [activeChatId]);
-
-
-  console.log(chatUser);
 
   const sendMessage = async (e) => {
     e.preventDefault();
     const currentDate = new Date();
     const timestamp = Math.floor(currentDate.getTime() / 1000);
-    const input = document.getElementById('chatInput');
+    const input = document.getElementById("chatInput");
     const message = input.value;
     const data = {
       to_id: chatUser?.otherUser?._id,
       timestamp: timestamp,
-      message: type === 'text' ? message : type === 'image' ? imageUrl : type === 'video' ? videoUrl : type === 'doc' ? documentUrl : message,
-      type: type
-    }
+      message:
+        type === "text"
+          ? message
+          : type === "image"
+          ? imageUrl
+          : type === "video"
+          ? videoUrl
+          : type === "doc"
+          ? documentUrl
+          : message,
+      type: type,
+    };
     if (!socket) {
       console.error("Socket is not connected yet.");
       return;
@@ -126,8 +134,8 @@ const ChatMessageList = ({ socketRef }) => {
     chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
     try {
       await socket.emit("clientSendMessage", data);
-      input.value = '';
-      handleClear()
+      input.value = "";
+      handleClear();
     } catch (error) {
       console.error("Error sending message:", error);
     }
@@ -137,82 +145,92 @@ const ChatMessageList = ({ socketRef }) => {
   const [count, setCount] = useState(0);
 
   const getUserChat = async (userId) => {
-    await axiosInstance.get(`msg/messages/${userId}/0`)
+    await axiosInstance
+      .get(`msg/messages/${userId}/0`)
       .then(async (result) => {
         if (result?.data?.success) {
-          setNewMsg(true)
-          setCount(result.data.count)
-          setLastId(0)
+          setNewMsg(true);
+          setCount(result.data.count);
+          setLastId(0);
           setChatMsg(result?.data?.messages?.reverse());
         }
-        setIsLoading3(false)
-      }).catch((err) => {
-        console.log(err)
-        setIsLoading3(false)
+        setIsLoading3(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading3(false);
       });
-  }
+  };
   const handleChatClick = async (userId) => {
-    setIsLoading3(true)
-    getUserChat(userId)
+    setIsLoading3(true);
+    getUserChat(userId);
   };
   useLayoutEffect(() => {
-    handleChatClick(activeChatId)
+    handleChatClick(activeChatId);
   }, [activeChatId]);
   useEffect(() => {
     if (chatMsg?.length > 0) {
       if (lastId === 0) {
-        chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+        chatMessagesRef.current.scrollTop =
+          chatMessagesRef.current.scrollHeight;
       } else {
         if (newMsg) {
-          chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
-          setNewMsg(true)
+          chatMessagesRef.current.scrollTop =
+            chatMessagesRef.current.scrollHeight;
+          setNewMsg(true);
         }
       }
     }
   }, [chatMsg]);
 
   const handleScroll = async () => {
-    if (chatMessagesRef.current.scrollTop === 0 && lastId + 30 < count && !isLoading3) {
-      setNewMsg(false)
-      setIsLoading2(true)
-      await axiosInstance.get(`msg/messages/${activeChatId}/${lastId + 30}`)
+    if (
+      chatMessagesRef.current.scrollTop === 0 &&
+      lastId + 30 < count &&
+      !isLoading3
+    ) {
+      setNewMsg(false);
+      setIsLoading2(true);
+      await axiosInstance
+        .get(`msg/messages/${activeChatId}/${lastId + 30}`)
         .then(async (result) => {
           if (result?.data?.success) {
-            setLastId(lastId + 30)
-            const data = [...result?.data?.messages?.reverse(), ...chatMsg]
-            setChatMsg(data)
-            setIsLoading2(false)
+            setLastId(lastId + 30);
+            const data = [...result?.data?.messages?.reverse(), ...chatMsg];
+            setChatMsg(data);
+            setIsLoading2(false);
           }
-          setIsLoading3(false)
-        }).catch((err) => {
-          console.log(err)
-          setIsLoading3(false)
+          setIsLoading3(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading3(false);
         });
-    } else
-      setIsLoading2(false)
+    } else setIsLoading2(false);
   };
 
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       const formData = new FormData();
-      formData.append('file', selectedFile);
+      formData.append("file", selectedFile);
       setFileLoading(true);
       await uploadFile({ data: formData })
         .then((res) => {
           if (res) {
-            setImageUrl(res.files[0])
-            setType('image');
+            setImageUrl(res.files[0]);
+            setType("image");
             setFileLoading(false);
           } else {
-            message.error('Upload Again')
+            message.error("Upload Again");
             setFileLoading(false);
-            handleClear()
+            handleClear();
           }
-        }).catch((err) => {
-          message.error('Failed to upload file');
-          setFileLoading(false);
         })
+        .catch((err) => {
+          message.error("Failed to upload file");
+          setFileLoading(false);
+        });
     }
   };
 
@@ -220,23 +238,24 @@ const ChatMessageList = ({ socketRef }) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       const formData = new FormData();
-      formData.append('video', selectedFile);
+      formData.append("video", selectedFile);
       setFileLoading2(true);
       await uploadFile({ data: formData })
         .then((res) => {
           if (res) {
-            setType('video');
-            setVideoUrl(res.video)
+            setType("video");
+            setVideoUrl(res.video);
             setFileLoading2(false);
           } else {
-            message.error('Upload Again')
+            message.error("Upload Again");
             setFileLoading2(false);
-            handleClear()
+            handleClear();
           }
-        }).catch((err) => {
-          message.error('Failed to upload file');
-          setFileLoading2(false);
         })
+        .catch((err) => {
+          message.error("Failed to upload file");
+          setFileLoading2(false);
+        });
     }
   };
 
@@ -244,95 +263,118 @@ const ChatMessageList = ({ socketRef }) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       const formData = new FormData();
-      formData.append('file', selectedFile);
+      formData.append("file", selectedFile);
       setFileLoading3(true);
       await uploadFile({ data: formData })
         .then((res) => {
           if (res) {
-            setType('doc');
-            setDocumentUrl(res.file)
+            setType("doc");
+            setDocumentUrl(res.file);
             setFileLoading3(false);
           } else {
-            message.error('Upload Again')
+            message.error("Upload Again");
             setFileLoading3(false);
-            handleClear()
+            handleClear();
           }
-        }).catch((err) => {
-          message.error('Failed to upload file');
-          setFileLoading3(false);
         })
+        .catch((err) => {
+          message.error("Failed to upload file");
+          setFileLoading3(false);
+        });
     }
   };
 
   const handleClear = () => {
-    setImageUrl('');
-    setVideoUrl('');
-    setDocumentUrl('');
-    setType('text');
+    setImageUrl("");
+    setVideoUrl("");
+    setDocumentUrl("");
+    setType("text");
   };
 
   const items1 = [
     {
-      label: <button type="button" className="w-full">
-        <label htmlFor={`fileInput1`} style={{ cursor: "pointer" }} className="cursor-pointer w-full">
-          {imageUrl ? (
-            <Image
-              src={imageUrl}
-              alt="Preview"
-              style={{ height: "100px", objectFit: "cover" }}
-              className="rounded-4 w-full bg_light object-cover"
-            />
-          ) : (
-            <div className="rounded-4 w-full text_black relative flex gap-2 justify-start items-center">
-              <Camera size={16} />
-              <span className="poppins_medium text-xs">Upload Image</span>
-            </div>
-          )}
-        </label>
-        <Input
-          type="file"
-          id={`fileInput1`}
-          accept="image/*"
-          className="visually-hidden"
-          onChange={handleFileChange}
-        />
-      </button>,
-      key: '0',
-    },
-    {
-      label: <button type="button" className="w-full">
-        <label style={{ cursor: "pointer" }} htmlFor={`fileInput2`} className="cursor-pointer w-full">
-          {videoUrl ? (
-            <video
-              src={videoUrl}
-              alt="Preview"
-              style={{ height: "100px", objectFit: "cover" }}
-              className="rounded-4 w-full bg_light object-cover"
-              controls
-            />
-          ) : (
-            <div className="rounded-4 w-full text_black relative flex gap-2 justify-start items-center">
-              <IoVideocamOutline size={18} />
-              <span className="poppins_medium text-xs">Upload Video</span>
-            </div>
-          )}
-        </label>
-        <Input
-          type="file"
-          id={`fileInput2`}
-          accept="video/*"
-          className="visually-hidden"
-          onChange={handleFileChange2}
-        />
-      </button>,
-      key: '1',
-    },
-    {
-      label:
+      label: (
         <button type="button" className="w-full">
-          <label style={{ cursor: "pointer" }} htmlFor={`fileInput3`} className="cursor-pointer w-full">
+          <label
+            htmlFor={`fileInput1`}
+            style={{ cursor: "pointer" }}
+            className="cursor-pointer w-full"
+          >
+            {imageUrl ? (
+              <Image
+                src={imageUrl}
+                alt="Preview"
+                style={{ height: "100px", objectFit: "cover" }}
+                className="rounded-4 w-full bg_light object-cover"
+              />
+            ) : (
+              <div className="rounded-4 w-full text_black relative flex gap-2 justify-start items-center">
+                <Camera size={16} />
+                <span className="poppins_medium text-xs">Upload Image</span>
+              </div>
+            )}
+          </label>
+          <Input
+            type="file"
+            id={`fileInput1`}
+            accept="image/*"
+            className="visually-hidden"
+            onChange={handleFileChange}
+          />
+        </button>
+      ),
+      key: "0",
+    },
+    {
+      label: (
+        <button type="button" className="w-full">
+          <label
+            style={{ cursor: "pointer" }}
+            htmlFor={`fileInput2`}
+            className="cursor-pointer w-full"
+          >
+            {videoUrl ? (
+              <video
+                src={videoUrl}
+                alt="Preview"
+                style={{ height: "100px", objectFit: "cover" }}
+                className="rounded-4 w-full bg_light object-cover"
+                controls
+              />
+            ) : (
+              <div className="rounded-4 w-full text_black relative flex gap-2 justify-start items-center">
+                <IoVideocamOutline size={18} />
+                <span className="poppins_medium text-xs">Upload Video</span>
+              </div>
+            )}
+          </label>
+          <Input
+            type="file"
+            id={`fileInput2`}
+            accept="video/*"
+            className="visually-hidden"
+            onChange={handleFileChange2}
+          />
+        </button>
+      ),
+      key: "1",
+    },
+    {
+      label: (
+        <button type="button" className="w-full">
+          <label
+            style={{ cursor: "pointer" }}
+            htmlFor={`fileInput3`}
+            className="cursor-pointer w-full"
+          >
             {documentUrl ? (
-              <a href={documentUrl} target="__blank" className="text_black poppins_medium text-xs hover:underline">{documentUrl}</a>
+              <a
+                href={documentUrl}
+                target="__blank"
+                className="text_black poppins_medium text-xs hover:underline"
+              >
+                {documentUrl}
+              </a>
             ) : (
               <div className="rounded-4 w-full text_black relative flex gap-2 justify-start items-center">
                 <File size={16} />
@@ -347,10 +389,11 @@ const ChatMessageList = ({ socketRef }) => {
             className="visually-hidden"
             onChange={handleFileChange3}
           />
-        </button>,
-      key: '2',
+        </button>
+      ),
+      key: "2",
     },
-  ]
+  ];
 
   return (
     <div className="chat_height overflow-hidden position-relative">
@@ -360,7 +403,8 @@ const ChatMessageList = ({ socketRef }) => {
             className="d_left_button"
             onClick={() => {
               setResponsiveChat(false);
-            }}>
+            }}
+          >
             <ChevronLeft />
           </button>
         </div>
@@ -369,16 +413,36 @@ const ChatMessageList = ({ socketRef }) => {
             {/* <Image src={chatUser?.otherUser?.profilePicture ? global.BASEURL + "/" + chatUser?.otherUser?.profilePicture : profile} className="rounded-circle bg-white" alt=""
               style={{ height: '48px', width: "48px", objectFit: "cover" }}
               /> */}
-            <Image src={(chatUser?.otherUser?.profile_image || chatUser?.otherUser?.brand?.logo) || avataruser} width={50} height={50} alt="" className="chat_profile_img" />
+            <Image
+              src={
+                chatUser?.otherUser?.profile_image ||
+                chatUser?.otherUser?.brand?.logo ||
+                avataruser
+              }
+              width={50}
+              height={50}
+              alt=""
+              className="chat_profile_img"
+            />
             <div className="d-flex  flex-column">
-              <span className=" text_black poppins_medium">{`${(chatUser?.otherUser?.influencer?.name || chatUser?.otherUser?.brand?.name) || ''}`}</span>
-              <span className="poppins_regular text_black text-sm ">{chatUser?.otherUser?.email}</span>
+              <span className=" text_black poppins_medium">{`${
+                chatUser?.otherUser?.influencer?.name ||
+                chatUser?.otherUser?.brand?.name ||
+                ""
+              }`}</span>
+              <span className="poppins_regular text_black text-sm ">
+                {chatUser?.otherUser?.email}
+              </span>
             </div>
           </div>
         </div>
       </div>
       <div className="position-relative">
-        <div ref={chatMessagesRef} onScroll={handleScroll} className="chat-messages scrolbar">
+        <div
+          ref={chatMessagesRef}
+          onScroll={handleScroll}
+          className="chat-messages scrolbar"
+        >
           {/* {postData ?
             <div style={{ zIndex: 99 }} className="flex gap-3 bg_white justify-between items-center w-full p-3 mb-2 sticky top-0 shadow-md">
               <div className="flex gap-2 items-center w-full">
@@ -409,33 +473,40 @@ const ChatMessageList = ({ socketRef }) => {
                 animation="border"
                 role="status"
               >
-                <span className="poppins_regular visually-hidden">Loading...</span>
+                <span className="poppins_regular visually-hidden">
+                  Loading...
+                </span>
               </Spinner>
             </div>
           ) : (
             <div className="px-2">
-              {isLoading2 && <div className="text-center">   <Spinner
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  marginTop: "3px",
-                  borderWidth: "0.15em",
-                }}
-                animation="border"
-                role="status"
-              >
-              </Spinner></div>}
-              {chatMsg?.length > 0 && chatMsg?.map((msg, index) => (
-                <Fragment key={index} >
-                  <ChatMessage
-                    data={msg}
-                    left={userData?._id === msg?.sender ? false : true}
-                    message={msg?.message}
-                    type={msg?.type}
-                    timestamp={`${msg?.timestamp}`}
-                  />
-                </Fragment>
-              ))}
+              {isLoading2 && (
+                <div className="text-center">
+                  {" "}
+                  <Spinner
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      marginTop: "3px",
+                      borderWidth: "0.15em",
+                    }}
+                    animation="border"
+                    role="status"
+                  ></Spinner>
+                </div>
+              )}
+              {chatMsg?.length > 0 &&
+                chatMsg?.map((msg, index) => (
+                  <Fragment key={index}>
+                    <ChatMessage
+                      data={msg}
+                      left={userData?._id === msg?.sender ? false : true}
+                      message={msg?.message}
+                      type={msg?.type}
+                      timestamp={`${msg?.timestamp}`}
+                    />
+                  </Fragment>
+                ))}
             </div>
           )}
         </div>
@@ -448,30 +519,53 @@ const ChatMessageList = ({ socketRef }) => {
                 <Spinner size="sm" className="text_primary" />
               </div>
             </div>
-          ) : type === 'image' ? (
-            <div className=' relative selected_img bg-[#f4f4f4] rounded-3'>
-              <Image src={imageUrl} alt="Selected" className="w-100 rounded-3 h-100" />
-              <button className="absolute -top-2 -right-2 bg_light p-1 rounded-full" onClick={handleClear}>
+          ) : type === "image" ? (
+            <div className=" relative selected_img bg-[#f4f4f4] rounded-3">
+              <Image
+                src={imageUrl}
+                alt="Selected"
+                className="w-100 rounded-3 h-100"
+              />
+              <button
+                className="absolute -top-2 -right-2 bg_light p-1 rounded-full"
+                onClick={handleClear}
+              >
                 <X />
               </button>
             </div>
-          ) : type === 'video' ? (
-            <div className='relative selected_img bg-[#f4f4f4] rounded-3'>
-              <video src={videoUrl} controls className="w-100 rounded-3 h-100" />
-              <button className="absolute -top-2 -right-2 bg_light p-1 rounded-full" onClick={handleClear}>
+          ) : type === "video" ? (
+            <div className="relative selected_img bg-[#f4f4f4] rounded-3">
+              <video
+                src={videoUrl}
+                controls
+                className="w-100 rounded-3 h-100"
+              />
+              <button
+                className="absolute -top-2 -right-2 bg_light p-1 rounded-full"
+                onClick={handleClear}
+              >
                 <X />
               </button>
             </div>
-          ) : type === 'doc' ? (
+          ) : type === "doc" ? (
             <div className="position-relative">
-              <a href={documentUrl} target="__blank" className="text-black poppins_regular">
+              <a
+                href={documentUrl}
+                target="__blank"
+                className="text-black poppins_regular"
+              >
                 {documentUrl}
               </a>
-              <button className="absolute -top-2 -right-2 bg_light p-1 rounded-full" onClick={handleClear}>
+              <button
+                className="absolute -top-2 -right-2 bg_light p-1 rounded-full"
+                onClick={handleClear}
+              >
                 <X />
               </button>
             </div>
-          ) : ''}
+          ) : (
+            ""
+          )}
         </div>
         <div className="w-100">
           <div className="d-flex gap-2 mt-4">
@@ -479,7 +573,7 @@ const ChatMessageList = ({ socketRef }) => {
               menu={{
                 items: items1,
               }}
-              trigger={['click']}
+              trigger={["click"]}
             >
               <button type="button" className="btn btn-light">
                 <Plus size={18} />
@@ -497,7 +591,9 @@ const ChatMessageList = ({ socketRef }) => {
               />
             </div>
             <button
-              disabled={isLoading3 || fileLoading || fileLoading2 || fileLoading3}
+              disabled={
+                isLoading3 || fileLoading || fileLoading2 || fileLoading3
+              }
               className="rounded-1 py-[6px] h-fit px-[12px] bg_primary"
               type="submit"
             >

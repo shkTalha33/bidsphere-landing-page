@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import ApiFunction from "@/components/api/apiFuntions";
-import { sendCodeForgotPassword } from "@/components/api/ApiRoutesFile";
+import { sendCodeForgotPassword } from "@/components/api/ApiFile";
 import {
   setForgotCode,
   setIsForgotPassword,
@@ -60,7 +60,6 @@ const Page = () => {
     try {
       const response = await post(sendCodeForgotPassword, data);
       if (response.success) {
-        console.log(response);
 
         dispatch(setIsForgotPassword(true));
         const data = {
@@ -81,7 +80,7 @@ const Page = () => {
   };
 
   return (
-    <AuthLayout>
+    <AuthLayout  isCenter={true}>
       <>
         <AuthHeading
           heading={"Forgot Password!"}

@@ -67,7 +67,7 @@ const Page = () => {
   };
 
   return (
-    <AuthLayout>
+    <AuthLayout  isCenter={true}>
       <>
         <AuthHeading heading={'Phone Number'} subHeading={'Please enter your Mobile number'} />
         <Form onSubmit={handleSubmit(onSubmit)} className="mt-8 gap-6 auth-form">

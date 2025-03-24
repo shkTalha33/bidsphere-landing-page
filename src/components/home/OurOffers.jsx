@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { Col, Container, Row } from "reactstrap";
@@ -8,28 +9,19 @@ import { SwiperSlide } from "swiper/react";
 import SectionHeadings from "../common/sectionHeadings";
 import { motion } from "framer-motion";
 import { staggerChildren } from "../utils/motion";
+import ApiFunction from "../api/apiFuntions";
+import { getCategory } from "../api/ApiFile";
+import { useEffect } from "react";
+import { useGetAuctionsQuery } from "../redux/apiSlice";
+import { Spinner } from "react-bootstrap";
 
 export default function OurOffers() {
-  const features = [
-    {
-      title: "Arts and Abstracts",
-      icon: vehicles,
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.",
-    },
-    {
-      title: "Vehicles",
-      icon: art,
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.",
-    },
-    {
-      title: "Electronics",
-      icon: electronics,
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.",
-    },
-  ];
+  const { get } = ApiFunction();
+
+  const { data, isLoading, error } = useGetAuctionsQuery({
+    endpoint: `${getCategory}`,
+  });
+
 
   return (
     <motion.main
@@ -50,26 +42,27 @@ export default function OurOffers() {
               consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
               labore et"
           />
-          <Col md="12">
-            <CustomSwiper
-              spaceBetween={10}
-              slidesPerView={3}
-              pagination={false}
-              loop={false}
-              navigation={true}
-              breakpoints={{
-                640: { spaceBetween: 5, slidesPerView: 2 },
-                768: { spaceBetween: 10, slidesPerView: 3 },
-                1024: { spaceBetween: 10, slidesPerView: 3 },
-              }}
-            >
-              {features.map((feature, index) => (
-                <SwiperSlide key={index}>
-                  <PlansCard index={index} plan={feature} />
-                </SwiperSlide>
-              ))}
-            </CustomSwiper>
-          </Col>
+         <Col md="12">
+                <CustomSwiper
+                  spaceBetween={10}
+                  slidesPerView={3}
+                  pagination={false}
+                  loop={false}
+                  navigation={true}
+                  breakpoints={{
+                    640: { spaceBetween: 5, slidesPerView: 2 },
+                    768: { spaceBetween: 10, slidesPerView: 3 },
+                    1024: { spaceBetween: 10, slidesPerView: 3 },
+                  }}
+                >
+                  {data &&
+                    data.categories?.map((feature, index) => (
+                      <SwiperSlide key={index}>
+                        <PlansCard plan={feature} index={index} />
+                      </SwiperSlide>
+                    ))}
+                </CustomSwiper>
+              </Col>
         </Row>
       </Container>
     </motion.main>

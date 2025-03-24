@@ -46,8 +46,6 @@ const ProductTable = ({
 
   const handleModal = () => setModal(!modal);
 
-  console.log("{Math.ceil(count / 10)}", Math.ceil(count / 10));
-
   const handleFilter = (e) => {
     const value = e.target.value;
     let updatedData = [];

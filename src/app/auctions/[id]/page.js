@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { auctionDetail } from "@/components/api/ApiRoutesFile";
+import { auctionDetail } from "@/components/api/ApiFile";
 import ApiFunction from "@/components/api/apiFuntions";
 import { handleError } from "@/components/api/errorHandler";
 import { avataruser } from "@/components/assets/icons/icon";
@@ -63,7 +64,6 @@ const AuctionDetailPage = () => {
     if (newSocket) {
       newSocket.emit("join_auction", selectedData?._id, (auctionResponse) => {
         if (auctionResponse.success) {
-          console.log("Joined auction:", auctionResponse);
         } else {
           console.error("Auction join failed:", auctionResponse.message);
         }

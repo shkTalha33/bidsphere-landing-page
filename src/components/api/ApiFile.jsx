@@ -24,6 +24,10 @@ const editAuctionRegistration = "auction/edit-registration/";
 const registrationTracking = "auction/me/registration/";
 const getLatestCurrencyRate = "users/data";
 
+// huraira
+const getCategory = "cat/all";
+const checkPhoneNumber = "users/check-phone";
+
 export {
   login,
   imageUpload,
@@ -47,4 +51,6 @@ export {
   registrationTracking,
   editAuctionRegistration,
   getLatestCurrencyRate,
+  getCategory,
+  checkPhoneNumber
 };
