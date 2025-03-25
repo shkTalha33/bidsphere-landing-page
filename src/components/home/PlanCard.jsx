@@ -15,6 +15,7 @@ export default function PlansCard({ plan, index }) {
         variants={fadeIn("down", "tween", (index + 1) * 0.1, 1)}
       >
         <div className="flex justify-center items-center">
+          
           <img
             src={plan?.image}
             alt="Plan Icon"
