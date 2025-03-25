@@ -223,7 +223,7 @@ export default function Header() {
       icon: <BiUser size={18} />,
     },
     {
-      key: "1",
+      key: "3",
       label: (
         <Link href={"/profile/change-currency"}>Currency {currency?.code}</Link>
       ),

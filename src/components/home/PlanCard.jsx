@@ -3,19 +3,24 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Col } from "reactstrap";
 import { fadeIn, slideIn } from "../utils/motion";
+import { useRouter } from "next/navigation";
 
 export default function PlansCard({ plan, index }) {
+  const router = useRouter();
+  const handleCatAuction = (item) => {
+    router.push(`/category-auction/${item?._id}`);
+  };
   return (
     <Col key={index}>
       <motion.div
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
-        className="flex flex-col items-center bg-white py-[2rem] md:py-[4rem] px-1 md:px-6 h-full rounded-[15px] shadow"
+        className="flex flex-col items-center bg-white cursor-pointer py-[2rem] md:py-[4rem] px-1 md:px-6 h-full rounded-[15px] shadow"
         variants={fadeIn("down", "tween", (index + 1) * 0.1, 1)}
+        onClick={() => handleCatAuction(plan)}
       >
         <div className="flex justify-center items-center">
-          
           <img
             src={plan?.image}
             alt="Plan Icon"

@@ -22,7 +22,6 @@ export default function OurOffers() {
     endpoint: `${getCategory}`,
   });
 
-
   return (
     <motion.main
       variants={staggerChildren}
@@ -42,27 +41,27 @@ export default function OurOffers() {
               consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
               labore et"
           />
-         <Col md="12">
-                <CustomSwiper
-                  spaceBetween={10}
-                  slidesPerView={3}
-                  pagination={false}
-                  loop={false}
-                  navigation={true}
-                  breakpoints={{
-                    640: { spaceBetween: 5, slidesPerView: 2 },
-                    768: { spaceBetween: 10, slidesPerView: 3 },
-                    1024: { spaceBetween: 10, slidesPerView: 3 },
-                  }}
-                >
-                  {data &&
-                    data.categories?.map((feature, index) => (
-                      <SwiperSlide key={index}>
-                        <PlansCard plan={feature} index={index} />
-                      </SwiperSlide>
-                    ))}
-                </CustomSwiper>
-              </Col>
+          <Col md="12">
+            <CustomSwiper
+              spaceBetween={10}
+              slidesPerView={3}
+              pagination={false}
+              loop={false}
+              navigation={true}
+              breakpoints={{
+                640: { spaceBetween: 5, slidesPerView: 2 },
+                768: { spaceBetween: 10, slidesPerView: 3 },
+                1024: { spaceBetween: 10, slidesPerView: 3 },
+              }}
+            >
+              {data &&
+                data.categories?.map((feature, index) => (
+                  <SwiperSlide key={index}>
+                    <PlansCard plan={feature} index={index} />
+                  </SwiperSlide>
+                ))}
+            </CustomSwiper>
+          </Col>
         </Row>
       </Container>
     </motion.main>

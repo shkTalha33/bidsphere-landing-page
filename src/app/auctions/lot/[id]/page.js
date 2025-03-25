@@ -15,11 +15,13 @@ import { useEffect, useState } from "react";
 import { Check, ChevronRight, Heart, Maximize2, X } from "react-feather";
 import { FaRegClock } from "react-icons/fa6";
 import { TbLivePhoto } from "react-icons/tb";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
+import { useSocket } from "@/components/socketProvider/socketProvider";
 
 export default function Page() {
+  const { get, userData } = ApiFunction();
   const [activeButton, setActiveButton] = useState("custom");
   const [openWinBidModal, setOpenWinBidModal] = useState(false);
   const [openBiddingConfirmationModal, setOpenBiddingConfirmationModal] =
@@ -27,12 +29,24 @@ export default function Page() {
   const [previewModal, setPreviewModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState({});
-  const dispatch = useDispatch();
-  const { get } = ApiFunction();
-  const router = useRouter();
   const { formatPrice, convert } = useCurrency();
-
+  const [currentLot, setCurrentLot] = useState(null);
+  const [recentBids, setRecentBids] = useState([]);
+  const [bidAmount, setBidAmount] = useState("");
+  const [participants, setParticipants] = useState([]);
+  const token = useSelector((state) => state.auth?.accessToken);
+  const socket = useSocket();
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) return "Good morning";
+    if (hour >= 12 && hour < 17) return "Good afternoon";
+    if (hour >= 17 && hour < 21) return "Good evening";
+    return "Good night";
+  };
 
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -109,24 +123,24 @@ export default function Page() {
     setPreviewModal(true);
   };
 
-  const fetchAuctionDetail = debounce(async () => {
-    setLoading(true);
-    await get(`${getAuctionLot}${id}`)
+  const fetchAuctionDetail = () => {
+    get(`${getAuctionLot}${id}`)
       .then((result) => {
         if (result?.success) {
           setItem(result?.lot);
         }
+        setLoading(false);
       })
-      .catch((err) => {
-        handleError(err);
-      })
-      .finally(() => {
+      .catch((error) => {
+        handleError(error);
         setLoading(false);
       });
-  }, 300);
+  };
 
   useEffect(() => {
-    fetchAuctionDetail();
+    if (id) {
+      fetchAuctionDetail();
+    }
   }, []);
 
   useEffect(() => {
@@ -134,6 +148,69 @@ export default function Page() {
       setSelectedImage(item.images[0]);
     }
   }, [item]);
+
+  // console.log(participants, "participants");
+  // console.log(recentBids, "recentBids");
+  // console.log(socket, "socket");
+
+  useEffect(() => {
+    if (socket?.connected) {
+      // Authenticate user
+      socket.emit("authenticate", token);
+
+      // Join the auction
+      socket.emit("join_auction", id, (response) => {
+        if (response.success) {
+          setCurrentLot(response.currentLot);
+          setRecentBids(response.recentBids);
+        }
+      });
+
+      // Listen for new bids
+      socket.on("new_bid", (bid) => {
+        setRecentBids((prevBids) => [bid, ...prevBids.slice(0, 9)]);
+      });
+
+      // Listen for auction updates
+      socket.on("auction", (data) => {
+        setCurrentLot(data.auction.current_lot);
+      });
+
+      // Listen for participant updates
+      socket.on("user_joined", ({ user }) => {
+        setParticipants((prev) => {
+          const isUserExists = prev.some(
+            (participant) => participant?._id === user?._id
+          );
+          return isUserExists ? prev : [...prev, user];
+        });
+      });
+
+      return () => {
+        socket.off("new_bid");
+        socket.off("auction");
+        socket.off("user_joined");
+      };
+    }
+  }, [socket]);
+
+  const placeBid = () => {
+    if (!bidAmount) return;
+
+    socket.emit(
+      "place_bid",
+      { id, lotId: currentLot?._id, bidAmount },
+      (response) => {
+        if (!response.success) {
+          alert(response.message);
+        } else {
+          setBidAmount("");
+        }
+      }
+    );
+  };
+
+  // console.log(item, "iet");
 
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
@@ -145,7 +222,7 @@ export default function Page() {
       ) : (
         <>
           <TopSection
-            title={"Good morning, Adnan"}
+            title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
             description={"Here are your auctions whom you can join."}
             button={button}
           />
@@ -255,12 +332,15 @@ export default function Page() {
                             backgroundColor: "#fde3cf",
                           }}
                         >
-                          {[1, 2, 3, 4, 5].map((user) => (
-                            <Avatar
-                              key={user}
-                              src="https://api.dicebear.com/7.x/miniavs/svg?seed=3"
-                            />
-                          ))}
+                          {participants?.map((user, index) => {
+                            return (
+                              <Image
+                                src={user?.profilepicture || avataruser}
+                                alt=""
+                                className="rounded-full w-[2rem] h-[2rem]"
+                              />
+                            );
+                          })}
                         </Avatar.Group>
                         <p className="poppins_regular text-[15px] text-[#1C201F] mb-0">
                           are live
@@ -295,25 +375,25 @@ export default function Page() {
                   </Col>
                   <Col xs="4" sm="6" className="px-0">
                     <p className="capitalize poppins_regular text-[14px] text-end mb-0">
-                      14 Bids made
+                      {participants?.length} Bids made
                     </p>
                   </Col>
                 </Row>
 
                 {/* Bidders List */}
                 <div className="space-y-4 mt-3 mb-3 flex-grow">
-                  {bidders.map((bid) => (
-                    <Row className="px-6 mx-0" key={bid.id}>
+                  {participants?.map((bid) => (
+                    <Row className="px-6 mx-0" key={bid?._id}>
                       <Col md="6" className="px-0">
                         <div className="flex items-center justify-start gap-3">
                           <Image
-                            src={bid.avatar}
+                            src={bid?.profilepicture || avataruser}
                             className="w-9 h-9 rounded-full"
-                            alt={`${bid.name}'s avatar`}
+                            alt={`${bid?.fname}'s avatar`}
                           />
                           <div>
                             <p className="poppins_regular text-base text_dark mb-0">
-                              {bid.name}
+                              {bid?.fname}
                             </p>
                             <p className="poppins_regular text-sm text_lightsecondary mb-0">
                               {bid.timeAgo}

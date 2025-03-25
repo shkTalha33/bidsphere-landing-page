@@ -27,6 +27,7 @@ const getLatestCurrencyRate = "users/data";
 // huraira
 const getCategory = "cat/all";
 const checkPhoneNumber = "users/check-phone";
+const getAuctionByCategory = "catId";
 
 export {
   login,
@@ -52,5 +53,6 @@ export {
   editAuctionRegistration,
   getLatestCurrencyRate,
   getCategory,
-  checkPhoneNumber
+  checkPhoneNumber,
+  getAuctionByCategory
 };

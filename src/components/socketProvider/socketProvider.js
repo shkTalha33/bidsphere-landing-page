@@ -10,6 +10,7 @@ import React, {
 } from "react";
 import { useDispatch } from "react-redux";
 import { io } from "socket.io-client";
+import { socketURL } from "../api/axiosInstance";
 
 const SocketContext = createContext();
 
@@ -27,7 +28,7 @@ export const SocketProvider = ({ children }) => {
   useEffect(() => {
     const initializeSocket = async () => {
       try {
-        const newSocket = io("https://api.castle-auction.com/", {
+        const newSocket = io(socketURL, {
           reconnectionAttempts: 15,
           transports: ["websocket"],
         });

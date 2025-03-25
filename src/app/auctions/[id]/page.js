@@ -10,6 +10,7 @@ import useCurrency from "@/components/hooks/useCurrency";
 import { useSocket } from "@/components/socketProvider/socketProvider";
 import { format } from "date-fns";
 import debounce from "debounce";
+import moment from "moment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,62 +21,21 @@ import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
 
 const AuctionDetailPage = () => {
   const router = useRouter();
-  const [isShowAll, setIsShowAll] = useState(true);
-  const [selectedFiles, setSelectedFiles] = useState([]);
   const [item, setItem] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewModal, setPreviewModal] = useState(false);
-  const [activeButton, setActiveButton] = useState("custom");
-  const [bids, setBids] = useState([]);
-  const selectedData = useSelector(
-    (state) => state?.auctionProduct?.auctionProductData
-  );
-  const { get } = ApiFunction();
+
+  const { get, userData } = ApiFunction();
   const { id } = useParams();
-  const newSocket = useSocket();
   const { formatPrice, convert } = useCurrency();
 
-  const bidders = [
-    {
-      id: 1,
-      name: "Ronald Richards",
-      bid: "$24.5k",
-      avatar: avataruser,
-      timeAgo: "2m",
-    },
-    {
-      id: 2,
-      name: "Cameron Williamson",
-      bid: "$20k",
-      avatar: avataruser,
-      timeAgo: "1m",
-    },
-    {
-      id: 3,
-      name: "Guy Hawkins",
-      bid: "$18k",
-      avatar: avataruser,
-      timeAgo: "2m",
-    },
-  ];
-
-  useEffect(() => {
-    if (newSocket) {
-      newSocket.emit("join_auction", selectedData?._id, (auctionResponse) => {
-        if (auctionResponse.success) {
-        } else {
-          console.error("Auction join failed:", auctionResponse.message);
-        }
-      });
-    }
-  }, [newSocket]);
-
-  const priceOptions = ["$20k", "$21k", "$22k", "$23k"];
-
-  const handleShowAllFiles = () => {
-    setSelectedFiles(selectedData?.images);
-    setIsShowAll(false);
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) return "Good morning";
+    if (hour >= 12 && hour < 17) return "Good afternoon";
+    if (hour >= 17 && hour < 21) return "Good evening";
+    return "Good night";
   };
 
   const handleImagePreview = (image) => {
@@ -83,24 +43,25 @@ const AuctionDetailPage = () => {
     setPreviewModal(true);
   };
 
-  const fetchAuctionDetail = debounce(async () => {
+  const fetchAuctionDetail = () => {
     setLoading(true);
-    await get(`${auctionDetail}${id}`)
-      .then((result) => {
-        if (result?.success) {
-          setItem(result?.auction);
+    get(`${auctionDetail}${id}`)
+      .then((res) => {
+        if (res?.success) {
+          setItem(res?.auction);
         }
+        setLoading(false);
       })
-      .catch((err) => {
-        handleError(err);
-      })
-      .finally(() => {
+      .catch((error) => {
+        handleError(error);
         setLoading(false);
       });
-  }, 300);
+  };
 
   useEffect(() => {
-    fetchAuctionDetail();
+    if (id) {
+      fetchAuctionDetail();
+    }
   }, []);
 
   useEffect(() => {
@@ -109,24 +70,7 @@ const AuctionDetailPage = () => {
     }
   }, [item]);
 
-  useEffect(() => {
-    if (selectedData) {
-      setSelectedFiles(selectedData?.images?.slice(0, 3) || []);
-      setIsShowAll(true);
-    }
-  }, [selectedData]);
-
-  const handleClick = () => {
-    router.back();
-  };
-
-  // Format date for display
-
-  const formatDate = (dateString) => {
-    return dateString
-      ? format(new Date(dateString), "dd-MM-yyyy HH:mm:ss")
-      : "N/A";
-  };
+  console.log(item, "itme");
 
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
@@ -138,7 +82,7 @@ const AuctionDetailPage = () => {
       ) : (
         <>
           <TopSection
-            title={"Good morning, Adnan"}
+            title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
             description={"Here are your auctions whom you can join."}
             // button={button}
           />
@@ -212,7 +156,7 @@ const AuctionDetailPage = () => {
                 lg="5"
                 className="bg_white p-3 md:p-4 rounded-lg d-flex flex-column max-h-[700px] overflow-y-auto"
               >
-                <Row className="">
+                <Row>
                   <Col md="12">
                     <div className="bg_primary py-3 sm:px-6 rounded-xl relative">
                       <div className="flex items-start justify-between">
@@ -234,15 +178,15 @@ const AuctionDetailPage = () => {
                       Starting Time
                     </div>
                     <div className="poppins_regular text-sm">
-                      {formatDate(item?.start_date)}
+                      {moment(item?.start_date).format("DD-MMMM-YYYY hh:mm A")}
                     </div>
                   </Col>
-                  <Col md="6" className="">
+                  <Col md="6">
                     <div className="poppins_medium text-base text_primary">
                       Ending Time
                     </div>
                     <div className="poppins_regular text-sm">
-                      {formatDate(item?.end_date)}
+                      {moment(item?.end_date).format("DD-MMMM-YYYY hh:mm A")}
                     </div>
                   </Col>
                 </Row>
@@ -252,7 +196,7 @@ const AuctionDetailPage = () => {
                       Deposit Amount
                     </div>
                   </Col>
-                  <Col md="6" className="">
+                  <Col md="6">
                     <div className="poppins_regular">
                       {formatPrice(convert(item?.depositamount, "LBP"))}
                     </div>
@@ -264,7 +208,7 @@ const AuctionDetailPage = () => {
                       Description
                     </div>
                   </Col>
-                  <Col md="12" className="">
+                  <Col md="12">
                     <div className="poppins_regular text_dark">
                       <p
                         dangerouslySetInnerHTML={{
@@ -278,7 +222,7 @@ const AuctionDetailPage = () => {
             </Row>
           </Container>
           <Container>
-            <div className="">
+            <div>
               <p className="poppins_medium text-2xl mb-0 ">
                 All Lots({item?.lots?.length})
               </p>

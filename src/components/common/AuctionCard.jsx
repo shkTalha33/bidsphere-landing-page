@@ -10,13 +10,12 @@ export default function AuctionCard({ item, index }) {
   const { formatPrice, convert } = useCurrency();
   const router = useRouter();
   const dispatch = useDispatch();
+  
   const formatTimeLeft = (endTime) => {
     const now = new Date();
     const end = new Date(endTime);
-
     const days = differenceInDays(end, now);
     const hours = differenceInHours(end, now) % 24;
-
     return `Time left ${days}d ${hours}h (${format(end, "EEE, hh:mm a")})`;
   };
 
