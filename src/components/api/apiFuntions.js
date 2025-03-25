@@ -13,7 +13,7 @@ const ApiFunction = () => {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const userData = useSelector((state) => state.auth?.userData);
-  const token = localStorage.getItem("auction_user_token");
+  const token = useSelector((state) => state.auth?.accessToken);
   // Track active requests to prevent duplicates
   const activeRequestsRef = useRef(new Map());
   
@@ -26,12 +26,12 @@ const ApiFunction = () => {
   // Define headers
   const header1 = {
     "Content-Type": "application/json",
-    "x-auth-token":token
+    // "x-auth-token":token
   };
 
   const header2 = {
     "Content-Type": "multipart/form-data",
-    "x-auth-token":token
+    // "x-auth-token":token
   };
 
   // Helper to generate request key
