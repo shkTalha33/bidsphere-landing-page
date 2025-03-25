@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
 import { auctionDetail } from "@/components/api/ApiFile";
@@ -30,9 +31,10 @@ export default function Page() {
         setLoading(false);
       });
   }, 300);
-
   useEffect(() => {
-    fetchAuctionDetail();
+    if (id) {
+      fetchAuctionDetail();
+    }
   }, []);
   return (
     <>
@@ -46,7 +48,7 @@ export default function Page() {
           <div className="flex items-center justify-between">
             <p className="poppins_semibold text-2xl capitalize">{data?.name}</p>
             <div className="px-5 py-2 bg-[#f5f5f5] text_primary text-sm rounded-2xl capitalize">
-                {data?.status}
+              {data?.status}
             </div>
           </div>
           <RegistrationReviewPage

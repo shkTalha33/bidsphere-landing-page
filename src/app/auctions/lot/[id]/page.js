@@ -337,6 +337,7 @@ export default function Page() {
                               <Image
                                 src={user?.profilepicture || avataruser}
                                 alt=""
+                                key={index}
                                 className="rounded-full w-[2rem] h-[2rem]"
                               />
                             );

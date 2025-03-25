@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import { Progress, Tabs } from "antd";

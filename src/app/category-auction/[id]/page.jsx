@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { BeatLoader } from "react-spinners";
 
-const page = () => {
+const Page = () => {
   const { id } = useParams();
   const { get } = ApiFunction();
   const [totalPages, setTotalPages] = useState(0);
@@ -50,7 +50,7 @@ const page = () => {
 
   useEffect(() => {
     handleAuctionData();
-  }, []);
+  }, );
 
   return (
     <>
@@ -77,7 +77,7 @@ const page = () => {
             <Container className="bg-white rounded-[9px] mt-4">
               <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
                 {auctions?.map((auction, index) => {
-                  return <AuctionCard item={auction} index={index} />;
+                  return <AuctionCard item={auction} key={index} index={index} />;
                 })}
               </div>
               {totalPages && (
@@ -107,4 +107,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
