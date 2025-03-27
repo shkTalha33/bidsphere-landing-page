@@ -117,7 +117,7 @@ export default function Page() {
       socket.emit("join_auction", id, (response) => {
         console.log(response , "response");
         
-        if (response.success) {
+        if (response?.success) {
           const matchedLot = response?.auction?.lots.find(
             (lot) => lot?.item?._id === response?.auction?.current_lot
           );
