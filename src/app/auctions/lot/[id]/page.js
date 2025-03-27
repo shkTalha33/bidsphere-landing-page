@@ -28,7 +28,6 @@ export default function Page() {
     useState(false);
   const [previewModal, setPreviewModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [item, setItem] = useState({});
   const { formatPrice, convert } = useCurrency();
   const [currentLot, setCurrentLot] = useState(null);
   const [recentBids, setRecentBids] = useState([]);
@@ -127,7 +126,7 @@ export default function Page() {
     get(`${getAuctionLot}${id}`)
       .then((result) => {
         if (result?.success) {
-          setItem(result?.lot);
+          setCurrentLot(result?.lot);
         }
         setLoading(false);
       })
@@ -144,10 +143,10 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    if (item?.images?.length > 0) {
-      setSelectedImage(item.images[0]);
+    if (currentLot?.images?.length > 0) {
+      setSelectedImage(currentLot.images[0]);
     }
-  }, [item]);
+  }, [currentLot]);
 
   // console.log(participants, "participants");
   // console.log(recentBids, "recentBids");
@@ -194,9 +193,10 @@ export default function Page() {
     }
   }, [socket]);
 
+  console.log(currentLot , "currentLot");
+  
   const placeBid = () => {
     if (!bidAmount) return;
-
     socket.emit(
       "place_bid",
       { id, lotId: currentLot?._id, bidAmount },
@@ -210,7 +210,7 @@ export default function Page() {
     );
   };
 
-  // console.log(item, "iet");
+  // console.log(currentLot, "iet");
 
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
@@ -230,7 +230,7 @@ export default function Page() {
             <Row className="g-3 h-full">
               <Col md="4" lg="2" className="flex md:flex-column ">
                 <div className="flex md:flex-col gap-3 h-100 max-h-[700px] w-full overflow-y-auto">
-                  {item?.images?.map((image, index) => (
+                  {currentLot?.images?.map((image, index) => (
                     <div
                       key={index}
                       className="w-full md:w-full md:flex-grow-0 flex-shrink-0 h-[120px] mb-2"
@@ -301,7 +301,7 @@ export default function Page() {
                   <div className="flex items-start justify-between">
                     <div>
                       <p className="poppins_medium text-xl sm:text-2xl text-white mb-0 capitalize">
-                        {item?.name}
+                        {currentLot?.name}
                       </p>
                       <p className="poppins_regular text-sm text-white mb-0 capitalize">
                         Auction

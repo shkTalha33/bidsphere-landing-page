@@ -1,12 +1,12 @@
-import avataruser from '../png/avataruser.png'
-import coveravatar from '../png/coveravatar.png'
-import facebookicon from '../png/facebookicon.png'
-import appleicon from '../png/appleicon.png'
-import googleicon from '../png/googleicon.png'
-import logout from '../png/log out.png'
-import fashion1 from '../png/fashion1.png'
-import product1 from '../png/product1.png'
-import logo from '../png/setofshoplogo.png'
+import avataruser from "../png/avataruser.png";
+import coveravatar from "../png/coveravatar.png";
+import facebookicon from "../png/facebookicon.png";
+import appleicon from "../png/appleicon.png";
+import googleicon from "../png/googleicon.png";
+import logout from "../png/log out.png";
+import fashion1 from "../png/fashion1.png";
+import product1 from "../png/product1.png";
+import logo from "../png/setofshoplogo.png";
 import StaticImage from "../png/static.png";
 import deliveryicon from "../svg/delivery.svg";
 import icon1light from "../png/icon1light.png";
@@ -99,15 +99,101 @@ import deliveredLight from "../png/deliveredLight.png";
 import noData from "../png/noData.webp";
 
 export {
-  avataruser, fashion1, auctionlogo2, icon10dark, icon11dark, icon12dark, icon13dark, auctionlogo, playstore, appstore, phones, landingimage, pdfIcon, noData,
-  icon1dark, icon2dark, icon3dark, icon4dark, icon5dark, icon6dark, icon7dark, icon8dark, icon9dark,
-  icon1light, icon2light, icon3light, icon4light, icon5light, icon6light, icon7light, icon8light, icon9light, icon10light, icon11light, icon12light, icon13light,
+  avataruser,
+  fashion1,
+  auctionlogo2,
+  icon10dark,
+  icon11dark,
+  icon12dark,
+  icon13dark,
+  auctionlogo,
+  playstore,
+  appstore,
+  phones,
+  landingimage,
+  pdfIcon,
+  noData,
+  icon1dark,
+  icon2dark,
+  icon3dark,
+  icon4dark,
+  icon5dark,
+  icon6dark,
+  icon7dark,
+  icon8dark,
+  icon9dark,
+  icon1light,
+  icon2light,
+  icon3light,
+  icon4light,
+  icon5light,
+  icon6light,
+  icon7light,
+  icon8light,
+  icon9light,
+  icon10light,
+  icon11light,
+  icon12light,
+  icon13light,
   appleicon,
-  StaticImage, deliveryicon,
+  StaticImage,
+  deliveryicon,
   facebookicon,
-  googleicon, product1, logo,
+  googleicon,
+  product1,
+  logo,
   coveravatar,
   logout,
-  art, electronics, vehicles, image1, image2, image3, image4, image5, event1, event2, event3, event4, event5,
-  secure, returnMoney, deal, shipping, experience, downloadApp, appleStore, googlePlay, auctionImage, car1, car2, car3, car4, car5, winBid, confirmBid, uploadfileIcon, stripe, paypal, googlePay, topupWallet, payment, payment1, payment2, payment3,  depositDark, depositWhite, refundWhite, refundDark, ClockWhite, ClockDark, deliveredLight, deliveredDark, transitDark, transitLight, shippedLight, shippedDark, allDark, allLight
-}
+  art,
+  electronics,
+  vehicles,
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+  event1,
+  event2,
+  event3,
+  event4,
+  event5,
+  secure,
+  returnMoney,
+  deal,
+  shipping,
+  experience,
+  downloadApp,
+  appleStore,
+  googlePlay,
+  auctionImage,
+  car1,
+  car2,
+  car3,
+  car4,
+  car5,
+  winBid,
+  confirmBid,
+  uploadfileIcon,
+  stripe,
+  paypal,
+  googlePay,
+  topupWallet,
+  payment,
+  payment1,
+  payment2,
+  payment3,
+  depositDark,
+  depositWhite,
+  refundWhite,
+  refundDark,
+  ClockWhite,
+  ClockDark,
+  deliveredLight,
+  deliveredDark,
+  transitDark,
+  transitLight,
+  shippedLight,
+  shippedDark,
+  allDark,
+  allLight,
+};

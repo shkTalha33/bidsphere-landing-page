@@ -14,7 +14,7 @@ import moment from "moment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Maximize2, X } from "react-feather";
+import { Heart, Maximize2, Plus, X } from "react-feather";
 import { useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
@@ -25,7 +25,6 @@ const AuctionDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewModal, setPreviewModal] = useState(false);
-
   const { get, userData } = ApiFunction();
   const { id } = useParams();
   const { formatPrice, convert } = useCurrency();
@@ -70,7 +69,14 @@ const AuctionDetailPage = () => {
     }
   }, [item]);
 
-  console.log(item, "itme");
+  // console.log(item, "itme");
+  const button = {
+    icon: <Plus className="w-4 h-4 md:w-5 md:h-5 text-white" />,
+    text: "Join Auction",
+    onClick: () => router.push(`/auctions/auction-join/${id}`),
+    className:
+      "h-8 shadow md:h-10 bg_primary text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center",
+  };
 
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
@@ -84,8 +90,9 @@ const AuctionDetailPage = () => {
           <TopSection
             title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
             description={"Here are your auctions whom you can join."}
-            // button={button}
+            {...(item?.status === "start" && { button })}
           />
+
           <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
             <Row className="g-3 h-full">
               <Col md="4" lg="2" className="flex md:flex-column ">
@@ -178,7 +185,8 @@ const AuctionDetailPage = () => {
                       Starting Time
                     </div>
                     <div className="poppins_regular text-sm">
-                      {moment(item?.start_date).format("DD-MMMM-YYYY hh:mm A")}
+                    {moment.utc(item?.start_date).format("DD-MMMM-YYYY hh:mm A")}
+
                     </div>
                   </Col>
                   <Col md="6">
@@ -186,7 +194,7 @@ const AuctionDetailPage = () => {
                       Ending Time
                     </div>
                     <div className="poppins_regular text-sm">
-                      {moment(item?.end_date).format("DD-MMMM-YYYY hh:mm A")}
+                      {moment.utc(item?.end_date).format("DD-MMMM-YYYY hh:mm A")}
                     </div>
                   </Col>
                 </Row>

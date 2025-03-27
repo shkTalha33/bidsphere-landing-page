@@ -1,10 +1,14 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { getAuctionByCategory, getAuctions } from "@/components/api/ApiFile";
 import ApiFunction from "@/components/api/apiFuntions";
 import { handleError } from "@/components/api/errorHandler";
+import { StaticImage } from "@/components/assets/icons/icon";
 import AuctionCard from "@/components/common/AuctionCard";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import { Skeleton } from "antd";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
@@ -50,7 +54,7 @@ const Page = () => {
 
   useEffect(() => {
     handleAuctionData();
-  }, );
+  }, []);
 
   return (
     <>
@@ -75,12 +79,31 @@ const Page = () => {
         ) : (
           <>
             <Container className="bg-white rounded-[9px] mt-4">
-              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
-                {auctions?.map((auction, index) => {
-                  return <AuctionCard item={auction} key={index} index={index} />;
-                })}
-              </div>
-              {totalPages && (
+              {auctions?.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
+                    {auctions?.map((auction, index) => {
+                      return (
+                        <AuctionCard item={auction} key={index} index={index} />
+                      );
+                    })}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex flex-col items-center justify-center mt-4">
+                    <Image
+                      className="w-[5rem] h-[5rem]"
+                      src={StaticImage}
+                      alt=""
+                    />
+                    <div className="text-center">
+                      No auction found in this category.
+                    </div>
+                  </div>
+                </>
+              )}
+              {totalPages > 0 && (
                 <>
                   {totalPages >= lastId && (
                     <section className="flex items-center justify-center mt-4">
