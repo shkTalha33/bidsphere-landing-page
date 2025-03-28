@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
 import { useSocket } from "@/components/socketProvider/socketProvider";
+import AuctionTimer from "@/components/AuctionTimer/AuctionTimer";
 
 export default function Page() {
   const { get, userData } = ApiFunction();
@@ -33,13 +34,12 @@ export default function Page() {
   const [recentBids, setRecentBids] = useState([]);
   const [bidAmount, setBidAmount] = useState("");
   const [participants, setParticipants] = useState([]);
+  const [auctionData, setAuctionData] = useState("");
   const token = useSelector((state) => state.auth?.accessToken);
   const socket = useSocket();
   const { id } = useParams();
   const dispatch = useDispatch();
   const router = useRouter();
-
-  console.log(id, "id");
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -105,37 +105,37 @@ export default function Page() {
     }
   }, [currentLot]);
 
-  console.log(participants, "participants");
-  console.log(recentBids, "recentBids");
+  // console.log(participants, "participants");
+  // console.log(recentBids, "recentBids");
   // console.log(socket, "socket");
-  console.log(currentLot, "currentLot");
+  // console.log(currentLot, "currentLot");
+  // console.log(auctionData, "auctionData");
 
   useEffect(() => {
     if (socket?.connected) {
       socket.emit("authenticate", token);
       // Join the auction
       socket.emit("join_auction", id, (response) => {
-        console.log(response , "response");
-        
         if (response?.success) {
           const matchedLot = response?.auction?.lots.find(
             (lot) => lot?.item?._id === response?.auction?.current_lot
           );
           // Set matching lot in state
           setCurrentLot(matchedLot || null);
-          setRecentBids(response.recentBids);
+          setRecentBids(response?.lastBids);
         }
       });
 
       // Listen for new bids
-      socket.on("new_bid", (bid) => {
-        console.log(bid , "bid");
-        
-        // setRecentBids((prevBids) => [bid, ...prevBids?.slice(0, 9)]);
+      socket.on("new_bid", (data) => {
+        const newBid = data?.bid;
+        if (!newBid) return;
+        setRecentBids((prevBids) => [newBid]?.concat(prevBids));
       });
+
       // Listen for auction updates
       socket.on("auction", (data) => {
-        setCurrentLot(data.auction.current_lot);
+        setAuctionData(data?.auction);
       });
 
       // Listen for participant updates
@@ -156,7 +156,9 @@ export default function Page() {
     }
   }, [socket]);
 
-  console.log(currentLot, "currentLot");
+  // current remaining time
+
+  // console.log(currentLot, "currentLot");
 
   const placeBid = () => {
     if (!bidAmount) return;
@@ -190,7 +192,7 @@ export default function Page() {
         <TopSection
           title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
           description={"Here are your auctions whom you can join."}
-          button={button}
+          // button={button}
         />
         <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
           <Row className="g-3 h-full">
@@ -287,7 +289,7 @@ export default function Page() {
                       Starting price
                     </p>
                     <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
-                      {formatPrice(convert(5000, "LBP"))}
+                      {formatPrice(convert(currentLot?.minprice || 0, "LBP"))}
                     </p>
                     <div className="flex items-center justify-start mb-2 md:mb-0 mt-2 gap-2">
                       <Avatar.Group
@@ -320,10 +322,13 @@ export default function Page() {
                       Current Bid Price
                     </p>
                     <p className="text-[#1B212C] mb-0 text-xs sm:text-sm poppins_regular capitalize">
-                      {formatPrice(convert(2500, "LBP"))}
+                      {formatPrice(convert(recentBids?.[0]?.price || 0, "LBP"))}
                     </p>
                     <p className="text-[#1B212C] mb-0 mt-2 text-[15px] poppins_regular capitalize flex items-center justify-start gap-2">
-                      <FaRegClock size={18} color="#1C201F" /> 01: 23s remaining
+                      {/* <AuctionTimer
+                        startDate={auctionData?.start_date}
+                        endDate={auctionData?.end_date}
+                      /> */}
                     </p>
                   </Col>
                 </Row>
@@ -341,38 +346,33 @@ export default function Page() {
                 </Col>
                 <Col xs="4" sm="6" className="px-0">
                   <p className="capitalize poppins_regular text-[14px] text-end mb-0">
-                    {participants?.length} Bids made
+                    {recentBids?.length} Bids made
                   </p>
                 </Col>
               </Row>
 
               {/* Bidders List */}
-              <div className="space-y-4 mt-3 mb-3 flex-grow">
-                {participants?.map((bid) => (
-                  <Row className="px-6 mx-0" key={bid?._id}>
-                    <Col md="6" className="px-0">
-                      <div className="flex items-center justify-start gap-3">
-                        <Image
-                          src={bid?.profilepicture || avataruser}
-                          className="w-9 h-9 rounded-full"
-                          alt={`${bid?.fname}'s avatar`}
-                        />
-                        <div>
-                          <p className="poppins_regular text-base text_dark mb-0">
-                            {bid?.fname}
-                          </p>
-                          <p className="poppins_regular text-sm text_lightsecondary mb-0">
-                            {bid.timeAgo}
-                          </p>
-                        </div>
+
+              <div className="space-y-4 w-[90%] mx-auto mt-3 mb-3 max-h-[15rem] h-auto overflow-auto flex-grow">
+                {recentBids?.map((bid) => (
+                  <div
+                    key={bid?._id}
+                    className="flex items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-300 text-dark font-semibold text-lg">
+                        {bid?.name?.charAt(0)?.toUpperCase()}
                       </div>
-                    </Col>
-                    <Col md="6" className="px-0">
-                      <p className="capitalize poppins_regular text-[14px] text-end mb-0">
-                        {bid.bid}
-                      </p>
-                    </Col>
-                  </Row>
+                      <div>
+                        <p className="poppins_regular text-base text_dark mb-0">
+                          {bid?.name}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="capitalize poppins_regular text-[14px] text-end mb-0">
+                      {formatPrice(convert(bid?.price || 0, "LBP"))}
+                    </p>
+                  </div>
                 ))}
               </div>
 

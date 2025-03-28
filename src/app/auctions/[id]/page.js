@@ -8,6 +8,7 @@ import AuctionLots from "@/components/auction/auctionLots";
 import TopSection from "@/components/common/TopSection";
 import useCurrency from "@/components/hooks/useCurrency";
 import { useSocket } from "@/components/socketProvider/socketProvider";
+import { message } from "antd";
 import { format } from "date-fns";
 import debounce from "debounce";
 import moment from "moment";
@@ -69,11 +70,20 @@ const AuctionDetailPage = () => {
     }
   }, [item]);
 
-  // console.log(item, "itme");
+  console.log(userData, "userData");
+
+  const handleNavi = () => {
+    if (userData) {
+      router.push(`/auctions/auction-join/${id}`);
+    } else {
+      message.error("Please login to join the auction!");
+    }
+  };
+
   const button = {
     icon: <Plus className="w-4 h-4 md:w-5 md:h-5 text-white" />,
     text: "Join Auction",
-    onClick: () => router.push(`/auctions/auction-join/${id}`),
+    onClick: handleNavi,
     className:
       "h-8 shadow md:h-10 bg_primary text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center",
   };
@@ -185,8 +195,9 @@ const AuctionDetailPage = () => {
                       Starting Time
                     </div>
                     <div className="poppins_regular text-sm">
-                    {moment.utc(item?.start_date).format("DD-MMMM-YYYY hh:mm A")}
-
+                      {moment
+                        .utc(item?.start_date)
+                        .format("DD-MMMM-YYYY hh:mm A")}
                     </div>
                   </Col>
                   <Col md="6">
@@ -194,7 +205,9 @@ const AuctionDetailPage = () => {
                       Ending Time
                     </div>
                     <div className="poppins_regular text-sm">
-                      {moment.utc(item?.end_date).format("DD-MMMM-YYYY hh:mm A")}
+                      {moment
+                        .utc(item?.end_date)
+                        .format("DD-MMMM-YYYY hh:mm A")}
                     </div>
                   </Col>
                 </Row>
