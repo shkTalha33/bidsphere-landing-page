@@ -2,7 +2,7 @@
 
 import imageCompression from "browser-image-compression";
 import { isValidFileType } from "./isValidType";
-import axiosInstance from "./axiosInstance";
+import { axiosInstance } from "./axiosInstance";
 import ApiFunction from "./apiFuntions";
 import { imageUpload } from "./ApiFile";
 // import { imageUpload } from "./ApiRoutesFile";
@@ -29,7 +29,9 @@ export const uploadFile = async (file, acceptPdf = null) => {
       maxWidthOrHeight: 1920,
       useWebWorker: true,
     };
-    const compressedFile = acceptPdf ? file : await imageCompression(file, options);
+    const compressedFile = acceptPdf
+      ? file
+      : await imageCompression(file, options);
     const formData = new FormData();
     formData.append("image", compressedFile);
     const response = await axiosInstance.post(imageUpload, formData, {
