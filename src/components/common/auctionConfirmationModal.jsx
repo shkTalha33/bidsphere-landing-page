@@ -12,15 +12,15 @@ const AuctionConfirmationModal = ({ item, openModal, setOpenModal }) => {
       centered
       closeIcon={null}
       width={700}
-      bodyStyle={{
+      style={{
         maxHeight: "90vh",
         overflowY: "auto",
         paddingRight: "16px",
       }}
     >
       <div className="flex flex-col gap-2 gap-md-4 items-center justify-center py-5">
-        <div className="w-20 md:w-[160px] relative">
-          <Image src={item?.image} width={80} height={80} alt={item?.title} />
+        <div className="relative mx-auto text-center">
+          <Image src={item?.image} width={90} height={90} alt={item?.title} />
         </div>
         <h6 className="capitalize text-2xl sm:text-2xl md:text-3xl lg:text-[44px] text-[#14181B] poppins_semibold mt-1 mb-1 mb-md-2">
           {item?.title}
