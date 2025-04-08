@@ -116,9 +116,9 @@ export default function Header() {
         <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
           <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
         </div>
-        <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+        <Link href={`/favorite`} className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
           <FaRegHeart className="text-white w-[1.2rem] h-[1.2rem]" />
-        </div>
+        </Link>
 
         <Dropdown menu={{ items }}>
           <Space className="">
@@ -352,9 +352,9 @@ export default function Header() {
                 <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
                   <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
                 </div>
-                <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+                <Link href={'/favorite'} className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
                   <FaRegHeart className="text-white w-[1.2rem] h-[1.2rem]" />
-                </div>
+                </Link>
               </div>
               <Dropdown menu={{ items }}>
                 <Space className="">

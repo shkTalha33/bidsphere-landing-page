@@ -349,23 +349,12 @@ export default function Page() {
                       </div>
                     </Col>
 
-                    <Col sm="6" className="px-4">
-                      <p className="text-[#1B212C] mb-0 text-base sm:text-lg poppins_semibold capitalize">
-                        Current Bid Price
-                      </p>
-                      <p className="text-[#1B212C] mb-0 text-xs sm:text-sm poppins_regular capitalize">
-                        {formatPrice(convert(2500, "LBP"))}
-                      </p>
-                      <p className="text-[#1B212C] mb-0 mt-2 text-[15px] poppins_regular capitalize flex items-center justify-start gap-2">
-                        <FaRegClock size={18} color="#1C201F" /> 01: 23s
-                        remaining
-                      </p>
-                    </Col>
+                    
                   </Row>
                 </div>
 
                 {/* Live Auction Header */}
-                <Row className="px-6 items-center mx-0">
+                {/* <Row className="px-6 items-center mx-0">
                   <Col xs="8" sm="6" className="px-0">
                     <div className="flex items-center justify-start gap-2">
                       <TbLivePhoto size={20} />
@@ -379,96 +368,9 @@ export default function Page() {
                       {participants?.length} Bids made
                     </p>
                   </Col>
-                </Row>
+                </Row> */}
 
-                {/* Bidders List */}
-                <div className="space-y-4 mt-3 mb-3 flex-grow">
-                  {participants?.map((bid) => (
-                    <Row className="px-6 mx-0" key={bid?._id}>
-                      <Col md="6" className="px-0">
-                        <div className="flex items-center justify-start gap-3">
-                          <Image
-                            src={bid?.profilepicture || avataruser}
-                            className="w-9 h-9 rounded-full"
-                            alt={`${bid?.fname}'s avatar`}
-                          />
-                          <div>
-                            <p className="poppins_regular text-base text_dark mb-0">
-                              {bid?.fname}
-                            </p>
-                            <p className="poppins_regular text-sm text_lightsecondary mb-0">
-                              {bid.timeAgo}
-                            </p>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col md="6" className="px-0">
-                        <p className="capitalize poppins_regular text-[14px] text-end mb-0">
-                          {bid.bid}
-                        </p>
-                      </Col>
-                    </Row>
-                  ))}
-                </div>
-
-                {/* Bidding Controls */}
-                <div className="w-[90%] mx-auto mt-auto bg-[#F3F2F2] rounded-[10px] p-4">
-                  {/* Bid Amount Options */}
-                  <div className="flex justify-evenly items-center gap-2 overflow-auto pb-3">
-                    {priceOptions.map((price) => (
-                      <button
-                        key={price}
-                        className={`py-1 px-3 rounded-md poppins_regular whitespace-nowrap text-sm ${
-                          activeButton === price
-                            ? "border border-black bg_dark text-white"
-                            : "border border-[#BDBDBD] text_dark"
-                        }`}
-                        onClick={() => setActiveButton(price)}
-                      >
-                        {price}
-                      </button>
-                    ))}
-                    <button
-                      className={`py-1 px-3 poppins_regular rounded-md text-sm whitespace-nowrap ${
-                        activeButton === "custom"
-                          ? "border border-black bg_dark text-white"
-                          : "border border-[#BDBDBD] text_dark"
-                      }`}
-                      onClick={() => setActiveButton("custom")}
-                    >
-                      Use Custom Bid
-                    </button>
-                  </div>
-
-                  {/* Custom Bid Input or Bid Button */}
-                  {activeButton === "custom" ? (
-                    <div className="flex items-center justify-start gap-3 mt-3">
-                      <input
-                        placeholder="e.g 45000"
-                        className="text-center py-2 md:py-3 rounded-2xl poppins_semibold text-[14px] bg-transparent border border-[#660000] text_primary flex-grow"
-                      />
-                      <button
-                        className="bg_primary flex items-center justify-center rounded-2xl p-2 md:p-3"
-                        onClick={() => setOpenBiddingConfirmationModal(true)}
-                      >
-                        <Check size={24} className="text-white" />
-                      </button>
-                      <button
-                        className="bg_white flex items-center justify-center rounded-2xl p-2 md:p-3 border border-[#660000]"
-                        onClick={() => setActiveButton("")}
-                      >
-                        <X size={24} className="text_primary" />
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      className="capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg"
-                      onClick={() => setOpenBiddingConfirmationModal(true)}
-                    >
-                      Place Bid For $25k
-                    </button>
-                  )}
-                </div>
+               
               </Col>
             </Row>
           </Container>
