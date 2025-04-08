@@ -1,3 +1,8 @@
+import Logo1 from "../logo/logo1.png";
+import Logo11 from "../logo/logo11.png";
+import Logo2 from "../logo/logo2.png";
+import Logo3 from "../logo/logo3.png";
+import Logo4 from "../logo/logo4.png";
 import avataruser from "../png/avataruser.png";
 import coveravatar from "../png/coveravatar.png";
 import facebookicon from "../png/facebookicon.png";
@@ -196,4 +201,9 @@ export {
   shippedDark,
   allDark,
   allLight,
+  Logo1,
+  Logo2,
+  Logo3,
+  Logo4,
+  Logo11
 };

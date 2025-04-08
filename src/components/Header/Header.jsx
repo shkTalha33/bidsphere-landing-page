@@ -11,10 +11,13 @@ import { TbLogout } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { Container } from "reactstrap";
 import ApiFunction from "../api/apiFuntions";
-import { avataruser } from "../assets/icons/icon";
+import { avataruser, Logo1, Logo11 } from "../assets/icons/icon";
 import { setLogout } from "../redux/loginForm";
 import { worldCurrencies } from "../utils/WorldCurrency";
 import useCurrency from "../hooks/useCurrency";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { RiChatSmile2Line } from "react-icons/ri";
+import { FaRegHeart } from "react-icons/fa";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -107,9 +110,9 @@ export default function Header() {
         </div>
       </div>
       <div className="hidden d-md-flex items-center gap-[0.5rem]">
-        <button>
-          <Image src="/assets/notification.png" width={30} height={30} alt="" />
-        </button>
+        <div className="bg-1 w-[1.7rem] h-[1.7rem] rounded-full flex items-center justify-center cursor-pointer">
+          <IoMdNotificationsOutline className="text-white" />
+        </div>
         <button>
           <Image src="/assets/chat.png" width={30} height={30} alt="" />
         </button>
@@ -259,9 +262,7 @@ export default function Header() {
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => router.push("/")}
           >
-            <h2 className="poppins_medium text-2xl text_primary">
-              Castle Auction
-            </h2>
+            <Image className="w-[3.5rem] h-[3.5rem] object-cover" src={isHomeOrHashRoute && !isScrolled ? Logo11 : Logo1} alt="" />
           </div>
           {isLogin ? <AuthenticatedNav /> : <NonAuthenticatedNav />}
 
@@ -340,14 +341,9 @@ export default function Header() {
 
               {/* Mobile Action Icons */}
               <div className="flex justify-center gap-6 w-full mt-2">
-                <button>
-                  <Image
-                    src="/assets/notification.png"
-                    width={26}
-                    height={26}
-                    alt=""
-                  />
-                </button>
+                <div>
+                  <IoMdNotificationsOutline />
+                </div>
                 <button>
                   <Image src="/assets/chat.png" width={26} height={26} alt="" />
                 </button>

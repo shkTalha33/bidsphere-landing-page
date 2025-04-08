@@ -1,20 +1,21 @@
 /* Light Theme */
 :root {
-  --primary: #21CD9D;
+  --primary: #660000;
   --lightprimary: #003f7d;
   --primary2: #7f61c4;
   --secondary: #4d4d4d;
-  --darkprimary: #1B212C;
-  --secondary2: #7C8493;
-  --lightsecondary: #E7FAF4;
+  --darkprimary: #1b212c;
+  --secondary2: #7c8493;
+  --lightsecondary: #e7faf4;
   --success: #28a745;
   --info: #17a2b8;
   --warning: #ffc107;
   --danger: #dc3545;
   --light: #fdfdff;
-  --dark: #1C201F;
+  --dark: #1c201f;
   --white: #fff;
-  --mainsecondary: #F7F7F7
+  --mainsecondary: #f7f7f7;
+  --color-1: #844e4e;
 }
 
 /* Dark Theme */
@@ -22,11 +23,11 @@
   --primary: #17a2b8;
   --secondary: #6c757d;
   --success: #28a745;
-  --darkprimary: #1B212C;
+  --darkprimary: #1b212c;
   --info: #007bff;
   --warning: #ffc107;
   --danger: #dc3545;
   --light: #343a40;
   --dark: #e0e1e2;
-  --mainsecondary: #F7F7F7
+  --mainsecondary: #f7f7f7;
 }

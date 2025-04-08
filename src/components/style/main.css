@@ -57,6 +57,12 @@
 .text_primary {
   color: var(--primary);
 }
+.color-1 {
+  color: var(--color-1);
+}
+.bg-1 {
+  background-color: var(--color-1);
+}
 .text_mainsecondary {
   color: var(--mainsecondary);
 }
