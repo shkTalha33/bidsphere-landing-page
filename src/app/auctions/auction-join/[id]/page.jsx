@@ -20,6 +20,7 @@ import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
 import { useSocket } from "@/components/socketProvider/socketProvider";
 import AuctionTimer from "@/components/AuctionTimer/AuctionTimer";
+import toast from "react-hot-toast";
 
 export default function Page() {
   const { get, userData } = ApiFunction();
@@ -32,7 +33,7 @@ export default function Page() {
   const { formatPrice, convert } = useCurrency();
   const [currentLot, setCurrentLot] = useState(null);
   const [recentBids, setRecentBids] = useState([]);
-  const [bidAmount, setBidAmount] = useState("");
+  const [bidAmount, setBidAmount] = useState(0);
   const [participants, setParticipants] = useState([]);
   const [auctionData, setAuctionData] = useState("");
   const token = useSelector((state) => state.auth?.accessToken);
@@ -60,13 +61,14 @@ export default function Page() {
 
   const confirmationItem = {
     title: "Confirm Bid",
-    description:
-      "You have placed a bid for $35,000. Should we place this as your Bid?",
+    description: `You have placed a bid for ${formatPrice(
+      convert(bidAmount || 0, "LBP")
+    )}. Should we place this as your Bid?`,
     image: confirmBid,
     buttons: [
       {
         btnText: "Yes, Place My Bid",
-        // onClick: () => router.push("/auctions/registration"),
+        onClick: () => placeBid(),
         className:
           "rounded-[10px] bg_primary text-white poppins_medium text-xs sm:text-base md:text-lg border border-[#21CD9D] w-full py-2 md:py-3",
       },
@@ -93,7 +95,7 @@ export default function Page() {
     ],
   };
 
-  const priceOptions = ["$20k", "$21k", "$22k", "$23k"];
+  const priceOptions = ["2000000", "4000000", "6000000", "8000000"];
 
   const handleImagePreview = (image) => {
     setSelectedImage(image);
@@ -117,9 +119,12 @@ export default function Page() {
       // Join the auction
       socket.emit("join_auction", id, (response) => {
         if (response?.success) {
+          console.log("response", response);
           const matchedLot = response?.auction?.lots.find(
             (lot) => lot?.item?._id === response?.auction?.current_lot
           );
+
+          console.log("matechedLot", matchedLot);
           // Set matching lot in state
           setCurrentLot(matchedLot || null);
           setRecentBids(response?.lastBids);
@@ -162,17 +167,22 @@ export default function Page() {
 
   const placeBid = () => {
     if (!bidAmount) return;
-    socket.emit(
-      "place_bid",
-      { id, lotId: currentLot?._id, bidAmount },
-      (response) => {
-        if (!response.success) {
-          alert(response.message);
-        } else {
-          setBidAmount("");
-        }
+    const data = {
+      auctionId: id,
+      lotId: currentLot?.item?._id,
+      bidAmount: Number(bidAmount),
+      name: userData?.fname,
+      type: "user",
+    };
+    socket.emit("place_bid", data, (response) => {
+      if (!response.success) {
+        toast.error(response.message);
+      } else {
+        toast.success(response.message);
+        setBidAmount("");
       }
-    );
+      setOpenBiddingConfirmationModal(false);
+    });
   };
 
   // console.log(currentLot, "iet");
@@ -388,9 +398,12 @@ export default function Page() {
                           ? "border border-black bg_dark text-white"
                           : "border border-[#BDBDBD] text_dark"
                       }`}
-                      onClick={() => setActiveButton(price)}
+                      onClick={() => {
+                        setActiveButton(price);
+                        setBidAmount(price);
+                      }}
                     >
-                      {price}
+                      {formatPrice(convert(price || 0, "LBP"))}
                     </button>
                   ))}
                   <button
@@ -409,7 +422,9 @@ export default function Page() {
                 {activeButton === "custom" ? (
                   <div className="flex items-center justify-start gap-3 mt-3">
                     <input
+                      type="number"
                       placeholder="e.g 45000"
+                      onChange={(e) => setBidAmount(e.target.value)}
                       className="text-center py-2 md:py-3 rounded-2xl poppins_semibold text-[14px] bg-transparent border border-[#21CD9D] text_primary flex-grow"
                     />
                     <button
@@ -430,7 +445,7 @@ export default function Page() {
                     className="capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg"
                     onClick={() => setOpenBiddingConfirmationModal(true)}
                   >
-                    Place Bid For $25k
+                    Place Bid For {formatPrice(convert(bidAmount || 0, "LBP"))}
                   </button>
                 )}
               </div>
@@ -444,6 +459,7 @@ export default function Page() {
         openModal={openBiddingConfirmationModal}
         setOpenModal={setOpenBiddingConfirmationModal}
         item={confirmationItem}
+        bidAmount={bidAmount}
       />
 
       {/* Image Preview Modal */}
