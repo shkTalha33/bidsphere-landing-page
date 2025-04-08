@@ -135,7 +135,7 @@ const RegistrationDetail = () => {
             <div className="">
               <Progress
                 percent={progress}
-                strokeColor={"#21CD9D"}
+                strokeColor={"#660000"}
                 size={["100%", 8]}
                 showInfo={false}
               />

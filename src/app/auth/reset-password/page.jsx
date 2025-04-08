@@ -165,7 +165,7 @@ const Page = () => {
         </div>
 
         <div className="col-span-6 sm:flex sm:items-center sm:gap-4 w-full">
-          <button disabled={loading} type="submit" className="btn1 primary w-100">
+          <button disabled={loading} type="submit" className="btn1 bg_primary text-white w-100">
             {loading ? <BeatLoader color="#fff" size={10} /> : 'Reset Password'}
           </button>
         </div>

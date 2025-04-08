@@ -123,7 +123,7 @@ export default function DepositTracking() {
             className="p-1 bg_mainsecondary rounded-full ml-3 w-9 h-9 cursor-pointer flex items-center justify-center"
             //  onClick={() => handleLeadDetails(row)}
           >
-            <div className="w-6 h-6 rounded-full bg-[#1ECD2D] flex items-center justify-center text-white">
+            <div className="w-6 h-6 rounded-full bg-[#660000] flex items-center justify-center text-white">
               <IoMdCheckmark size={18} className="text_primary" color="#fff" />
             </div>
           </div>

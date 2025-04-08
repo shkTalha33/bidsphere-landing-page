@@ -170,7 +170,7 @@ const Page = () => {
             icon={<TbCurrentLocation />}
             onClick={handleCurrentLocation}
             disabled={loading}
-            className="flex-1 flex items-center justify-center px-4 py-3 gap-2 border-[1px] border-[#21CD9D] text_primary rounded-lg"
+            className="flex-1 flex items-center justify-center px-4 py-3 gap-2 border-[1px] border-[#660000] text_primary rounded-lg"
           >
             <TbCurrentLocation size={20} />
             {loading ? <Spin size="small" /> : "Current Location"}
@@ -179,7 +179,7 @@ const Page = () => {
             disabled={loading}
             type="default"
             onClick={handleSubmit}
-            className="btn1 primary w-100"
+            className="btn1 bg_primary text-white w-100"
           >
             {loading || sbLoading ? (
               <BeatLoader color="#fff" size={10} />

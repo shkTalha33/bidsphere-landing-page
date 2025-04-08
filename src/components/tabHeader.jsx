@@ -25,7 +25,7 @@ const TabHeader = () => {
               block py-3 px-6 text-lg rounded-lg popins_medium
               ${
                 pathname === item.path
-                  ? "bg-emerald-400 text-white"
+                  ? "bg_primary text-white"
                   : "bg-gray-50 text-gray-800 hover:bg-gray-100 border-b border-gray-200"
               }
               transition-colors duration-200

@@ -130,7 +130,7 @@ const Page = () => {
             <button
               disabled={loading}
               type="submit"
-              className="btn1 primary w-100"
+              className="btn1 bg_primary text-white w-100"
             >
               {loading ? <BeatLoader color="#fff" size={10} /> : "Send Code"}
             </button>

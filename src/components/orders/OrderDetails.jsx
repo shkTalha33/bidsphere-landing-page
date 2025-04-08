@@ -141,7 +141,7 @@ export default function OrderDetails() {
                 </Col>
                 <Col xs="2" className="">
                   <div className="bg_lightsecondary flex items-center justify-center w-9 h-9 rounded-full ml-auto cursor-pointer">
-                    <TbMessage color="#21CD9D" size={24} />
+                    <TbMessage color="#660000" size={24} />
                   </div>
                 </Col>
               </Row>

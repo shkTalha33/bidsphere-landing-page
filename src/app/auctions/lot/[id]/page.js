@@ -90,13 +90,13 @@ export default function Page() {
         btnText: "Yes, Place My Bid",
         // onClick: () => router.push("/auctions/registration"),
         className:
-          "rounded-[10px] bg_primary text-white poppins_medium text-xs sm:text-base md:text-lg border border-[#21CD9D] w-full py-2 md:py-3",
+          "rounded-[10px] bg_primary text-white poppins_medium text-xs sm:text-base md:text-lg border border-[#660000] w-full py-2 md:py-3",
       },
       {
         btnText: "Cancel",
         onClick: () => setOpenBiddingConfirmationModal(false),
         className:
-          "rounded-[10px] bg-white text_primary border border-[#21CD9D] poppins_medium text-xs sm:text-base md:text-lg w-full py-2 md:py-3",
+          "rounded-[10px] bg-white text_primary border border-[#660000] poppins_medium text-xs sm:text-base md:text-lg w-full py-2 md:py-3",
       },
     ],
   };
@@ -110,7 +110,7 @@ export default function Page() {
         btnText: "okay",
         onClick: () => setOpenWinBidModal(false),
         className:
-          "rounded-[10px] bg_primary text-white poppins_medium text-lg border border-[#21CD9D] w-full py-3",
+          "rounded-[10px] bg_primary text-white poppins_medium text-lg border border-[#660000] w-full py-3",
       },
     ],
   };
@@ -193,8 +193,8 @@ export default function Page() {
     }
   }, [socket]);
 
-  console.log(currentLot , "currentLot");
-  
+  console.log(currentLot, "currentLot");
+
   const placeBid = () => {
     if (!bidAmount) return;
     socket.emit(
@@ -217,7 +217,7 @@ export default function Page() {
       {loading ? (
         <div className="min-h-[100vh] flex items-center justify-center">
           {" "}
-          <HashLoader color="#21CD9D" size={25} />{" "}
+          <HashLoader color="#660000" size={25} />{" "}
         </div>
       ) : (
         <>
@@ -445,7 +445,7 @@ export default function Page() {
                     <div className="flex items-center justify-start gap-3 mt-3">
                       <input
                         placeholder="e.g 45000"
-                        className="text-center py-2 md:py-3 rounded-2xl poppins_semibold text-[14px] bg-transparent border border-[#21CD9D] text_primary flex-grow"
+                        className="text-center py-2 md:py-3 rounded-2xl poppins_semibold text-[14px] bg-transparent border border-[#660000] text_primary flex-grow"
                       />
                       <button
                         className="bg_primary flex items-center justify-center rounded-2xl p-2 md:p-3"
@@ -454,7 +454,7 @@ export default function Page() {
                         <Check size={24} className="text-white" />
                       </button>
                       <button
-                        className="bg_white flex items-center justify-center rounded-2xl p-2 md:p-3 border border-[#21CD9D]"
+                        className="bg_white flex items-center justify-center rounded-2xl p-2 md:p-3 border border-[#660000]"
                         onClick={() => setActiveButton("")}
                       >
                         <X size={24} className="text_primary" />

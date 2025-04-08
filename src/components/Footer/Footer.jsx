@@ -1,9 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BsTwitter } from 'react-icons/bs';
-import { FaFacebookF, FaLinkedinIn } from 'react-icons/fa';
-import { FaYoutube } from 'react-icons/fa6';
-import { appstore, auctionlogo, playstore } from '../assets/icons/icon';
+import { BsTwitter } from "react-icons/bs";
+import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa6";
+import {
+  appstore,
+  auctionlogo,
+  Logo11,
+  Logo2,
+  Logo3,
+  Logo4,
+  playstore,
+} from "../assets/icons/icon";
 
 const Footer = () => {
   return (
@@ -12,16 +20,14 @@ const Footer = () => {
         <div className="space-y-6">
           <div>
             <Image
-              src={auctionlogo}
-              width={80}
-              height={50}
+              src={Logo11}
               alt="Logo"
-              className="mb-2 md:mb-6"
+              className="mb-2 md:mb-6 h-[7rem] object-contain w-[7rem]"
             />
             <p className="text-sm max-w-md">
               Aenean fermentum sapien acenagravida. Fusce a ipsum metuslai.
-              Suspendisse oi potenti.Aenean fermentum sapien acenagravida.
-              Fusce a ipsum metuslai.Suspendisse oi potenti.
+              Suspendisse oi potenti.Aenean fermentum sapien acenagravida. Fusce
+              a ipsum metuslai.Suspendisse oi potenti.
             </p>
           </div>
           <Link href="#" className="inline-block">
@@ -33,7 +39,9 @@ const Footer = () => {
 
         {/* Middle Section - Contacts */}
         <div className="lg:px-12">
-          <h3 className="text-lg md:text-2xl poppins_semibold mb-2 md:mb-8">Contacts</h3>
+          <h3 className="text-lg md:text-2xl poppins_semibold mb-2 md:mb-8">
+            Contacts
+          </h3>
           <div className="space-y-4">
             <div>
               <p className="mb-1 text-sm">+880 176 1111 456</p>
@@ -53,16 +61,28 @@ const Footer = () => {
         {/* Right Section - Social & Download */}
         <div className="space-y-8">
           <div className="flex gap-4">
-            <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
+            <Link
+              href="#"
+              className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full"
+            >
               <BsTwitter size={20} className="text_primary" />
             </Link>
-            <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
+            <Link
+              href="#"
+              className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full"
+            >
               <FaFacebookF size={20} className="text_primary" />
             </Link>
-            <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
+            <Link
+              href="#"
+              className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full"
+            >
               <FaLinkedinIn size={20} className="text_primary" />
             </Link>
-            <Link href="#" className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full">
+            <Link
+              href="#"
+              className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full"
+            >
               <FaYoutube size={20} className="text_primary" />
             </Link>
           </div>
@@ -85,9 +105,15 @@ const Footer = () => {
           </div>
 
           <div className="flex gap-6 text-sm">
-            <Link href="#" className="hover:underline">Privacy</Link>
-            <Link href="#" className="hover:underline">Accessibility</Link>
-            <Link href="#" className="hover:underline">Terms</Link>
+            <Link href="#" className="hover:underline">
+              Privacy
+            </Link>
+            <Link href="#" className="hover:underline">
+              Accessibility
+            </Link>
+            <Link href="#" className="hover:underline">
+              Terms
+            </Link>
           </div>
         </div>
       </div>

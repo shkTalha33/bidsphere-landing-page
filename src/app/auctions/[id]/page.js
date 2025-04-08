@@ -70,9 +70,13 @@ const AuctionDetailPage = () => {
     }
   }, [item]);
 
-  console.log(userData, "userData");
+  console.log(item, "item");
 
-  const handleNavi = () => {
+  const handleRegister = () => {
+    router.push(`/auctions/${id}/registration`);
+  };
+
+  const handleJoin = () => {
     if (userData) {
       router.push(`/auctions/auction-join/${id}`);
     } else {
@@ -80,10 +84,12 @@ const AuctionDetailPage = () => {
     }
   };
 
+  const isRegister = !item?.applications || item.applications.length === 0;
+
   const button = {
     icon: <Plus className="w-4 h-4 md:w-5 md:h-5 text-white" />,
-    text: "Join Auction",
-    onClick: handleNavi,
+    text: isRegister ? "Register Auction" : "Join Auction",
+    onClick: isRegister ? handleRegister : handleJoin,
     className:
       "h-8 shadow md:h-10 bg_primary text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center",
   };
@@ -93,7 +99,7 @@ const AuctionDetailPage = () => {
       {loading ? (
         <div className="min-h-[100vh] flex items-center justify-center">
           {" "}
-          <HashLoader color="#21CD9D" size={25} />{" "}
+          <HashLoader color="#660000" size={25} />{" "}
         </div>
       ) : (
         <>

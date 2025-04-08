@@ -103,7 +103,7 @@ const ProfilePage = () => {
       minWidth: "180px",
       maxWidth: "200px",
       cell: (row) => (
-        <button className="px-2 py-1 rounded-lg border-[1px] text-xs border-[#1ECD2D] flex items-center justify-center text_primary">
+        <button className="px-2 py-1 rounded-lg border-[1px] text-xs border-[#660000] flex items-center justify-center text_primary">
           View Detail
         </button>
       ),

@@ -1,6 +1,7 @@
 import { Modal } from "antd";
 import Image from "next/image";
 import React from "react";
+import { PiMoneyWavyLight } from "react-icons/pi";
 
 const AuctionConfirmationModal = ({ item, openModal, setOpenModal }) => {
   return (
@@ -11,18 +12,18 @@ const AuctionConfirmationModal = ({ item, openModal, setOpenModal }) => {
       footer={null}
       centered
       closeIcon={null}
-      width={700}
-      style={{
-        maxHeight: "90vh",
-        overflowY: "auto",
-        paddingRight: "16px",
-      }}
+      // width={700}
+      // style={{
+      //   maxHeight: "90vh",
+      //   overflowY: "auto",
+      //   paddingRight: "16px",
+      // }}
     >
       <div className="flex flex-col gap-2 gap-md-4 items-center justify-center py-5">
         <div className="relative mx-auto text-center">
-          <Image src={item?.image} width={90} height={90} alt={item?.title} />
+        <PiMoneyWavyLight className="text_primary h-[4rem] w-[4rem]" />
         </div>
-        <h6 className="capitalize text-2xl sm:text-2xl md:text-3xl lg:text-[44px] text-[#14181B] poppins_semibold mt-1 mb-1 mb-md-2">
+        <h6 className="capitalize text-[2rem] text-[#14181B] poppins_semibold">
           {item?.title}
         </h6>
         <p className="text-[#14181B] text-center text-xs sm:text-sm md:text-[17px]  poppins_regular">

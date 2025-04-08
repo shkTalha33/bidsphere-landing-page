@@ -110,15 +110,16 @@ export default function Header() {
         </div>
       </div>
       <div className="hidden d-md-flex items-center gap-[0.5rem]">
-        <div className="bg-1 w-[1.7rem] h-[1.7rem] rounded-full flex items-center justify-center cursor-pointer">
-          <IoMdNotificationsOutline className="text-white" />
+        <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+          <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
         </div>
-        <button>
-          <Image src="/assets/chat.png" width={30} height={30} alt="" />
-        </button>
-        <button onClick={() => router.push("/favorite")}>
-          <Image src="/assets/heart.png" width={30} height={30} alt="" />
-        </button>
+        <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+          <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
+        </div>
+        <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+          <FaRegHeart className="text-white w-[1.2rem] h-[1.2rem]" />
+        </div>
+
         <Dropdown menu={{ items }}>
           <Space className="">
             <div className="flex cursor-pointer gap-2 items-center w-fit">
@@ -262,7 +263,11 @@ export default function Header() {
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => router.push("/")}
           >
-            <Image className="w-[3.5rem] h-[3.5rem] object-cover" src={isHomeOrHashRoute && !isScrolled ? Logo11 : Logo1} alt="" />
+            <Image
+              className="w-[3.5rem] h-[3.5rem] object-cover"
+              src={isHomeOrHashRoute && !isScrolled ? Logo11 : Logo1}
+              alt=""
+            />
           </div>
           {isLogin ? <AuthenticatedNav /> : <NonAuthenticatedNav />}
 
@@ -341,20 +346,15 @@ export default function Header() {
 
               {/* Mobile Action Icons */}
               <div className="flex justify-center gap-6 w-full mt-2">
-                <div>
-                  <IoMdNotificationsOutline />
+                <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+                  <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
                 </div>
-                <button>
-                  <Image src="/assets/chat.png" width={26} height={26} alt="" />
-                </button>
-                <button onClick={() => router.push("/favorite")}>
-                  <Image
-                    src="/assets/heart.png"
-                    width={26}
-                    height={26}
-                    alt=""
-                  />
-                </button>
+                <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+                  <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
+                </div>
+                <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+                  <FaRegHeart className="text-white w-[1.2rem] h-[1.2rem]" />
+                </div>
               </div>
               <Dropdown menu={{ items }}>
                 <Space className="">
