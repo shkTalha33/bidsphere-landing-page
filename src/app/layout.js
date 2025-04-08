@@ -23,13 +23,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/assets/auctionlogo.png"
-        />
-        <link rel="apple-icon" sizes="180x180" href="/assets/auctionlogo.png" />
-        <meta name="apple-mobile-web-app-title" content="Bid sphere" />
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon.ico" />
+        <link rel="apple-icon" sizes="180x180" href="favicon.ico" />
+        <meta name="apple-mobile-web-app-title" content="Castle sphere" />
       </head>
       <body>
         <AntdRegistry>
