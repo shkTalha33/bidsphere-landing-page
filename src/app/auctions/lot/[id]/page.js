@@ -193,8 +193,6 @@ export default function Page() {
     }
   }, [socket]);
 
-  console.log(currentLot, "currentLot");
-
   const placeBid = () => {
     if (!bidAmount) return;
     socket.emit(

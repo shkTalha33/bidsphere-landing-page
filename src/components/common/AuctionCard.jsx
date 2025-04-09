@@ -1,23 +1,23 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { fadeIn } from "../utils/motion";
-import { format, differenceInDays, differenceInHours } from "date-fns";
+// import { format, differenceInDays, differenceInHours } from "date-fns";
+import {
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+  format,
+} from "date-fns";
 import { useDispatch } from "react-redux";
 import { setAuctionProduct } from "../redux/auctionProduct";
 import { useRouter } from "next/navigation";
 import useCurrency from "../hooks/useCurrency";
+import moment from "moment";
+import CountdownTimer from "../CountdownTimer/CountdownTimer";
 export default function AuctionCard({ item, index }) {
   const { formatPrice, convert } = useCurrency();
   const router = useRouter();
   const dispatch = useDispatch();
-  
-  const formatTimeLeft = (endTime) => {
-    const now = new Date();
-    const end = new Date(endTime);
-    const days = differenceInDays(end, now);
-    const hours = differenceInHours(end, now) % 24;
-    return `Time left ${days}d ${hours}h (${format(end, "EEE, hh:mm a")})`;
-  };
 
   const handleAuctionDetail = (item) => {
     dispatch(setAuctionProduct(item));
@@ -43,8 +43,14 @@ export default function AuctionCard({ item, index }) {
       />
       <div className="p-2">
         <p className="poppins_regular text_darkprimary text-[10px] mt-2">
-          {formatTimeLeft(item?.end_date)}
+          <p className="poppins_regular gap-1 text_darkprimary text-[10px] mt-2">
+            <CountdownTimer
+              startDate={item?.start_date}
+              endDate={item?.end_date}
+            />
+          </p>
         </p>
+
         <p className="poppins_mediumtext_darkprimary text-[1.25rem]">
           {item?.name}
         </p>

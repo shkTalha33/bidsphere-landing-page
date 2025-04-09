@@ -19,7 +19,7 @@ import { Heart, Maximize2, Plus, X } from "react-feather";
 import { useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
-
+import CountdownTimer from "../../../components/CountdownTimer/CountdownTimer";
 const AuctionDetailPage = () => {
   const router = useRouter();
   const [item, setItem] = useState([]);
@@ -70,8 +70,6 @@ const AuctionDetailPage = () => {
     }
   }, [item]);
 
-  console.log(item, "item");
-
   const handleRegister = () => {
     router.push(`/auctions/${id}/registration`);
   };
@@ -85,7 +83,7 @@ const AuctionDetailPage = () => {
   };
 
   const isRegister = !item?.applications || item.applications.length === 0;
-
+  const [isExpired, setIsExpired] = useState(false);
   const button = {
     icon: <Plus className="w-4 h-4 md:w-5 md:h-5 text-white" />,
     text: isRegister ? "Register Auction" : "Join Auction",
@@ -93,7 +91,8 @@ const AuctionDetailPage = () => {
     className:
       "h-8 shadow md:h-10 bg_primary text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center",
   };
-
+  
+  
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
       {loading ? (
@@ -106,7 +105,7 @@ const AuctionDetailPage = () => {
           <TopSection
             title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
             description={"Here are your auctions whom you can join."}
-            {...(item?.status === "start" && { button })}
+            {...(item?.status === "start" && !isExpired && { button })}
           />
 
           <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
@@ -203,7 +202,8 @@ const AuctionDetailPage = () => {
                     <div className="poppins_regular text-sm">
                       {moment
                         .utc(item?.start_date)
-                        .format("DD-MMMM-YYYY hh:mm A")}
+                        .local()
+                        .format("DD MMMM, YYYY h:mm A")}
                     </div>
                   </Col>
                   <Col md="6">
@@ -213,7 +213,8 @@ const AuctionDetailPage = () => {
                     <div className="poppins_regular text-sm">
                       {moment
                         .utc(item?.end_date)
-                        .format("DD-MMMM-YYYY hh:mm A")}
+                        .local()
+                        .format("DD MMMM, YYYY h:mm A")}
                     </div>
                   </Col>
                 </Row>
@@ -256,6 +257,14 @@ const AuctionDetailPage = () => {
             </div>
           </Container>
           <AuctionLots loading={loading} items={item} />
+          <div className="opacity-0">
+
+          <CountdownTimer
+            startDate={item?.start_date}
+            endDate={item?.end_date}
+            onExpire={() => setIsExpired(true)}
+          />
+          </div>
         </>
       )}
 

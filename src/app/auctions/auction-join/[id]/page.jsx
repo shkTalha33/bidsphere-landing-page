@@ -7,20 +7,26 @@ import { avataruser, confirmBid, winBid } from "@/components/assets/icons/icon";
 import AuctionConfirmationModal from "@/components/common/auctionConfirmationModal";
 import TopSection from "@/components/common/TopSection";
 import useCurrency from "@/components/hooks/useCurrency";
-import { Avatar } from "antd";
+import { Avatar, Result } from "antd";
 import debounce from "debounce";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Check, ChevronRight, Heart, Maximize2, X } from "react-feather";
+import { Check, ChevronRight, Heart, Maximize2, Plus, X } from "react-feather";
 import { FaRegClock } from "react-icons/fa6";
 import { TbLivePhoto } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
-import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
+import { Col, Container, Modal, ModalBody, ModalHeader, Row } from "reactstrap";
 import { useSocket } from "@/components/socketProvider/socketProvider";
 import AuctionTimer from "@/components/AuctionTimer/AuctionTimer";
 import toast from "react-hot-toast";
+import { GiPodiumWinner } from "react-icons/gi";
+import {
+  CloseCircleOutlined,
+  SmileOutlined,
+  TrophyOutlined,
+} from "@ant-design/icons";
 
 export default function Page() {
   const { get, userData } = ApiFunction();
@@ -51,13 +57,7 @@ export default function Page() {
   };
 
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const button = {
-    icon: <Heart className="w-4 h-4 md:w-5 md:h-5 text-white" />,
-    onClick: () => console.log("Heart clicked!"),
-    className:
-      "w-8 h-8 md:w-10 md:h-10 bg-black rounded-full flex items-center justify-center",
-  };
+  const [winnerLot, setWinnerLot] = useState(null);
 
   const confirmationItem = {
     title: "Confirm Bid",
@@ -116,15 +116,11 @@ export default function Page() {
   useEffect(() => {
     if (socket?.connected) {
       socket.emit("authenticate", token);
-      // Join the auction
       socket.emit("join_auction", id, (response) => {
         if (response?.success) {
-          console.log("response", response);
           const matchedLot = response?.auction?.lots.find(
             (lot) => lot?.item?._id === response?.auction?.current_lot
           );
-
-          console.log("matechedLot", matchedLot);
           // Set matching lot in state
           setCurrentLot(matchedLot || null);
           setRecentBids(response?.lastBids);
@@ -136,6 +132,11 @@ export default function Page() {
         const newBid = data?.bid;
         if (!newBid) return;
         setRecentBids((prevBids) => [newBid]?.concat(prevBids));
+      });
+
+      socket.on("lot_winner_selected", (data) => {
+        setWinnerLot(data);
+        toggle();
       });
 
       // Listen for auction updates
@@ -186,6 +187,16 @@ export default function Page() {
   };
 
   // console.log(currentLot, "iet");
+  const button = {
+    icon: <GiPodiumWinner className="w-5 h-5 mr-2 text-yellow-300" />,
+    text: "Winner Announced",
+    onClick: null, // disabled or no action
+    className:
+      "bg-gradient-to-r flex from-[#660000] via-[#800000] to-[#990000] text-white font-semibold px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
+  };
+
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
 
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
@@ -202,8 +213,13 @@ export default function Page() {
         <TopSection
           title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
           description={"Here are your auctions whom you can join."}
-          // button={button}
+          button={
+            currentLot?.status === "winner" || winnerLot?.bid
+              ? button
+              : undefined
+          }
         />
+
         <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
           <Row className="g-3 h-full">
             <Col md="4" lg="2" className="flex md:flex-column ">
@@ -423,19 +439,43 @@ export default function Page() {
                   <div className="flex items-center justify-start gap-3 mt-3">
                     <input
                       type="number"
-                      placeholder="e.g 45000"
+                      placeholder="Enter your bid"
+                      disabled={
+                        currentLot?.status === "winner" || winnerLot?.bid
+                      }
                       onChange={(e) => setBidAmount(e.target.value)}
                       className="text-center py-2 md:py-3 rounded-2xl poppins_semibold text-[14px] bg-transparent border border-[#21CD9D] text_primary flex-grow"
                     />
+
                     <button
                       className="bg_primary flex items-center justify-center rounded-2xl p-2 md:p-3"
-                      onClick={() => setOpenBiddingConfirmationModal(true)}
+                      onClick={() => {
+                        if (currentLot?.status === "winner" || winnerLot?.bid) {
+                          toast.error(
+                            "You are not allowed to bid on this lot anymore."
+                          );
+                        } else {
+                          setOpenBiddingConfirmationModal(true);
+                        }
+                      }}
                     >
                       <Check size={24} className="text-white" />
                     </button>
+
                     <button
                       className="bg_white flex items-center justify-center rounded-2xl p-2 md:p-3 border border-[#21CD9D]"
-                      onClick={() => setActiveButton("")}
+                      onClick={() => {
+                        if (
+                          currentLot?.status !== "winner" &&
+                          !winnerLot?.bid
+                        ) {
+                          setActiveButton("");
+                        } else {
+                          toast.error(
+                            "You are not allowed to bid on this lot anymore."
+                          );
+                        }
+                      }}
                     >
                       <X size={24} className="text_primary" />
                     </button>
@@ -443,7 +483,15 @@ export default function Page() {
                 ) : (
                   <button
                     className="capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg"
-                    onClick={() => setOpenBiddingConfirmationModal(true)}
+                    onClick={() => {
+                      if (currentLot?.status === "winner" || winnerLot?.bid) {
+                        toast.error(
+                          "You are not allowed to bid on this lot anymore."
+                        );
+                      } else {
+                        setOpenBiddingConfirmationModal(true);
+                      }
+                    }}
                   >
                     Place Bid For {formatPrice(convert(bidAmount || 0, "LBP"))}
                   </button>
@@ -463,31 +511,45 @@ export default function Page() {
       />
 
       {/* Image Preview Modal */}
-      <Modal
-        isOpen={previewModal}
-        toggle={() => setPreviewModal(!previewModal)}
-        size="lg"
-        centered
-        contentClassName="bg-transparent border-0"
-      >
-        <ModalBody className="p-0">
-          <div className="relative">
-            <button
-              className="absolute top-4 right-4 bg-black/70 hover:bg-black rounded-full p-2 z-10 transition-colors duration-300"
-              onClick={() => setPreviewModal(false)}
-            >
-              <X className="text-white" />
-            </button>
-            <div className="w-full h-full flex items-center justify-center">
-              <Image
-                src={selectedImage}
-                width={1200}
-                height={800}
-                className="w-full h-full !object-contain"
-                alt="Preview"
-              />
-            </div>
-          </div>
+
+      <Modal centered backdrop="static" isOpen={modal} toggle={toggle}>
+        <ModalHeader
+          toggle={toggle}
+          className={
+            winnerLot?.bid?.user === userData._id
+              ? "text-success"
+              : "text-danger"
+          }
+        >
+          {winnerLot?.bid?.user === userData._id
+            ? "🎉 Congratulations!"
+            : "❌ Bidding Closed"}
+        </ModalHeader>
+
+        <ModalBody>
+          {winnerLot?.bid?.user === userData._id ? (
+            <Result
+              icon={
+                <TrophyOutlined
+                  style={{ color: "#FFC107", fontSize: "60px" }}
+                />
+              }
+              title="You've won this auction!"
+              subTitle="Congratulations on winning the lot! The auction has ended in your favor. Please proceed to complete the transaction if required."
+              status="success"
+            />
+          ) : (
+            <Result
+              icon={
+                <CloseCircleOutlined
+                  style={{ color: "#ff4d4f", fontSize: "60px" }}
+                />
+              }
+              title="This auction is now closed."
+              subTitle="The winner has already been selected. You can no longer place a bid for this lot."
+              status="error"
+            />
+          )}
         </ModalBody>
       </Modal>
     </main>

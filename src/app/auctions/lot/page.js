@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Container, Row } from "reactstrap";
+import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
 
 export default function Page() {
   const { get } = ApiFunction();
@@ -21,6 +22,7 @@ export default function Page() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const [isExpired, setIsExpired] = useState(false);
   const items = useSelector(
     (state) => state?.auctionProduct?.auctionProductData
   );
@@ -29,7 +31,7 @@ export default function Page() {
 
   const handleRegistration = () => {
     if (items?.applications) {
-      router.push(`/auctions/${id}/detail`);
+      router.push(`/auctions/auction-join/${id}`);
     } else {
       router.push(`/auctions/${id}/registration`);
     }
@@ -59,6 +61,8 @@ export default function Page() {
     }
   }, []);
 
+  console.log(items, "datye");
+
   return (
     <main className="bg_mainsecondary p-2 py-md-4">
       <Container className="bg_white rounded-[9px] mt-20 p-3 p-sm-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
@@ -80,16 +84,18 @@ export default function Page() {
                     <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark capitalize">
                       {items?.name}
                     </h3>
-                    <button
-                      className="rounded-md bg_primary text_white py-2 text-sm md:text-base px-3 px-md-4 text-center"
-                      onClick={handleRegistration}
-                    >
-                      {items?.applications
-                        ? items?.applications?.status === "approved"
-                          ? "Join Auction"
-                          : "Registration Pending"
-                        : "Resgister Auction"}
-                    </button>
+                    {items?.status === "start" && !isExpired && (
+                      <>
+                        <button
+                          className="rounded-md bg_primary text_white py-2 text-sm md:text-base px-3 px-md-4 text-center"
+                          onClick={handleRegistration}
+                        >
+                          {items?.applications
+                            ? "Join Auction"
+                            : "Register Auction"}
+                        </button>
+                      </>
+                    )}
                   </div>
                   <p className="poppins_regular text-xs md:text-sm md:w-[80%] text_primary mb-0 sm:mb-3 capitalize ">
                     you can see auction detail here
@@ -101,6 +107,14 @@ export default function Page() {
         </Row>
       </Container>
       <AuctionLots items={items} loading={loading} />
+    <div className="opacity-0">
+
+      <CountdownTimer
+        startDate={items?.start_date}
+        endDate={items?.end_date}
+        onExpire={() => setIsExpired(true)}
+      />
+    </div>
     </main>
   );
 }
