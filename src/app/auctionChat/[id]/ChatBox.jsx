@@ -15,6 +15,7 @@ const ChatBox = ({ messages, userData, setChatMessage, id }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [oldMsgAvailable, setOldMsgAvailable] = useState(true);
   const [initialScrollDone, setInitialScrollDone] = useState(false);
+  const [isUserAtBottom, setIsUserAtBottom] = useState(true);
 
   const fetchOldMessages = async () => {
     const firstMessageId = messages[0]?._id;
@@ -50,6 +51,11 @@ const ChatBox = ({ messages, userData, setChatMessage, id }) => {
       setInitialScrollDone(true);
     }
   }, [messages.length, initialScrollDone]);
+  useEffect(() => {
+    if (isUserAtBottom && listRef.current) {
+      listRef.current.scrollToItem(messages.length - 1, "end");
+    }
+  }, [messages]);
 
   const Row = useCallback(
     ({ index, style }) => {
@@ -124,11 +130,24 @@ const ChatBox = ({ messages, userData, setChatMessage, id }) => {
         itemCount={messages.length}
         itemSize={100}
         width="100%"
-        onScroll={(e) => {
+        onScroll={({
+          scrollOffset,
+          scrollUpdateWasRequested,
+          scrollDirection,
+        }) => {
           if (!containerRef.current) return;
-          if (e.scrollOffset === 0 && e.scrollDirection === "backward") {
+
+          // When user scrolls to top, fetch old messages
+          if (scrollOffset === 0 && scrollDirection === "backward") {
             fetchOldMessages();
           }
+
+          const bottomThreshold = 50; // how close to bottom we consider "at bottom"
+          const maxScroll =
+            containerRef.current.scrollHeight -
+            containerRef.current.clientHeight;
+
+          setIsUserAtBottom(maxScroll - scrollOffset <= bottomThreshold);
         }}
         ref={listRef}
       >

@@ -82,7 +82,6 @@ export default function Page() {
   const onSubmit = (data) => {
     const message = data?.message.trim();
     if (!message) return;
-
     socket.emit("send-message", {
       auction: id,
       message: message,
@@ -145,12 +144,17 @@ export default function Page() {
           ) : (
             <>
               <Row className="g-3 h-full">
-                <Col md={8} className="d-flex flex-column">
+                <Col sm={12} md={8} lg={6} xl={8} className="d-flex flex-column">
                   <div
                     className="flex-grow-1 overflow-auto border rounded mb-1"
                     style={{ background: "#f9f9f9" }}
                   >
-                    <ChatBox messages={chatMessage} userData={userData} setChatMessage={setChatMessage} id={id} />
+                    <ChatBox
+                      messages={chatMessage}
+                      userData={userData}
+                      setChatMessage={setChatMessage}
+                      id={id}
+                    />
                   </div>
 
                   <form
@@ -186,9 +190,11 @@ export default function Page() {
                   </form>
                 </Col>
 
-                {/* <Col
+                <Col
                   md={4}
-                  className="bg_white p-3 md:p-4 rounded-lg d-flex flex-column max-h-[700px] overflow-y-auto"
+                  lg={6}
+                  xl={4}
+                  className="bg_white max-[767px]:!hidden p-3 md:p-4 rounded-lg d-flex flex-column max-h-[700px] overflow-y-auto"
                 >
                   <h5 className="text-[1.5rem] poppins_medium mb-3">
                     Lot Details
@@ -239,7 +245,7 @@ export default function Page() {
                       </p>
                     </div>
                   </section>
-                </Col> */}
+                </Col>
               </Row>
             </>
           )}
