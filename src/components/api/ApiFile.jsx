@@ -30,6 +30,9 @@ const checkPhoneNumber = "users/check-phone";
 const getAuctionByCategory = "catId";
 
 const getLiveChat = "msg/liveChat";
+
+// order api start
+const GetOrders = "auction/customer/order";
 export {
   login,
   imageUpload,
@@ -56,5 +59,6 @@ export {
   getCategory,
   checkPhoneNumber,
   getAuctionByCategory,
-  getLiveChat
+  getLiveChat,
+  GetOrders,
 };

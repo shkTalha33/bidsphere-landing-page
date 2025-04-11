@@ -1,6 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
@@ -23,37 +26,59 @@ import Breadcrumbs from "../common/Breadcrumbs";
 import ProductTable from "../common/dataTables/productTable";
 import { useRouter } from "next/navigation";
 
+import { FaList, FaTruck, FaShippingFast, FaBox } from "react-icons/fa";
+import moment from "moment";
+import { GetOrders } from "../api/ApiFile";
+import ApiFunction from "../api/apiFuntions";
+
 export default function Orders() {
+  const { get } = ApiFunction();
   const [currentActiveButton, setCurrentActiveButton] = useState("all orders");
-  const [filterStatics, setFilterStatics] = useState("all");
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
-  const [lastId, setLastId] = useState(0);
+  const [lastId, setLastId] = useState(1);
   const [count, setCount] = useState(0);
+  const [search, setSearch] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [data, setData] = useState([]);
   const router = useRouter();
   const onChange = (key) => {
     console.log(key);
   };
 
   const sideButtons = [
-    {
-      title: "all orders",
-      lightImage: allLight,
-      darkImage: allDark,
-    },
-    { title: "in transit ", lightImage: transitLight, darkImage: transitDark },
-    {
-      title: "shipped",
-      lightImage: shippedLight,
-      darkImage: shippedDark,
-    },
-    {
-      title: "delivered",
-      lightImage: deliveredLight,
-      darkImage: deliveredDark,
-    },
+    { title: "all orders", status: "all", icon: <FaList /> },
+    { title: "in transit", status: "transit", icon: <FaTruck /> },
+    { title: "shipped", status: "shipped", icon: <FaShippingFast /> },
+    { title: "delivered", status: "delivered", icon: <FaBox /> },
   ];
+
+  const handleGetOrder = (status) => {
+    setLoading(true);
+    const api =
+      status === "all"
+        ? `${GetOrders}/${lastId}?status=winner`
+        : `${GetOrders}/${lastId}?status=winner&orderstatus=${status}`;
+
+    get(api)
+      .then((res) => {
+        if (res?.success && res?.applications?.length > 0) {
+          setData(res?.applications);
+          setCount(res?.count?.totalPage);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    if (lastId) {
+      handleGetOrder("all");
+    }
+  }, [lastId]);
 
   const columns = [
     {
@@ -67,13 +92,17 @@ export default function Orders() {
       ),
     },
     {
-      name: "Item Name",
+      name: "Auction Name",
       minWidth: "150px",
       maxWidth: "350px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize gap-2">
-          <Image src={car1} className="w-8" />
-          {row?.name || "John"}
+          <img
+            src={row?.auction?.images[0]}
+            alt
+            className="w-[2rem] h-[2rem] rounded-[6px]"
+          />
+          {row?.auction?.name || ""}
         </div>
       ),
     },
@@ -83,40 +112,38 @@ export default function Orders() {
       maxWidth: "250px",
       cell: (row) => (
         <div className="flex items-center justify-center">
-          {row?.category || "Hybrid"}
+          {row?.auction?.category?.name || ""}
         </div>
       ),
     },
+
     {
-      name: "Invoice#",
-      minWidth: "120px",
-      maxWidth: "250px",
-      cell: (row) => (
-        <div className="flex items-center justify-center">
-          {row?.invoice || "Hybrid"}
-        </div>
-      ),
-    },
-    {
-      name: "Date & Time",
-      minWidth: "150px",
-      maxWidth: "350px",
+      name: "Start Date",
+      minWidth: "200px",
+      maxWidth: "400px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize">
-          {row?.date || "12/12/2000"}
+          {moment
+            .utc(row?.auction?.start_date)
+            .local()
+            .format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
     },
     {
-      name: "Payment",
-      minWidth: "120px",
-      maxWidth: "200px",
+      name: "End Date",
+      minWidth: "200px",
+      maxWidth: "400px",
       cell: (row) => (
-        <div className="flex items-center justify-center capitalize cursor-pointer">
-          {row?.payment}
+        <div className="flex items-center justify-center capitalize">
+          {moment
+            .utc(row?.auction?.end_date)
+            .local()
+            .format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
     },
+
     {
       name: "Status",
       minWidth: "120px",
@@ -150,80 +177,11 @@ export default function Orders() {
     },
   ];
 
-  const data = [
-    {
-      name: "Tesla Model 3",
-      category: "Electric",
-      invoice: "INV-2001",
-      date: "2024-02-19 10:30 AM",
-      payment: "45,000",
-      status: "shipped",
-    },
-    {
-      name: "Ford Mustang",
-      category: "Sports",
-      invoice: "INV-2002",
-      date: "2024-02-18 03:45 PM",
-      payment: "55,000",
-      status: "intransit",
-    },
-    {
-      name: "Toyota Prius",
-      category: "Hybrid",
-      invoice: "INV-2003",
-      date: "2024-02-17 12:15 PM",
-      payment: "30,000",
-      status: "delivered",
-    },
-    {
-      name: "BMW X5",
-      category: "SUV",
-      invoice: "INV-2004",
-      date: "2024-02-16 09:00 AM",
-      payment: "60,000",
-      status: "shipped",
-    },
-    {
-      name: "Honda Civic",
-      category: "Sedan",
-      invoice: "INV-2005",
-      date: "2024-02-15 06:20 PM",
-      payment: "25,000",
-      status: "intransit",
-    },
-    {
-      name: "Mercedes-Benz GLE",
-      category: "Luxury",
-      invoice: "INV-2006",
-      date: "2024-02-14 02:10 PM",
-      payment: "75,000",
-      status: "delivered",
-    },
-    {
-      name: "Chevrolet Camaro",
-      category: "Sports",
-      invoice: "INV-2007",
-      date: "2024-02-13 11:30 AM",
-      payment: "50,000",
-      status: "shipped",
-    },
-    {
-      name: "Audi Q7",
-      category: "SUV",
-      invoice: "INV-2008",
-      date: "2024-02-12 08:45 AM",
-      payment: "68,000",
-      status: "intransit",
-    },
-  ];
-
-  const filterButtons = ["all", "pending", "approve", "review"];
-
   return (
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
-          <Col md="12" className="">
+          <Col md="12">
             <Breadcrumbs pageTitle={"Orders"} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
               Orders
@@ -235,47 +193,48 @@ export default function Orders() {
         <Row className="rounded-[9px] g-3">
           <Col md="3">
             <div className="flex flex-col gap-2 gap-md-4 items-center justify-center">
-              {sideButtons.map((button) => {
+              {sideButtons?.map((button) => {
+                const isActive = currentActiveButton === button.title;
                 return (
                   <button
+                    key={button.title}
                     className={`${
-                      currentActiveButton === button?.title
+                      isActive
                         ? "bg_primary text-white"
                         : "bg-[#F5F5F5] text-[#909495]"
                     } rounded-[10px] w-full flex items-center justify-start gap-4 p-2 p-md-4 capitalize`}
-                    onClick={() => setCurrentActiveButton(button?.title)}
+                    onClick={() => {
+                      setCurrentActiveButton(button.title),
+                        handleGetOrder(button.status);
+                      setData([]);
+                      setLastId(1);
+                      setCount(0);
+                    }}
                   >
                     <div className="flex items-center w-full justify-between">
                       <div className="flex gap-3 items-center">
                         <div
                           className={`w-7 h-7 sm:w-9 sm:h-9 ${
-                            currentActiveButton === button?.title
-                              ? "bg-white"
-                              : "bg_primary"
+                            isActive ? "bg-white" : "bg_primary"
                           } flex items-center justify-center p-2 rounded-full`}
                         >
-                          <Image
-                            src={
-                              currentActiveButton === button?.title
-                                ? button?.darkImage
-                                : button?.lightImage
-                            }
-                            className=""
-                          />
+                          {React.cloneElement(button.icon, {
+                            color: isActive ? "#7D0303" : "#ffffff", // adjust color codes
+                            size: 16,
+                          })}
                         </div>
                         <div className="text-sm sm:text-base">
-                          {" "}
-                          {button?.title}
+                          {button.title}
                         </div>
                       </div>
                       <div
                         className={`${
-                          currentActiveButton === button?.title
+                          isActive
                             ? "bg-white text_dark"
                             : "bg_primary text-white"
                         } flex items-center justify-center p-1 rounded-full`}
                       >
-                        {<FaArrowRight size={15} />}
+                        <FaArrowRight size={15} />
                       </div>
                     </div>
                   </button>
@@ -283,23 +242,7 @@ export default function Orders() {
               })}
             </div>
           </Col>
-          <Col md="9" className="">
-            <div className="flex items-center w-full overflow-auto no-scrollbar justify-start gap-4 md:gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px]">
-              {filterButtons.map((button) => {
-                return (
-                  <button
-                    className={`${
-                      filterStatics === button
-                        ? "bg_primary text_white"
-                        : "bg-[#E2F5F0] text_primary"
-                    } rounded-[16px] px-4 px-md-5 py-1 text-sm sm:text-base py-md-2 poppins_regular capitalize`}
-                    onClick={() => setFilterStatics(button)}
-                  >
-                    {button}
-                  </button>
-                );
-              })}
-            </div>
+          <Col md="9">
             <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px] mt-3">
               <ProductTable
                 rowHeading="all orders"
