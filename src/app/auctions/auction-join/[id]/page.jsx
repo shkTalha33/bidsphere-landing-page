@@ -27,6 +27,7 @@ import {
   SmileOutlined,
   TrophyOutlined,
 } from "@ant-design/icons";
+import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
 
 export default function Page() {
   const { get, userData } = ApiFunction();
@@ -81,21 +82,24 @@ export default function Page() {
     ],
   };
 
-  const winBidItem = {
-    title: "win the bid",
-    description: "You have won the bid of 3500$",
-    image: winBid,
-    buttons: [
-      {
-        btnText: "okay",
-        onClick: () => setOpenWinBidModal(false),
-        className:
-          "rounded-[10px] bg_primary text-white poppins_medium text-lg border border-[#21CD9D] w-full py-3",
-      },
-    ],
+  const [priceOptions, setPriceOptions] = useState([]);
+  const getPriceOptions = () => {
+    let basePrice = 0;
+    if (recentBids?.length > 0) {
+      const latestBid = Number(recentBids[0]?.price || 0);
+      basePrice = latestBid + 1000;
+    } else if (currentLot?.minprice) {
+      basePrice = Number(currentLot?.minprice) + 1000;
+    }
+    const options = Array.from({ length: 4 }, (_, i) =>
+      String(basePrice + i * 1000)
+    );
+    return options;
   };
 
-  const priceOptions = ["2000000", "4000000", "6000000", "8000000"];
+  useEffect(() => {
+    setPriceOptions(getPriceOptions());
+  }, [recentBids, currentLot]);
 
   const handleImagePreview = (image) => {
     setSelectedImage(image);
@@ -107,12 +111,6 @@ export default function Page() {
     }
   }, [currentLot]);
 
-  // console.log(participants, "participants");
-  // console.log(recentBids, "recentBids");
-  // console.log(socket, "socket");
-  // console.log(currentLot, "currentLot");
-  // console.log(auctionData, "auctionData");
-
   useEffect(() => {
     if (socket?.connected) {
       socket.emit("authenticate", token);
@@ -121,7 +119,6 @@ export default function Page() {
           const matchedLot = response?.auction?.lots.find(
             (lot) => lot?.item?._id === response?.auction?.current_lot
           );
-          // Set matching lot in state
           setCurrentLot(matchedLot || null);
           setRecentBids(response?.lastBids);
         }
@@ -162,10 +159,6 @@ export default function Page() {
     }
   }, [socket]);
 
-  // current remaining time
-
-  // console.log(currentLot, "currentLot");
-
   const placeBid = () => {
     if (!bidAmount) return;
     const data = {
@@ -186,7 +179,6 @@ export default function Page() {
     });
   };
 
-  // console.log(currentLot, "iet");
   const button = {
     icon: <GiPodiumWinner className="w-5 h-5 mr-2 text-yellow-300" />,
     text: "Winner Announced",
@@ -198,17 +190,12 @@ export default function Page() {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
+  // chat navigate
+  const handlechat = () => {
+    router.push(`/auctionChat/${id}`);
+  };
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
-      {/* {loading ? (
-        <div className="min-h-[100vh] flex items-center justify-center">
-          {" "}
-          <HashLoader color="#21CD9D" size={25} />{" "}
-        </div>
-      ) : (
-      
-      )} */}
-
       <>
         <TopSection
           title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
@@ -317,26 +304,38 @@ export default function Page() {
                     <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                       {formatPrice(convert(currentLot?.minprice || 0, "LBP"))}
                     </p>
-                    <div className="flex items-center justify-start mb-2 md:mb-0 mt-2 gap-2">
-                      <Avatar.Group
-                        size="default"
-                        maxCount={4}
-                        maxStyle={{
-                          color: "#f56a00",
-                          backgroundColor: "#fde3cf",
-                        }}
-                      >
-                        {participants?.map((user, index) => {
-                          return (
-                            <Image
-                              src={user?.profilepicture || avataruser}
-                              alt=""
-                              key={index}
-                              className="rounded-full w-[2rem] h-[2rem]"
-                            />
-                          );
-                        })}
-                      </Avatar.Group>
+                    <div className="flex items-center justify-start mb-2 md:mb-0 mt-2 gap-1">
+                      {/* {participants?.map((user, index) => {
+                        return (
+                          <Image
+                            src={user?.profilepicture || avataruser}
+                            alt=""
+                            key={index}
+                            className="rounded-full w-[2rem] h-[2rem]"
+                          />
+                        );
+                      })} */}
+                      {participants?.slice(0, 3).map((user, index) => {
+                        const initial = user?.fname
+                          .trim()
+                          .charAt(0)
+                          .toUpperCase();
+                        return (
+                          <div
+                            key={index}
+                            className="bg-gray-300 rounded-full w-[2rem] h-[2rem] flex items-center justify-center text-sm font-bold text-black"
+                          >
+                            {initial}
+                          </div>
+                        );
+                      })}
+
+                      {participants?.length > 3 && (
+                        <div className="bg-gray-300 rounded-full w-[2rem] h-[2rem] flex items-center justify-center text-sm font-bold text-black">
+                          +{participants?.length - 3}
+                        </div>
+                      )}
+
                       <p className="poppins_regular text-[15px] text-[#1C201F] mb-0">
                         are live
                       </p>
@@ -351,152 +350,186 @@ export default function Page() {
                       {formatPrice(convert(recentBids?.[0]?.price || 0, "LBP"))}
                     </p>
                     <p className="text-[#1B212C] mb-0 mt-2 text-[15px] poppins_regular capitalize flex items-center justify-start gap-2">
-                      {/* <AuctionTimer
-                        startDate={auctionData?.start_date}
-                        endDate={auctionData?.end_date}
+                      {/* <CountdownTimer
+                        startDate={item?.start_date}
+                        endDate={item?.end_date}
+                        onExpire={() => setIsExpired(true)}
                       /> */}
                     </p>
                   </Col>
                 </Row>
               </div>
 
-              {/* Live Auction Header */}
-              <Row className="px-6 items-center mx-0">
-                <Col xs="8" sm="6" className="px-0">
-                  <div className="flex items-center justify-start gap-2">
-                    <TbLivePhoto size={20} />
-                    <p className="capitalize poppins_semibold text-lg mb-0">
-                      Live Auction
+              {currentLot?.status === "winner" || winnerLot?.bid ? (
+                <>
+                  <div className="flex flex-col items-center justify-center bg-red-50 border border-red-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
+                    <CloseCircleOutlined className="text-red-500 text-5xl mb-4" />
+                    <h2 className="text-xl font-semibold text-red-600 mb-2">
+                      Winner Announced
+                    </h2>
+                    <p className="text-gray-700">
+                      This lot is now closed as a winner has been selected. You
+                      can no longer place a bid for this item.
                     </p>
                   </div>
-                </Col>
-                <Col xs="4" sm="6" className="px-0">
-                  <p className="capitalize poppins_regular text-[14px] text-end mb-0">
-                    {recentBids?.length} Bids made
-                  </p>
-                </Col>
-              </Row>
-
-              {/* Bidders List */}
-
-              <div className="space-y-4 w-[90%] mx-auto mt-3 mb-3 max-h-[15rem] h-auto overflow-auto flex-grow">
-                {recentBids?.map((bid) => (
-                  <div
-                    key={bid?._id}
-                    className="flex items-center justify-between gap-3"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-300 text-dark font-semibold text-lg">
-                        {bid?.name?.charAt(0)?.toUpperCase()}
-                      </div>
-                      <div>
-                        <p className="poppins_regular text-base text_dark mb-0">
-                          {bid?.name}
+                </>
+              ) : (
+                <>
+                  {/* Live Auction Header */}
+                  <Row className="px-6 items-center mx-0">
+                    <Col xs="8" sm="6" className="px-0">
+                      <div className="flex items-center justify-start gap-2">
+                        <TbLivePhoto size={20} />
+                        <p className="capitalize poppins_semibold text-lg mb-0">
+                          Live Auction
                         </p>
                       </div>
+                    </Col>
+                    <Col xs="4" sm="6" className="px-0">
+                      <p className="capitalize poppins_regular text-[14px] text-end mb-0">
+                        {recentBids?.length} Bids made
+                      </p>
+                    </Col>
+                  </Row>
+
+                  {/* Bidders List */}
+
+                  <div className="space-y-4 w-[90%] mx-auto mt-3 mb-3 max-h-[15rem] h-auto overflow-auto flex-grow">
+                    {recentBids?.map((bid) => (
+                      <div
+                        key={bid?._id}
+                        className="flex items-center justify-between gap-3"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-300 text-dark font-semibold text-lg">
+                            {bid?.name?.charAt(0)?.toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="poppins_regular text-base text_dark mb-0">
+                              {bid?.name}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="capitalize poppins_regular text-[14px] text-end mb-0">
+                          {formatPrice(convert(bid?.price || 0, "LBP"))}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bidding Controls */}
+                  <div className="w-[90%] mx-auto mt-auto bg-[#F3F2F2] rounded-[10px] p-4">
+                    {/* Bid Amount Options */}
+                    <div className="flex justify-evenly items-center gap-2 overflow-auto pb-3">
+                      {priceOptions?.map((price) => (
+                        <button
+                          key={price}
+                          className={`py-1 px-3 rounded-md poppins_regular whitespace-nowrap text-sm ${
+                            activeButton === price
+                              ? "border border-black bg_dark text-white"
+                              : "border border-[#BDBDBD] text_dark"
+                          }`}
+                          onClick={() => {
+                            setActiveButton(price);
+                            setBidAmount(price);
+                          }}
+                        >
+                          {formatPrice(convert(price || 0, "LBP"))}
+                        </button>
+                      ))}
+                      <button
+                        className={`py-1 px-3 poppins_regular rounded-md text-sm whitespace-nowrap ${
+                          activeButton === "custom"
+                            ? "border border-black bg_dark text-white"
+                            : "border border-[#BDBDBD] text_dark"
+                        }`}
+                        onClick={() => setActiveButton("custom")}
+                      >
+                        Use Custom Bid
+                      </button>
                     </div>
-                    <p className="capitalize poppins_regular text-[14px] text-end mb-0">
-                      {formatPrice(convert(bid?.price || 0, "LBP"))}
-                    </p>
-                  </div>
-                ))}
-              </div>
 
-              {/* Bidding Controls */}
-              <div className="w-[90%] mx-auto mt-auto bg-[#F3F2F2] rounded-[10px] p-4">
-                {/* Bid Amount Options */}
-                <div className="flex justify-evenly items-center gap-2 overflow-auto pb-3">
-                  {priceOptions?.map((price) => (
-                    <button
-                      key={price}
-                      className={`py-1 px-3 rounded-md poppins_regular whitespace-nowrap text-sm ${
-                        activeButton === price
-                          ? "border border-black bg_dark text-white"
-                          : "border border-[#BDBDBD] text_dark"
-                      }`}
-                      onClick={() => {
-                        setActiveButton(price);
-                        setBidAmount(price);
-                      }}
-                    >
-                      {formatPrice(convert(price || 0, "LBP"))}
-                    </button>
-                  ))}
-                  <button
-                    className={`py-1 px-3 poppins_regular rounded-md text-sm whitespace-nowrap ${
-                      activeButton === "custom"
-                        ? "border border-black bg_dark text-white"
-                        : "border border-[#BDBDBD] text_dark"
-                    }`}
-                    onClick={() => setActiveButton("custom")}
-                  >
-                    Use Custom Bid
-                  </button>
+                    {/* Custom Bid Input or Bid Button */}
+                    {activeButton === "custom" ? (
+                      <div className="flex items-center justify-start gap-3 mt-3">
+                        <input
+                          type="number"
+                          placeholder="Enter your bid"
+                          disabled={
+                            currentLot?.status === "winner" || winnerLot?.bid
+                          }
+                          onChange={(e) => setBidAmount(e.target.value)}
+                          className="text-center py-2 md:py-3 rounded-2xl poppins_semibold text-[14px] bg-transparent border border-[#21CD9D] text_primary flex-grow"
+                        />
+
+                        <button
+                          className="bg_primary flex items-center justify-center rounded-2xl p-2 md:p-3"
+                          onClick={() => {
+                            if (
+                              currentLot?.status === "winner" ||
+                              winnerLot?.bid
+                            ) {
+                              toast.error(
+                                "You are not allowed to bid on this lot anymore."
+                              );
+                            } else {
+                              setOpenBiddingConfirmationModal(true);
+                            }
+                          }}
+                        >
+                          <Check size={24} className="text-white" />
+                        </button>
+
+                        <button
+                          className="bg_white flex items-center justify-center rounded-2xl p-2 md:p-3 border border-[#21CD9D]"
+                          onClick={() => {
+                            if (
+                              currentLot?.status !== "winner" &&
+                              !winnerLot?.bid
+                            ) {
+                              setActiveButton("");
+                            } else {
+                              toast.error(
+                                "You are not allowed to bid on this lot anymore."
+                              );
+                            }
+                          }}
+                        >
+                          <X size={24} className="text_primary" />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        className="capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg"
+                        onClick={() => {
+                          if (
+                            currentLot?.status === "winner" ||
+                            winnerLot?.bid
+                          ) {
+                            toast.error(
+                              "You are not allowed to bid on this lot anymore."
+                            );
+                          } else {
+                            setOpenBiddingConfirmationModal(true);
+                          }
+                        }}
+                      >
+                        Place Bid For{" "}
+                        {formatPrice(convert(bidAmount || 0, "LBP"))}
+                      </button>
+                    )}
+                  </div>
+                </>
+              )}
+
+              <section className="mt-3">
+                <div
+                  onClick={handlechat}
+                  className="bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white font-semibold px-4 py-2 rounded-[10px] cursor-pointer shadow-md hover:scale-105 transition-transform duration-300"
+                >
+                  Live Chat
                 </div>
-
-                {/* Custom Bid Input or Bid Button */}
-                {activeButton === "custom" ? (
-                  <div className="flex items-center justify-start gap-3 mt-3">
-                    <input
-                      type="number"
-                      placeholder="Enter your bid"
-                      disabled={
-                        currentLot?.status === "winner" || winnerLot?.bid
-                      }
-                      onChange={(e) => setBidAmount(e.target.value)}
-                      className="text-center py-2 md:py-3 rounded-2xl poppins_semibold text-[14px] bg-transparent border border-[#21CD9D] text_primary flex-grow"
-                    />
-
-                    <button
-                      className="bg_primary flex items-center justify-center rounded-2xl p-2 md:p-3"
-                      onClick={() => {
-                        if (currentLot?.status === "winner" || winnerLot?.bid) {
-                          toast.error(
-                            "You are not allowed to bid on this lot anymore."
-                          );
-                        } else {
-                          setOpenBiddingConfirmationModal(true);
-                        }
-                      }}
-                    >
-                      <Check size={24} className="text-white" />
-                    </button>
-
-                    <button
-                      className="bg_white flex items-center justify-center rounded-2xl p-2 md:p-3 border border-[#21CD9D]"
-                      onClick={() => {
-                        if (
-                          currentLot?.status !== "winner" &&
-                          !winnerLot?.bid
-                        ) {
-                          setActiveButton("");
-                        } else {
-                          toast.error(
-                            "You are not allowed to bid on this lot anymore."
-                          );
-                        }
-                      }}
-                    >
-                      <X size={24} className="text_primary" />
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    className="capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg"
-                    onClick={() => {
-                      if (currentLot?.status === "winner" || winnerLot?.bid) {
-                        toast.error(
-                          "You are not allowed to bid on this lot anymore."
-                        );
-                      } else {
-                        setOpenBiddingConfirmationModal(true);
-                      }
-                    }}
-                  >
-                    Place Bid For {formatPrice(convert(bidAmount || 0, "LBP"))}
-                  </button>
-                )}
-              </div>
+              </section>
             </Col>
           </Row>
         </Container>
@@ -545,7 +578,7 @@ export default function Page() {
                   style={{ color: "#ff4d4f", fontSize: "60px" }}
                 />
               }
-              title="This auction is now closed."
+              title="The winner for this lot has been selected."
               subTitle="The winner has already been selected. You can no longer place a bid for this lot."
               status="error"
             />

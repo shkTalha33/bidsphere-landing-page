@@ -43,11 +43,15 @@ export const SocketProvider = ({ children }) => {
         newSocket.on("unauthorized", (error) => {
           console.error("Unauthorized socket connection:", error.message);
         });
-        // newSocket.on("disconnect", () => {
-        //   console.log("Socket disconnected. Attempting to reconnect...");
-        //   setSocket(null);
-        //   initializeSocket();
-        // });
+        newSocket.on("disconnect", (reason) => {
+          console.warn("Socket disconnected:", reason);
+          setSocket(null);
+          setTimeout(() => {
+            console.log("Reconnecting socket...");
+            initializeSocket();
+          }, 3000); // 3-second delay before reconnecting
+        });
+
         socketRef.current = newSocket;
       } catch (error) {
         console.error("Error initializing socket:", error);

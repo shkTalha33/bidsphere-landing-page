@@ -29,6 +29,7 @@ const getCategory = "cat/all";
 const checkPhoneNumber = "users/check-phone";
 const getAuctionByCategory = "catId";
 
+const getLiveChat = "msg/liveChat";
 export {
   login,
   imageUpload,
@@ -54,5 +55,6 @@ export {
   getLatestCurrencyRate,
   getCategory,
   checkPhoneNumber,
-  getAuctionByCategory
+  getAuctionByCategory,
+  getLiveChat
 };

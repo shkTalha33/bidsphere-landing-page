@@ -91,8 +91,7 @@ const AuctionDetailPage = () => {
     className:
       "h-8 shadow md:h-10 bg_primary text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center",
   };
-  
-  
+
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
       {loading ? (
@@ -258,12 +257,11 @@ const AuctionDetailPage = () => {
           </Container>
           <AuctionLots loading={loading} items={item} />
           <div className="opacity-0">
-
-          <CountdownTimer
-            startDate={item?.start_date}
-            endDate={item?.end_date}
-            onExpire={() => setIsExpired(true)}
-          />
+            <CountdownTimer
+              startDate={item?.start_date}
+              endDate={item?.end_date}
+              onExpire={() => setIsExpired(true)}
+            />
           </div>
         </>
       )}
