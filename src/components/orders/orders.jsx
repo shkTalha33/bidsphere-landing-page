@@ -125,7 +125,7 @@ export default function Orders() {
         <div className="flex items-center justify-center capitalize">
           {moment
             .utc(row?.auction?.start_date)
-            .local()
+
             .format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
@@ -138,7 +138,7 @@ export default function Orders() {
         <div className="flex items-center justify-center capitalize">
           {moment
             .utc(row?.auction?.end_date)
-            .local()
+
             .format("DD MMMM, YYYY h:mm A")}
         </div>
       ),

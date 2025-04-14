@@ -19,7 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, ModalHeader, Row } from "reactstrap";
 import { useSocket } from "@/components/socketProvider/socketProvider";
-import AuctionTimer from "@/components/AuctionTimer/AuctionTimer";
 import toast from "react-hot-toast";
 import { GiPodiumWinner } from "react-icons/gi";
 import {

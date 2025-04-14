@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
@@ -121,8 +122,6 @@ export default function Page() {
       "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white font-semibold px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
   };
 
-  // console.log(auctionData, "auctionData");
-
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
       <>
@@ -144,11 +143,33 @@ export default function Page() {
           ) : (
             <>
               <Row className="g-3 h-full">
-                <Col sm={12} md={8} lg={6} xl={8} className="d-flex flex-column">
+                <Col
+                  sm={12}
+                  md={8}
+                  lg={6}
+                  xl={8}
+                  className="d-flex flex-column"
+                >
                   <div
-                    className="flex-grow-1 overflow-auto border rounded mb-1"
+                    className="flex-grow-1 overflow-auto border rounded mb-1 relative"
                     style={{ background: "#f9f9f9" }}
                   >
+                    <div className="absolute inset-0 bg_primary w-full h-fit z-40 p-2">
+                      <div className="flex items-center ms-4 gap-2">
+                        <div className=" w-[3rem] h-[3rem]">
+                          <img
+                            className="rounded-[50%] object-cover w-[100%] h-[100%]"
+                            alt=""
+                            src={auctionData?.item?.images[0]}
+                          />
+                        </div>
+                        <div>
+                          <h5 className="text-white text-[1.2rem] poppins_medium">
+                            {auctionData?.item?.name}
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
                     <ChatBox
                       messages={chatMessage}
                       userData={userData}

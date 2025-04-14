@@ -12,11 +12,12 @@ import { RxCross2 } from "react-icons/rx";
 import { Col, Container, Row } from "reactstrap";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { FaList, FaTruck, FaShippingFast, FaBox } from "react-icons/fa";
-import { GetOrders } from "@/components/api/ApiFile";
+import { GetOrders, orderGetbyid } from "@/components/api/ApiFile";
 import moment from "moment";
 import ApiFunction from "@/components/api/apiFuntions";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import ProductTable from "@/components/common/dataTables/productTable";
+import OrderDetails from "./detail/orderDetail";
 const Page = () => {
   const { get } = ApiFunction();
   const [currentActiveButton, setCurrentActiveButton] = useState("all orders");
@@ -27,11 +28,13 @@ const Page = () => {
   const [search, setSearch] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [data, setData] = useState([]);
+  const [orderDetail, setOrderDetail] = useState("");
+  const [detailLoading, setDetailLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const urlParams = new URLSearchParams(searchParams);
   const urlId = urlParams.get("id");
-  
+
   const sideButtons = [
     { title: "all orders", status: "all", icon: <FaList /> },
     { title: "in transit", status: "transit", icon: <FaTruck /> },
@@ -115,7 +118,7 @@ const Page = () => {
         <div className="flex items-center justify-center capitalize">
           {moment
             .utc(row?.auction?.start_date)
-            .local()
+
             .format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
@@ -126,10 +129,7 @@ const Page = () => {
       maxWidth: "400px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize">
-          {moment
-            .utc(row?.auction?.end_date)
-            .local()
-            .format("DD MMMM, YYYY h:mm A")}
+          {moment.utc(row?.auction?.end_date).format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
     },
@@ -168,6 +168,36 @@ const Page = () => {
       ),
     },
   ];
+
+  // get order detail by id
+  const handlegetOrderById = () => {
+    setDetailLoading(true);
+    const api = `${orderGetbyid}/${urlId}`;
+    get(api)
+      .then((res) => {
+        if (res?.success) {
+          setOrderDetail(res?.order);
+        }
+        setDetailLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setDetailLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    if (urlId) {
+      handlegetOrderById();
+    }
+  }, [urlId]);
+
+  // back to order list
+  const backetoOrderList = () => {
+    router.push("/orders");
+    setOrderDetail("");
+  };
+
   return (
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
@@ -200,6 +230,7 @@ const Page = () => {
                       setData([]);
                       setLastId(1);
                       setCount(0);
+                      backetoOrderList();
                     }}
                   >
                     <div className="flex items-center w-full justify-between">
@@ -209,13 +240,13 @@ const Page = () => {
                             isActive ? "bg-white" : "bg_primary"
                           } flex items-center justify-center p-2 rounded-full`}
                         >
-                          {React.cloneElement(button.icon, {
+                          {React.cloneElement(button?.icon, {
                             color: isActive ? "#7D0303" : "#ffffff", // adjust color codes
                             size: 16,
                           })}
                         </div>
                         <div className="text-sm sm:text-base">
-                          {button.title}
+                          {button?.title}
                         </div>
                       </div>
                       <div
@@ -234,21 +265,29 @@ const Page = () => {
             </div>
           </Col>
           <Col md="9">
-            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px] mt-3">
-              <ProductTable
-                rowHeading="all orders"
-                count={count}
-                loading={loading}
-                setCurrentPage={setPage}
-                currentPage={page}
-                columns={columns}
-                data={data}
-                setPageNumber={setPage}
-                type="search"
-                setLastId={setLastId}
-                itemsPerPage={itemsPerPage}
-              />
-            </div>
+            {urlId ? (
+              <>
+                <OrderDetails orderDetail={orderDetail} detailLoading={detailLoading} />
+              </>
+            ) : (
+              <>
+                <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px] mt-3">
+                  <ProductTable
+                    rowHeading="all orders"
+                    count={count}
+                    loading={loading}
+                    setCurrentPage={setPage}
+                    currentPage={page}
+                    columns={columns}
+                    data={data}
+                    setPageNumber={setPage}
+                    type="search"
+                    setLastId={setLastId}
+                    itemsPerPage={itemsPerPage}
+                  />
+                </div>
+              </>
+            )}
           </Col>
         </Row>
       </Container>

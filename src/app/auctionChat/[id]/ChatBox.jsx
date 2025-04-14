@@ -115,7 +115,7 @@ const ChatBox = ({ messages, userData, setChatMessage, id }) => {
     <div
       ref={containerRef}
       id="chat-scroll"
-      className="max-h-[30rem] overflow-y-auto p-4"
+      className="max-h-[30rem] overflow-y-auto p-4 mt-[3rem]"
       style={{ position: "relative" }}
     >
       {/* Loading Spinner at top */}

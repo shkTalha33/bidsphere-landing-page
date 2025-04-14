@@ -1,101 +1,144 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Fragment, Suspense, useEffect, useRef, useState } from "react";
+"use client";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
+
 import { useSelector } from "react-redux";
-import { HashLoader } from "react-spinners";
-import axiosInstance from "../api/axiosInstance";
+import {
+  useActiveChat,
+  useChatList,
+  useChatUser,
+  useResponsiveChat,
+} from "./context";
+
+import Skeleton from "react-loading-skeleton";
+
+import Image from "next/image";
+import { getAllConversation } from "../api/ApiFile";
+import ApiFunction from "../api/apiFuntions";
 import { useSocket } from "../socketProvider/socketProvider";
-import { useActiveChat, useChatList, useChatUser, useResponsiveChat } from "./context";
 import { avataruser } from "../assets/icons/icon";
-import UserLoader from "../common/UserLoader";
+import { Spinner } from "react-bootstrap";
 
-const ChatUsers = ({ name, discrip, img, id, timestamp, type, loading, status, data, conversationId }) => {
+const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
+  const { userData } = ApiFunction();
   const [badge, setBadge] = useState(false);
-  const userData = useSelector((state) => state?.auth?.userData)
-  const { activeChatId, setActiveChatId } = useActiveChat()
-  const { setChatUser } = useChatUser()
-  const { setResponsiveChat } = useResponsiveChat()
-  const { replace } = useRouter();
-  const pathname = usePathname()
-  const socket = useSocket()
-  const searchParams = useSearchParams()
-
-  const handleDeleteParams = () => {
-    const param = new URLSearchParams(searchParams)
-    const nData = param.get('detail-user')
-    if (nData) {
-      param.delete('detail-user')
-      replace(`${pathname}`);
-    }
-  }
+  const { activeChatId, setActiveChatId } = useActiveChat();
+  const { setChatUser } = useChatUser();
+  const { setResponsiveChat } = useResponsiveChat();
 
   const toggleData = async (chatData) => {
-    setChatUser(chatData)
-    setResponsiveChat(true)
-    setActiveChatId(chatData?.otherUser?._id); // Set the active chat ID
-    if (socket) {
-      socket.emit('seen-msg', { conversationId })
-    }
+    setChatUser(chatData);
+    setResponsiveChat(true);
+    setActiveChatId(chatData?.lot?._id); // Set the active chat ID
+    HandleSeenMessage(chatData?.lot?._id);
   };
+
+  // seen message api start
+  const socket = useSocket();
+  const HandleSeenMessage = (userId) => {
+    // const apiSeen = `${seenMessage}/${userId}`;
+    // const newSocket = io(baseURL);
+    // newSocket.on("connect", async () => {
+    //   const token = userData?.token;
+    //   // Authenticate with the server using the provided JWT token
+    //   newSocket.emit("authenticate", token);
+    // });
+    // newSocket.on("authenticated", (userId) => {
+    //   setSocket(newSocket);
+    // });
+    // newSocket.on("seen-msg", (notification) => {
+    //   // dispatch(userChat(notification));
+    // });
+    // newSocket.on("send_message_error", (error) => {
+    //   console.log("error", error);
+    // });
+    // return () => {
+    //   newSocket.disconnect();
+    // };
+  };
+
+  // seen message api ended
+
   const isActive = id === activeChatId;
   useEffect(() => {
     if (isActive) {
-      toggleData(data)
+      toggleData(data);
     }
-  }, [activeChatId, isActive])
+  }, [activeChatId, isActive]);
   useEffect(() => {
-    setBadge(((data?.lastMsg?.sender !== userData?._id) && data?.lastMsg?.seen === false))
+    setBadge(
+      data?.lastMsg?.sender !== userData?._id && data?.lastMsg?.seen === false
+    );
   }, [data]);
 
   return (
-    <>
-      {loading ?
-        <div className="w-full my-4 text-center flex justify-center items-center">
-          <HashLoader size={18} className='text_primary' />
-        </div> :
+    <div>
+      <div
+        className={`_link_  border-0 `}
+        style={{ cursor: "pointer" }}
+        onClick={() => toggleData(data)}
+      >
         <div
-          className={`_link_  border-0 `}
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            toggleData(data)
-            handleDeleteParams()
-          }}
+          className={`d-flex align-items-center chat-list-link border-b-2 border-b-[#E5E9EB] px-3 py-3 w-100 ${
+            isActive ? "active" : ""
+          }`}
         >
-          <div
-            className={`d-flex align-items-center chat-list-link border-b border-b-[#E5E9EB] px-3 py-[14px] w-100 ${isActive ? "active" : ""
-              }`}
-          >
+          <div>
             <div className={`${status ? "status_div00" : ""}`}>
-              <div className="position-relative" style={{ minWidth: '45px' }}>
-                <Image src={img || avataruser} alt="" width={45} height={45} className="chat_profile_img" />
+              <div className="position-relative">
+                <div className="chat_profile_img rounded-[50%]">
+                  {img ? (
+                    <>
+                      <img
+                        src={img}
+                        alt=""
+                        className="w-[100%] h-[100%] rounded-[50%]"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Image
+                        src={avataruser}
+                        alt=""
+                        className="w-[100%] h-[100%] rounded-[50%]"
+                      />
+                    </>
+                  )}
+                </div>
                 <span>
                   <span
-                    className={`noti_badges poppins_regular text-xs ${badge && 'd-block'}`}
+                    className={`noti_badges fs_06 ${badge && "d-block"}`}
                     id="chatbadge"
-                  >
-                  </span>
+                  ></span>
                 </span>
               </div>
             </div>
-            <div className="d-flex justify-content-between align-items-center w-100 pe-1">
-              <div className="ps-3 mt-1">
-                <h4 className="my-0 chat_name00 text-sm line-clamp-1 poppins_regular">{name}</h4>
-                <div className="chat_detail00 text-xs poppins_regular line-clamp-1">{type === 'text' ? discrip : type === 'video' ? 'Video' : 'File'}</div>
-              </div>
-              <div className="time_div00">
-                <h6 className="chat_detail00 text-xs poppins_regular line-clamp-1" style={{ whiteSpace: "nowrap" }}>
-                  <Moment unix fromNow className="poppins_medium">
-                    {timestamp}
-                  </Moment>
-                </h6>
+          </div>
+
+          <div className="d-flex justify-content-between align-items-center w-100 pe-1">
+            <div className="ps-3 mt-1">
+              <h4 className="my-0 medium_font text-[0.9rem] mb-2 line-clamp-1">
+                {name}
+              </h4>
+              <div className="chat_detail00 regular_font text-[1rem] line-clamp-1">
+                {discrip}
               </div>
             </div>
+            <div className="time_div00">
+              <h6
+                className="chat_detail00 regular_font line-clamp-1"
+                style={{ whiteSpace: "nowrap" }}
+              >
+                <Moment fromNow>{timestamp}</Moment>
+              </h6>
+            </div>
           </div>
-        </div>}
-    </>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -103,110 +146,125 @@ const ChatList = () => {
   const { chatListData, setChatListData } = useChatList();
   const chatContainerRef = useRef(null);
   const [count, setCount] = useState(0);
-  const [loading, setloading] = useState(false);
   const [lastId, setLastId] = useState(0);
+  const hasFetchedChatList = useRef(false);
+  const { activeChatId, setActiveChatId } = useActiveChat();
+  const { get, header1, userData } = ApiFunction();
 
-
+  const [listLoading, setListLoading] = useState(false);
+  // get all conversatioin api start
   const handleChatList = async (id) => {
-    setloading(true); // Start loading
-    try {
-      const result = await axiosInstance.get(`msg/conversations`);
-      if (result?.data?.success) {
-        setCount(result.data.count);
-        setChatListData(
-          result?.data?.conversations?.sort((a, b) => {
-            const lastMsgA = a?.lastMsg;
-            const lastMsgB = b?.lastMsg;
-            if (!lastMsgA || !lastMsgB) {
-              return 0;
-            }
-            const createdAtA = new Date(lastMsgA.createdAt);
-            const createdAtB = new Date(lastMsgB.createdAt);
-            return createdAtB - createdAtA;
-          })
-        );
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setloading(false);
-    }
+    setListLoading(true);
+    const getConversation = getAllConversation;
+    await get(getConversation)
+      .then((result) => {
+        if (result?.success) {
+          setListLoading(false);
+          if (result?.conversations?.length > 0) {
+            setChatListData(
+              result?.conversations?.sort((a, b) => {
+                const lastMsgA = a?.lastMsg;
+                const lastMsgB = b?.lastMsg;
+                if (!lastMsgA || !lastMsgB) {
+                  return 0;
+                }
+                const createdAtA = new Date(lastMsgA.createdAt);
+                const createdAtB = new Date(lastMsgB.createdAt);
+                return createdAtB - createdAtA;
+              })
+            );
+          } else {
+            setChatListData([]);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setListLoading(false);
+      })
+      .finally(() => {
+        setListLoading(false);
+      });
   };
+
+  // get all conversatioin api ended
 
   async function handleScroll() {
     const { scrollTop, clientHeight, scrollHeight } = chatContainerRef.current;
     if (lastId <= count) {
       if (Math.ceil(scrollHeight - scrollTop) - 1 < clientHeight) {
         try {
-          setloading(true);
-          const result = await axiosInstance.get(`msg/conversations/${lastId + 10}`);
-          if (result?.data?.success) {
-            setLastId(lastId + 10);
-            const newConversations = result?.data?.conversations.filter(
-              (conversation) => !chatListData.find((chat) => chat._id === conversation._id)
-            );
-            setChatListData((prevChatList) => [
-              ...prevChatList,
-              ...newConversations,
-            ].sort((a, b) => {
-              const lastMsgA = a?.lastMsg;
-              const lastMsgB = b?.lastMsg;
-              if (!lastMsgA || !lastMsgB) {
-                return 0;
-              }
-              const createdAtA = new Date(lastMsgA.createdAt);
-              const createdAtB = new Date(lastMsgB.createdAt);
-              return createdAtB - createdAtA;
-            }));
-          }
+          // const result = await getChatList(lastId + 10);
+          // if (result?.data?.success) {
+          //   setLastId(lastId + 10);
+          //   const newConversations = result?.data?.conversations.filter(conversation => (
+          //     !chatListData.find(chat => chat._id === conversation._id)
+          //   ));
+          //   // Combine filtered new data with previous chatList
+          //   setChatListData(prevChatList => [
+          //     ...prevChatList,
+          //     ...newConversations
+          //   ].sort((a, b) => {
+          //     const lastMsgA = a?.lastMsg;
+          //     const lastMsgB = b?.lastMsg;
+          //     if (!lastMsgA || !lastMsgB) {
+          //       return 0;
+          //     }
+          //     const createdAtA = new Date(lastMsgA.createdAt);
+          //     const createdAtB = new Date(lastMsgB.createdAt);
+          //     return createdAtB - createdAtA; // Sort in ascending order for oldest first
+          //   }));
+          // }
         } catch (err) {
           console.log(err);
-        } finally {
-          setloading(false);
         }
       }
     }
   }
 
   useEffect(() => {
-    handleChatList(0);
-  }, []);
+    if (!hasFetchedChatList.current && chatListData?.length === 0) {
+      handleChatList();
+      hasFetchedChatList.current = true;
+    }
+  }, [chatListData]);
+
+  const skeletonCount = 4;
 
   return (
     <>
-      <Suspense>
-        <div className="chat_height_contol scrolbar" ref={chatContainerRef} onScroll={handleScroll}>
-          {loading && chatListData.length === 0 && (
-            <UserLoader />
-          )}
-          {!loading && chatListData.length === 0 && (
-            <div className="w-full my-5 text-center">
-              <p className="poppins_medium text_primary">No chats found</p>
+      <>
+        {listLoading && (
+          <>
+            {/* {[...Array(skeletonCount)].map((_, index) => ( */}
+            {/* <div key={index} className="chatSkltonmain mt-3"> */}
+            <div className="flex justify-center mt-10">
+              <Spinner />
             </div>
-          )}
+            {/* </div> */}
+            {/* ))} */}
+          </>
+        )}
+        <div
+          className="chat_height_contol scrolbar"
+          ref={chatContainerRef}
+          onScroll={handleScroll}
+        >
           {chatListData?.length > 0 &&
-            chatListData.map((chat) => (
+            chatListData?.map((chat, index) => (
               <Fragment key={chat?._id}>
                 <ChatUsers
-                  id={chat?.otherUser?._id}
-                  img={(chat?.otherUser?.profile_image || chat?.otherUser?.brand?.logo) || avataruser}
-                  loading={loading}
+                  id={chat?.lot?._id}
+                  img={chat?.lot?.images[0] || ""}
                   data={chat}
-                  conversationId={chat?._id}
-                  type={chat?.lastMsg?.type}
-                  name={`${(chat?.otherUser?.influencer?.name || chat?.otherUser?.brand?.name || '')}`}
+                  name={`${chat?.lot?.name}`}
                   discrip={chat?.lastMsg?.message}
-                  timestamp={chat?.lastMsg?.timestamp}
+                  timestamp={chat?.lastMsg?.createdAt}
                 />
               </Fragment>
             ))}
-          {loading && chatListData.length > 0 && (
-            <div className="w-full my-4 text-center">
-              <HashLoader size={18} className='text_primary' animation="border" />
-            </div>
-          )}
         </div>
-      </Suspense>
+      </>
     </>
   );
 };

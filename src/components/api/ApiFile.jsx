@@ -33,6 +33,10 @@ const getLiveChat = "msg/liveChat";
 
 // order api start
 const GetOrders = "auction/customer/order";
+const orderGetbyid = "auction/order/details";
+// chat api start
+const getAllConversation = "auction/conversations";
+const getUserMessage = "auction/messages";
 export {
   login,
   imageUpload,
@@ -61,4 +65,7 @@ export {
   getAuctionByCategory,
   getLiveChat,
   GetOrders,
+  orderGetbyid,
+  getAllConversation,
+  getUserMessage,
 };

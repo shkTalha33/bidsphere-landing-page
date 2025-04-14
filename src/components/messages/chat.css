@@ -1,8 +1,624 @@
+@import url(../../components/style/fonts.css);
+
+/* Gap - General */
+.gap-0 {
+  gap: 0 !important;
+}
+.gap-1 {
+  gap: 0.25rem !important;
+}
+.gap-2 {
+  gap: 0.5rem !important;
+}
+.gap-3 {
+  gap: 1rem !important;
+}
+.gap-4 {
+  gap: 1.5rem !important;
+}
+.gap-5 {
+  gap: 3rem !important;
+}
+/* Border - Width */
+.border {
+  border: 1px solid #dee2e6 !important;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 2.7rem;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-1 {
+  border-width: 1px !important;
+}
+
+.border-2 {
+  border-width: 2px !important;
+}
+
+.border-3 {
+  border-width: 3px !important;
+}
+
+.border-4 {
+  border-width: 4px !important;
+}
+
+.border-5 {
+  border-width: 5px !important;
+}
+
+/* Border - Individual Sides */
+.border-top {
+  border-top: 1px solid #dee2e6 !important;
+}
+
+.border-top-0 {
+  border-top: 0 !important;
+}
+
+.border-end {
+  border-right: 1px solid #dee2e6 !important;
+}
+
+.border-end-0 {
+  border-right: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #dee2e6 !important;
+}
+
+.border-bottom-0 {
+  border-bottom: 0 !important;
+}
+
+.border-start {
+  border-left: 1px solid #dee2e6 !important;
+}
+
+.border-start-0 {
+  border-left: 0 !important;
+}
+
+/* Border - Color */
+.border-primary {
+  border-color: #0d6efd !important;
+}
+
+.border-secondary {
+  border-color: #6c757d !important;
+}
+
+.border-success {
+  border-color: #198754 !important;
+}
+
+.border-danger {
+  border-color: #dc3545 !important;
+}
+
+.border-warning {
+  border-color: #ffc107 !important;
+}
+
+.border-info {
+  border-color: #0dcaf0 !important;
+}
+
+.border-light {
+  border-color: #f8f9fa !important;
+}
+
+.border-dark {
+  border-color: #212529 !important;
+}
+
+.border-white {
+  border-color: #fff !important;
+}
+
+/* Border - Radius */
+.rounded {
+  border-radius: 0.25rem !important;
+}
+
+.rounded-0 {
+  border-radius: 0 !important;
+}
+
+.rounded-1 {
+  border-radius: 0.2rem !important;
+}
+
+.rounded-2 {
+  border-radius: 0.25rem !important;
+}
+
+.rounded-3 {
+  border-radius: 0.55rem !important;
+}
+.rounded-4 {
+  border-radius: 0.1rem !important;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.rounded-pill {
+  border-radius: 50rem !important;
+}
+
+/* Border - Remove Specific Corners */
+.rounded-top {
+  border-top-left-radius: 0.25rem !important;
+  border-top-right-radius: 0.25rem !important;
+}
+
+.rounded-end {
+  border-top-right-radius: 0.25rem !important;
+  border-bottom-right-radius: 0.25rem !important;
+}
+
+.rounded-bottom {
+  border-bottom-right-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
+}
+
+.rounded-start {
+  border-top-left-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
+}
+
+/* Padding - All Sides */
+.p-0 {
+  padding: 0 !important;
+}
+
+.p-1 {
+  padding: 0.25rem !important;
+}
+
+.p-2 {
+  padding: 0.5rem !important;
+}
+
+.p-3 {
+  padding: 1rem !important;
+}
+
+.p-4 {
+  padding: 1.5rem !important;
+}
+
+.p-5 {
+  padding: 3rem !important;
+}
+
+/* Padding - Top */
+.pt-0 {
+  padding-top: 0 !important;
+}
+
+.pt-1 {
+  padding-top: 0.25rem !important;
+}
+
+.pt-2 {
+  padding-top: 0.5rem !important;
+}
+
+.pt-3 {
+  padding-top: 1rem !important;
+}
+
+.pt-4 {
+  padding-top: 1.5rem !important;
+}
+
+.pt-5 {
+  padding-top: 3rem !important;
+}
+
+/* Padding - Bottom */
+.pb-0 {
+  padding-bottom: 0 !important;
+}
+
+.pb-1 {
+  padding-bottom: 0.25rem !important;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem !important;
+}
+
+.pb-3 {
+  padding-bottom: 1rem !important;
+}
+
+.pb-4 {
+  padding-bottom: 1.5rem !important;
+}
+
+.pb-5 {
+  padding-bottom: 3rem !important;
+}
+
+/* Padding - Start (Left in LTR, Right in RTL) */
+.ps-0 {
+  padding-left: 0 !important;
+}
+
+.ps-1 {
+  padding-left: 0.25rem !important;
+}
+
+.ps-2 {
+  padding-left: 0.5rem !important;
+}
+
+.ps-3 {
+  padding-left: 1rem !important;
+}
+
+.ps-4 {
+  padding-left: 1.5rem !important;
+}
+
+.ps-5 {
+  padding-left: 3rem !important;
+}
+
+/* Padding - End (Right in LTR, Left in RTL) */
+.pe-0 {
+  padding-right: 0 !important;
+}
+
+.pe-1 {
+  padding-right: 0.25rem !important;
+}
+
+.pe-2 {
+  padding-right: 0.5rem !important;
+}
+
+.pe-3 {
+  padding-right: 1rem !important;
+}
+
+.pe-4 {
+  padding-right: 1.5rem !important;
+}
+
+.pe-5 {
+  padding-right: 3rem !important;
+}
+
+/* Padding - Horizontal (Left & Right) */
+.px-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.px-1 {
+  padding-left: 0.25rem !important;
+  padding-right: 0.25rem !important;
+}
+
+.px-2 {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+.px-3 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+.px-4 {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+.px-5 {
+  padding-left: 3rem !important;
+  padding-right: 3rem !important;
+}
+
+/* Padding - Vertical (Top & Bottom) */
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.py-1 {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
+
+.py-2 {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.py-3 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.py-4 {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+/* Margin - All Sides */
+.m-0 {
+  margin: 0 !important;
+}
+
+.m-1 {
+  margin: 0.25rem !important;
+}
+
+.m-2 {
+  margin: 0.5rem !important;
+}
+
+.m-3 {
+  margin: 1rem !important;
+}
+
+.m-4 {
+  margin: 1.5rem !important;
+}
+
+.m-5 {
+  margin: 3rem !important;
+}
+
+/* Margin - Top */
+.mt-0 {
+  margin-top: 0 !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+.mt-2 {
+  margin-top: 0.5rem !important;
+}
+
+.mt-3 {
+  margin-top: 1rem !important;
+}
+
+.mt-4 {
+  margin-top: 1.5rem !important;
+}
+
+.mt-5 {
+  margin-top: 3rem !important;
+}
+
+/* Margin - Bottom */
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem !important;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+.mb-5 {
+  margin-bottom: 3rem !important;
+}
+
+/* Margin - Start (Left in LTR, Right in RTL) */
+.ms-0 {
+  margin-left: 0 !important;
+}
+
+.ms-1 {
+  margin-left: 0.25rem !important;
+}
+
+.ms-2 {
+  margin-left: 0.5rem !important;
+}
+
+.ms-3 {
+  margin-left: 1rem !important;
+}
+
+.ms-4 {
+  margin-left: 1.5rem !important;
+}
+
+.ms-5 {
+  margin-left: 3rem !important;
+}
+
+/* Margin - End (Right in LTR, Left in RTL) */
+.me-0 {
+  margin-right: 0 !important;
+}
+
+.me-1 {
+  margin-right: 0.25rem !important;
+}
+
+.me-2 {
+  margin-right: 0.5rem !important;
+}
+
+.me-3 {
+  margin-right: 1rem !important;
+}
+
+.me-4 {
+  margin-right: 1.5rem !important;
+}
+
+.me-5 {
+  margin-right: 3rem !important;
+}
+
+/* Margin - Horizontal (Left & Right) */
+.mx-0 {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.mx-1 {
+  margin-left: 0.25rem !important;
+  margin-right: 0.25rem !important;
+}
+
+.mx-2 {
+  margin-left: 0.5rem !important;
+  margin-right: 0.5rem !important;
+}
+
+.mx-3 {
+  margin-left: 1rem !important;
+  margin-right: 1rem !important;
+}
+
+.mx-4 {
+  margin-left: 1.5rem !important;
+  margin-right: 1.5rem !important;
+}
+
+.mx-5 {
+  margin-left: 3rem !important;
+  margin-right: 3rem !important;
+}
+
+/* Margin - Vertical (Top & Bottom) */
+.my-0 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.my-1 {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.my-2 {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.my-3 {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.my-4 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.my-5 {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
+}
+
+/* Width and height */
+.w-100 {
+  width: 100% !important;
+}
+
+.h-100 {
+  height: 100% !important;
+}
+
+/* Positioning */
+.position-absolute {
+  position: absolute !important;
+}
+
+.position-relative {
+  position: relative !important;
+}
+
+/* Flexbox utilities */
+.d-flex {
+  display: flex !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+/* Background Colors */
+.bg-danger {
+  background-color: #dc3545 !important; /* Bootstrap's danger red */
+}
+
+/* Text Colors */
+.text-white {
+  color: #ffffff !important; /* White text */
+}
+/* Text Alignment - Center */
+.text-center {
+  text-align: center !important;
+}
+/* custome bootstrap */
+
 /* font famil  */
 .chat-messages {
   display: flex;
   flex-direction: column;
-  height: 68vh;
+  height: 65vh;
   overflow-y: auto;
 }
 
@@ -20,24 +636,21 @@
   overflow-y: auto;
 }
 
-
-.chat_grid {
-  height: 40rem !important;
-}
-
-@media (min-width:1400px) {
+@media (min-width: 1400px) {
   .chat-messages {
     height: 29rem !important;
   }
 
+  .chat_grid {
+    height: 38rem !important;
+  }
 
   .chat_height_contol {
     height: 29rem !important;
   }
 }
 
-@media (max-width:768px) {
-
+@media (max-width: 768px) {
   .chat_height_contol {
     height: 74vh !important;
   }
@@ -50,6 +663,7 @@
 }
 
 .chat-message-left {
+  font-family: "light-readex";
   margin-right: auto;
 }
 
@@ -57,7 +671,6 @@
   flex-direction: row-reverse;
   margin-left: auto;
 }
-
 
 .chat_grid {
   display: grid;
@@ -70,15 +683,9 @@
   background-color: #ffffff;
   width: 100%;
   height: 100%;
-  border-radius: 12px;
-  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
-  border: 1.3px solid #e9e9e9;
-}
-
-@media (max-width: 767px) {
-  .chat_screen{
-    border: none !important;
-  }
+  border-radius: 8px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border: 1px solid #f7f7f7;
 }
 
 .chat_search {
@@ -91,13 +698,19 @@
 }
 
 .chat_profile_img {
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50% 50%;
   object-fit: cover;
   object-position: center;
+  border: 1px solid #e6e6e6;
 }
 
+.chatImg00 {
+  height: 48px;
+  width: 48px;
+  object-fit: cover;
+}
 .chat_profile_img2 {
   width: 2rem;
   height: 2rem;
@@ -197,16 +810,18 @@
   background-color: #f2f3f5;
   color: #323232;
   min-width: 6rem;
-  font-family: "plusJakara_regular";
+  font-weight: 500;
+  font-family: "inter_regular";
 }
 
 .chat_card_right {
   max-width: 17rem;
   border-radius: 1rem 1rem 0vh 1rem;
-  background-color: var(--primary);
+  background-color: #005a8c;
   color: white;
   min-width: 6rem;
-  font-family: "plusJakara_regular";
+  font-size: 0.9rem;
+  font-family: "inter_regular";
 }
 
 .chat_screen .search_icon {
@@ -226,7 +841,7 @@
   border-radius: 8px;
 }
 
-.chat_screen .search_icon>img {
+.chat_screen .search_icon > img {
   height: 23.62px;
   width: 23.62px;
 }
@@ -308,24 +923,6 @@
   display: none !important;
 }
 
-.selected_img {
-  bottom: 0;
-  height: auto;
-  /* max-width: 25rem; */
-  max-width:20rem;
-  width: 100%;
-  border-radius: 1rem;
-  /* padding: 1rem; */
-  /* color: white; */
-  /* z-index: 99; */
-}
-
-.selected_img img {
-  object-fit: contain;
-  max-height: 10rem;
-  width: auto;
-}
-
 .noti_badges:empty {
   display: none;
 }
@@ -335,7 +932,7 @@
 }
 
 .chat_height_contol {
-  height: 60vh;
+  height: 65vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -353,7 +950,6 @@
   -webkit-line-clamp: 1;
 }
 
-
 .send_btn {
   background-color: transparent;
   border: none;
@@ -362,6 +958,7 @@
   justify-content: center;
   width: 3rem;
   height: 2.7rem;
+  background-color: #005a8c;
 }
 
 .story_height::-webkit-scrollbar,
@@ -389,7 +986,7 @@
 /* huraira css  add */
 
 .msg_text {
-  font-family: "plusJakara_bold";
+  font-family: "inter_medium";
   font-size: 25px;
   color: #09101d;
 }
@@ -420,7 +1017,7 @@
 
 .logomark_chat h3 {
   font-size: 15px;
-  font-family: "plusJakara_bold";
+  font-family: "inter_medium";
   color: var(--head-color);
   margin-left: 3px;
 }
@@ -439,12 +1036,13 @@
 
 .chat_detail00 {
   color: #908c95 !important;
-  font-family: "plusJakara_regular";
+  font-size: 12px;
 }
 
 .chat_name00 {
-  color: #252C32;
-  font-family: "plusJakara_medium";
+  color: #252c32;
+  font-family: "medium-readex";
+  font-size: 14px;
 }
 
 .status_div00 {
@@ -488,7 +1086,7 @@
 
 .msg_s00 {
   font-size: 18px;
-  font-family: "plusJakara_bold";
+  font-family: "inter_medium";
   color: #000000;
 }
 
@@ -510,13 +1108,13 @@
 
 .userInfo000 {
   color: #000000;
-  font-family: "plusJakara_regular";
+  font-family: "popins-regular";
   font-size: 14px;
 }
 
 .userName00 {
   color: #000000;
-  font-family: "plusJakara_bold";
+  font-family: "inter_medium";
   font-size: 22px;
 }
 
@@ -535,7 +1133,7 @@
 
 .chatName000 {
   color: #09101d;
-  font-family: "plusJakara_bold";
+  font-family: "inter_medium";
   font-size: 22px;
 }
 
@@ -614,7 +1212,6 @@
 }
 
 @media (max-width: 992px) {
-
   .w_lg_80,
   .w_lg_50 {
     width: 100% !important;
@@ -626,18 +1223,18 @@
 }
 
 .d_left_button {
-  margin-right: .6rem;
+  margin-right: 1rem;
   border-radius: 50%;
   width: 2rem;
   height: 2rem;
-  /* color: #fff; */
+  color: #005a8c;
   display: none;
 }
 
-/* .d_left_button:hover {
-  background: #EBF7FF;
+.d_left_button:hover {
+  background: #ebf7ff;
   color: #b9b9b9;
-} */
+}
 
 @media (max-width: 768px) {
   .d_left_button {
@@ -659,5 +1256,21 @@
 .chat-list-link:hover,
 .chat-list-link:focus,
 .chat-list-link.active {
-  background-color: #EBF7FF;
+  background-color: #ebf7ff;
+}
+/* font family classes */
+.bold_font {
+  font-family: "inter_bold";
+}
+.regular_font {
+  font-family: "inter_regular";
+}
+.medium_font {
+  font-family: "inter_medium";
+}
+.semibold_font {
+  font-family: "inter_semibold";
+}
+.light_font {
+  font-family: "inter_light";
 }

@@ -7,9 +7,8 @@ const CountdownTimer = ({ startDate, endDate, onExpire }) => {
 
   useEffect(() => {
     const updateCountdown = () => {
-      const start = moment.utc(startDate).local();
-      const end = moment.utc(endDate).local();
-      const now = moment();
+      const end = moment.utc(endDate); // stay in UTC
+      const now = moment.utc();        // use UTC now too
 
       if (end.isBefore(now)) {
         setTimeLeft(`Ended on ${end.format("DD-MMMM-YYYY h:mm A")}`);
@@ -24,25 +23,12 @@ const CountdownTimer = ({ startDate, endDate, onExpire }) => {
       const leftSeconds = timeLeftDuration.seconds();
 
       let timeString = "";
-      
-      // Add days if greater than 0
-      if (leftDays > 0) {
-        timeString += `${leftDays}d `;
-      }
-      
-      // Add hours if greater than 0
-      if (leftHours > 0) {
-        timeString += `${leftHours}h `;
-      }
-      
-      // Add minutes if greater than 0
-      if (leftMinutes > 0) {
-        timeString += `${leftMinutes}m `;
-      }
 
-      // Always show seconds
+      if (leftDays > 0) timeString += `${leftDays}d `;
+      if (leftHours > 0) timeString += `${leftHours}h `;
+      if (leftMinutes > 0) timeString += `${leftMinutes}m `;
+
       timeString += `${leftSeconds}s`;
-
       timeString += ` (Ends at ${end.format("DD-MMMM-YYYY h:mm A")})`;
 
       setTimeLeft(timeString);

@@ -71,7 +71,11 @@ const AuctionDetailPage = () => {
   }, [item]);
 
   const handleRegister = () => {
-    router.push(`/auctions/${id}/registration`);
+    if (userData) {
+      router.push(`/auctions/${id}/registration`);
+    } else {
+      message.error("Please login to register the auction!");
+    }
   };
 
   const handleJoin = () => {
@@ -201,10 +205,10 @@ const AuctionDetailPage = () => {
                     <div className="poppins_regular text-sm">
                       {moment
                         .utc(item?.start_date)
-                        .local()
-                        .format("DD MMMM, YYYY h:mm A")}
+                        .format("DD MMMM, YYYY h:mm A")}{" "}
                     </div>
                   </Col>
+
                   <Col md="6">
                     <div className="poppins_medium text-base text_primary">
                       Ending Time
@@ -212,8 +216,7 @@ const AuctionDetailPage = () => {
                     <div className="poppins_regular text-sm">
                       {moment
                         .utc(item?.end_date)
-                        .local()
-                        .format("DD MMMM, YYYY h:mm A")}
+                        .format("DD MMMM, YYYY h:mm A")}{" "}
                     </div>
                   </Col>
                 </Row>
