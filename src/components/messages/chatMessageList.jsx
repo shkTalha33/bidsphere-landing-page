@@ -49,8 +49,6 @@ const ChatMessageList = () => {
   const { chatListData, setChatListData } = useChatList();
   const socket = useSocket();
 
-  console.log(chatListData, "ds");
-
   useEffect(() => {
     setLastId(chatMsg[0]?._id);
   }, [chatMsg]);
@@ -58,8 +56,6 @@ const ChatMessageList = () => {
   useEffect(() => {
     if (socket) {
       const handleMessage = (message) => {
-        console.log(message, "message");
-
         // Check if the message belongs to the active chat or the current user
         const isActiveChat =
           activeChatId === message?.sender || userData?._id === message?.sender;

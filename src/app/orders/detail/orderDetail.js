@@ -49,8 +49,6 @@ export default function OrderDetails({ orderDetail, detailLoading }) {
     { title: "Payment Method", value: "8765" },
     { title: "payment date", value: "8765" },
   ];
-
-  console.log(orderDetail, "orderDetail");
   const handleBakcOr = () => {
     router.push("/orders");
   };
