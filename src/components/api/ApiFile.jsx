@@ -37,6 +37,7 @@ const orderGetbyid = "auction/order/details";
 // chat api start
 const getAllConversation = "auction/conversations";
 const getUserMessage = "auction/messages";
+const updateProfile = "users/update-user";
 export {
   login,
   imageUpload,
@@ -68,4 +69,5 @@ export {
   orderGetbyid,
   getAllConversation,
   getUserMessage,
+  updateProfile,
 };

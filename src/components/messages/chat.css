@@ -1,4 +1,5 @@
 @import url(../../components/style/fonts.css);
+@import url(../../components/style/color.css);
 
 /* Gap - General */
 .gap-0 {
@@ -811,17 +812,17 @@
   color: #323232;
   min-width: 6rem;
   font-weight: 500;
-  font-family: "inter_regular";
+  font-family: "popins_regular";
 }
 
 .chat_card_right {
   max-width: 17rem;
   border-radius: 1rem 1rem 0vh 1rem;
-  background-color: #005a8c;
+  background-color: var(--primary);
   color: white;
   min-width: 6rem;
   font-size: 0.9rem;
-  font-family: "inter_regular";
+  font-family: "popins_regular";
 }
 
 .chat_screen .search_icon {
@@ -958,7 +959,7 @@
   justify-content: center;
   width: 3rem;
   height: 2.7rem;
-  background-color: #005a8c;
+  background-color: var(--primary);
 }
 
 .story_height::-webkit-scrollbar,
@@ -986,7 +987,7 @@
 /* huraira css  add */
 
 .msg_text {
-  font-family: "inter_medium";
+  font-family: "popins_medium";
   font-size: 25px;
   color: #09101d;
 }
@@ -1017,7 +1018,7 @@
 
 .logomark_chat h3 {
   font-size: 15px;
-  font-family: "inter_medium";
+  font-family: "popins_medium";
   color: var(--head-color);
   margin-left: 3px;
 }
@@ -1086,7 +1087,7 @@
 
 .msg_s00 {
   font-size: 18px;
-  font-family: "inter_medium";
+  font-family: "popins_medium";
   color: #000000;
 }
 
@@ -1114,7 +1115,7 @@
 
 .userName00 {
   color: #000000;
-  font-family: "inter_medium";
+  font-family: "popins_medium";
   font-size: 22px;
 }
 
@@ -1133,7 +1134,7 @@
 
 .chatName000 {
   color: #09101d;
-  font-family: "inter_medium";
+  font-family: "popins_medium";
   font-size: 22px;
 }
 
@@ -1227,7 +1228,7 @@
   border-radius: 50%;
   width: 2rem;
   height: 2rem;
-  color: #005a8c;
+  color: var(--primary);
   display: none;
 }
 
@@ -1260,17 +1261,17 @@
 }
 /* font family classes */
 .bold_font {
-  font-family: "inter_bold";
+  font-family: "popins_bold";
 }
 .regular_font {
-  font-family: "inter_regular";
+  font-family: "popins_regular";
 }
 .medium_font {
-  font-family: "inter_medium";
+  font-family: "popins_medium";
 }
 .semibold_font {
-  font-family: "inter_semibold";
+  font-family: "popins_semibold";
 }
 .light_font {
-  font-family: "inter_light";
+  font-family: "popins_light";
 }

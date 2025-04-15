@@ -193,6 +193,8 @@ export default function Page() {
   const handlechat = () => {
     router.push(`/auctionChat/${id}`);
   };
+
+  
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
       <>
@@ -548,18 +550,18 @@ export default function Page() {
         <ModalHeader
           toggle={toggle}
           className={
-            winnerLot?.bid?.user === userData._id
+            winnerLot?.bid?.user === userData?._id
               ? "text-success"
               : "text-danger"
           }
         >
-          {winnerLot?.bid?.user === userData._id
+          {winnerLot?.bid?.user === userData?._id
             ? "🎉 Congratulations!"
             : "❌ Bidding Closed"}
         </ModalHeader>
 
         <ModalBody>
-          {winnerLot?.bid?.user === userData._id ? (
+          {winnerLot?.bid?.user === userData?._id ? (
             <Result
               icon={
                 <TrophyOutlined

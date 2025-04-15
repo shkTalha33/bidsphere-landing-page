@@ -14,6 +14,7 @@ const ApiFunction = () => {
   const navigate = useRouter();
   const userData = useSelector((state) => state.auth?.userData);
   const token = useSelector((state) => state.auth?.accessToken);
+  
   // Track active requests to prevent duplicates
   const activeRequestsRef = useRef(new Map());
 
@@ -240,6 +241,7 @@ const ApiFunction = () => {
     userData,
     GoogleApiKey,
     cancelAllRequests,
+    token
   };
 };
 

@@ -167,7 +167,7 @@ export default function OrderDetails({ orderDetail, detailLoading }) {
                 <Row className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
                   <Col md="12">
                     <div className="border-1 border-[#DCE1EF] rounded-[43px] p-2 flex items-center justify-start gap-2 overflow-auto no-scrollbar">
-                      {orderDetailButtons.map((buttonDetail) => {
+                      {orderDetailButtons?.map((buttonDetail) => {
                         return (
                           <button
                             className={`${

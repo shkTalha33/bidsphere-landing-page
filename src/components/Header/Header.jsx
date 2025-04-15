@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Dropdown, message, Space } from "antd";
@@ -113,25 +114,45 @@ export default function Header() {
         <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
           <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
         </div>
-        <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+        <div
+          onClick={handleChatnaoo}
+          className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+        >
           <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
         </div>
-        <Link href={`/favorite`} className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+        <Link
+          href={`/favorite`}
+          className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+        >
           <FaRegHeart className="text-white w-[1.2rem] h-[1.2rem]" />
         </Link>
 
         <Dropdown menu={{ items }}>
           <Space className="">
             <div className="flex cursor-pointer gap-2 items-center w-fit">
-              <div>
-                <Image
-                  src={avataruser}
-                  width={40}
-                  height={40}
-                  style={{ borderRadius: "50%", objectFit: "cover" }}
-                  alt=""
-                />
-              </div>
+              {userData?.profile ? (
+                <>
+                  <div className="w-[3rem] h-[3rem]">
+                    <img
+                      src={userData?.profile}
+                      alt=""
+                      className="w-[100%] h-[100%] rounded-[50%] object-cover"
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <Image
+                      src={avataruser}
+                      width={40}
+                      height={40}
+                      style={{ borderRadius: "50%", objectFit: "cover" }}
+                      alt=""
+                    />
+                  </div>
+                </>
+              )}
               <div className="flex flex-col">
                 <h6
                   className={`${
@@ -249,6 +270,10 @@ export default function Header() {
     },
   ];
 
+  const handleChatnaoo = () => {
+    router.push("/chat");
+  };
+
   return (
     <header
       className={`fixed w-full transition-all duration-300 ease-in-out
@@ -349,25 +374,45 @@ export default function Header() {
                 <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
                   <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
                 </div>
-                <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+                <div
+                  onClick={handleChatnaoo}
+                  className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+                >
                   <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
                 </div>
-                <Link href={'/favorite'} className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
+                <Link
+                  href={"/favorite"}
+                  className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+                >
                   <FaRegHeart className="text-white w-[1.2rem] h-[1.2rem]" />
                 </Link>
               </div>
               <Dropdown menu={{ items }}>
                 <Space className="">
                   <div className="flex cursor-pointer gap-2 items-center w-fit">
-                    <div>
-                      <Image
-                        src={avataruser}
-                        width={40}
-                        height={40}
-                        style={{ borderRadius: "50%", objectFit: "cover" }}
-                        alt=""
-                      />
-                    </div>
+                    {userData?.profile ? (
+                      <>
+                        <div className="w-[3rem] h-[3rem]">
+                          <img
+                            src={userData?.profile}
+                            alt=""
+                            className="w-[100%] h-[100%] rounded-[50%] object-cover"
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div>
+                          <Image
+                            src={avataruser}
+                            width={40}
+                            height={40}
+                            style={{ borderRadius: "50%", objectFit: "cover" }}
+                            alt=""
+                          />
+                        </div>
+                      </>
+                    )}
                     <div className="flex flex-col">
                       <h6
                         className={`${

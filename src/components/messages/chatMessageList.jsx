@@ -23,7 +23,7 @@ import { avataruser } from "../assets/icons/icon";
 import { Spinner } from "react-bootstrap";
 
 const ChatMessageList = () => {
-  const { userData, baseURL, get, post } = ApiFunction();
+  const { userData, baseURL, get, post  } = ApiFunction();
   const router = useRouter();
   const dispatch = useDispatch();
   const [chatMsg, setChatMsg] = useState([]);
@@ -48,7 +48,7 @@ const ChatMessageList = () => {
   const { activeChatId } = useActiveChat();
   const { chatListData, setChatListData } = useChatList();
   const socket = useSocket();
-
+  
   useEffect(() => {
     setLastId(chatMsg[0]?._id);
   }, [chatMsg]);
@@ -91,6 +91,11 @@ const ChatMessageList = () => {
     }
   }, [activeChatId, chatListData]);
 
+  socket.on("receive-message", (data)=>{
+    console.log(data , "data");
+    
+  });
+
   const sendMessage = async (e) => {
     e.preventDefault();
     const input = document.getElementById("chatInput");
@@ -114,7 +119,7 @@ const ChatMessageList = () => {
       .then((res) => {
         if (res?.success) {
           setNewMsg(true);
-          setChatMsg(res?.messages?.reverse());
+          setChatMsg([...res?.messages].reverse());
           setIsLoading3(false);
         }
       })
@@ -150,8 +155,7 @@ const ChatMessageList = () => {
       setNewMsg(false);
       setIsLoading2(true);
       const apiChat = `${getUserMessage}/${usersId}/${lastId}`;
-
-      getData(apiChat, header1)
+      get(apiChat)
         .then((res) => {
           if (res?.success) {
             const data = [...res?.messages?.reverse(), ...chatMsg];
@@ -238,10 +242,7 @@ const ChatMessageList = () => {
 
   return (
     <div className="chat_height position-relative">
-      <div
-        className="d-flex align-items-center bg_dark rounded-4"
-        style={{ borderRadius: "8px" }}
-      >
+      <div className="d-flex align-items-center bg_dark !rounded-t-[10px]">
         <div>
           <button
             className="d_left_button bg-dark"

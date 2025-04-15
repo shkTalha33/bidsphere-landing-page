@@ -1,120 +1,155 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/alt-text */
 "use client";
 
+import ApiFunction from "@/components/api/apiFuntions";
+import { avataruser } from "@/components/assets/icons/icon";
 import TabHeader from "@/components/tabHeader";
 import Image from "next/image";
 /* eslint-disable @next/next/no-img-element */
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Check, Edit2, X } from "react-feather";
-
+import { useForm, Controller } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
+import { uploadFile } from "@/components/api/uploadFile";
+import { Button, Modal, Spinner } from "react-bootstrap";
+import { Input } from "antd";
+import { useDispatch } from "react-redux";
+import Autocomplete from "react-google-autocomplete";
+import { updateProfile } from "@/components/api/ApiFile";
+import { setUserData } from "@/components/redux/loginForm";
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [profileImage, setProfileImage] = useState("/assets/avatar.png");
-  const fileInputRef = useRef(null);
-  const [profileData, setProfileData] = useState({
-    fullName: "Jerome Bell",
-    dateOfBirth: "1995-03-23",
-    phoneNumber: "123456789",
-    email: "Jeromebell@gmail.com",
+  const { userData, GoogleApiKey, put } = ApiFunction();
+  const [show, setShow] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [locationDetails, setLocationDetails] = useState({});
+  // ////
+
+  const schema = yup.object().shape({
+    fname: yup
+      .string()
+      .test("trim-start", "No leading spaces allowed", (value) => {
+        return !value || value === value.trimStart();
+      })
+      .required("First name is required"),
+    lname: yup
+      .string()
+      .test("trim-start", "No leading spaces allowed", (value) => {
+        return !value || value === value.trimStart();
+      })
+      .required("Last name is required"),
+
+    address: yup
+      .string()
+      .test("trim-start", "No leading spaces allowed", (value) => {
+        return !value || value === value.trimStart();
+      })
+      .required("Address is required"),
+
+    phone: yup
+      .string()
+      .matches(
+        /^\+?[0-9\s()-]{5,}$/,
+        "Phone number must contain only digits and can include spaces, parentheses, or dashes"
+      )
+      .required("Phone number is required"),
+
+    profile: yup
+      .string()
+      .url("Profile image must be a valid URL")
+      .required("Profile image is required"),
   });
 
-  const [formValues, setFormValues] = useState({ ...profileData });
-  const [formErrors, setFormErrors] = useState({});
+  const {
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      fname: "",
+      lname: "",
+      address: "",
+      phone: "",
+      profile: "",
+    },
+  });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
+  const getimgUrl = watch("profile");
 
-  const handleImageClick = () => {
-    fileInputRef.current.click();
-  };
+  useEffect(() => {
+    if (userData) {
+      setValue("fname", userData?.fname);
+      setValue("lname", userData?.lname);
+      setValue("address", userData?.address);
+      setValue("phone", userData?.phone);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
+      setValue("profile", userData?.profile);
+      setLocationDetails({
+        lng: userData?.location?.coordinates[0],
+        lat: userData?.location?.coordinates[1],
+      });
     }
-  };
+  }, []);
 
-  const validateForm = () => {
-    const errors = {};
-    if (!formValues.fullName.trim()) {
-      errors.fullName = "Full name is required";
-    }
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!formValues.email.trim()) {
-      errors.email = "Email is required";
-    } else if (!emailRegex.test(formValues.email)) {
-      errors.email = "Please enter a valid email address";
-    }
-    const phoneRegex = /^[0-9]{9,15}$/;
-    if (!formValues.phoneNumber.trim()) {
-      errors.phoneNumber = "Phone number is required";
-    } else if (!phoneRegex.test(formValues.phoneNumber)) {
-      errors.phoneNumber = "Please enter a valid phone number (9-15 digits)";
-    }
-    if (!formValues.dateOfBirth) {
-      errors.dateOfBirth = "Date of birth is required";
-    }
-
-    return errors;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm();
-
-    if (Object.keys(validationErrors).length === 0) {
-      setProfileData(formValues);
-      setIsEditing(false);
-      setShowSuccessMessage(true);
-      setTimeout(() => setShowSuccessMessage(false), 3000);
-    } else {
-      setFormErrors(validationErrors);
-    }
-  };
-
-  const cancelEdit = () => {
-    setFormValues({ ...profileData });
-    setFormErrors({});
-    setIsEditing(false);
-  };
-
-  const formatDate = (dateString) => {
+  // image upload
+  const handleImageChange = async (e, setValue) => {
+    const files = Array.from(e.target.files);
+    setIsUploading(true);
     try {
-      const date = new Date(dateString);
-      const options = { year: "numeric", month: "long", day: "numeric" };
-      return date.toLocaleDateString("en-US", options);
-    } catch (e) {
-      return dateString;
-    }
-  };
-
-  // Calculate age
-  const calculateAge = (dateString) => {
-    try {
-      const birthDate = new Date(dateString);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDifference = today.getMonth() - birthDate.getMonth();
-
-      if (
-        monthDifference < 0 ||
-        (monthDifference === 0 && today.getDate() < birthDate.getDate())
-      ) {
-        age--;
+      if (files.length > 0) {
+        const uploadedImageUrl = await uploadFile(files[0]);
+        setValue("profile", uploadedImageUrl?.data?.image);
+        clearErrors("profile");
       }
-
-      return `(${age} y.o)`;
-    } catch (e) {
-      return "";
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    } finally {
+      setIsUploading(false);
     }
   };
+
+  const onSubmit = (data) => {
+    setLoading(true);
+    const api = updateProfile;
+    const apiData = {
+      fname: data?.fname,
+      lname: data?.lname,
+      location: {
+        type: "Point",
+        coordinates: [locationDetails?.lng, locationDetails?.lat],
+      },
+      address: data?.address,
+      phone: data?.phone,
+      email: data?.email,
+      profile: data?.profile,
+    };
+    put(api, apiData)
+      .then((res) => {
+        if (res?.success) {
+          dispatch(setUserData(res?.user));
+          toast.success("Profile updated successfully!");
+        } else {
+          toast.error("Profile NOT updated!");
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error?.response?.data?.message);
+      });
+  };
+
+  // console.log(userData, "userData");
 
   return (
     <main className="bg-gray-100 pt-20 flex flex-col items-start min-h-screen">
@@ -131,37 +166,209 @@ const ProfilePage = () => {
               <p className="text-gray-600">You can do management here.</p>
             </div>
             <button
-              onClick={() => (isEditing ? cancelEdit() : setIsEditing(true))}
+              onClick={() => setIsEditing((prev) => !prev)}
               className="ml-4 py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-2 flex items-center justify-center"
-              aria-label={isEditing ? "Cancel editing" : "Edit profile"}
+              aria-label={"Edit profile"}
             >
               {isEditing ? "Cancel" : "Edit"}
             </button>
           </div>
           <div className="bg-white p-8 rounded-lg w-full shadow-sm">
-            <div className="flex justify-between items-start mb-8">
-              <div className="flex flex-col md:flex-row items-start w-full">
-                <div className="w-full md:w-1/2">
-                  <h2 className="text-2xl poppins_semibold mb-2">
-                    Profile Photo
-                  </h2>
-                  <p className="text-gray-700 poppins_medium">
-                    This image will be shown publicly as your profile picture.
-                  </p>
-                </div>
-                <div className="w-full md:w-1/2 flex items-center gap-6 mt-6 md:mt-0">
-                  <div className="min-w-24">
-                    <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-300">
-                      <Image
-                        src={profileImage}
-                        width={96}
-                        height={96}
-                        alt="Profile"
-                        className="w-full h-full object-cover"
+            {isEditing ? (
+              <>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="w-full mx-auto"
+                >
+                  {/* Username */}
+                  <div className="flex gap-3 items-center mb-10">
+                    <div className="relative flex shrink-0 overflow-hidden rounded-full h-20 w-20">
+                      {isUploading ? (
+                        <>
+                          <div className="flex items-center justify-center w-100">
+                            <Spinner />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          {getimgUrl ? (
+                            <>
+                              <img
+                                className="aspect-square h-full w-full"
+                                src={getimgUrl}
+                              />
+                            </>
+                          ) : (
+                            <>
+                              <Image
+                                className="aspect-square h-full w-full"
+                                src={avataruser}
+                                alt=""
+                              />
+                            </>
+                          )}
+                        </>
+                      )}
+                    </div>
+                    <div className="px-4  cursor-pointer  border border-input relative py-2">
+                      <input
+                        type="file"
+                        id="profile"
+                        disabled={isUploading}
+                        className="form-control borderCus absolute opacity-0 rounded-md p-2"
+                        onChange={(e) => handleImageChange(e, setValue)}
                       />
+                      Upload Profile
+                      {errors.profile && (
+                        <p className="text-red-500">{errors.profile.message}</p>
+                      )}
                     </div>
                   </div>
-                  <div
+                  <div className="flex flex-col mb-4">
+                    <label htmlFor="fname">First name</label>
+                    <Controller
+                      name="fname"
+                      control={control}
+                      render={({ field }) => (
+                        <Input
+                          id="fname"
+                          placeholder="Enter your First name"
+                          className="border p-2"
+                          {...field}
+                        />
+                      )}
+                    />
+                    {errors.fname && (
+                      <p className="text-red-500 text-[0.7rem]">
+                        {errors.fname.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-col mb-4">
+                    <label htmlFor="lname">Last name</label>
+                    <Controller
+                      name="lname"
+                      control={control}
+                      render={({ field }) => (
+                        <Input
+                          id="lname"
+                          placeholder="Enter your Last name"
+                          className="border p-2"
+                          {...field}
+                        />
+                      )}
+                    />
+                    {errors.lname && (
+                      <p className="text-red-500 text-[0.7rem]">
+                        {errors.lname.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-col mb-4">
+                    <label htmlFor="address">Address</label>
+                    <Controller
+                      name="address"
+                      control={control}
+                      rules={{ required: "Address is required" }}
+                      render={({ field: { onChange, value, ref } }) => (
+                        <Autocomplete
+                          apiKey={GoogleApiKey}
+                          className="form-control"
+                          onPlaceSelected={(place) => {
+                            const formattedAddress =
+                              place?.formatted_address || "";
+                            const lng = place?.geometry?.location.lng();
+                            const lat = place?.geometry?.location.lat();
+                            setLocationDetails({ lng, lat });
+                            onChange(formattedAddress);
+                          }}
+                          options={{ types: ["address"] }}
+                          defaultValue={value}
+                          placeholder="Enter your address"
+                          ref={ref}
+                        />
+                      )}
+                    />
+
+                    {errors.address && (
+                      <p className="text-red-500 text-[0.7rem]">
+                        {errors.address.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Phone */}
+                  <div className="flex flex-col mb-4">
+                    <label htmlFor="phone">Phone</label>
+                    <Controller
+                      name="phone"
+                      control={control}
+                      render={({ field }) => (
+                        <Input
+                          id="phone"
+                          placeholder="Enter your phone number"
+                          className="border p-2"
+                          {...field}
+                        />
+                      )}
+                    />
+                    {errors.phone && (
+                      <p className="text-red-500 text-[0.7rem]">
+                        {errors.phone.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <Button
+                    disabled={loading || isUploading}
+                    className="w-full h-[3.5rem] mt-6 bg_primary border-0"
+                    type="submit"
+                  >
+                    {" "}
+                    {loading ? <>Loading...</> : <>Update Profile</>}
+                  </Button>
+                </form>
+              </>
+            ) : (
+              <>
+                <div className="flex justify-between items-start mb-8">
+                  <div className="flex flex-col md:flex-row items-start w-full">
+                    <div className="w-full md:w-1/2">
+                      <h2 className="text-2xl poppins_semibold mb-2">
+                        Profile Photo
+                      </h2>
+                      <p className="text-gray-700 poppins_medium">
+                        This image will be shown publicly as your profile
+                        picture.
+                      </p>
+                    </div>
+                    <div className="w-full md:w-1/2 flex items-center gap-6 mt-6 md:mt-0">
+                      <div className="min-w-24">
+                        <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-300">
+                          {userData?.profile ? (
+                            <>
+                              <img
+                                src={userData?.profile}
+                                width={96}
+                                height={96}
+                                alt="Profile"
+                                className="w-full h-full object-cover"
+                              />
+                            </>
+                          ) : (
+                            <>
+                              <Image
+                                src={avataruser}
+                                width={96}
+                                height={96}
+                                alt="Profile"
+                                className="w-full h-full object-cover"
+                              />
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      {/* <div
                     onClick={handleImageClick}
                     className="w-full h-32 border-2 border-dashed border-green-300 rounded-lg flex flex-col items-center justify-center bg-green-50 cursor-pointer hover:bg-green-100 transition-colors"
                   >
@@ -199,174 +406,69 @@ const ProfilePage = () => {
                     <p className="text-green-500 font-medium">
                       Click to replace
                     </p>
-                    <p className="text-gray-500 text-sm mt-1">
-                      or drag and drop
-                    </p>
                     <p className="text-gray-400 text-xs mt-1">
                       SVG, PNG, JPG or GIF (max. 400 x 400px)
                     </p>
+                  </div> */}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Success Message */}
-            {/* {showSuccessMessage && (
-                            <div className="mb-6 p-4 bg-green-100 text-green-800 rounded-md flex items-center">
-                                <Check size={18} className="mr-2" />
-                                Profile updated successfully!
-                            </div>
-                        )} */}
-
-            <div className="border-t pt-8 w-full mt-8">
-              <form onSubmit={handleSubmit}>
-                <div className="flex flex-col md:flex-row">
-                  <div className="w-full md:w-1/2 mb-6 md:mb-0">
-                    <h2 className="text-2xl poppins_semibold mb-2">
-                      Personal information
-                    </h2>
-                    <p className="text-gray-700 poppins_medium">
-                      This info will be shown publicly as your personal
-                      information.
-                    </p>
-                  </div>
-                  <div className="w-full md:w-1/2 space-y-6">
-                    <div>
-                      <h3 className="font-medium text-gray-700 poppins_medium">
-                        Full Name
-                      </h3>
-                      {isEditing ? (
-                        <div>
-                          <input
-                            type="text"
-                            name="fullName"
-                            value={formValues.fullName}
-                            onChange={handleInputChange}
-                            className={`w-full p-2 border rounded mt-1 ${
-                              formErrors.fullName
-                                ? "border-red-500"
-                                : "border-gray-300"
-                            }`}
-                          />
-                          {formErrors.fullName && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {formErrors.fullName}
-                            </p>
-                          )}
-                        </div>
-                      ) : (
-                        <p className="text-gray-900 poppins_regular">
-                          {profileData.fullName}
-                        </p>
-                      )}
+                <div className="border-t pt-8 w-full mt-8">
+                  <div className="flex flex-col md:flex-row">
+                    <div className="w-full md:w-1/2 mb-6 md:mb-0">
+                      <h2 className="text-2xl poppins_semibold mb-2">
+                        Personal information
+                      </h2>
+                      <p className="text-gray-700 poppins_medium">
+                        This info will be shown publicly as your personal
+                        information.
+                      </p>
                     </div>
-                    <div>
-                      <h3 className="font-medium text-gray-700 poppins_medium">
-                        Date of Birth
-                      </h3>
-                      {isEditing ? (
-                        <div>
-                          <input
-                            type="date"
-                            name="dateOfBirth"
-                            value={formValues.dateOfBirth}
-                            onChange={handleInputChange}
-                            className={`w-full p-2 border rounded mt-1 ${
-                              formErrors.dateOfBirth
-                                ? "border-red-500"
-                                : "border-gray-300"
-                            }`}
-                          />
-                          {formErrors.dateOfBirth && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {formErrors.dateOfBirth}
-                            </p>
-                          )}
-                        </div>
-                      ) : (
+                    <div className="w-full md:w-1/2 space-y-6">
+                      <div>
+                        <h3 className="font-medium text-gray-700 poppins_medium">
+                          Full Name
+                        </h3>
                         <p className="text-gray-900 poppins_regular">
-                          {formatDate(profileData.dateOfBirth)}{" "}
-                          {calculateAge(profileData.dateOfBirth)}
+                          {`${userData?.fname} ${userData?.lname}`}
                         </p>
-                      )}
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-700 poppins_medium">
-                        Phone Number
-                      </h3>
-                      {isEditing ? (
-                        <div>
-                          <input
-                            type="tel"
-                            name="phoneNumber"
-                            value={formValues.phoneNumber}
-                            onChange={handleInputChange}
-                            className={`w-full p-2 border rounded mt-1 ${
-                              formErrors.phoneNumber
-                                ? "border-red-500"
-                                : "border-gray-300"
-                            }`}
-                          />
-                          {formErrors.phoneNumber && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {formErrors.phoneNumber}
-                            </p>
-                          )}
-                        </div>
-                      ) : (
-                        <p className="text-gray-900 poppins_regular">
-                          {profileData.phoneNumber}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-700 poppins_medium">
-                        Email
-                      </h3>
-                      {isEditing ? (
-                        <div>
-                          <input
-                            type="email"
-                            name="email"
-                            value={formValues.email}
-                            onChange={handleInputChange}
-                            className={`w-full p-2 border rounded mt-1 ${
-                              formErrors.email
-                                ? "border-red-500"
-                                : "border-gray-300"
-                            }`}
-                          />
-                          {formErrors.email && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {formErrors.email}
-                            </p>
-                          )}
-                        </div>
-                      ) : (
-                        <p className="text-gray-900 poppins_regular">
-                          {profileData.email}
-                        </p>
-                      )}
-                    </div>
-
-                    {isEditing && (
-                      <div className="flex justify-end pt-4">
-                        <button
-                          type="submit"
-                          className="bg-emerald-500 text-white px-6 py-2 rounded flex items-center gap-2 hover:bg-emerald-600 transition-colors"
-                        >
-                          <Check size={18} />
-                          Update
-                        </button>
                       </div>
-                    )}
+
+                      <div>
+                        <h3 className="font-medium text-gray-700 poppins_medium">
+                          Address
+                        </h3>
+                        <p className="text-gray-900 poppins_regular">
+                          {userData?.address}
+                        </p>
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-gray-700 poppins_medium">
+                          Phone Number
+                        </h3>
+                        <p className="text-gray-900 poppins_regular">
+                          {userData?.phone}
+                        </p>
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-gray-700 poppins_medium">
+                          Email
+                        </h3>
+                        <p className="text-gray-900 poppins_regular">
+                          {userData?.email}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </form>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>
+
+      <section></section>
     </main>
   );
 };
