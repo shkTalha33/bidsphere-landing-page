@@ -214,6 +214,7 @@ const ProfilePage = () => {
                       <input
                         type="file"
                         id="profile"
+                        accept="image/*"
                         disabled={isUploading}
                         className="form-control borderCus absolute opacity-0 rounded-md p-2"
                         onChange={(e) => handleImageChange(e, setValue)}

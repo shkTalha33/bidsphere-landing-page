@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -13,19 +14,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container } from "reactstrap";
 import ApiFunction from "../api/apiFuntions";
 import { avataruser, Logo1, Logo11 } from "../assets/icons/icon";
-import { setLogout } from "../redux/loginForm";
+import { setLogout, setUserData } from "../redux/loginForm";
 import { worldCurrencies } from "../utils/WorldCurrency";
 import useCurrency from "../hooks/useCurrency";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiChatSmile2Line } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
+import { getUserProfile } from "../api/ApiFile";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const pathname = usePathname();
   const isLogin = useSelector((state) => state?.auth?.isLogin);
-  const { userData } = ApiFunction();
+  const { userData, get } = ApiFunction();
   const router = useRouter();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -274,6 +276,26 @@ export default function Header() {
     router.push("/chat");
   };
 
+  // get user proffile
+
+  const handleUserProfile = () => {
+    const api = getUserProfile;
+    get(api)
+      .then((res) => {
+        if (res?.success) {
+          dispatch(setUserData(res?.user));
+        }
+      })
+      .catch((error) => {
+        console.log(error, "error");
+      });
+  };
+
+  useEffect(() => {
+    if (userData) {
+      handleUserProfile();
+    }
+  }, [pathname]);
   return (
     <header
       className={`fixed w-full transition-all duration-300 ease-in-out

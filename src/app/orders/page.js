@@ -12,12 +12,14 @@ import { RxCross2 } from "react-icons/rx";
 import { Col, Container, Row } from "reactstrap";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { FaList, FaTruck, FaShippingFast, FaBox } from "react-icons/fa";
-import { GetOrders, orderGetbyid } from "@/components/api/ApiFile";
+import { getInvoice, GetOrders, orderGetbyid } from "@/components/api/ApiFile";
 import moment from "moment";
 import ApiFunction from "@/components/api/apiFuntions";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import ProductTable from "@/components/common/dataTables/productTable";
 import OrderDetails from "./detail/orderDetail";
+import { MdPayments } from "react-icons/md";
+
 const Page = () => {
   const { get } = ApiFunction();
   const [currentActiveButton, setCurrentActiveButton] = useState("all orders");
@@ -37,6 +39,7 @@ const Page = () => {
 
   const sideButtons = [
     { title: "all orders", status: "all", icon: <FaList /> },
+    { title: "Payement", status: "payement", icon: <MdPayments /> },
     { title: "in transit", status: "transit", icon: <FaTruck /> },
     { title: "shipped", status: "shipped", icon: <FaShippingFast /> },
     { title: "delivered", status: "delivered", icon: <FaBox /> },
@@ -157,14 +160,18 @@ const Page = () => {
       minWidth: "100px",
       maxWidth: "120px",
       cell: (row) => (
-        <div
-          className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#660000] poppins_medium capitalize cursor-pointer"
-          onClick={() => {
-            handleDetail(row);
-          }}
-        >
-          view details
-        </div>
+       <>
+        {currentActiveButton !== "Payement" && (
+          <div
+            className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#660000] poppins_medium capitalize cursor-pointer"
+            onClick={() => {
+              handleDetail(row);
+            }}
+          >
+            view details
+          </div>
+        )}
+       </>
       ),
     },
   ];
@@ -198,6 +205,27 @@ const Page = () => {
     setOrderDetail("");
   };
 
+  // handle payement
+
+  const handleInvoicePayement = () => {
+    setLoading(true);
+    const api = `${getInvoice}/${lastId}`;
+    get(api)
+      .then((res) => {
+        if (res?.success && res?.transactions?.length > 0) {
+          setData(res?.transactions);
+          setCount(res?.count?.totalPage);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
+
+
+  
   return (
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
@@ -210,7 +238,7 @@ const Page = () => {
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white p-2 p-md-5 rounded-[9px] mt-2 md:mt-4">
+      <Container className="bg_white p-2 p-md-2 rounded-[9px] mt-2 md:mt-4">
         <Row className="rounded-[9px] g-3">
           <Col md="3">
             <div className="flex flex-col gap-2 gap-md-4 items-center justify-center">
@@ -225,26 +253,35 @@ const Page = () => {
                         : "bg-[#F5F5F5] text-[#909495]"
                     } rounded-[10px] w-full flex items-center justify-start gap-4 p-2 p-md-4 capitalize`}
                     onClick={() => {
-                      setCurrentActiveButton(button.title),
-                        handleGetOrder(button.status);
+                      setCurrentActiveButton(button.title);
                       setData([]);
                       setLastId(1);
                       setCount(0);
                       backetoOrderList();
+
+                      // Check if the status is "payement"
+                      if (button?.status === "payement") {
+                        handleInvoicePayement();
+                      } else {
+                        handleGetOrder(button.status);
+                      }
                     }}
                   >
                     <div className="flex items-center w-full justify-between">
                       <div className="flex gap-3 items-center">
-                        <div
-                          className={`w-7 h-7 sm:w-9 sm:h-9 ${
-                            isActive ? "bg-white" : "bg_primary"
-                          } flex items-center justify-center p-2 rounded-full`}
-                        >
-                          {React.cloneElement(button?.icon, {
-                            color: isActive ? "#7D0303" : "#ffffff", // adjust color codes
-                            size: 16,
-                          })}
+                        <div className="w-7 h-7">
+                          <div
+                            className={`w-100 h-100 sm:w-9 sm:h-9 ${
+                              isActive ? "bg-white" : "bg_primary"
+                            } flex items-center justify-center p-2 rounded-full`}
+                          >
+                            {React.cloneElement(button?.icon, {
+                              color: isActive ? "#7D0303" : "#ffffff", // adjust color codes
+                              size: 16,
+                            })}
+                          </div>
                         </div>
+
                         <div className="text-sm sm:text-base">
                           {button?.title}
                         </div>
@@ -267,11 +304,14 @@ const Page = () => {
           <Col md="9">
             {urlId ? (
               <>
-                <OrderDetails orderDetail={orderDetail} detailLoading={detailLoading} />
+                <OrderDetails
+                  orderDetail={orderDetail}
+                  detailLoading={detailLoading}
+                />
               </>
             ) : (
               <>
-                <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px] mt-3">
+                <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px]">
                   <ProductTable
                     rowHeading="all orders"
                     count={count}

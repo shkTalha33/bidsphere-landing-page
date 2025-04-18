@@ -189,7 +189,7 @@ export default function Orders() {
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white p-2 p-md-5 rounded-[9px] mt-2 md:mt-4">
+      <Container className="bg_white p-2 p-md-2 rounded-[9px] mt-2 md:mt-4">
         <Row className="rounded-[9px] g-3">
           <Col md="3">
             <div className="flex flex-col gap-2 gap-md-4 items-center justify-center">
@@ -243,7 +243,7 @@ export default function Orders() {
             </div>
           </Col>
           <Col md="9">
-            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px] mt-3">
+            <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px]">
               <ProductTable
                 rowHeading="all orders"
                 count={count}

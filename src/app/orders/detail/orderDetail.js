@@ -27,6 +27,10 @@ import { Skeleton } from "antd";
 import toast from "react-hot-toast";
 import { encryptData } from "@/components/api/encrypted";
 import ApiFunction from "@/components/api/apiFuntions";
+import moment from "moment";
+import OrderSummary from "./orderSummary";
+import DeliveryInfo from "./deliveryInfo";
+import DeliveryTime from "./deliveryTime";
 
 export default function OrderDetails({ orderDetail, detailLoading }) {
   const [currentActiveButton, setCurrentActiveButton] = useState("all orders");
@@ -42,13 +46,6 @@ export default function OrderDetails({ orderDetail, detailLoading }) {
     "delivery timeline",
   ];
 
-  const orderSummary = [
-    { title: "Lot Number", value: "8765" },
-    { title: "Item Description", value: "8765" },
-    { title: "Winning Bid Amount", value: "8765" },
-    { title: "Payment Method", value: "8765" },
-    { title: "payment date", value: "8765" },
-  ];
   const handleBakcOr = () => {
     router.push("/orders");
   };
@@ -67,6 +64,7 @@ export default function OrderDetails({ orderDetail, detailLoading }) {
     const enData = encodeURIComponent(encryptData(chatUser));
     router.push(`/chat?query=${enData}`);
   };
+
 
   return (
     <>
@@ -159,9 +157,10 @@ export default function OrderDetails({ orderDetail, detailLoading }) {
                   <AlertSection
                     type={"info"}
                     message={"info"}
-                    description={
-                      "Your order is shipped on 24 january 2025. You will receive it soon."
-                    }
+                    description={`Your order is shipped on ${moment(orderDetail?.shippedDate)
+                      .format("DD-MMMM-YYYY")
+                      .toLowerCase()}. You will receive it soon.`}
+                    
                   />
                 </Row>
                 <Row className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
@@ -189,27 +188,20 @@ export default function OrderDetails({ orderDetail, detailLoading }) {
 
                 <Row className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
                   <Col md="12">
-                    <p className="text-[#202020] poppins_semibold text-[12px] mb-2">
-                      Order Summary
-                    </p>
-                    {orderSummary.map((order, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="flex items-center my-2 justify-between bg_lightsecondary px-3 py-2 border-[0.5px] rounded-md border-[#F8F9FA]"
-                        >
-                          <p className="mb-0 poppins_medium text-sm text_dark ">
-                            {order?.title}
-                          </p>
-                          <p className="mb-0 poppins_semibold text-base text_dark">
-                            {order?.value}
-                          </p>
-                        </div>
-                      );
-                    })}
+                    {currentSelectedButton === "order summary" && (
+                      <OrderSummary orderDetail={orderDetail} />
+                    )}
+
+                    {currentSelectedButton === "delivery information" && (
+                      <DeliveryInfo orderDetail={orderDetail} />
+                    )}
+
+                    {currentSelectedButton === "delivery timeline" && (
+                      <DeliveryTime orderDetail={orderDetail} />
+                    )}
                   </Col>
                 </Row>
-                <Row>
+                {/* <Row>
                   <Col md="6" className="text-end ml-auto mt-4 px-0">
                     <button
                       type="submit"
@@ -219,7 +211,7 @@ export default function OrderDetails({ orderDetail, detailLoading }) {
                       Download As PDF
                     </button>
                   </Col>
-                </Row>
+                </Row> */}
               </div>
             </section>
           </>

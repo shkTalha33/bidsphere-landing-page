@@ -38,6 +38,11 @@ const orderGetbyid = "auction/order/details";
 const getAllConversation = "auction/conversations";
 const getUserMessage = "auction/messages";
 const updateProfile = "users/update-user";
+
+const getPrivacy = "users/privacy";
+const getTerms = "users/terms";
+const getUserProfile = "users/me";
+const getInvoice = "auction/customer/invoices";
 export {
   login,
   imageUpload,
@@ -70,4 +75,8 @@ export {
   getAllConversation,
   getUserMessage,
   updateProfile,
+  getPrivacy,
+  getTerms,
+  getUserProfile,
+  getInvoice,
 };
