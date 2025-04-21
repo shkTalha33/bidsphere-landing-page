@@ -19,6 +19,7 @@ import Breadcrumbs from "@/components/common/Breadcrumbs";
 import ProductTable from "@/components/common/dataTables/productTable";
 import OrderDetails from "./detail/orderDetail";
 import { MdPayments } from "react-icons/md";
+import Invoice from "./invoice/invoice";
 
 const Page = () => {
   const { get } = ApiFunction();
@@ -36,10 +37,11 @@ const Page = () => {
   const searchParams = useSearchParams();
   const urlParams = new URLSearchParams(searchParams);
   const urlId = urlParams.get("id");
+  const urlInvoice = urlParams.get("invoice");
 
   const sideButtons = [
     { title: "all orders", status: "all", icon: <FaList /> },
-    { title: "Payement", status: "payement", icon: <MdPayments /> },
+    // { title: "Payement", status: "payement", icon: <MdPayments /> },
     { title: "in transit", status: "transit", icon: <FaTruck /> },
     { title: "shipped", status: "shipped", icon: <FaShippingFast /> },
     { title: "delivered", status: "delivered", icon: <FaBox /> },
@@ -74,6 +76,9 @@ const Page = () => {
 
   const handleDetail = (item) => {
     router.replace(`/orders?id=${item?._id}`);
+  };
+  const handleinvoice = (item) => {
+    router.replace(`/orders?invoice=${item?._id}`);
   };
 
   const columns = [
@@ -136,6 +141,29 @@ const Page = () => {
         </div>
       ),
     },
+    {
+      name: "Invoice",
+      minWidth: "200px",
+      maxWidth: "400px",
+      cell: (row) => (
+        <>
+          {row?.transaction?._id ? (
+            <>
+              <div
+                onClick={() => {
+                  handleinvoice(row);
+                }}
+                className="h-6 shadow md:h-10 bg_primary cursor-pointer text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center"
+              >
+                See Invoice
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+        </>
+      ),
+    },
 
     {
       name: "Status",
@@ -160,8 +188,8 @@ const Page = () => {
       minWidth: "100px",
       maxWidth: "120px",
       cell: (row) => (
-       <>
-        {/* {currentActiveButton !== "Payement" && ( */}
+        <>
+          {/* {currentActiveButton !== "Payement" && ( */}
           <div
             className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#660000] poppins_medium capitalize cursor-pointer"
             onClick={() => {
@@ -170,8 +198,8 @@ const Page = () => {
           >
             view details
           </div>
-        {/* )} */}
-       </>
+          {/* )} */}
+        </>
       ),
     },
   ];
@@ -179,7 +207,7 @@ const Page = () => {
   // get order detail by id
   const handlegetOrderById = () => {
     setDetailLoading(true);
-    const api = `${orderGetbyid}/${urlId}`;
+    const api = `${orderGetbyid}/${urlId || urlInvoice}`;
     get(api)
       .then((res) => {
         if (res?.success) {
@@ -194,10 +222,10 @@ const Page = () => {
   };
 
   useEffect(() => {
-    if (urlId) {
+    if (urlId || urlInvoice) {
       handlegetOrderById();
     }
-  }, [urlId]);
+  }, [urlId, urlInvoice]);
 
   // back to order list
   const backetoOrderList = () => {
@@ -224,8 +252,6 @@ const Page = () => {
       });
   };
 
-
-  
   return (
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
@@ -302,31 +328,32 @@ const Page = () => {
             </div>
           </Col>
           <Col md="9">
-            {urlId ? (
-              <>
-                <OrderDetails
-                  orderDetail={orderDetail}
-                  detailLoading={detailLoading}
-                />
-              </>
+            {urlInvoice ? (
+              <Invoice
+                orderDetail={orderDetail}
+                detailLoading={detailLoading}
+              />
+            ) : urlId ? (
+              <OrderDetails
+                orderDetail={orderDetail}
+                detailLoading={detailLoading}
+              />
             ) : (
-              <>
-                <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px]">
-                  <ProductTable
-                    rowHeading="all orders"
-                    count={count}
-                    loading={loading}
-                    setCurrentPage={setPage}
-                    currentPage={page}
-                    columns={columns}
-                    data={data}
-                    setPageNumber={setPage}
-                    type="search"
-                    setLastId={setLastId}
-                    itemsPerPage={itemsPerPage}
-                  />
-                </div>
-              </>
+              <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px]">
+                <ProductTable
+                  rowHeading="all orders"
+                  count={count}
+                  loading={loading}
+                  setCurrentPage={setPage}
+                  currentPage={page}
+                  columns={columns}
+                  data={data}
+                  setPageNumber={setPage}
+                  type="search"
+                  setLastId={setLastId}
+                  itemsPerPage={itemsPerPage}
+                />
+              </div>
             )}
           </Col>
         </Row>
