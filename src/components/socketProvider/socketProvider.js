@@ -31,17 +31,33 @@ export const SocketProvider = ({ children }) => {
         const newSocket = io(socketURL, {
           reconnectionAttempts: 15,
           transports: ["websocket"],
+          reconnection: true,
+          reconnectionDelay: 1000,
+          reconnectionDelayMax: 5000,
+          randomizationFactor: 0.5,
+          timeout: 20000,
         });
-        newSocket.emit("authenticate", token);
+
+        newSocket.on("connect", () => {
+          console.log("Connected to socket server");
+          // Re-authenticate if needed
+          newSocket.emit("authenticate", token);
+        });
         newSocket.on("authenticated", (id) => {
           setSocket(newSocket);
         });
+
         newSocket.on("connect_error", (error) => {
           console.error("Socket connection error:", error);
         });
 
         newSocket.on("unauthorized", (error) => {
           console.error("Unauthorized socket connection:", error.message);
+        });
+        newSocket.on('reconnect', (attemptNumber) => {
+          console.log('Reconnected after', attemptNumber, 'attempts');
+          // Re-authenticate after reconnection
+          newSocket.emit('authenticate', token);
         });
         newSocket.on("disconnect", (reason) => {
           console.warn("Socket disconnected:", reason);
