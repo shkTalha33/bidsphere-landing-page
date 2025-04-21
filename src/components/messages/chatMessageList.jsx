@@ -23,7 +23,7 @@ import { avataruser } from "../assets/icons/icon";
 import { Spinner } from "react-bootstrap";
 
 const ChatMessageList = () => {
-  const { userData, baseURL, get, post  } = ApiFunction();
+  const { userData, baseURL, get, post } = ApiFunction();
   const router = useRouter();
   const dispatch = useDispatch();
   const [chatMsg, setChatMsg] = useState([]);
@@ -48,7 +48,7 @@ const ChatMessageList = () => {
   const { activeChatId } = useActiveChat();
   const { chatListData, setChatListData } = useChatList();
   const socket = useSocket();
-  
+
   useEffect(() => {
     setLastId(chatMsg[0]?._id);
   }, [chatMsg]);
@@ -56,10 +56,11 @@ const ChatMessageList = () => {
   useEffect(() => {
     if (socket) {
       const handleMessage = (message) => {
-        // Check if the message belongs to the active chat or the current user
-        const isActiveChat =
-          activeChatId === message?.sender || userData?._id === message?.sender;
-        // Update chat messages for the active chat
+        // const isActiveChat =
+        //   activeChatId === message?.sender || userData?._id === message?.sender;
+        
+        const isActiveChat = chatUser?.lot?._id === activeChatId;
+
         if (isActiveChat) {
           setChatMsg((prevChat) => [...prevChat, message]);
         }
@@ -77,7 +78,7 @@ const ChatMessageList = () => {
           return updatedChatList.sort((a, b) => {
             const lastMsgA = a?.lastMsg?.createdAt;
             const lastMsgB = b?.lastMsg?.createdAt;
-            return new Date(lastMsgB) - new Date(lastMsgA); // Sort in descending order (latest first)
+            return new Date(lastMsgB) - new Date(lastMsgA);
           });
         });
       };
@@ -89,12 +90,8 @@ const ChatMessageList = () => {
         socket.off("send-lot-message");
       };
     }
-  }, [activeChatId, chatListData]);
+  }, [activeChatId, socket, userData?._id]);
 
-  socket.on("receive-message", (data)=>{
-    console.log(data , "data");
-    
-  });
 
   const sendMessage = async (e) => {
     e.preventDefault();

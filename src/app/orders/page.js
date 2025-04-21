@@ -161,7 +161,7 @@ const Page = () => {
       maxWidth: "120px",
       cell: (row) => (
        <>
-        {currentActiveButton !== "Payement" && (
+        {/* {currentActiveButton !== "Payement" && ( */}
           <div
             className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#660000] poppins_medium capitalize cursor-pointer"
             onClick={() => {
@@ -170,7 +170,7 @@ const Page = () => {
           >
             view details
           </div>
-        )}
+        {/* )} */}
        </>
       ),
     },
