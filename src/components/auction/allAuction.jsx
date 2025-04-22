@@ -48,6 +48,7 @@ export default function AllAuction() {
   const trendingResults = useGetAuctionsQuery(trendingQueryParams);
   const popularResults = useGetAuctionsQuery(popularQueryParams);
 
+  
   // Select the correct query results based on active tab
   const getActiveTabResults = () => {
     switch (activeTab) {

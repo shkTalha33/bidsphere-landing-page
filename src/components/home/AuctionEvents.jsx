@@ -27,7 +27,7 @@ export default function AuctionEvents() {
       variants={staggerContainer}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.25 }}
+      viewport={{ once: true, amount: 0.10 }}
       className="pb-4 md:pb-[5rem] bg-white overflow-hidden"
     >
       {data?.categories?.length > 0 ? (

@@ -22,6 +22,7 @@ import { useSocket } from "@/components/socketProvider/socketProvider";
 import toast from "react-hot-toast";
 import { GiPodiumWinner } from "react-icons/gi";
 import {
+  CheckCircleOutlined,
   CloseCircleOutlined,
   SmileOutlined,
   TrophyOutlined,
@@ -194,7 +195,6 @@ export default function Page() {
     router.push(`/auctionChat/${id}`);
   };
 
-  
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
       <>
@@ -363,16 +363,31 @@ export default function Page() {
 
               {currentLot?.status === "winner" || winnerLot?.bid ? (
                 <>
-                  <div className="flex flex-col items-center justify-center bg-red-50 border border-red-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
-                    <CloseCircleOutlined className="text-red-500 text-5xl mb-4" />
-                    <h2 className="text-xl font-semibold text-red-600 mb-2">
-                      Winner Announced
-                    </h2>
-                    <p className="text-gray-700">
-                      This lot is now closed as a winner has been selected. You
-                      can no longer place a bid for this item.
-                    </p>
-                  </div>
+                  {userData?._id === currentLot?.winner ? (
+                    <div className="flex flex-col items-center justify-center bg-green-50 border border-green-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
+                      <CheckCircleOutlined className="text-green-500 text-5xl mb-4" />
+                      <h2 className="text-xl font-semibold text-green-600 mb-2">
+                        Congratulations!
+                      </h2>
+                      <p className="text-gray-700">
+                        🎉 You have won this lot!. You can no longer place a bid
+                        for this item.
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex flex-col items-center justify-center bg-red-50 border border-red-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
+                        <CloseCircleOutlined className="text-red-500 text-5xl mb-4" />
+                        <h2 className="text-xl font-semibold text-red-600 mb-2">
+                          Winner Announced
+                        </h2>
+                        <p className="text-gray-700">
+                          This lot is now closed as a winner has been selected.
+                          You can no longer place a bid for this item.
+                        </p>
+                      </div>
+                    </>
+                  )}
                 </>
               ) : (
                 <>

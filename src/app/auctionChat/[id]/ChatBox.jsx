@@ -115,7 +115,7 @@ const ChatBox = ({ messages, userData, setChatMessage, id }) => {
     <div
       ref={containerRef}
       id="chat-scroll"
-      className="max-h-[30rem] overflow-y-auto p-4 mt-[3rem]"
+      className="max-h-[30rem] h-auto overflow-y-auto p-4 mt-[3rem]"
       style={{ position: "relative" }}
     >
       {/* Loading Spinner at top */}
@@ -130,6 +130,7 @@ const ChatBox = ({ messages, userData, setChatMessage, id }) => {
         itemCount={messages.length}
         itemSize={100}
         width="100%"
+        style={{ maxHeight: "480px", height: "auto" }}
         onScroll={({
           scrollOffset,
           scrollUpdateWasRequested,
