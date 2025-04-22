@@ -148,9 +148,6 @@ export default function Page() {
     }
   }, [currentLot]);
 
-  // console.log(participants, "participants");
-  // console.log(recentBids, "recentBids");
-  // console.log(socket, "socket");
 
   useEffect(() => {
     if (socket?.connected) {
@@ -207,8 +204,6 @@ export default function Page() {
       }
     );
   };
-
-  // console.log(currentLot, "iet");
 
   return (
     <main className="bg_mainsecondary p-2 md:py-4">

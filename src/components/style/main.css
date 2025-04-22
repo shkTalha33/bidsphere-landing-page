@@ -291,7 +291,7 @@
 
 .pagination li.page-item.active {
   border: transparent;
-  background: #f8f8f8 !important;
+  background: #dcdcdc !important;
   color: #111827 !important;
 }
 

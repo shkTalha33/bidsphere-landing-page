@@ -1,13 +1,152 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
+import { avataruser } from "@/components/assets/icons/icon";
 import AlertSection from "@/components/common/alertSection";
 import useCurrency from "@/components/hooks/useCurrency";
 import { Skeleton } from "antd";
 import moment from "moment";
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
-
-const Invoice = ({ orderDetail, detailLoading }) => {
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { Button, Col, Container, Modal, Row, Spinner } from "react-bootstrap";
+import { BsCash } from "react-icons/bs";
+import { TbArrowBackUp, TbMessage } from "react-icons/tb";
+import Select from "react-select";
+import { useForm, Controller } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Input } from "antd";
+import { uploadFile } from "@/components/api/uploadFile";
+import { X } from "react-feather";
+import ApiFunction from "@/components/api/apiFuntions";
+import { invoicePayment } from "@/components/api/ApiFile";
+import toast from "react-hot-toast";
+const Invoice = ({
+  orderDetail,
+  detailLoading,
+  setData,
+  setOrderDetail,
+  urlInvoice,
+}) => {
   const { formatPrice, convert } = useCurrency();
+  const router = useRouter();
+  const [isUploading, setIsUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { put } = ApiFunction();
+  // payment proof modal
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleBakcOr = () => {
+    router.push("/orders");
+  };
+  // payment proof modal
+  const paymentOptions = [
+    { value: "Credit Card", label: "Credit Card" },
+    { value: "Debit Card", label: "Debit Card" },
+    { value: "Stripe", label: "Stripe" },
+    { value: "Other", label: "Other" },
+  ];
+
+  const schema = yup.object().shape({
+    proofImg: yup
+      .string()
+      .url("Proof image must be a valid URL")
+      .required("Proof image is required"),
+    paymentMethod: yup.string().required("Payment method is required"),
+    otherMethod: yup.string().when("paymentMethod", {
+      is: (val) => val === "Other",
+      then: (schema) => schema.required("Please specify other method"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  });
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      proofImg: "",
+      paymentMethod: "",
+      otherMethod: "",
+    },
+  });
+  const handleClose = () => {
+    reset();
+    setShow(false);
+  };
+  const selectedPayment = watch("paymentMethod");
+
+  // proof image upload
+  const getimgUrl = watch("proofImg");
+  const handleImageChange = async (e, setValue) => {
+    const files = Array.from(e.target.files);
+    setIsUploading(true);
+    try {
+      if (files.length > 0) {
+        const uploadedImageUrl = await uploadFile(files[0]);
+        setValue("proofImg", uploadedImageUrl?.data?.image);
+        clearErrors("proofImg");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  // proof image remove
+  const handleimgeRemove = () => {
+    setValue("proofImg", "");
+    const input = document.getElementById("proofImg");
+    if (input) {
+      input.value = "";
+    }
+  };
+
+  const onSubmit = (data) => {
+    setLoading(true);
+    const api = `${invoicePayment}/${orderDetail?.transaction?._id}`;
+    const apiData = {
+      paymentImage: data?.proofImg,
+      paymentMethodType: data?.otherMethod
+        ? data?.otherMethod
+        : data?.paymentMethod,
+    };
+    put(api, apiData)
+      .then((res) => {
+        if (res?.success) {
+          setOrderDetail((prev) => ({
+            ...prev,
+            transaction: res?.transaction,
+          }));
+          // update the invoice in the table component
+
+          setData((prevData) =>
+            prevData.map((item) =>
+              item?._id === urlInvoice
+                ? { ...item, transaction: res?.transaction }
+                : item
+            )
+          );
+          handleClose();
+          toast.success("Payment uploaded successfully!");
+        } else {
+          toast.error("Payment NOT uploaded!");
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error?.response?.data?.message);
+      });
+  };
+
   return (
     <Container className="bg_white rounded-[9px] p-4">
       {detailLoading ? (
@@ -21,7 +160,7 @@ const Invoice = ({ orderDetail, detailLoading }) => {
 
             {/* Auction Info */}
             <Row className="bg_white rounded-[7px] border border-[#F8F9FA] shadow-sm items-center p-3 mb-4">
-              <Col xs="10">
+              <Col xs="8">
                 <div className="flex items-start gap-4">
                   <div>
                     <div className="h-[4rem] w-[4rem]">
@@ -43,6 +182,25 @@ const Invoice = ({ orderDetail, detailLoading }) => {
                       }}
                     />
                   </div>
+                </div>
+              </Col>
+              <Col xs="4">
+                <div className="flex items-center gap-2">
+                  <div
+                    onClick={handleBakcOr}
+                    className="bg_lightsecondary flex items-center justify-center w-9 h-9 rounded-full ml-auto cursor-pointer"
+                  >
+                    <TbArrowBackUp color="#660000" size={24} />
+                  </div>
+                  {orderDetail?.transaction?.status === "pending" && (
+                    <div
+                      onClick={handleShow}
+                      className="text-[1rem] py-[5px] px-[10px] bg-[#660000] text-white rounded-[8px] poppins_regular whitespace-nowrap flex items-center gap-2 cursor-pointer"
+                    >
+                      <BsCash />
+                      Make a payment
+                    </div>
+                  )}
                 </div>
               </Col>
             </Row>
@@ -143,6 +301,128 @@ const Invoice = ({ orderDetail, detailLoading }) => {
           </section>
         </>
       )}
+
+      {/* payment modal */}
+
+      <Modal show={show} backdrop="static" centered onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title className="poppins_regular text-[1rem]">
+            Make a Payement
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto">
+            {/* Username */}
+            <div className="flex flex-col gap-2 mb-4">
+              <div className="px-4 text-center w-[100%] cursor-pointer border border-input relative py-2">
+                <input
+                  type="file"
+                  id="proofImg"
+                  accept="image/*"
+                  disabled={isUploading}
+                  className="form-control borderCus absolute opacity-0 rounded-md p-2"
+                  onChange={(e) => handleImageChange(e, setValue)}
+                />
+                Upload Proof Image
+              </div>
+              <div className="relative flex shrink-0 overflow-hidden">
+                {isUploading ? (
+                  <>
+                    <div className="flex items-center justify-center w-100">
+                      <Spinner />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {getimgUrl && (
+                      <>
+                        <div className="h-[4rem] w-[4rem]">
+                          <img
+                            className="h-full w-full rounded-[10px] object-cover"
+                            src={getimgUrl}
+                          />
+                        </div>
+                        <div
+                          onClick={handleimgeRemove}
+                          className="absolute inset-0 cursor-pointer bg-black/50 w-fit h-fit rounded-[50%]"
+                        >
+                          <X className="text-white " size={18} />
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+              {errors.proofImg && (
+                <p className="text-red-500">{errors.proofImg.message}</p>
+              )}
+            </div>
+            {/* Select payment method */}
+            <div className="flex flex-col gap-2 mb-4">
+              <label htmlFor="paymentMethod  poppins_regular">
+                Select Payment Method
+              </label>
+              <Controller
+                name="paymentMethod"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    options={paymentOptions}
+                    placeholder="Select Method"
+                    onChange={(selectedOption) =>
+                      field.onChange(selectedOption?.value)
+                    } // just send value to form
+                    value={paymentOptions.find(
+                      (opt) => opt.value === field.value
+                    )} // controlled value
+                  />
+                )}
+              />
+              {errors.paymentMethod && (
+                <p className="text-red-500 text-[0.7rem]">
+                  {errors.paymentMethod.message}
+                </p>
+              )}
+            </div>
+
+            {/* Show custom input if "Other" is selected */}
+            {selectedPayment === "Other" && (
+              <div className="flex flex-col gap-2 mb-4">
+                <label htmlFor="otherMethod poppins_regular">
+                  Enter Other Method
+                </label>
+                <Controller
+                  name="otherMethod"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      id="otherMethod"
+                      placeholder="Specify other method"
+                      className="border p-2"
+                      {...field}
+                    />
+                  )}
+                />
+                {errors.otherMethod && (
+                  <p className="text-red-500 text-[0.7rem]">
+                    {errors.otherMethod.message}
+                  </p>
+                )}
+              </div>
+            )}
+
+            <Button
+              disabled={loading || isUploading}
+              className="w-full h-[3.5rem] mt-6 bg_primary border-0"
+              type="submit"
+            >
+              {" "}
+              {loading ? <>Loading...</> : <>Upload</>}
+            </Button>
+          </form>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };

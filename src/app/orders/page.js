@@ -23,7 +23,7 @@ import Invoice from "./invoice/invoice";
 
 const Page = () => {
   const { get } = ApiFunction();
-  const [currentActiveButton, setCurrentActiveButton] = useState("all orders");
+  const [currentActiveButton, setCurrentActiveButton] = useState("all");
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [lastId, setLastId] = useState(1);
@@ -70,7 +70,7 @@ const Page = () => {
 
   useEffect(() => {
     if (lastId) {
-      handleGetOrder("all");
+      handleGetOrder(currentActiveButton);
     }
   }, [lastId]);
 
@@ -82,16 +82,6 @@ const Page = () => {
   };
 
   const columns = [
-    {
-      name: "#",
-      minWidth: "20px",
-      maxWidth: "60px",
-      cell: (_, index) => (
-        <span className="text-center flex items-center justify-center">
-          {index + 1 || "1"}
-        </span>
-      ),
-    },
     {
       name: "Auction Name",
       minWidth: "150px",
@@ -143,8 +133,8 @@ const Page = () => {
     },
     {
       name: "Invoice",
-      minWidth: "200px",
-      maxWidth: "400px",
+      minWidth: "140px",
+      maxWidth: "300px",
       cell: (row) => (
         <>
           {row?.transaction?._id ? (
@@ -159,7 +149,9 @@ const Page = () => {
               </div>
             </>
           ) : (
-            ""
+            <>
+              <h4 className="text-center">No Invoice</h4>
+            </>
           )}
         </>
       ),
@@ -234,7 +226,6 @@ const Page = () => {
   };
 
   // handle payement
-
   const handleInvoicePayement = () => {
     setLoading(true);
     const api = `${getInvoice}/${lastId}`;
@@ -250,6 +241,14 @@ const Page = () => {
         console.log(error);
         setLoading(false);
       });
+  };
+
+  const handlePageChange = () => {
+    setData([]);
+    setLastId(1);
+    setCount(0);
+    backetoOrderList();
+    setPage(0);
   };
 
   return (
@@ -269,7 +268,7 @@ const Page = () => {
           <Col md="3">
             <div className="flex flex-col gap-2 gap-md-4 items-center justify-center">
               {sideButtons?.map((button) => {
-                const isActive = currentActiveButton === button.title;
+                const isActive = currentActiveButton === button.status;
                 return (
                   <button
                     key={button.title}
@@ -279,18 +278,15 @@ const Page = () => {
                         : "bg-[#F5F5F5] text-[#909495]"
                     } rounded-[10px] w-full flex items-center justify-start gap-4 p-2 p-md-4 capitalize`}
                     onClick={() => {
-                      setCurrentActiveButton(button.title);
-                      setData([]);
-                      setLastId(1);
-                      setCount(0);
-                      backetoOrderList();
-
+                      handlePageChange();
+                      handleGetOrder(button.status);
+                      setCurrentActiveButton(button.status);
                       // Check if the status is "payement"
-                      if (button?.status === "payement") {
-                        handleInvoicePayement();
-                      } else {
-                        handleGetOrder(button.status);
-                      }
+                      // if (button?.status === "payement") {
+                      //   handleInvoicePayement();
+                      // } else {
+                      //   handleGetOrder(button.status);
+                      // }
                     }}
                   >
                     <div className="flex items-center w-full justify-between">
@@ -332,6 +328,9 @@ const Page = () => {
               <Invoice
                 orderDetail={orderDetail}
                 detailLoading={detailLoading}
+                setData={setData}
+                setOrderDetail={setOrderDetail}
+                urlInvoice={urlInvoice}
               />
             ) : urlId ? (
               <OrderDetails

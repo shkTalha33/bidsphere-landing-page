@@ -149,8 +149,6 @@ const ProfilePage = () => {
       });
   };
 
-  // console.log(userData, "userData");
-
   return (
     <main className="bg-gray-100 pt-20 flex flex-col items-start min-h-screen">
       <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-6">

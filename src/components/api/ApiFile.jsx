@@ -43,6 +43,7 @@ const getPrivacy = "users/privacy";
 const getTerms = "users/terms";
 const getUserProfile = "users/me";
 const getInvoice = "auction/customer/invoices";
+const invoicePayment = "auction/update-invoice";
 export {
   login,
   imageUpload,
@@ -79,4 +80,5 @@ export {
   getTerms,
   getUserProfile,
   getInvoice,
+  invoicePayment
 };
