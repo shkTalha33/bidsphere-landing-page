@@ -10,6 +10,7 @@ import { auctionRegistrationSlice } from "./auctionRegistration";
 import { apiSlice } from "./apiSlice";
 import { apiSlice2 } from "./apiSlice2";
 import { currencySlice } from "./currency";
+import { footerApiSlice } from "./footerSlice";
 
 const rootReducer = combineReducers({
   auth: authSlice,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   currency: currencySlice.reducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
   [apiSlice2.reducerPath]: apiSlice2.reducer,
+  [footerApiSlice.reducerPath]: footerApiSlice.reducer,
 });
 
 const persistConfig = {
@@ -37,7 +39,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(apiSlice.middleware, apiSlice2.middleware),
+    }).concat(apiSlice.middleware, apiSlice2.middleware, footerApiSlice.middleware),
   devTools: process.env.NODE_ENV !== "production",
 });
 export const persistor = persistStore(store);

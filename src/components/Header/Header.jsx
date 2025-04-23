@@ -6,7 +6,7 @@ import { Dropdown, message, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiUser } from "react-icons/bi";
 import { MdOutlineCurrencyExchange } from "react-icons/md";
 import { TbLogout } from "react-icons/tb";
@@ -21,13 +21,14 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiChatSmile2Line } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
 import { getUserProfile } from "../api/ApiFile";
+import NotificationDown from "./notificationDown";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const pathname = usePathname();
   const isLogin = useSelector((state) => state?.auth?.isLogin);
-  const { userData, get } = ApiFunction();
+  const { userData, get, token } = ApiFunction();
   const router = useRouter();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -110,11 +111,34 @@ export default function Header() {
           >
             Orders
           </Link>
+          <Link
+            href="/contactUS"
+            className={`${
+              pathname === "/contactUS"
+                ? "text_primary poppins_medium"
+                : isHomeOrHashRoute && !isScrolled
+                ? "text_white"
+                : "text_dark"
+            }
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+          >
+            Contact Us
+          </Link>
         </div>
       </div>
       <div className="hidden d-md-flex items-center gap-[0.5rem]">
-        <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
-          <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
+        <div className="relative" ref={dropdownRef}>
+          <div
+            onClick={() => setShowNotification(!showNotification)}
+            className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+          >
+            <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
+          </div>
+          {showNotification && (
+            <div className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50">
+              <NotificationDown />
+            </div>
+          )}
         </div>
         <div
           onClick={handleChatnaoo}
@@ -296,6 +320,21 @@ export default function Header() {
       handleUserProfile();
     }
   }, [pathname]);
+
+  const [showNotification, setShowNotification] = useState(false);
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowNotification(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <header
       className={`fixed w-full transition-all duration-300 ease-in-out
@@ -317,26 +356,43 @@ export default function Header() {
             />
           </div>
           {isLogin ? <AuthenticatedNav /> : <NonAuthenticatedNav />}
-
-          <div className="flex md:hidden">
-            <button onClick={toggleMenu} aria-label="Toggle menu">
-              <svg
-                className={`${
-                  isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"
-                } w-6 h-6 cursor-pointer`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+          <div className="flex gap-3 md:hidden">
+            <div className="relative" ref={dropdownRef}>
+              <div
+                className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+                onClick={() => setShowNotification(!showNotification)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
+                <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
+              </div>
+
+              {showNotification && (
+                <div className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50">
+                  <NotificationDown />
+                </div>
+              )}
+            </div>
+            <div className="flex md:hidden">
+              <button onClick={toggleMenu} aria-label="Toggle menu">
+                <svg
+                  className={`${
+                    isHomeOrHashRoute && !isScrolled
+                      ? "text_white"
+                      : "text_dark"
+                  } w-6 h-6 cursor-pointer`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </nav>
 
@@ -393,9 +449,6 @@ export default function Header() {
 
               {/* Mobile Action Icons */}
               <div className="flex justify-center gap-6 w-full mt-2">
-                <div className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer">
-                  <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
-                </div>
                 <div
                   onClick={handleChatnaoo}
                   className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"

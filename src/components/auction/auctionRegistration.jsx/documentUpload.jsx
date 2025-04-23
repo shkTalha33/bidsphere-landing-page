@@ -114,7 +114,7 @@ const DocumentUpload = ({
         const imageData = {
           title,
           type,
-          url: response.data.image,
+          url: response.data.image || response.data.video,
         };
         uploadedUrls.push(imageData);
       }

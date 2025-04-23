@@ -108,7 +108,10 @@ const ProfilePage = () => {
     try {
       if (files.length > 0) {
         const uploadedImageUrl = await uploadFile(files[0]);
-        setValue("profile", uploadedImageUrl?.data?.image);
+        setValue(
+          "profile",
+          uploadedImageUrl?.data?.image || uploadedImageUrl?.data?.video
+        );
         clearErrors("profile");
       }
     } catch (error) {

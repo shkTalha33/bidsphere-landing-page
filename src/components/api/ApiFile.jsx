@@ -16,6 +16,7 @@ const getAuctionLot = "lot/details/";
 
 // "upload files"
 const imageUpload = "image/upload";
+const filUploadAPi = "image/video";
 const auctionDetail = "auction/details/";
 const likeAuction = "auction/like/";
 const getFavouriteAuctions = "/auction/fav/me/";
@@ -44,6 +45,9 @@ const getTerms = "users/terms";
 const getUserProfile = "users/me";
 const getInvoice = "auction/customer/invoices";
 const invoicePayment = "auction/update-invoice";
+const GetFooter = "users/footer";
+const contactUsApi = "support/create";
+
 export {
   login,
   imageUpload,
@@ -80,5 +84,8 @@ export {
   getTerms,
   getUserProfile,
   getInvoice,
-  invoicePayment
+  invoicePayment,
+  GetFooter,
+  filUploadAPi,
+  contactUsApi,
 };

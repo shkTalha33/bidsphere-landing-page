@@ -90,7 +90,10 @@ const Invoice = ({
     try {
       if (files.length > 0) {
         const uploadedImageUrl = await uploadFile(files[0]);
-        setValue("proofImg", uploadedImageUrl?.data?.image);
+        setValue(
+          "proofImg",
+          uploadedImageUrl?.data?.image || uploadedImageUrl?.data?.video
+        );
         clearErrors("proofImg");
       }
     } catch (error) {
