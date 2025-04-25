@@ -12,7 +12,7 @@ import { setAuctionRegistrationData } from "@/components/redux/auctionRegistrati
 import { yupResolver } from "@hookform/resolvers/yup";
 import debounce from "debounce";
 import Image from "next/image";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,6 +59,10 @@ const PaymentDetail = ({
   const stripKeysData = useSelector(selectKeysObject);
   const formData = useSelector(selectRegisterData);
   const progress = useSelector(selectProgress);
+
+  const searchParams = useSearchParams();
+  const urlParams = new URLSearchParams(searchParams);
+  const urlStatus = urlParams.get("redirect_status");
 
   const fetchAuctionDetail = debounce(async () => {
     setLoading(true);
@@ -184,7 +188,7 @@ const PaymentDetail = ({
             </Col>
             <Col md="6" className="text-center">
               <div>
-                {formData?.paymentId ? (
+                {formData?.paymentId || urlStatus === "succeeded" ? (
                   <>
                     <div className="mb-3 text-lg font-semibold">
                       Payment Already Done with Strip
@@ -195,23 +199,27 @@ const PaymentDetail = ({
                     <div className="mb-3 text-lg font-semibold">
                       Payment with Stripe
                     </div>
-                    <button
+                    <div
                       onClick={handleCreatePayment}
-                      className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg flex items-center justify-center gap-2"
+                      className="bg_primary w-fit cursor-pointer text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg flex items-center justify-center gap-2"
                     >
                       <FaCreditCard size={20} /> {/* Stripe icon */}
                       Pay with Stripe
-                    </button>
+                    </div>
                   </>
                 )}
               </div>
               <div className="flex justify-end mt-3">
-                <div
-                  onClick={handlenavoiu}
-                  className="bg_primary w-fit cursor-pointer text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
-                >
-                  Next
-                </div>
+                {urlStatus === "succeeded" && (
+                  <>
+                    <div
+                      onClick={handlenavoiu}
+                      className="bg_primary w-fit cursor-pointer text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
+                    >
+                      Next
+                    </div>
+                  </>
+                )}
               </div>
             </Col>
           </Row>
