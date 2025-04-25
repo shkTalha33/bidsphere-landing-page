@@ -6,13 +6,15 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import ApiFunction from "@/components/api/apiFuntions";
-import { contactUs, contactUsApi } from "@/components/api/ApiFile";
+import { contactUs, contactUsApi, GetFooter } from "@/components/api/ApiFile";
 import { message } from "antd";
 import { FiPhone, FiMail, FiSend } from "react-icons/fi";
+import { useFootersQuery } from "@/components/redux/footerSlice";
 
 const Page = () => {
   const { post } = ApiFunction();
   const [loading, setLoading] = useState(false);
+
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup
@@ -58,13 +60,17 @@ const Page = () => {
   // Primary color
   const primaryColor = "#844e4e";
 
+  const { data, isFetching, error } = useFootersQuery({
+    endpoint: GetFooter,
+  });
+
   return (
     <>
       <Container className="bg-white rounded-lg mt-20 p-2 p-md-4 shadow-lg">
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={"Contact Us"} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-medium text-gray-800">
+            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text-gray-800">
               Contact Us
             </h3>
           </Col>
@@ -85,18 +91,18 @@ const Page = () => {
                     "--tw-ring-color": primaryColor,
                   }}
                 >
-                  <div className="flex items-center mb-3">
+                  <div className="flex items-center">
                     <div
                       className="text-white p-3 rounded-full transition-all duration-300 group-hover:shadow-md mr-4"
                       style={{ backgroundColor: primaryColor }}
                     >
                       <FiPhone size={24} />
                     </div>
-                    <h4 className="text-xl font-medium text-gray-800">
+                    <h4 className="text-xl poppins_medium text-gray-800">
                       Call Us
                     </h4>
                   </div>
-                  <p className="text-gray-600 pl-14">923216464270</p>
+                  <p className="text-gray-600 pl-14">{data?.footer?.phone1}</p>
                 </div>
               </Col>
 
@@ -109,18 +115,18 @@ const Page = () => {
                     "--tw-ring-color": primaryColor,
                   }}
                 >
-                  <div className="flex items-center mb-3">
+                  <div className="flex items-center">
                     <div
                       className="text-white p-3 rounded-full transition-all duration-300 group-hover:shadow-md mr-4"
                       style={{ backgroundColor: primaryColor }}
                     >
                       <FiMail size={24} />
                     </div>
-                    <h4 className="text-xl font-medium text-gray-800">
+                    <h4 className="text-xl poppins_medium text-gray-800">
                       Email Us
                     </h4>
                   </div>
-                  <p className="text-gray-600 pl-14">info@vitalitymedico.eu</p>
+                  <p className="text-gray-600 pl-14">{data?.footer?.email1}</p>
                 </div>
               </Col>
             </Row>
@@ -129,7 +135,7 @@ const Page = () => {
           {/* Contact Form */}
           <Col lg="8" md="6">
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h4 className="text-xl font-medium text-gray-800 mb-6">
+              <h4 className="text-xl poppins_semibold text-gray-800 mb-6">
                 Get In Touch
               </h4>
               <p className="text-gray-600 mb-8">
@@ -142,7 +148,7 @@ const Page = () => {
                 <div className="mb-2">
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm poppins_medium text-gray-700 mb-2"
                   >
                     Your Name
                   </label>
@@ -170,7 +176,7 @@ const Page = () => {
                 <div className="mb-2">
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm poppins_medium text-gray-700 mb-2"
                   >
                     Your Email
                   </label>
@@ -198,7 +204,7 @@ const Page = () => {
                 <div className="mb-2">
                   <label
                     htmlFor="message"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm poppins_medium text-gray-700 mb-2"
                   >
                     Your Message
                   </label>
@@ -227,7 +233,7 @@ const Page = () => {
                 <button
                   disabled={loading}
                   type="submit"
-                  className="flex items-center justify-center w-full sm:w-auto px-8 py-3 text-white font-medium rounded-lg transition-all duration-300 hover:opacity-90"
+                  className="flex items-center justify-center w-full sm:w-auto px-8 py-3 text-white poppins_medium rounded-lg transition-all duration-300 hover:opacity-90"
                   style={{ backgroundColor: primaryColor }}
                 >
                   {loading ? (

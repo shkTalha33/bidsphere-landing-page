@@ -22,7 +22,9 @@ import { RiChatSmile2Line } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
 import { getUserProfile } from "../api/ApiFile";
 import NotificationDown from "./notificationDown";
-
+import { useSocket } from "../socketProvider/socketProvider";
+import toast from "react-hot-toast";
+import { BellOutlined } from "@ant-design/icons";
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -33,7 +35,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { currency } = useCurrency();
-
+  const socket = useSocket();
   const isHomeOrHashRoute = pathname === "/";
 
   const handleLogoutFun = async () => {
@@ -66,6 +68,62 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // notfication handle
+  const dropdownRef = useRef(null);
+  const [hasFetched, setHasFetched] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const isMouseOver = useRef(false);
+
+  // Lock body scroll when dropdown is open
+  useEffect(() => {
+    if (showNotification) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showNotification]);
+
+  const handleToggleNotification = () => {
+    setShowNotification((prev) => {
+      const next = !prev;
+      if (next && !hasFetched) {
+        setHasFetched(true);
+      }
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !isMouseOver.current
+      ) {
+        setShowNotification(false);
+      }
+    }
+
+    function handleScroll() {
+      // Only close if NOT hovering AND dropdown is open
+      if (!isMouseOver.current && showNotification) {
+        setShowNotification(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [showNotification]); // Add dependency
+  // notfication handle ended
 
   // Authenticated navigation items
   const AuthenticatedNav = () => (
@@ -129,17 +187,28 @@ export default function Header() {
       <div className="hidden d-md-flex items-center gap-[0.5rem]">
         <div className="relative" ref={dropdownRef}>
           <div
-            onClick={() => setShowNotification(!showNotification)}
+            onClick={handleToggleNotification}
             className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
           >
             <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
           </div>
+
           {showNotification && (
-            <div className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50">
-              <NotificationDown />
+            <div
+              className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50"
+              onMouseEnter={() => (isMouseOver.current = true)}
+              onMouseLeave={() => (isMouseOver.current = false)}
+              style={{
+                maxHeight: "70vh",
+                overflowY: "auto",
+                overscrollBehavior: "contain",
+              }}
+            >
+              <NotificationDown firstTime={hasFetched} setShowNotification={setShowNotification} />
             </div>
           )}
         </div>
+
         <div
           onClick={handleChatnaoo}
           className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
@@ -321,20 +390,32 @@ export default function Header() {
     }
   }, [pathname]);
 
-  const [showNotification, setShowNotification] = useState(false);
-
-  const dropdownRef = useRef(null);
+  // notification socket
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowNotification(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (socket) {
+      socket.on("notification", (data) => {
+        toast.success(
+          <div>
+            <strong>{data?.user?.fname}</strong>: {data?.description}
+          </div>,
+          {
+            icon: <BellOutlined style={{ color: "#1890ff", fontSize: 20 }} />,
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+      });
 
+      return () => {
+        socket.off("notification");
+      };
+    }
+  }, [socket]);
   return (
     <header
       className={`fixed w-full transition-all duration-300 ease-in-out
@@ -360,14 +441,23 @@ export default function Header() {
             <div className="relative" ref={dropdownRef}>
               <div
                 className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
-                onClick={() => setShowNotification(!showNotification)}
+                onClick={handleToggleNotification}
               >
                 <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
               </div>
 
               {showNotification && (
-                <div className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50">
-                  <NotificationDown />
+                <div
+                  className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50"
+                  onMouseEnter={() => (isMouseOver.current = true)}
+                  onMouseLeave={() => (isMouseOver.current = false)}
+                  style={{
+                    maxHeight: "70vh",
+                    overflowY: "auto",
+                    overscrollBehavior: "contain",
+                  }}
+                >
+                  <NotificationDown firstTime={hasFetched} setShowNotification={setShowNotification} />
                 </div>
               )}
             </div>

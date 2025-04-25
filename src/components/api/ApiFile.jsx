@@ -47,7 +47,9 @@ const getInvoice = "auction/customer/invoices";
 const invoicePayment = "auction/update-invoice";
 const GetFooter = "users/footer";
 const contactUsApi = "support/create";
-
+const getNotification = "notification/all";
+const deleteNotification = "notification";
+const seenNotification = "notification/check-seen";
 export {
   login,
   imageUpload,
@@ -88,4 +90,8 @@ export {
   GetFooter,
   filUploadAPi,
   contactUsApi,
+  getNotification,
+  deleteNotification,
+  seenNotification,
+  
 };

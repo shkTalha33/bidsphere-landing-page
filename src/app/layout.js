@@ -29,12 +29,12 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <AntdRegistry>
-          <ProviderLayout>
-            <SocketProvider>
+          {/* <SocketProvider> */}
+            <ProviderLayout>
               <Toaster position="top-center" />
               {children}
-            </SocketProvider>
-          </ProviderLayout>
+            </ProviderLayout>
+          {/* </SocketProvider> */}
         </AntdRegistry>
       </body>
     </html>

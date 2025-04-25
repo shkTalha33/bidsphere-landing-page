@@ -1,94 +1,188 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getNotification } from "../api/ApiFile";
+import ApiFunction from "../api/apiFuntions";
+import { Skeleton } from "antd";
+import Image from "next/image";
+import { avataruser } from "../assets/icons/icon";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Spinner } from "react-bootstrap";
+import { useSocket } from "@/components/socketProvider/socketProvider";
+import { useSelector } from "react-redux";
+import { encryptData } from "../api/encrypted";
+const NotificationDown = ({ firstTime, setShowNotification }) => {
+  const { get, token } = ApiFunction();
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const socket = useSocket();
 
-const NotificationDown = () => {
   const router = useRouter();
 
-  const notifications = [
-    {
-      id: 1,
-      title: "New message from Ali",
-      time: "2 mins ago",
-      type: "message",
-    },
-    {
-      id: 2,
-      title: "Order #1234 has shipped",
-      time: "10 mins ago",
-      type: "order",
-    },
-    {
-      id: 3,
-      title: "System alert: Password changed",
-      time: "1 hour ago",
-      type: "alert",
-    },
-    // Add more dummy data to simulate scroll
-    {
-      id: 4,
-      title: "New message from Sara",
-      time: "2 hours ago",
-      type: "message",
-    },
-    {
-      id: 5,
-      title: "Order #789 delivered",
-      time: "1 day ago",
-      type: "order",
-    },
-    {
-      id: 6,
-      title: "Alert: Account updated",
-      time: "2 days ago",
-      type: "alert",
-    },
-  ];
-
   const handleNotificationClick = (item) => {
-    switch (item.type) {
-      case "message":
-        router.push("/messages");
+    setShowNotification(false);
+    switch (item?.type) {
+      case "message": {
+        const chatUser = {
+          _id: item?.lot?._id,
+          name: item?.lot?.name,
+          images: [item?.lot?.images?.[0]] || "",
+          email: "",
+        };
+
+        const enData = encodeURIComponent(encryptData(chatUser));
+        router.push(`/chat?query=${enData}`);
         break;
+      }
+
+      case "winner":
+        router.push("/orders");
+        break;
+
       case "order":
         router.push("/orders");
         break;
-      case "alert":
-        router.push("/settings");
+      case "invoice":
+        router.push(`/orders?invoice=${item?.bids?._id}`);
         break;
-      default:
-        router.push("/");
+      case "auction":
+        router.push("/auctions");
+        break;
+
+      // default:
+      //   router.push("/");
     }
   };
 
+  // handle get notification by api
+  const lastId = notifications?.[notifications?.length - 1]?._id;
+  const handleGetNotification = () => {
+    if (notifications?.length > 0) {
+      setLoadingMore(true);
+    } else {
+      setLoading(true);
+    }
+    const api =
+      notifications?.length > 0
+        ? `${getNotification}/${lastId}`
+        : getNotification;
+    get(api)
+      .then((res) => {
+        if (res?.success && res?.notifications?.length > 0) {
+          if (notifications?.length > 0) {
+            setNotifications([...notifications, ...res?.notifications]);
+          } else {
+            setNotifications(res?.notifications);
+          }
+        } else {
+          setHasMore(false);
+        }
+        setLoading(false);
+        setLoadingMore(false);
+      })
+      .catch((error) => {
+        console.log(error, "error");
+        setLoading(false);
+        setLoadingMore(false);
+      });
+  };
+
+  useEffect(() => {
+    if (firstTime) {
+      handleGetNotification();
+    }
+  }, [firstTime]);
+
+  // get notification by socket
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("notification", (data) => {
+        setNotifications((prevNotifications) => [data, ...prevNotifications]);
+      });
+      return () => {
+        socket.off("notification");
+      };
+    }
+  }, [socket]);
+
   return (
-    <div className="p-4 max-h-[300px] overflow-y-auto w-[300px] sm:w-[320px]">
-      <h4 className="text-md font-semibold mb-3 text-gray-800">
-        Notifications
-      </h4>
-      {notifications.length > 0 ? (
-        <ul className="space-y-2">
-          {notifications.map((item) => (
-            <li
-              key={item.id}
-              className="p-3 rounded hover:bg-gray-100 cursor-pointer border border-gray-200 transition-all duration-200"
-              //   onClick={() => handleNotificationClick(item)}
+    <>
+      <section>
+        <h4 className="text-md font-semibold px-3 mt-3 text-gray-800">
+          Notifications
+        </h4>
+
+        <div
+          id="scrollableDiv"
+          className="p-4 max-h-[300px] overflow-y-auto w-[300px] sm:w-[320px]"
+        >
+          {loading ? (
+            <div className="flex justify-center items-center h-20 mt-4">
+              <Skeleton active />
+            </div>
+          ) : (
+            <InfiniteScroll
+              dataLength={notifications?.length}
+              next={handleGetNotification}
+              hasMore={hasMore}
+              loader={
+                <div className="flex justify-center items-center py-2">
+                  <Spinner size="sm" />
+                </div>
+              }
+              scrollableTarget="scrollableDiv"
             >
-              <div className="text-sm font-medium text-gray-800">
-                {item.title}
-              </div>
-              <div className="text-xs text-gray-500">{item.time}</div>
-              <div className="text-[10px] text-blue-500 mt-1 capitalize">
-                Type: {item.type}
-              </div>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="text-sm text-gray-500">No notifications.</p>
-      )}
-    </div>
+              <ul className="space-y-2">
+                {notifications?.map((item) => (
+                  <li
+                    key={item?._id}
+                    onClick={() => handleNotificationClick(item)}
+                    className="p-3 mt-0 rounded hover:bg-gray-100 cursor-pointer transition-all duration-200"
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="w-[3rem] h-[3rem]">
+                        {item?.user?.profile ? (
+                          <img
+                            src={item?.user?.profile}
+                            alt="notification"
+                            className="w-[100%] h-[100%] rounded-[50%]"
+                          />
+                        ) : (
+                          <Image
+                            width={100}
+                            height={100}
+                            src={avataruser}
+                            alt="notification"
+                            className="w-full h-full rounded-[50%]"
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-gray-800">
+                          {item?.title}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {item?.description}
+                        </div>
+                        <div className="text-[10px] text-blue-500 mt-1 capitalize">
+                          @{item?.user?.fname && item?.user?.lname}
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </InfiniteScroll>
+          )}
+        </div>
+      </section>
+    </>
   );
 };
 
