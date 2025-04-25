@@ -22,12 +22,11 @@ import { io } from "socket.io-client";
 // import { getChatList } from "../../api/message_api";
 import { Search } from "react-feather";
 
-import { useRouter, useSearchParams, } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { useSocket } from "../socketProvider/socketProvider";
 import { decryptData } from "../api/encrypted";
 import ApiFunction from "../api/apiFuntions";
-
 
 const ChatMessage = () => {
   const { userData, baseURL } = ApiFunction();
@@ -49,7 +48,7 @@ const ChatMessage = () => {
       setChatUser({ lot: urlData });
       router.replace("/chat");
     }
-  }, []);
+  }, [urlDataEnq]);
 
   useEffect(() => {
     if (socket) {

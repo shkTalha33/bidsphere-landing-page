@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { setAuctionRegistrationData } from "@/components/redux/auctionRegistration";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Col,
   Container,
@@ -13,18 +14,27 @@ import {
   Row,
 } from "reactstrap";
 import * as Yup from "yup";
-import { allCountries  } from "country-region-data";
-import { useState } from "react";
+import { allCountries } from "country-region-data";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import {
+  clearRegisterData,
+  selectActiveStep,
+  selectProgress,
+  selectRegisterData,
+  setActiveStep,
+  setRegisterData,
+  setsliceProgress,
+} from "@/components/redux/registrationSlice/resgiterSlice";
 
-const PersonalInfo = ({
-  setProgress,
-  setIsCompleted,
-  isCompleted,
-  setActive,
-}) => {
+const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [regions, setRegions] = useState([]);
   const dispatch = useDispatch();
+  const pathname = usePathname();
+  const formData = useSelector(selectRegisterData);
+  const active = useSelector(selectActiveStep);
+  const progress = useSelector(selectProgress);
 
   const schema = Yup.object().shape({
     fname: Yup.string().required("First name is required"),
@@ -40,15 +50,14 @@ const PersonalInfo = ({
     field.onChange(country);
     setSelectedCountry(country);
 
-    const countryData = allCountries .find(
-      ([name, code]) => code === country
-    );
+    const countryData = allCountries.find(([name, code]) => code === country);
     setRegions(countryData ? countryData[2]?.map(([region]) => region) : []);
   };
 
   const {
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -62,13 +71,31 @@ const PersonalInfo = ({
     },
   });
 
+  useEffect(() => {
+    if (formData) {
+      setValue("fname", formData?.fname);
+      setValue("lname", formData?.lname);
+      setValue("email", formData?.email);
+      setValue("phone", formData?.phone);
+      setValue("country", formData?.country);
+      setValue("region", formData?.region);
+      setSelectedCountry(formData?.country);
+    }
+  }, [formData, setValue]);
+
   const onSubmit = (formData) => {
     if (!isCompleted?.personal) {
-      setProgress((prev) => parseInt(prev) + 33.3);
+      if (progress === 0) {
+        dispatch(setsliceProgress(33.3));
+      }
       setIsCompleted((prev) => ({ ...prev, personal: true }));
     }
-    dispatch(setAuctionRegistrationData(formData));
-    setActive("document");
+
+    dispatch(setRegisterData(formData));
+    dispatch(setActiveStep("document"));
+    // dispatch(clearRegisterData())
+
+    // setActive("document");
   };
 
   return (
@@ -175,7 +202,7 @@ const PersonalInfo = ({
                   onChange={(e) => handleCountryChange(e, field)}
                 >
                   <option value="">Select Country</option>
-                  {allCountries ?.map(([name, code]) => (
+                  {allCountries?.map(([name, code]) => (
                     <option key={code} value={code}>
                       {name}
                     </option>
@@ -222,7 +249,7 @@ const PersonalInfo = ({
         <Col md="6" className="text-end ml-auto">
           <button
             type="submit"
-             className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
+            className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
           >
             Next
           </button>

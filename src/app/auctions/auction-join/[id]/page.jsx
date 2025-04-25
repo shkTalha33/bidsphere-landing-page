@@ -184,7 +184,7 @@ export default function Page() {
     text: "Winner Announced",
     onClick: null, // disabled or no action
     className:
-      "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white font-semibold px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
+      "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
   };
 
   const [modal, setModal] = useState(false);
@@ -366,7 +366,7 @@ export default function Page() {
                   {userData?._id === currentLot?.winner || winnerLot?.winner ? (
                     <div className="flex flex-col items-center justify-center bg-green-50 border border-green-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
                       <CheckCircleOutlined className="text-green-500 text-5xl mb-4" />
-                      <h2 className="text-xl font-semibold text-green-600 mb-2">
+                      <h2 className="text-xl poppins_medium text-green-600 mb-2">
                         Congratulations!
                       </h2>
                       <p className="text-gray-700">
@@ -378,7 +378,7 @@ export default function Page() {
                     <>
                       <div className="flex flex-col items-center justify-center bg-red-50 border border-red-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
                         <CloseCircleOutlined className="text-red-500 text-5xl mb-4" />
-                        <h2 className="text-xl font-semibold text-red-600 mb-2">
+                        <h2 className="text-xl poppins_medium text-red-600 mb-2">
                           Winner Announced
                         </h2>
                         <p className="text-gray-700">
@@ -417,7 +417,7 @@ export default function Page() {
                         className="flex items-center justify-between gap-3"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-300 text-dark font-semibold text-lg">
+                          <div className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-300 text-dark poppins_medium text-lg">
                             {bid?.name?.charAt(0)?.toUpperCase()}
                           </div>
                           <div>
@@ -541,7 +541,7 @@ export default function Page() {
               <section className="mt-3">
                 <div
                   onClick={handlechat}
-                  className="bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white font-semibold px-4 py-2 rounded-[10px] cursor-pointer shadow-md hover:scale-105 transition-transform duration-300"
+                  className="bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium px-4 py-2 rounded-[10px] cursor-pointer shadow-md hover:scale-105 transition-transform duration-300"
                 >
                   Live Chat
                 </div>

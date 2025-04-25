@@ -204,7 +204,10 @@ export default function Header() {
                 overscrollBehavior: "contain",
               }}
             >
-              <NotificationDown firstTime={hasFetched} setShowNotification={setShowNotification} />
+              <NotificationDown
+                firstTime={hasFetched}
+                setShowNotification={setShowNotification}
+              />
             </div>
           )}
         </div>
@@ -416,6 +419,7 @@ export default function Header() {
       };
     }
   }, [socket]);
+
   return (
     <header
       className={`fixed w-full transition-all duration-300 ease-in-out
@@ -438,29 +442,34 @@ export default function Header() {
           </div>
           {isLogin ? <AuthenticatedNav /> : <NonAuthenticatedNav />}
           <div className="flex gap-3 md:hidden">
-            <div className="relative" ref={dropdownRef}>
-              <div
-                className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
-                onClick={handleToggleNotification}
-              >
-                <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
-              </div>
-
-              {showNotification && (
+            {userData?._id && (
+              <div className="relative" ref={dropdownRef}>
                 <div
-                  className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50"
-                  onMouseEnter={() => (isMouseOver.current = true)}
-                  onMouseLeave={() => (isMouseOver.current = false)}
-                  style={{
-                    maxHeight: "70vh",
-                    overflowY: "auto",
-                    overscrollBehavior: "contain",
-                  }}
+                  className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+                  onClick={handleToggleNotification}
                 >
-                  <NotificationDown firstTime={hasFetched} setShowNotification={setShowNotification} />
+                  <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
                 </div>
-              )}
-            </div>
+
+                {showNotification && (
+                  <div
+                    className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50"
+                    onMouseEnter={() => (isMouseOver.current = true)}
+                    onMouseLeave={() => (isMouseOver.current = false)}
+                    style={{
+                      maxHeight: "70vh",
+                      overflowY: "auto",
+                      overscrollBehavior: "contain",
+                    }}
+                  >
+                    <NotificationDown
+                      firstTime={hasFetched}
+                      setShowNotification={setShowNotification}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
             <div className="flex md:hidden">
               <button onClick={toggleMenu} aria-label="Toggle menu">
                 <svg

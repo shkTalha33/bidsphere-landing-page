@@ -161,19 +161,30 @@ const Page = () => {
       name: "Status",
       minWidth: "120px",
       maxWidth: "200px",
-      cell: (row) => (
-        <div
-          className={`flex items-center justify-center capitalize whitespace-nowrap rounded-full cursor-pointer bg-[#EAF5F2] px-4 py-1 ${
-            row?.status === "shipped"
-              ? "text-[#56CDAD] bg-[#EAF5F2]"
-              : row.status === "intransit"
-              ? "text-[#4640DE] bg-[#E8E7F7]"
-              : " bg-[#EAF5F2] text-[#6DC1FE]"
-          } capitalize`}
-        >
-          {row?.status}
-        </div>
-      ),
+      cell: (row) => {
+        const getStatusClasses = (status) => {
+          switch (status?.toLowerCase()) {
+            case "shipped":
+              return "bg-[#FFEAEA] text-[#660000]";
+            case "intransit":
+              return "bg-[#FFF1E0] text-[#660000]";
+            case "delivered":
+              return "bg-[#EAF5F2] text-[#660000]";
+            default:
+              return "bg-[#EEEAFD] text-[#660000]";
+          }
+        };
+
+        return (
+          <div
+            className={`w-fit text-xs cursor-pointer font-medium rounded-[8px] px-3 py-1 text-center capitalize ${getStatusClasses(
+              row?.status
+            )}`}
+          >
+            {row?.status}
+          </div>
+        );
+      },
     },
     {
       name: "Action",

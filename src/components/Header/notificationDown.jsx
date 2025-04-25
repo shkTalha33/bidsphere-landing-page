@@ -111,13 +111,17 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
     }
   }, [socket]);
 
+  // all  notification read
+  const handleGetNotificationAll = () => {
+    router.push("/allNotification");
+    setShowNotification(false);
+  };
   return (
     <>
       <section>
-        <h4 className="text-md font-semibold px-3 mt-3 text-gray-800">
+        <h4 className="text-md font-semibold px-3 mt-2 text-gray-800 pb-2">
           Notifications
         </h4>
-
         <div
           id="scrollableDiv"
           className="p-4 max-h-[300px] overflow-y-auto w-[300px] sm:w-[320px]"
@@ -127,60 +131,86 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
               <Skeleton active />
             </div>
           ) : (
-            <InfiniteScroll
-              dataLength={notifications?.length}
-              next={handleGetNotification}
-              hasMore={hasMore}
-              loader={
-                <div className="flex justify-center items-center py-2">
-                  <Spinner size="sm" />
-                </div>
-              }
-              scrollableTarget="scrollableDiv"
-            >
+            <>
               <ul className="space-y-2">
-                {notifications?.map((item) => (
-                  <li
-                    key={item?._id}
-                    onClick={() => handleNotificationClick(item)}
-                    className="p-3 mt-0 rounded hover:bg-gray-100 cursor-pointer transition-all duration-200"
-                  >
-                    <div className="flex items-start space-x-3">
-                      <div className="w-[3rem] h-[3rem]">
-                        {item?.user?.profile ? (
-                          <img
-                            src={item?.user?.profile}
-                            alt="notification"
-                            className="w-[100%] h-[100%] rounded-[50%]"
-                          />
-                        ) : (
-                          <Image
-                            width={100}
-                            height={100}
-                            src={avataruser}
-                            alt="notification"
-                            className="w-full h-full rounded-[50%]"
-                          />
-                        )}
+                {notifications?.length === 0 ? (
+                  <div className="text-center text-gray-500 py-4 text-sm">
+                    No notifications
+                  </div>
+                ) : (
+                  notifications?.map((item) => (
+                    <li
+                      key={item?._id}
+                      onClick={() => handleNotificationClick(item)}
+                      className="border-b mb-2 pb-1 mt-0 rounded hover:bg-gray-100 cursor-pointer transition-all duration-200"
+                    >
+                      <div className="flex items-start space-x-3">
+                        <div>
+                          <div className="w-[3rem] h-[3rem]">
+                            {item?.user?.profile ? (
+                              <img
+                                src={item?.user?.profile}
+                                alt="notification"
+                                className="w-[100%] h-[100%] rounded-[50%]"
+                              />
+                            ) : (
+                              <Image
+                                width={100}
+                                height={100}
+                                src={avataruser}
+                                alt="notification"
+                                className="w-full h-full rounded-[50%]"
+                              />
+                            )}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-gray-800">
+                            {item?.title}{" "}
+                            <span className="text-[10px] text-blue-500 mt-1 capitalize">
+                              @{item?.user?.fname && item?.user?.lname}
+                            </span>
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {item?.description}
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="text-sm font-medium text-gray-800">
-                          {item?.title}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {item?.description}
-                        </div>
-                        <div className="text-[10px] text-blue-500 mt-1 capitalize">
-                          @{item?.user?.fname && item?.user?.lname}
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  ))
+                )}
               </ul>
-            </InfiniteScroll>
+            </>
+            // <InfiniteScroll
+            //   dataLength={notifications?.length}
+            //   next={handleGetNotification}
+            //   hasMore={hasMore}
+            //   loader={
+            //     <div className="flex justify-center items-center py-2">
+            //       <Spinner size="sm" />
+            //     </div>
+            //   }
+            //   scrollableTarget="scrollableDiv"
+            // >
+            // <ul className="space-y-2">
+
+            //   </ul>
+
+            // </InfiniteScroll>
           )}
         </div>
+        {notifications?.length > 0 && (
+          <div>
+            <div className="flex justify-center items-center mt-2">
+              <button
+                onClick={() => handleGetNotificationAll()}
+                className=" text-gray-800 text-[1rem] p-2 poppins_medium  hover:text-blue-500 transition-all duration-200"
+              >
+                See All
+              </button>
+            </div>
+          </div>
+        )}
       </section>
     </>
   );

@@ -11,7 +11,8 @@ import { apiSlice } from "./apiSlice";
 import { apiSlice2 } from "./apiSlice2";
 import { currencySlice } from "./currency";
 import { footerApiSlice } from "./footerSlice";
-
+import registerReducer from "./registrationSlice/resgiterSlice";
+import stripKeyReducer from "./stripKey/stripKey";
 const rootReducer = combineReducers({
   auth: authSlice,
   sidebar: sidebarSlice,
@@ -20,6 +21,8 @@ const rootReducer = combineReducers({
   auctionProduct: auctionProductSlice.reducer,
   auctionRegistration: auctionRegistrationSlice.reducer,
   currency: currencySlice.reducer,
+  register: registerReducer,
+  stripKey: stripKeyReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
   [apiSlice2.reducerPath]: apiSlice2.reducer,
   [footerApiSlice.reducerPath]: footerApiSlice.reducer,
@@ -28,7 +31,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "cart"],
+  whitelist: ["auth", "cart", "register", "stripKey"],
   blacklist: [apiSlice.reducerPath],
 };
 
@@ -39,7 +42,11 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(apiSlice.middleware, apiSlice2.middleware, footerApiSlice.middleware),
+    }).concat(
+      apiSlice.middleware,
+      apiSlice2.middleware,
+      footerApiSlice.middleware
+    ),
   devTools: process.env.NODE_ENV !== "production",
 });
 export const persistor = persistStore(store);

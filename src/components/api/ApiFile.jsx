@@ -50,6 +50,8 @@ const contactUsApi = "support/create";
 const getNotification = "notification/all";
 const deleteNotification = "notification";
 const seenNotification = "notification/check-seen";
+const getstripKey = "payment/key";
+const createPaymentStripe = "payment/create";
 export {
   login,
   imageUpload,
@@ -93,5 +95,6 @@ export {
   getNotification,
   deleteNotification,
   seenNotification,
-  
+  getstripKey,
+  createPaymentStripe,
 };

@@ -9,11 +9,27 @@ import DocumentUpload from "./documentUpload";
 import PaymentDetail from "./paymentDetail";
 import PersonalInfo from "./personalInfo";
 import ReviewAndSubmit from "./ReviewAndSubmit";
+import {
+  selectActiveStep,
+  selectProgress,
+  setActiveStep,
+} from "@/components/redux/registrationSlice/resgiterSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const RegistrationDetail = () => {
-  const [progress, setProgress] = useState(0);
+  // const [progress, setProgress] = useState(0);
+  const progress = useSelector(selectProgress); // This should give the updated progress
+
+
+  console.log(progress , "progress");
+  
   const [data, setData] = useState({});
-  const [active, setActive] = useState("personal");
+  // const [active, setActive] = useState("personal");
+  const active = useSelector(selectActiveStep);
+
+  console.log(active , "active");
+  
+  const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const [isCompleted, setIsCompleted] = useState({
     personal: false,
@@ -27,10 +43,10 @@ const RegistrationDetail = () => {
       label: "Personal Information",
       children: (
         <PersonalInfo
-          setProgress={setProgress}
-          setActive={setActive}
+          // setActive={setActive}
           setIsCompleted={setIsCompleted}
           isCompleted={isCompleted}
+          active={active}
         />
       ),
     },
@@ -40,8 +56,7 @@ const RegistrationDetail = () => {
       disabled: progress < 33,
       children: (
         <DocumentUpload
-          setProgress={setProgress}
-          setActive={setActive}
+          // setActive={setActive}
           setIsCompleted={setIsCompleted}
           isCompleted={isCompleted}
         />
@@ -53,8 +68,7 @@ const RegistrationDetail = () => {
       disabled: progress < 66,
       children: (
         <PaymentDetail
-          setProgress={setProgress}
-          setActive={setActive}
+          // setActive={setActive}
           setIsCompleted={setIsCompleted}
           isCompleted={isCompleted}
           progress={progress}
@@ -67,7 +81,6 @@ const RegistrationDetail = () => {
       disabled: progress < 100,
       children: (
         <ReviewAndSubmit
-          setProgress={setProgress}
           data={data}
           setData={setData}
           progress={progress}
@@ -77,29 +90,23 @@ const RegistrationDetail = () => {
   ];
 
   const onChange = (tab) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("selected", tab);
-    window.history.replaceState(
-      {},
-      "",
-      `${window.location.pathname}?${params}`
-    );
-    setActive(tab);
+    dispatch(setActiveStep(tab));
+    // setActive(tab);
   };
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
     const selectedTab = params.get("selected");
     if (selectedTab) {
-      setActive(selectedTab);
+      // setActive(selectedTab);
     } else {
-      params.set("selected", "personal");
-      window.history.replaceState(
-        {},
-        "",
-        `${window.location.pathname}?${params}`
-      );
-      setActive("personal");
+      // params.set("selected", "personal");
+      // window.history.replaceState(
+      //   {},
+      //   "",
+      //   `${window.location.pathname}?${params}`
+      // );
+      // setActive("personal");
     }
   }, []);
 

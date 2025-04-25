@@ -14,20 +14,27 @@ import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { setAuctionRegistrationData } from "@/components/redux/auctionRegistration";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { usePathname, useRouter } from "next/navigation";
+import { decryptData, encryptData } from "@/components/api/encrypted";
+import {
+  selectProgress,
+  selectRegisterData,
+  setActiveStep,
+  setRegisterData,
+  setsliceProgress,
+} from "@/components/redux/registrationSlice/resgiterSlice";
 
-const DocumentUpload = ({
-  setProgress,
-  setIsCompleted,
-  isCompleted,
-  setActive,
-}) => {
+const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
   const [selectedData, setSelectedData] = useState(null);
   const dispatch = useDispatch();
   const [fileLoadingIdentity, setFileLoadingIdentity] = useState(false);
   const [fileLoadingFunds, setFileLoadingFunds] = useState(false);
   const [selectedIdentityFiles, setSelectedIdentityFiles] = useState([]);
   const [selectedFundsFiles, setSelectedFundsFiles] = useState([]);
+  const formData = useSelector(selectRegisterData);
+ const progress = useSelector(selectProgress);
+  // //
 
   const schema = Yup.object().shape({
     id_proof: Yup.array()
@@ -50,6 +57,25 @@ const DocumentUpload = ({
       funds_proof: [],
     },
   });
+
+  useEffect(() => {
+    if (
+      (formData && formData?.id_proof?.length > 0) ||
+      formData?.funds_proof?.length > 0
+    ) {
+      setValue("id_proof", formData?.id_proof, {
+        shouldValidate: true,
+      });
+      setValue("funds_proof", formData?.funds_proof, {
+        shouldValidate: true,
+      });
+      setSelectedIdentityFiles(formData?.id_proof || []);
+      setSelectedFundsFiles(formData?.funds_proof || []);
+      // dispatch(setRegisterData(formData));
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData]);
 
   useEffect(() => {
     if (selectedData) {
@@ -80,7 +106,7 @@ const DocumentUpload = ({
   const handleFileChange = async (event, type) => {
     let files = Array.from(event.target.files);
     if (type === "identity") {
-      const totalFiles = selectedIdentityFiles.length + files.length;
+      const totalFiles = selectedIdentityFiles?.length + files.length;
       if (totalFiles > 5) {
         return toast.error("Cannot upload more than 5 files");
       }
@@ -205,7 +231,7 @@ const DocumentUpload = ({
         )}
       </div>
       <div className="mt-3 d-flex gap-2 flex-wrap">
-        {files.map((file, index) => (
+        {files?.map((file, index) => (
           <div key={index} className="position-relative">
             <>
               <Link href={file?.url} target="_blank">
@@ -255,14 +281,37 @@ const DocumentUpload = ({
     </Col>
   );
 
-  const onSubmit = async (data) => {
+  // const onSubmit = async (data) => {
+  //   if (!isCompleted?.document) {
+  //     setProgress((prev) => parseInt(prev) + 33.3);
+  //     setIsCompleted((prev) => ({ ...prev, document: true }));
+  //   }
+  //   dispatch(setAuctionRegistrationData(data));
+  //   setActive("security");
+  // };
+
+  // /////
+
+  const onSubmit = (data) => {
     if (!isCompleted?.document) {
-      setProgress((prev) => parseInt(prev) + 33.3);
+      // setProgress((prev) => parseInt(prev) + 33.3);
+      if (progress === 33.3) {
+        dispatch(setsliceProgress(33.3));
+      }
+      dispatch(setsliceProgress(33.3));
       setIsCompleted((prev) => ({ ...prev, document: true }));
     }
-    dispatch(setAuctionRegistrationData(data));
-    setActive("security");
+
+    const mergedData = {
+      ...formData,
+      ...data,
+    };
+    // Encrypt and encode
+    dispatch(setRegisterData(mergedData));
+    dispatch(setActiveStep("security"));
   };
+
+  console.log(formData, "formData");
 
   return (
     <Container className="bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
