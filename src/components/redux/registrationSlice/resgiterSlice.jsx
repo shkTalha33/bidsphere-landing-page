@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: {},
-  activeStep: "personal", // Initial step
-  progress: 0 // Initial progress value
+  activeStep: "personal",
+  progress: 0,
 };
 
 const registerSlice = createSlice({
@@ -11,21 +11,21 @@ const registerSlice = createSlice({
   initialState,
   reducers: {
     setRegisterData: (state, action) => {
-      state.data = { ...state.data, ...action.payload }; // Merge new data with existing data
+      state.data = { ...state.data, ...action.payload };
     },
 
     setsliceProgress: (state, action) => {
-      state.progress += action.payload; // Ensure the addition is happening
+      state.progress += action.payload;
     },
-    
+
     setActiveStep: (state, action) => {
-      state.activeStep = action.payload; // Store the active step
+      state.activeStep = action.payload;
     },
 
     clearRegisterData: (state) => {
-      state.data = {}; // Reset form data
-      state.activeStep = "personal"; // Reset active step
-      state.progress = 0; // Reset progress
+      state.data = {};
+      state.activeStep = "personal";
+      state.progress = 0;
     },
   },
 });

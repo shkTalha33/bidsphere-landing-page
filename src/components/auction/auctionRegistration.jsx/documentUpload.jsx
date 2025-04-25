@@ -33,7 +33,7 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
   const [selectedIdentityFiles, setSelectedIdentityFiles] = useState([]);
   const [selectedFundsFiles, setSelectedFundsFiles] = useState([]);
   const formData = useSelector(selectRegisterData);
- const progress = useSelector(selectProgress);
+  const progress = useSelector(selectProgress);
   // //
 
   const schema = Yup.object().shape({
@@ -281,24 +281,13 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
     </Col>
   );
 
-  // const onSubmit = async (data) => {
-  //   if (!isCompleted?.document) {
-  //     setProgress((prev) => parseInt(prev) + 33.3);
-  //     setIsCompleted((prev) => ({ ...prev, document: true }));
-  //   }
-  //   dispatch(setAuctionRegistrationData(data));
-  //   setActive("security");
-  // };
-
   // /////
 
   const onSubmit = (data) => {
     if (!isCompleted?.document) {
-      // setProgress((prev) => parseInt(prev) + 33.3);
-      if (progress === 33.3) {
-        dispatch(setsliceProgress(33.3));
+      if (progress === 33) {
+        dispatch(setsliceProgress(33));
       }
-      dispatch(setsliceProgress(33.3));
       setIsCompleted((prev) => ({ ...prev, document: true }));
     }
 
@@ -310,8 +299,6 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
     dispatch(setRegisterData(mergedData));
     dispatch(setActiveStep("security"));
   };
-
-  console.log(formData, "formData");
 
   return (
     <Container className="bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">

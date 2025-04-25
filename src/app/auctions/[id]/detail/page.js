@@ -68,7 +68,7 @@ export default function Page() {
             </div>
           </div>
           <RegistrationReviewPage
-            data={data?.applications}
+            formData={data?.applications}
             pageType="detailPage"
             isLoading={loading}
           />

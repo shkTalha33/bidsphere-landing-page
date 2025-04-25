@@ -35,56 +35,14 @@ import { Elements } from "@stripe/react-stripe-js";
 import StripPayment from "@/components/stripPayment/stripPayment";
 import { loadStripe } from "@stripe/stripe-js";
 import { Modal } from "antd";
-
-const paymentMethods = [
-  {
-    name: "googlePay",
-    label: "Google Play",
-    email: "aaronramsdale@gmail.com",
-    icon: googlePay,
-  },
-  {
-    name: "stripe",
-    label: "Stripe",
-    email: "aaronramsdale@gmail.com",
-    icon: stripe,
-  },
-  {
-    name: "paypal",
-    label: "PayPal",
-    email: "aaronramsdale@gmail.com",
-    icon: paypal,
-  },
-];
-
-const PaymentMethod = ({ method, currentMethod, onClick }) => (
-  <div
-    className={`border ${
-      currentMethod === method.name
-        ? "border-[#5B0F001C] bg-[#E7FAF4]"
-        : "border-[#E7FAF4]"
-    } rounded-2xl p-3 flex gap-4 cursor-pointer items-center`}
-    onClick={() => onClick(method.name)}
-  >
-    <div
-      className={`flex items-center justify-center h-12 w-12 rounded-full ${
-        currentMethod === method.name ? "bg-white" : "bg-[#E7FAF4]"
-      }`}
-    >
-      <Image
-        src={method.icon}
-        width={24}
-        height={24}
-        alt={method.label}
-        className="w-6 h-6"
-      />
-    </div>
-    <div>
-      <h6 className="text-[#0D0D12] poppins_medium mb-1">{method.label}</h6>
-      <p className="text-[#818898] text-sm mb-0">{method.email}</p>
-    </div>
-  </div>
-);
+import { FaCreditCard } from "react-icons/fa6";
+import {
+  selectProgress,
+  selectRegisterData,
+  setActiveStep,
+  setRegisterData,
+  setsliceProgress,
+} from "@/components/redux/registrationSlice/resgiterSlice";
 
 const PaymentDetail = ({
   setProgress,
@@ -97,12 +55,10 @@ const PaymentDetail = ({
   const dispatch = useDispatch();
   const { id } = useParams();
   const { get, post, userData } = ApiFunction();
-  const schema = Yup.object().shape({
-    paymentId: Yup.string().required("Payment Method is required"),
-  });
   const pathname = usePathname();
-
   const stripKeysData = useSelector(selectKeysObject);
+  const formData = useSelector(selectRegisterData);
+  const progress = useSelector(selectProgress);
 
   const fetchAuctionDetail = debounce(async () => {
     setLoading(true);
@@ -124,44 +80,24 @@ const PaymentDetail = ({
     fetchAuctionDetail();
   }, []);
 
-  const {
-    handleSubmit,
-    setValue,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      paymentId: "",
-      amount: "",
-    },
-  });
-
-  const currentMethod = watch("paymentId");
-
-  const handleMethodSelect = (methodName) => {
-    setValue("paymentId", methodName, { shouldValidate: true });
-  };
-
-  const onSubmit = async (formData) => {
+  const handlenavoiu = () => {
     const data = {
-      paymentId: formData?.paymentId,
+      paymentId: stripKeysData?.paymentId,
       amount: item?.depositamount,
     };
-    setProgress((prev) => {
-      const newProgress = !isCompleted?.security ? parseInt(prev) + 34 : prev;
-      if (newProgress >= 100) {
-        setActive("review");
-      }
-      return newProgress;
-    });
-
     if (!isCompleted?.security) {
+      if (progress === 66) {
+        dispatch(setsliceProgress(34));
+      }
       setIsCompleted((prev) => ({ ...prev, security: true }));
     }
-
-    dispatch(setAuctionRegistrationData(data));
+    const mergedData = {
+      ...formData,
+      ...data,
+    };
+    // Encrypt and encode
+    dispatch(setRegisterData(mergedData));
+    dispatch(setActiveStep("review"));
   };
 
   // payment start strip
@@ -184,10 +120,6 @@ const PaymentDetail = ({
   const [isLoading2, setIsLoading2] = useState(false);
   const [isTriger, setIsTriger] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-
-  console.log(stripeKey, "stripeKey");
-  console.log(stripKeysData, "keys");
-  console.log(pathname, "pathname");
 
   // hadnle get key
   const handleGetKey = () => {
@@ -231,67 +163,58 @@ const PaymentDetail = ({
     <>
       <Container className="bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
         <Form
-          onSubmit={handleSubmit(onSubmit)}
+          // onSubmit={handleSubmit(onSubmit)}
           className="d-flex flex-column gap-2 w-100"
         >
           <Row className="g-8">
             <Col md="6">
-              <Label className="poppins_medium" for="amount">
-                Amount
-              </Label>
-              <Controller
-                name="amount"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    id="amount"
-                    disabled
-                    value={item?.depositamount}
-                    placeholder="Enter Here"
-                    invalid={!!errors.amount}
-                  />
-                )}
-              />
-              {errors.amount && (
-                <FormFeedback>{errors.amount.message}</FormFeedback>
-              )}
-            </Col>
-            <Col md="6">
-              <button onClick={handleCreatePayment}>click me</button>
-            </Col>
-            {/* <Col md="6" className="flex flex-col gap-3">
-            <div className="mb-3">
-              <Label className="form-label" for="paymentId">
-                Payment Method
-              </Label>
-              <div className="flex flex-col gap-2">
-                {paymentMethods.map((method) => (
-                  <PaymentMethod
-                    key={method.name}
-                    method={method}
-                    currentMethod={currentMethod}
-                    onClick={handleMethodSelect}
-                  />
-                ))}
+              <div className="mb-3">
+                <label className="poppins_medium" htmlFor="amount">
+                  Amount
+                </label>
+                <input
+                  id="amount"
+                  type="text"
+                  className="form-control"
+                  value={item?.depositamount}
+                  disabled
+                  placeholder="Enter Here"
+                />
               </div>
-              {errors.paymentId && (
-                <p className="text-red-500 mt-1 text-sm">
-                  {errors.paymentId.message}
-                </p>
-              )}
-            </div>
-          </Col> */}
+            </Col>
+            <Col md="6" className="text-center">
+              <div>
+                {formData?.paymentId ? (
+                  <>
+                    <div className="mb-3 text-lg font-semibold">
+                      Payment Already Done with Strip
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="mb-3 text-lg font-semibold">
+                      Payment with Stripe
+                    </div>
+                    <button
+                      onClick={handleCreatePayment}
+                      className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg flex items-center justify-center gap-2"
+                    >
+                      <FaCreditCard size={20} /> {/* Stripe icon */}
+                      Pay with Stripe
+                    </button>
+                  </>
+                )}
+              </div>
+              <div className="flex justify-end mt-3">
+                <div
+                  onClick={handlenavoiu}
+                  className="bg_primary w-fit cursor-pointer text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
+                >
+                  Next
+                </div>
+              </div>
+            </Col>
           </Row>
-          <Col md="6" className="text-end ml-auto">
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
-            >
-              Confirm Payment
-            </button>
-          </Col>
         </Form>
       </Container>
 
@@ -325,9 +248,9 @@ const PaymentDetail = ({
             onClick={() => {
               setIsTriger(true);
             }}
-            className="w-100 py-[12px] mt-3 w-full flex justify-center px-5 plusJakara_medium rounded-5 bg_primary2 text_white"
+            className="w-100 py-[12px] mt-3 w-full flex justify-center px-5 plusJakara_medium rounded-5 bg_primary text_white"
           >
-            {isLoading2 ? <Spinner size={18} color="#fff" /> : "Pay Proposal"}
+            {isLoading2 ? <Spinner size={18} color="#fff" /> : "Pay Amount"}
           </button>
         </div>
       </Modal>

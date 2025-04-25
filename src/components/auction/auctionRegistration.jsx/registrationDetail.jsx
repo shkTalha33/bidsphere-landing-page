@@ -20,14 +20,9 @@ const RegistrationDetail = () => {
   // const [progress, setProgress] = useState(0);
   const progress = useSelector(selectProgress); // This should give the updated progress
 
-
-  console.log(progress , "progress");
-  
   const [data, setData] = useState({});
   // const [active, setActive] = useState("personal");
   const active = useSelector(selectActiveStep);
-
-  console.log(active , "active");
   
   const dispatch = useDispatch();
   const searchParams = useSearchParams();

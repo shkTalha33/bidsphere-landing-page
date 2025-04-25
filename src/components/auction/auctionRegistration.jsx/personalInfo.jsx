@@ -86,7 +86,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
   const onSubmit = (formData) => {
     if (!isCompleted?.personal) {
       if (progress === 0) {
-        dispatch(setsliceProgress(33.3));
+        dispatch(setsliceProgress(33));
       }
       setIsCompleted((prev) => ({ ...prev, personal: true }));
     }
