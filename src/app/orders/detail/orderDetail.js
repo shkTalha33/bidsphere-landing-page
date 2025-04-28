@@ -32,7 +32,7 @@ import OrderSummary from "./orderSummary";
 import DeliveryInfo from "./deliveryInfo";
 import DeliveryTime from "./deliveryTime";
 
-export default function OrderDetails({ orderDetail, detailLoading }) {
+export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
   const [currentActiveButton, setCurrentActiveButton] = useState("all orders");
   const [currentSelectedButton, setCurrentSelectedButton] =
     useState("order summary");
@@ -47,7 +47,7 @@ export default function OrderDetails({ orderDetail, detailLoading }) {
   ];
 
   const handleBakcOr = () => {
-    router.push("/orders");
+    router.push(backrout);
   };
 
   const handleChatUser = (user) => {
@@ -65,13 +65,12 @@ export default function OrderDetails({ orderDetail, detailLoading }) {
     router.push(`/chat?query=${enData}`);
   };
 
-
   return (
     <>
       <Container className="bg_white rounded-[9px]">
         {detailLoading ? (
           <>
-            <div>
+            <div className="flex flex-col gap-4 p-3">
               <Skeleton active />
             </div>
           </>
@@ -157,10 +156,11 @@ export default function OrderDetails({ orderDetail, detailLoading }) {
                   <AlertSection
                     type={"info"}
                     message={"info"}
-                    description={`Your order is shipped on ${moment(orderDetail?.shippedDate)
+                    description={`Your order is shipped on ${moment(
+                      orderDetail?.shippedDate
+                    )
                       .format("DD-MMMM-YYYY")
                       .toLowerCase()}. You will receive it soon.`}
-                    
                   />
                 </Row>
                 <Row className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">

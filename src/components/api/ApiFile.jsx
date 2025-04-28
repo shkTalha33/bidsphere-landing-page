@@ -52,6 +52,11 @@ const deleteNotification = "notification";
 const seenNotification = "notification/check-seen";
 const getstripKey = "payment/key";
 const createPaymentStripe = "payment/create";
+
+// get faq category
+const getFaqCategory = "pages/faqcat";
+const getFaqById = "pages/faqs";
+const getInvoiceDetail = "auction/order/details";
 export {
   login,
   imageUpload,
@@ -97,4 +102,7 @@ export {
   seenNotification,
   getstripKey,
   createPaymentStripe,
+  getFaqCategory,
+  getFaqById,
+  getInvoiceDetail,
 };

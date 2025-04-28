@@ -1,42 +1,79 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
 
+import { GetOrders, orderGetbyid } from "@/components/api/ApiFile";
+import ApiFunction from "@/components/api/apiFuntions";
 import { car1 } from "@/components/assets/icons/icon";
 import ProductTable from "@/components/common/dataTables/productTable";
 import TopSection from "@/components/common/TopSection";
 import TabHeader from "@/components/tabHeader";
+import moment from "moment";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
+import OrderDetails from "@/app/orders/detail/orderDetail";
 /* eslint-disable @next/next/no-img-element */
 
 const ProfilePage = () => {
+  const { get } = ApiFunction();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
-  const [lastId, setLastId] = useState(0);
+  const [lastId, setLastId] = useState(1);
   const [count, setCount] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [data, setData] = useState([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const urlParams = new URLSearchParams(searchParams);
+  const urlId = urlParams.get("id");
+  const [orderDetail, setOrderDetail] = useState("");
+  const [detailLoading, setDetailLoading] = useState(false);
+  // handle get all order
+
+  const handleGetOrder = () => {
+    setLoading(true);
+    const api = `${GetOrders}/${lastId}?status=winner`;
+
+    get(api)
+      .then((res) => {
+        if (res?.success && res?.applications?.length > 0) {
+          setData(res?.applications);
+          setCount(res?.count?.totalPage);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    handleGetOrder();
+  }, [lastId]);
+
+  // handle detail
+
+  const handleDetail = (item) => {
+    router.replace(`/profile/won-lots?id=${item?._id}`);
+  };
 
   const columns = [
     {
-      name: "#",
-      minWidth: "20px",
-      maxWidth: "60px",
-      cell: (_, index) => (
-        <span className="text-center flex items-center justify-center">
-          {index + 1 || "1"}
-        </span>
-      ),
-    },
-    {
-      name: "Item Name",
+      name: "Auction Name",
       minWidth: "150px",
       maxWidth: "350px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize gap-2">
-          <Image src={car1} width={32} height={32} className="w-8" />
-          {row?.name || "John"}
+          <img
+            src={row?.auction?.images[0]}
+            alt
+            className="w-[2rem] h-[2rem] rounded-[6px]"
+          />
+          {row?.auction?.name || ""}
         </div>
       ),
     },
@@ -46,47 +83,39 @@ const ProfilePage = () => {
       maxWidth: "250px",
       cell: (row) => (
         <div className="flex items-center justify-center">
-          {row?.category || "Hybrid"}
+          {row?.auction?.category?.name || ""}
         </div>
       ),
     },
+
     {
-      name: "Invoice#",
-      minWidth: "120px",
-      maxWidth: "250px",
-      cell: (row) => (
-        <div className="flex items-center justify-center">
-          {row?.invoice || "Hybrid"}
-        </div>
-      ),
-    },
-    {
-      name: "Date & Time",
-      minWidth: "150px",
-      maxWidth: "350px",
+      name: "Start Date",
+      minWidth: "200px",
+      maxWidth: "400px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize">
-          {row?.date || "12/12/2000"}
+          {moment.utc(row?.auction?.start_date).format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
     },
     {
-      name: "Deposit Amount",
-      minWidth: "120px",
-      maxWidth: "200px",
+      name: "End Date",
+      minWidth: "200px",
+      maxWidth: "400px",
       cell: (row) => (
-        <div className="flex items-center justify-center capitalize cursor-pointer">
-          {row?.depositAmount}
+        <div className="flex items-center justify-center capitalize">
+          {moment.utc(row?.auction?.end_date).format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
     },
+
     {
       name: "Status",
       minWidth: "180px",
       maxWidth: "200px",
       cell: (row) => (
         <div
-          className={`flex items-center justify-center capitalize min-w-36 whitespace-nowrap rounded-full cursor-pointer bg-[#EAF5F2] px-4 py-1 ${
+          className={`flex items-center justify-center capitalize fit-fit whitespace-nowrap rounded-[10px] cursor-pointer bg-[#EAF5F2] px-4 py-1 ${
             row?.status === "approved"
               ? "text-[#56CDAD] bg-[#EAF5F2]"
               : row.status === "pending"
@@ -100,82 +129,54 @@ const ProfilePage = () => {
     },
     {
       name: "Action",
-      minWidth: "180px",
-      maxWidth: "200px",
+      minWidth: "100px",
+      maxWidth: "120px",
       cell: (row) => (
-        <button className="px-2 py-1 rounded-lg border-[1px] text-xs border-[#660000] flex items-center justify-center text_primary">
-          View Detail
-        </button>
+        <>
+          {/* {currentActiveButton !== "Payement" && ( */}
+          <div
+            className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#660000] poppins_medium capitalize cursor-pointer"
+            onClick={() => {
+              handleDetail(row);
+            }}
+          >
+            view details
+          </div>
+          {/* )} */}
+        </>
       ),
     },
   ];
 
-  const data = [
-    {
-      name: "Laptop",
-      category: "Electronics",
-      invoice: "INV-1001",
-      date: "2024-02-19 10:30 AM",
-      depositAmount: "$1200",
-      status: "approved",
-    },
-    {
-      name: "Smartphone",
-      category: "Electronics",
-      invoice: "INV-1002",
-      date: "2024-02-18 03:45 PM",
-      depositAmount: "$800",
-      status: "completed",
-    },
-    {
-      name: "Coffee Table",
-      category: "Furniture",
-      invoice: "INV-1003",
-      date: "2024-02-17 12:15 PM",
-      depositAmount: "$300",
-      status: "pending",
-    },
-    {
-      name: "Washing Machine",
-      category: "Appliances",
-      invoice: "INV-1004",
-      date: "2024-02-16 09:00 AM",
-      depositAmount: "$950",
-      status: "approved",
-    },
-    {
-      name: "Gaming Chair",
-      category: "Furniture",
-      invoice: "INV-1005",
-      date: "2024-02-15 06:20 PM",
-      depositAmount: "$450",
-      status: "completed",
-    },
-    {
-      name: "Headphones",
-      category: "Electronics",
-      invoice: "INV-1006",
-      date: "2024-02-14 02:10 PM",
-      depositAmount: "$150",
-      status: "pending",
-    },
-    {
-      name: "Microwave Oven",
-      category: "Appliances",
-      invoice: "INV-1007",
-      date: "2024-02-13 11:30 AM",
-      depositAmount: "$500",
-      status: "approved",
-    },
-    {
-      name: "Office Desk",
-      category: "Furniture",
-      invoice: "INV-1008",
-      date: "2024-02-12 08:45 AM",
-      depositAmount: "$700",
-      status: "completed",
-    },
-  ];
+  // order get by id
+
+  const handlegetOrderById = () => {
+    setDetailLoading(true);
+    const api = `${orderGetbyid}/${urlId}`;
+    get(api)
+      .then((res) => {
+        if (res?.success) {
+          setOrderDetail(res?.order);
+        }
+        setDetailLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setDetailLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    if (urlId) {
+      handlegetOrderById();
+    }
+  }, [urlId]);
+
+  // back to order list
+  const backetoOrderList = () => {
+    router.push("/orders");
+    setOrderDetail("");
+  };
 
   return (
     <main className="bg-gray-100 pt-20 flex flex-col items-start min-h-screen">
@@ -189,21 +190,33 @@ const ProfilePage = () => {
             mt={0}
             title="Won Lots"
           />
-          <div className="bg-white px-8 rounded-lg w-full shadow-sm">
-            <ProductTable
-              rowHeading="won lots"
-              count={count}
-              loading={loading}
-              setCurrentPage={setPage}
-              currentPage={page}
-              columns={columns}
-              data={data}
-              setPageNumber={setPage}
-              type="search"
-              setLastId={setLastId}
-              itemsPerPage={itemsPerPage}
-            />
-          </div>
+          {urlId ? (
+            <>
+              <OrderDetails
+                orderDetail={orderDetail}
+                detailLoading={detailLoading}
+                backrout={"/profile/won-lots"}
+              />
+            </>
+          ) : (
+            <>
+              <div className="bg-white px-8 rounded-lg w-full shadow-sm">
+                <ProductTable
+                  rowHeading="won lots"
+                  count={count}
+                  loading={loading}
+                  setCurrentPage={setPage}
+                  currentPage={page}
+                  columns={columns}
+                  data={data}
+                  setPageNumber={setPage}
+                  type="search"
+                  setLastId={setLastId}
+                  itemsPerPage={itemsPerPage}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </main>

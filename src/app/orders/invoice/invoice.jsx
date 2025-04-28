@@ -19,8 +19,10 @@ import { Input } from "antd";
 import { uploadFile } from "@/components/api/uploadFile";
 import { X } from "react-feather";
 import ApiFunction from "@/components/api/apiFuntions";
-import { invoicePayment } from "@/components/api/ApiFile";
+import { getInvoiceDetail, invoicePayment } from "@/components/api/ApiFile";
 import toast from "react-hot-toast";
+import DownloadInvoice from "./downloadInvoice";
+import { handleError } from "@/components/api/errorHandler";
 const Invoice = ({
   orderDetail,
   detailLoading,
@@ -81,6 +83,8 @@ const Invoice = ({
     setShow(false);
   };
   const selectedPayment = watch("paymentMethod");
+
+  console.log(orderDetail, "orderDetail");
 
   // proof image upload
   const getimgUrl = watch("proofImg");
@@ -148,6 +152,24 @@ const Invoice = ({
         console.log(error);
         toast.error(error?.response?.data?.message);
       });
+  };
+  const handleDownloadInvoice = async (invoiceId) => {
+    try {
+      // Show loading indicator if needed
+
+      // Fetch the invoice data
+      const endpoint = `${getInvoiceDetail}/${invoiceId}`;
+      const response = await get(endpoint);
+
+      if (response.success) {
+        await DownloadInvoice(response);
+      } else {
+        // Handle error case
+        console.error("Failed to fetch invoice data");
+      }
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   return (
@@ -299,6 +321,16 @@ const Invoice = ({
                 <p className="text-[#25324B] font-medium">
                   {orderDetail?.trackingnumber}
                 </p>
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <div
+                onClick={() => {
+                  handleDownloadInvoice(orderDetail?._id);
+                }}
+                className="text-[1rem] py-[5px] px-[12px] bg-[#660000] text-white rounded-[8px] poppins_regular whitespace-nowrap flex items-center gap-2 cursor-pointer"
+              >
+                Download Invoice
               </div>
             </div>
           </section>

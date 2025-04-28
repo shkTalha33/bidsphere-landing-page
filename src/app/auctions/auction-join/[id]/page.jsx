@@ -363,7 +363,8 @@ export default function Page() {
 
               {currentLot?.status === "winner" || winnerLot?.bid ? (
                 <>
-                  {userData?._id === currentLot?.winner || winnerLot?.winner ? (
+                  {userData?._id === currentLot?.winner ||
+                  userData?._id === winnerLot?.winner?._id ? (
                     <div className="flex flex-col items-center justify-center bg-green-50 border border-green-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
                       <CheckCircleOutlined className="text-green-500 text-5xl mb-4" />
                       <h2 className="text-xl poppins_medium text-green-600 mb-2">

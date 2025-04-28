@@ -2,7 +2,7 @@ import React from 'react';
 
 const DeliveryInfo = ({ orderDetail }) => {
   return (
-    <div className="bg-white rounded-lg p-4 shadow-sm">
+    <div className="rounded-lg p-4">
       <h2 className="text-lg poppins_semibold text-gray-800 mb-4">Delivery Information</h2>
 
       {orderDetail?.address && (

@@ -138,53 +138,29 @@ const Page = () => {
       cell: (row) => (
         <>
           {row?.transaction?._id ? (
-            <>
-              <div
-                onClick={() => {
-                  handleinvoice(row);
-                }}
-                className="h-6 shadow md:h-10 bg_primary cursor-pointer text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center"
-              >
-                See Invoice
-              </div>
-            </>
+            <div
+              onClick={() => handleinvoice(row)}
+              className="h-6 md:h-10 px-2 flex items-center justify-center text-white cursor-pointer text-[0.8rem] rounded-[10px] w-fit shadow bg-gradient-to-r from-[#660000] to-[#993333] hover:from-[#550000] hover:to-[#800000] transition-all duration-300"
+            >
+              See Invoice
+            </div>
           ) : (
-            <>
-              <h4 className="text-center">No Invoice</h4>
-            </>
+            <h4 className="text-center text-gray-400 italic">No Invoice</h4>
           )}
         </>
       ),
     },
-
     {
       name: "Status",
       minWidth: "120px",
       maxWidth: "200px",
-      cell: (row) => {
-        const getStatusClasses = (status) => {
-          switch (status?.toLowerCase()) {
-            case "shipped":
-              return "bg-[#FFEAEA] text-[#660000]";
-            case "intransit":
-              return "bg-[#FFF1E0] text-[#660000]";
-            case "delivered":
-              return "bg-[#EAF5F2] text-[#660000]";
-            default:
-              return "bg-[#EEEAFD] text-[#660000]";
-          }
-        };
-
-        return (
-          <div
-            className={`w-fit text-xs cursor-pointer font-medium rounded-[8px] px-3 py-1 text-center capitalize ${getStatusClasses(
-              row?.status
-            )}`}
-          >
-            {row?.status}
-          </div>
-        );
-      },
+      cell: (row) => (
+        <div
+          className={`w-fit text-xs cursor-pointer font-medium rounded-[8px] px-3 py-1 text-center capitalize`}
+        >
+          {row?.status}
+        </div>
+      ),
     },
     {
       name: "Action",
@@ -347,6 +323,7 @@ const Page = () => {
               <OrderDetails
                 orderDetail={orderDetail}
                 detailLoading={detailLoading}
+                backrout={"/orders"}
               />
             ) : (
               <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px]">

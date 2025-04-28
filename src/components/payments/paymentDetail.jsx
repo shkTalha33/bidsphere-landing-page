@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { Col, Container, Row } from "reactstrap";
 import {
@@ -13,37 +14,136 @@ import {
 } from "../assets/icons/icon";
 import Breadcrumbs from "../common/Breadcrumbs";
 import useCurrency from "../hooks/useCurrency";
+import { registrationTracking } from "../api/ApiFile";
+import ApiFunction from "../api/apiFuntions";
+import { IoMdCheckmark } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
+import ProductTable from "../common/dataTables/productTable";
+import { format } from "date-fns";
 
 export default function PaymentDetail() {
+  const { get } = ApiFunction();
+  const [paymentHistory, setPaymentHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [page, setPage] = useState(0);
+  const [lastId, setLastId] = useState(1);
+  const [count, setCount] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
   const { formatPrice, convert } = useCurrency();
-  const [currentPaymentMethod, setCurrentPaymentMethod] = useState();
-  const onChange = (key) => {
-    console.log(key);
+
+  const columns = [
+    {
+      name: "#",
+      minWidth: "20px",
+      maxWidth: "60px",
+      cell: (_, index) => (
+        <span className="text-center flex items-center justify-center">
+          {index + 1 || "1"}
+        </span>
+      ),
+    },
+    {
+      name: "Item Name",
+      minWidth: "150px",
+      maxWidth: "350px",
+      cell: (row) => (
+        <div className="flex items-center justify-center capitalize gap-2">
+          <Image
+            src={row?.auction?.images[0]}
+            width={32}
+            height={32}
+            alt={row?.auction?.name}
+            className="w-8 rounded-full h-8"
+          />
+          {row?.auction?.name || "N/A"}
+        </div>
+      ),
+    },
+    {
+      name: "Category",
+      minWidth: "120px",
+      maxWidth: "250px",
+      cell: (row) => (
+        <div className="flex items-center justify-center capitalize">
+          {row?.auction?.category?.name || "N/A"}
+        </div>
+      ),
+    },
+    {
+      name: "Invoice#",
+      minWidth: "120px",
+      maxWidth: "250px",
+      cell: (row) => (
+        <div className="flex items-center justify-center">
+          {row?.invoiceId || "N/A"}
+        </div>
+      ),
+    },
+    {
+      name: "Date & Time",
+      minWidth: "150px",
+      maxWidth: "350px",
+      cell: (row) => (
+        <div className="flex items-center justify-center capitalize">
+          {row?.createdAt
+            ? format(new Date(row?.createdAt), "dd/MM/yyyy")
+            : "12/12/2000"}
+        </div>
+      ),
+    },
+    {
+      name: "Amount",
+      minWidth: "120px",
+      maxWidth: "200px",
+      cell: (row) => (
+        <div className="flex items-center justify-center capitalize cursor-pointer">
+          {formatPrice(convert(row?.auction?.depositamount, "LBP"))}
+        </div>
+      ),
+    },
+    {
+      name: "Status",
+      minWidth: "120px",
+      maxWidth: "200px",
+      cell: (row) => (
+        <div
+          className={`flex items-center justify-center capitalize whitespace-nowrap rounded-full cursor-pointer bg-[#EAF5F2] px-4 py-1 ${
+            row?.status === "approved"
+              ? "text-[#56CDAD] bg-[#EAF5F2]"
+              : row.status === "pending"
+              ? "text-[#4640DE] bg-[#E8E7F7]"
+              : " bg-[#EAF5F2] text-[#6DC1FE]"
+          } capitalize`}
+        >
+          {row?.status}
+        </div>
+      ),
+    },
+  ];
+
+  // handle payment history
+  const handlePaymentHistory = () => {
+    setLoading(true);
+    const api = `${registrationTracking}${lastId}`;
+    get(api)
+      .then((res) => {
+        if (res?.success && res?.applications?.length > 0) {
+          setPaymentHistory(res?.applications);
+          setCount(res?.count?.totalPage);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error, "error");
+        setLoading(false);
+      });
   };
 
-  const router = useRouter();
-
-  const paymentMethods = [
-    {
-      image: payment,
-      cardNumber: "**** **** **** 8970",
-      expiryDate: "12/26",
-      title: "visa",
-    },
-    {
-      image: payment1,
-      cardNumber: "**** **** **** 8970",
-      expiryDate: "12/26",
-      title: "master",
-    },
-    {
-      image: payment2,
-      cardNumber: "**** **** **** 8970",
-      expiryDate: "12/26",
-      title: "paypal",
-    },
-    { image: payment3, cardNumber: "Cash", expiryDate: "12/26", title: "cash" },
-  ];
+  useEffect(() => {
+    handlePaymentHistory();
+  }, [lastId]);
 
   return (
     <>
@@ -57,8 +157,24 @@ export default function PaymentDetail() {
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white p-2 p-md-5 rounded-[9px] mt-4">
-        <div className="bg_primary p-3 p-md-4 rounded-[9px]">
+      <Container className="bg_white p-2 p-md-3 rounded-[9px] mt-4">
+        <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px] mt-3">
+          <ProductTable
+            rowHeading="all Payments"
+            count={count}
+            loading={loading}
+            setCurrentPage={setPage}
+            currentPage={page}
+            columns={columns}
+            data={paymentHistory}
+            setPageNumber={setPage}
+            type="search"
+            setLastId={setLastId}
+            itemsPerPage={itemsPerPage}
+          />
+        </div>
+
+        {/* <div className="bg_primary p-3 p-md-4 rounded-[9px]">
           <div className="flex items-center flex-wrap gap-2 gap-md-3 justify-between">
             <div className="flex gap-2 gap-md-4 flex-wrap items-center">
               <p className="poppins_semibold text-2xl sm:text-3xl md:text-4xl text-white mb-0">
@@ -153,7 +269,7 @@ export default function PaymentDetail() {
               Done
             </button>
           </Col>
-        </Row>
+        </Row> */}
       </Container>
     </>
   );
