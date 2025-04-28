@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getFavouriteAuctions, likeAuction } from "../api/ApiFile";
 import { baseURL } from "../api/axiosInstance";
+import { handleError } from "../api/errorHandler";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -15,7 +16,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Products", "Auction", "User", "Bid"],
+  tagTypes: ["Products", "Auction", "User", "Bid", "Favorites"],
   endpoints: (builder) => ({
     // Get auctions with pagination - using your original endpoint structure
     getAuctions: builder.query({
@@ -90,6 +91,7 @@ export const apiSlice = createApi({
         { type: "Auction", id: "all" },
         { type: "Auction", id: "trending" },
         { type: "Auction", id: "popular" },
+        { type: "Favorites", id: "LIST" },
       ],
     }),
 
@@ -104,6 +106,7 @@ export const apiSlice = createApi({
         { type: "Auction", id: "all" },
         { type: "Auction", id: "trending" },
         { type: "Auction", id: "popular" },
+        { type: "Favorites", id: "LIST" },
       ],
     }),
 
@@ -116,6 +119,7 @@ export const apiSlice = createApi({
         { type: "Auction", id: "all" },
         { type: "Auction", id: "trending" },
         { type: "Auction", id: "popular" },
+        { type: "Favorites", id: "LIST" },
       ],
     }),
 
@@ -125,13 +129,18 @@ export const apiSlice = createApi({
         method: "PUT",
       }),
       // Only invalidate the specific auction
-      invalidatesTags: (result, error, id) => [{ type: "Auction", id }],
+      invalidatesTags: (result, error, id) => [
+        { type: "Auction", id },
+        { type: "Favorites", id: "LIST" }, // Added to invalidate favorites when liking/unliking
+      ],
 
-      // Use onQueryStarted to manually update the cache for all three tabs
+      // Use onQueryStarted to manually update the cache for all tabs
       onQueryStarted: async (id, { dispatch, queryFulfilled, getState }) => {
         try {
-          // Wait for the mutation to complete
-          await queryFulfilled;
+          const { data } = await queryFulfilled;
+          // Determine if this was a like or unlike action based on response
+          // Assuming your API returns the updated auction with the likes status
+          const isLiked = data?.likes || false;
 
           // Update auction in all tabs without refetching
           const updateCache = (endpointName, queryParams) => {
@@ -146,9 +155,9 @@ export const apiSlice = createApi({
                     );
 
                     if (auctionIndex !== -1) {
-                      // Toggle the likes status
+                      // Update the likes status based on the response
                       const auction = draft.auctions[auctionIndex];
-                      auction.likes = !auction.likes;
+                      auction.likes = isLiked;
                     }
                   }
                 }
@@ -176,11 +185,74 @@ export const apiSlice = createApi({
             id: 1,
             params: { popular: true },
           });
+
+          // Update favorites cache based on whether it was liked or unliked
+          if (isLiked) {
+            // If liked, add to favorites if not already there
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getFavoriteAuctions",
+                1,
+                (draft) => {
+                  // Only proceed if we have draft data
+                  if (draft && draft.auctions) {
+                    // Check if auction already exists in favorites
+                    const existingIndex = draft.auctions.findIndex(
+                      (auction) => auction._id === id
+                    );
+
+                    // If not in favorites, fetch the auction details and add it
+                    if (existingIndex === -1) {
+                      // Find the auction in one of the other caches
+                      const state = getState();
+                      const allAuctionsCache =
+                        apiSlice.endpoints.getAuctions.select({
+                          endpoint: "auctions",
+                          id: 1,
+                          params: {},
+                        })(state);
+
+                      if (allAuctionsCache.data) {
+                        const auction = allAuctionsCache.data.auctions.find(
+                          (a) => a._id === id
+                        );
+
+                        if (auction) {
+                          // Add to favorites with likes set to true
+                          const auctionToAdd = { ...auction, likes: true };
+                          draft.auctions.unshift(auctionToAdd);
+                        }
+                      }
+                    }
+                  }
+                }
+              )
+            );
+          } else {
+            // If unliked, remove from favorites
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getFavoriteAuctions",
+                1,
+                (draft) => {
+                  if (draft && draft.auctions) {
+                    const index = draft.auctions.findIndex(
+                      (auction) => auction._id === id
+                    );
+                    if (index !== -1) {
+                      draft.auctions.splice(index, 1);
+                    }
+                  }
+                }
+              )
+            );
+          }
         } catch (err) {
-          // Error handling is already done in your component with the optimistic update
+          handleError(err);
         }
       },
     }),
+
     getFavoriteAuctions: builder.query({
       query: (page = 1) => `${getFavouriteAuctions}${page}`,
       serializeQueryArgs: ({ endpointName }) => {
@@ -215,21 +287,23 @@ export const apiSlice = createApi({
             ]
           : [{ type: "Favorites", id: "LIST" }],
     }),
+
     toggleFavoriteAuction: builder.mutation({
       query: (id) => ({
         url: `${likeAuction}${id}`,
         method: "PUT",
       }),
-      // Only invalidate the specific auction in the favorites list
+      // Invalidate both Favorites and the specific auction
       invalidatesTags: (result, error, id) => [
         { type: "Favorites", id },
         { type: "Favorites", id: "LIST" },
+        { type: "Auction", id }, // Also invalidate this specific auction everywhere
       ],
 
-      // Handle optimistic updates for the favorites list
+      // Handle optimistic updates for both favorites and regular auction views
       onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
-        // Get a reference to the current favorites data
-        const patchResult = dispatch(
+        // Update the Favorites list optimistically
+        const favoritesPatchResult = dispatch(
           apiSlice.util.updateQueryData("getFavoriteAuctions", 1, (draft) => {
             if (draft && draft.auctions) {
               // Find and remove the auction (since unliking removes from favorites)
@@ -243,12 +317,47 @@ export const apiSlice = createApi({
           })
         );
 
+        // Also update auctions in all tabs optimistically
+        const updateAuctionTab = (params) => {
+          return dispatch(
+            apiSlice.util.updateQueryData(
+              "getAuctions",
+              {
+                endpoint: "auctions",
+                id: 1,
+                params,
+              },
+              (draft) => {
+                if (draft && draft.auctions) {
+                  const auctionIndex = draft.auctions.findIndex(
+                    (auction) => auction._id === id
+                  );
+
+                  if (auctionIndex !== -1) {
+                    // Update the likes status to false (unliked)
+                    const auction = draft.auctions[auctionIndex];
+                    auction.likes = false;
+                  }
+                }
+              }
+            )
+          );
+        };
+
+        // Update all three tabs
+        const allPatchResult = updateAuctionTab({});
+        const trendingPatchResult = updateAuctionTab({ trending: true });
+        const popularPatchResult = updateAuctionTab({ popular: true });
+
         try {
           // Wait for the API call to complete
           await queryFulfilled;
         } catch {
-          // If the API call fails, revert the optimistic update
-          patchResult.undo();
+          // If the API call fails, revert all optimistic updates
+          favoritesPatchResult.undo();
+          allPatchResult.undo();
+          trendingPatchResult.undo();
+          popularPatchResult.undo();
         }
       },
     }),
