@@ -34,7 +34,7 @@ const Invoice = ({
   const router = useRouter();
   const [isUploading, setIsUploading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { put } = ApiFunction();
+  const { put, get } = ApiFunction();
   // payment proof modal
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
@@ -83,8 +83,6 @@ const Invoice = ({
     setShow(false);
   };
   const selectedPayment = watch("paymentMethod");
-
-  console.log(orderDetail, "orderDetail");
 
   // proof image upload
   const getimgUrl = watch("proofImg");
@@ -152,24 +150,6 @@ const Invoice = ({
         console.log(error);
         toast.error(error?.response?.data?.message);
       });
-  };
-  const handleDownloadInvoice = async (invoiceId) => {
-    try {
-      // Show loading indicator if needed
-
-      // Fetch the invoice data
-      const endpoint = `${getInvoiceDetail}/${invoiceId}`;
-      const response = await get(endpoint);
-
-      if (response.success) {
-        await DownloadInvoice(response);
-      } else {
-        // Handle error case
-        console.error("Failed to fetch invoice data");
-      }
-    } catch (error) {
-      handleError(error);
-    }
   };
 
   return (
@@ -324,14 +304,7 @@ const Invoice = ({
               </div>
             </div>
             <div className="flex justify-end">
-              <div
-                onClick={() => {
-                  handleDownloadInvoice(orderDetail?._id);
-                }}
-                className="text-[1rem] py-[5px] px-[12px] bg-[#660000] text-white rounded-[8px] poppins_regular whitespace-nowrap flex items-center gap-2 cursor-pointer"
-              >
-                Download Invoice
-              </div>
+              {/* <DownloadInvoice invoiceID={orderDetail?._id} /> */}
             </div>
           </section>
         </>
