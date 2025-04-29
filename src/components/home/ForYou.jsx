@@ -33,9 +33,7 @@ export default function ForYou() {
               title={"for you"}
               heading1={"ongoing"}
               heading2={"Auctions"}
-              description={
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et "
-              }
+              description="Discover all the exciting ongoing auctions at Castle-Auction. Bid in real-time and secure exclusive lots before time runs out."
             />
             {isLoading ? (
               <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">

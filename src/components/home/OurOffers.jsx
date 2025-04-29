@@ -2,7 +2,7 @@
 "use client";
 
 import { Col, Container, Row } from "reactstrap";
-import { art, electronics, vehicles } from "../assets/icons/icon";
+import { art, electronics, StaticImage, vehicles } from "../assets/icons/icon";
 import PlansCard from "./PlanCard";
 import CustomSwiper from "./CustomSwiper";
 import { SwiperSlide } from "swiper/react";
@@ -14,6 +14,8 @@ import { getCategory } from "../api/ApiFile";
 import { useEffect } from "react";
 import { useGetAuctionsQuery } from "../redux/apiSlice";
 import { Spinner } from "react-bootstrap";
+import Image from "next/image";
+import { Skeleton } from "antd";
 
 export default function OurOffers() {
   const { get } = ApiFunction();
@@ -36,31 +38,50 @@ export default function OurOffers() {
             title="What We Offer"
             heading1={"We Offer Creative"}
             heading2={"Categories"}
-            description=" Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et"
+            description="At Castle-Auction, explore a diverse range of auction categories tailored for every collector and bidder. From exclusive lots to unique finds, we bring the best under one platform."
           />
           <Col md="12">
-            <CustomSwiper
-              spaceBetween={10}
-              slidesPerView={3}
-              pagination={false}
-              loop={false}
-              navigation={true}
-              breakpoints={{
-                640: { spaceBetween: 5, slidesPerView: 2 },
-                768: { spaceBetween: 10, slidesPerView: 3 },
-                1024: { spaceBetween: 10, slidesPerView: 3 },
-              }}
-            >
-              {data &&
-                data.categories?.map((feature, index) => (
-                  <SwiperSlide key={index}>
-                    <PlansCard plan={feature} index={index} />
-                  </SwiperSlide>
-                ))}
-            </CustomSwiper>
+            {isLoading ? (
+              <>
+                <div>
+                  <Skeleton active />
+                </div>
+              </>
+            ) : (
+              <>
+                {data?.categories?.length > 0 ? (
+                  <CustomSwiper
+                    spaceBetween={10}
+                    slidesPerView={3}
+                    pagination={false}
+                    loop={false}
+                    navigation={true}
+                    breakpoints={{
+                      640: { spaceBetween: 5, slidesPerView: 2 },
+                      768: { spaceBetween: 10, slidesPerView: 3 },
+                      1024: { spaceBetween: 10, slidesPerView: 3 },
+                    }}
+                  >
+                    {data?.categories?.map((feature, index) => (
+                      <SwiperSlide key={index}>
+                        <PlansCard plan={feature} index={index} />
+                      </SwiperSlide>
+                    ))}
+                  </CustomSwiper>
+                ) : (
+                  <>
+                    <div className="flex flex-col items-center justify-center">
+                      <Image
+                        className="w-[5rem] h-[5rem]"
+                        src={StaticImage}
+                        alt=""
+                      />
+                      <h5>No category Found</h5>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
           </Col>
         </Row>
       </Container>
