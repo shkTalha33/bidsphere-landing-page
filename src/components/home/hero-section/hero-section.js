@@ -35,7 +35,7 @@ const HeroSection = () => {
                 every transaction is seamless.
               </motion.p>
 
-              <motion.button variants={fadeIn("down", "tween", 0.3, 0.8)} className="bg-white text-black px-12 py-2 md:py-3 rounded-md sm:text-lg font-semibold hover:bg-gray-100 transition-colors">
+              <motion.button variants={fadeIn("down", "tween", 0.3, 0.8)} className="bg-white text-black px-12 py-2 md:py-3 rounded-md sm:text-lg poppins_semibold hover:bg-gray-100 transition-colors">
                 Bid Now
               </motion.button>
             </div>

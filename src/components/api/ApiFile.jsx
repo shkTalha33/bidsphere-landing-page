@@ -58,6 +58,7 @@ const getFaqCategory = "pages/faqcat";
 const getFaqById = "pages/faqs";
 const getInvoiceDetail = "auction/order/details";
 const notificationemail = "support/subscribe";
+const getSupportDetail = "support/details";
 export {
   login,
   imageUpload,
@@ -107,4 +108,5 @@ export {
   getFaqById,
   getInvoiceDetail,
   notificationemail,
+  getSupportDetail
 };

@@ -214,37 +214,37 @@ const Invoice = ({
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Invoice Number</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.transaction?.invoice_num}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Issued Date</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {moment(orderDetail?.transaction?.issue_date).format("LLL")}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Expiry Date</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {moment(orderDetail?.transaction?.expirey_date).format("LLL")}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Payment Method</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.transaction?.paymentMethodType}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Payment Status</p>
-                <p className="text-[#28a745] font-semibold capitalize">
+                <p className="text-[#28a745] poppins_semibold capitalize">
                   {orderDetail?.transaction?.status}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Amount Paid</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {formatPrice(
                     convert(orderDetail?.transaction?.amount, "LBP")
                   )}
@@ -268,37 +268,37 @@ const Invoice = ({
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Customer</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.user?.fname} {orderDetail?.user?.lname}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Email</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.user?.email}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Shipping Address</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.address}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Delivery Date</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {moment(orderDetail?.deliveryDate).format("LLL")}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Shipped Date</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {moment(orderDetail?.shippedDate).format("LLL")}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Tracking Number</p>
-                <p className="text-[#25324B] font-medium">
+                <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.trackingnumber}
                 </p>
               </div>

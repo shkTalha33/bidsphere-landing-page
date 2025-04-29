@@ -190,13 +190,13 @@ const PaymentDetail = ({
               <div>
                 {formData?.paymentId || urlStatus === "succeeded" ? (
                   <>
-                    <div className="mb-3 text-lg font-semibold">
+                    <div className="mb-3 text-lg poppins_semibold">
                       Payment Already Done with Strip
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="mb-3 text-lg font-semibold">
+                    <div className="mb-3 text-lg poppins_semibold">
                       Payment with Stripe
                     </div>
                     <div

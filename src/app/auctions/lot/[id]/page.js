@@ -214,9 +214,11 @@ export default function Page() {
       ) : (
         <>
           <TopSection
-            title={`${getGreeting()}, ${userData?.fname || ""} ${userData?.lname || ""}`}
+            title={`${getGreeting()}, ${userData?.fname || ""} ${
+              userData?.lname || ""
+            }`}
             description={"Here are your auctions whom you can join."}
-            button={button}
+            button={""}
           />
           <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
             <Row className="g-3 h-full">

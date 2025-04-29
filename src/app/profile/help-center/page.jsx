@@ -171,7 +171,7 @@ const ProfilePage = () => {
                       </p>
                       <button
                         onClick={() => navigate("/contactUS")}
-                        className="rounded-none bg-white text-blue-700 px-4 py-2 mt-2 font-medium hover:bg-gray-100 transition-colors"
+                        className="rounded-none bg-white text-blue-700 px-4 py-2 mt-2 poppins_medium hover:bg-gray-100 transition-colors"
                       >
                         Contact Us
                       </button>

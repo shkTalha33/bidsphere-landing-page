@@ -19,8 +19,6 @@ const DownloadInvoice = ({ invoiceID }) => {
       });
   };
 
-  console.log(invoiceData, "invoiceData");
-
   return (
     <>
       <div

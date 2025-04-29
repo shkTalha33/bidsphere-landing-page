@@ -91,11 +91,11 @@ const ChatBox = ({ messages, userData, setChatMessage, id }) => {
               style={{ maxWidth: "70%", wordBreak: "break-word" }}
             >
               {!isMe && (
-                <div className="font-semibold text-sm">
+                <div className="poppins_semibold text-sm">
                   {msg?.sender?.fname} {msg?.sender?.lname}
                 </div>
               )}
-              <div className="text-[0.9rem] font-medium">{msg?.message}</div>
+              <div className="text-[0.9rem] poppins_medium">{msg?.message}</div>
               <small
                 className={`block text-[0.7rem] mt-1 ${
                   isMe ? "text-white/70" : "text-gray-500"

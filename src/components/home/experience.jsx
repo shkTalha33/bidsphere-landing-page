@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-key */
 import Image from "next/image";
 import React from "react";
@@ -28,12 +29,18 @@ export default function Experience() {
         <Container>
           <Row>
             <Col md="6">
-              <motion.div className="" variants={slideIn("left", "tween", 0.3, 0.8)}>
+              <motion.div
+                className=""
+                variants={slideIn("left", "tween", 0.3, 0.8)}
+              >
                 <Image src={experience} alt="experience" width={"90%"} />
               </motion.div>
             </Col>
             <Col md="6">
-              <motion.div className="flex justify-center flex-col h-full" variants={slideIn("right", "tween", 0.3, 0.8)}>
+              <motion.div
+                className="flex justify-center flex-col h-full"
+                variants={slideIn("right", "tween", 0.3, 0.8)}
+              >
                 <div className="flex gap-3 justify-center md:justify-start items-center  mb-[10px]">
                   <div className="w-8 h-2 bg_primary rounded-full"></div>
                   <h6 className="text-[#202020] poppins_semibold text-xl capitalize">
@@ -46,18 +53,24 @@ export default function Experience() {
                     future auctions
                   </span>
                 </h4>
-                <p className="poppins_regular text-center text-md-start text-base sm:text-lg md:text-xl text-[#8B8B8B] mb-3 md:mb-8">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et Lorem ipsum dolor
-                  sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  ut labore et{" "}
+                <p className="poppins_regular text-start md:text-start text-base sm:text-lg md:text-xl text-[#8B8B8B] mb-3 md:mb-8">
+                  Castle Auction is redefining the auction experience with
+                  cutting-edge digital solutions and transparent bidding. Our
+                  platform connects buyers and sellers in real-time, making
+                  auctions faster, smarter, and more accessible. Whether you're
+                  looking for rare collectibles or high-value assets, Castle
+                  Auction ensures a seamless and secure transaction every step
+                  of the way. Experience the future of auctions—where innovation
+                  meets trust.
                 </p>
+
                 <div className="grid grid-cols-2 gap-3 mb-4 md:mb-5">
                   {features.map((feature, index) => {
                     return (
-                      <div key={index} className="flex items-center justify-start gap-3">
+                      <div
+                        key={index}
+                        className="flex items-center justify-start gap-3"
+                      >
                         <FaCheck className="text_primary" size={20} />
                         <p className="text_primary poppins_medium text-sm sm:text-base md:text-xl">
                           {feature}

@@ -50,6 +50,9 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
       case "invoice":
         router.push(`/orders?invoice=${item?.bids?._id}`);
         break;
+      case "support":
+        router.push(`/supportReply/${item?.support?._id}`);
+        break;
       case "auction":
         router.push("/auctions");
         break;
@@ -116,10 +119,11 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
     router.push("/allNotification");
     setShowNotification(false);
   };
+
   return (
     <>
       <section>
-        <h4 className="text-md font-semibold px-3 mt-2 text-gray-800 pb-2">
+        <h4 className="text-md poppins_semibold px-3 mt-2 text-gray-800 pb-2">
           Notifications
         </h4>
         <div
@@ -165,7 +169,7 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
                           </div>
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-gray-800">
+                          <div className="text-sm poppins_medium text-gray-800">
                             {item?.title}{" "}
                             <span className="text-[10px] text-blue-500 mt-1 capitalize">
                               @{item?.user?.fname && item?.user?.lname}

@@ -80,7 +80,7 @@ export default function ContactSection() {
               variants={fadeIn("down", "tween", 0.3, 0.8)}
             >
               <div className="max-w-[50rem]">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl poppins_semibold capitalize text-center m-auto mb-2 md:mb-4">
+                <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl poppins_semibold capitalize text-center m-auto mb-2 md:mb-4">
                   STAY UPDATED WITH CASTLE-AUCTION
                 </h2>
                 <p className="m-auto poppins_regular text-center text-sm md:text-lg capitalize mb-3 md:mb-4">

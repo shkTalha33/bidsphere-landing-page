@@ -156,7 +156,7 @@ const Page = () => {
       maxWidth: "200px",
       cell: (row) => (
         <div
-          className={`w-fit text-xs cursor-pointer font-medium rounded-[8px] px-3 py-1 text-center capitalize`}
+          className={`w-fit text-xs cursor-pointer poppins_medium rounded-[8px] px-3 py-1 text-center capitalize`}
         >
           {row?.status}
         </div>

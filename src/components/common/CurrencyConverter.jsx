@@ -49,7 +49,7 @@ const CurrencyConverter = () => {
       <div className="mt-4">
         <p className="text-sm text-gray-600">
           Current currency:{" "}
-          <span className="font-medium">
+          <span className="poppins_medium">
             {selectedCurrency.name} ({selectedCurrency.symbol})
           </span>
         </p>

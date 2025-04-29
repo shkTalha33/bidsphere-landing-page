@@ -405,7 +405,7 @@ const ProfilePage = () => {
                         <polyline points="21 15 16 10 5 21"></polyline>
                       </svg>
                     </div>
-                    <p className="text-green-500 font-medium">
+                    <p className="text-green-500 poppins_medium">
                       Click to replace
                     </p>
                     <p className="text-gray-400 text-xs mt-1">
@@ -429,7 +429,7 @@ const ProfilePage = () => {
                     </div>
                     <div className="w-full md:w-1/2 space-y-6">
                       <div>
-                        <h3 className="font-medium text-gray-700 poppins_medium">
+                        <h3 className="poppins_medium text-gray-700 poppins_medium">
                           Full Name
                         </h3>
                         <p className="text-gray-900 poppins_regular">
@@ -438,7 +438,7 @@ const ProfilePage = () => {
                       </div>
 
                       <div>
-                        <h3 className="font-medium text-gray-700 poppins_medium">
+                        <h3 className="poppins_medium text-gray-700 poppins_medium">
                           Address
                         </h3>
                         <p className="text-gray-900 poppins_regular">
@@ -446,7 +446,7 @@ const ProfilePage = () => {
                         </p>
                       </div>
                       <div>
-                        <h3 className="font-medium text-gray-700 poppins_medium">
+                        <h3 className="poppins_medium text-gray-700 poppins_medium">
                           Phone Number
                         </h3>
                         <p className="text-gray-900 poppins_regular">
@@ -454,7 +454,7 @@ const ProfilePage = () => {
                         </p>
                       </div>
                       <div>
-                        <h3 className="font-medium text-gray-700 poppins_medium">
+                        <h3 className="poppins_medium text-gray-700 poppins_medium">
                           Email
                         </h3>
                         <p className="text-gray-900 poppins_regular">

@@ -39,7 +39,7 @@ export default function Home() {
                   <div>
                     <label
                       htmlFor="amount"
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="block text-sm poppins_medium text-gray-700 mb-1"
                     >
                       Amount ({baseCurrency}):
                     </label>

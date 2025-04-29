@@ -17,12 +17,12 @@ export default function TopSection({ title, description, button, mt = 20 }) {
                 {description}
               </p>
             </div>
-            {/* {button && (
+            {button && (
               <button className={button.className} onClick={button.onClick}>
                 {button.icon}
                 {button.text}
               </button>
-            )} */}
+            )}
           </div>
         </Col>
       </Row>
