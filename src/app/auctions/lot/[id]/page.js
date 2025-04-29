@@ -148,7 +148,6 @@ export default function Page() {
     }
   }, [currentLot]);
 
-
   useEffect(() => {
     if (socket?.connected) {
       // Authenticate user
@@ -215,7 +214,7 @@ export default function Page() {
       ) : (
         <>
           <TopSection
-            title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
+            title={`${getGreeting()}, ${userData?.fname || ""} ${userData?.lname || ""}`}
             description={"Here are your auctions whom you can join."}
             button={button}
           />
@@ -341,8 +340,6 @@ export default function Page() {
                         </p>
                       </div>
                     </Col>
-
-                    
                   </Row>
                 </div>
 
@@ -362,8 +359,6 @@ export default function Page() {
                     </p>
                   </Col>
                 </Row> */}
-
-               
               </Col>
             </Row>
           </Container>

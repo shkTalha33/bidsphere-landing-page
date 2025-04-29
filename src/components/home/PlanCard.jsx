@@ -32,11 +32,11 @@ export default function PlansCard({ plan, index }) {
 
       {/* Text Content */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
-        <h3 className="text-white text-lg md:text-xl font-semibold capitalize line-clamp-1">
+        <h3 className="text-white text-lg md:text-xl poppins_semibold capitalize line-clamp-1">
           {plan?.name}
         </h3>
-        <p className="text-white text-sm opacity-80 mt-1 line-clamp-2">
-          {plan?.subtitle || "Explore top auctions in this category"}
+        <p className="text-white text-sm opacity-80 mt-1 poppins_regular line-clamp-2">
+          {plan?.subtitle}
         </p>
       </div>
     </motion.div>

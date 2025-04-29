@@ -28,7 +28,7 @@ export default function AuctionEvents() {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.10 }}
-      className="pb-4 md:pb-[5rem] bg-white overflow-hidden"
+      className="pb-4 md:pb-[5rem] bg-white overflow-hidden mt-3"
     >
       {data?.categories?.length > 0 ? (
         <Container>

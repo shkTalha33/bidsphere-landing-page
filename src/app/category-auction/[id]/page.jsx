@@ -91,13 +91,13 @@ const Page = () => {
                 </>
               ) : (
                 <>
-                  <div className="flex flex-col items-center justify-center mt-4">
+                  <div className="flex flex-col items-center justify-center h-[20rem] mt-4">
                     <Image
                       className="w-[5rem] h-[5rem]"
                       src={StaticImage}
                       alt=""
                     />
-                    <div className="text-center">
+                    <div className="text-center poppins_medium mt-2">
                       No auction found in this category.
                     </div>
                   </div>

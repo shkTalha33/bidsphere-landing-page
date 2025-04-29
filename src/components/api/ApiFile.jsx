@@ -57,6 +57,7 @@ const createPaymentStripe = "payment/create";
 const getFaqCategory = "pages/faqcat";
 const getFaqById = "pages/faqs";
 const getInvoiceDetail = "auction/order/details";
+const notificationemail = "support/subscribe";
 export {
   login,
   imageUpload,
@@ -105,4 +106,5 @@ export {
   getFaqCategory,
   getFaqById,
   getInvoiceDetail,
+  notificationemail,
 };

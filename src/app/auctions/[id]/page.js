@@ -106,7 +106,7 @@ const AuctionDetailPage = () => {
       ) : (
         <>
           <TopSection
-            title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
+                  title={`${getGreeting()}, ${userData?.fname || ""} ${userData?.lname || ""}`}
             description={"Here are your auctions whom you can join."}
             {...(item?.status === "start" && !isExpired && { button })}
           />

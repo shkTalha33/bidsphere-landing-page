@@ -102,6 +102,9 @@ import transitDark from "../png/transitDark.png";
 import deliveredDark from "../png/deliveredDark.png";
 import deliveredLight from "../png/deliveredLight.png";
 import noData from "../png/noData.webp";
+import PlayStoreIcon from "../png/playstoreicon.png";
+import AppStoreIcon from "../png/appleicon.png";
+import AppStoreIconw from "../png/apple-logow.png";
 
 export {
   avataruser,
@@ -205,5 +208,8 @@ export {
   Logo2,
   Logo3,
   Logo4,
-  Logo11
+  Logo11,
+  PlayStoreIcon,
+  AppStoreIcon,
+  AppStoreIconw
 };

@@ -7,6 +7,7 @@ import NoData from "@/components/common/NoDataComponent";
 import SkeletonLayout from "@/components/common/SkeletonLayout";
 import { setAuctionProduct } from "@/components/redux/auctionProduct";
 import { formatPrice } from "@/components/utils/formatPrice";
+import ApiFunction from "@/components/api/apiFuntions";
 
 export default function FavoriteAuctionItems({
   items = [],
@@ -18,6 +19,7 @@ export default function FavoriteAuctionItems({
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { userData } = ApiFunction();
 
   // No need for likedItems state as all items are liked in favorites view
 
@@ -33,6 +35,10 @@ export default function FavoriteAuctionItems({
   };
 
   const handleToggleFavorite = async (auctionId, event) => {
+    if (!userData?._id) {
+          toast.error("Please login to continue");
+          return;
+        }
     event.stopPropagation(); // Prevent triggering other click handlers
 
     // Apply a visual transition effect for item removal

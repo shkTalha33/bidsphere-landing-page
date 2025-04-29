@@ -42,7 +42,7 @@ export default function Services() {
         <Container>
           <Row>
             <Col md="12">
-              <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+              <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-3">
                 {servicesData.map((service, index) => {
                   return (
                     <motion.div

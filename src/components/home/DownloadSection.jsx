@@ -3,10 +3,12 @@ import { Col, Container, Row } from "reactstrap";
 import {
   appleStore,
   appstore,
+  AppStoreIcon,
   downloadApp,
   googlePlay,
   phones,
   playstore,
+  PlayStoreIcon,
 } from "../assets/icons/icon";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -51,16 +53,35 @@ export default function DownloadSection() {
                     tristique sapien
                   </p>
                   <div className="flex justify-center md:justify-start gap-[1.145rem] mb-4 mb-md-0">
-                    <Image
-                      src={googlePlay}
-                      alt="Google Store"
-                      className="w-40 h-10 md:w-44 md:h-12 cursor-pointer"
-                    />
-                    <Image
-                      src={appleStore}
-                      alt="Apple Store"
-                      className="w-40 h-10 md:w-44 md:h-12 cursor-pointer"
-                    />
+                    <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
+                      <Image
+                        alt="Play Store"
+                        src={PlayStoreIcon}
+                        className="h-[35px] w-[35px] object-contain"
+                      />
+                      <div className="flex flex-column">
+                        <h5 className="color-0 poppins_regular text-[0.8rem]">
+                          GET IT ON                        </h5>
+                        <h4 className="poppins_medium text-[1.2rem] color-0">
+                          Google Play
+                        </h4>
+                      </div>
+                    </div>
+                    <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
+                      <Image
+                        alt="Play Store"
+                        src={AppStoreIcon}
+                        className="h-[35px] w-[35px] object-contain"
+                      />
+                      <div className="flex flex-column">
+                        <h5 className="color-0 poppins_regular text-[0.8rem]">
+                          Download on the
+                        </h5>
+                        <h4 className="poppins_medium text-[1.2rem] color-0">
+                          Apple Store
+                        </h4>
+                      </div>
+                    </div>
                   </div>
                 </Col>
               </Row>

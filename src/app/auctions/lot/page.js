@@ -15,9 +15,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Container, Row } from "reactstrap";
 import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
+import toast from "react-hot-toast";
 
 export default function Page() {
-  const { get } = ApiFunction();
+  const { get, userData } = ApiFunction();
   const params = useSearchParams();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -30,6 +31,10 @@ export default function Page() {
   const id = params.get("auctionId");
 
   const handleRegistration = () => {
+    if (!userData?._id) {
+      toast.error("Please login to continue");
+      return;
+    }
     if (items?.applications) {
       router.push(`/auctions/auction-join/${id}`);
     } else {
@@ -105,14 +110,13 @@ export default function Page() {
         </Row>
       </Container>
       <AuctionLots items={items} loading={loading} />
-    <div className="opacity-0">
-
-      <CountdownTimer
-        startDate={items?.start_date}
-        endDate={items?.end_date}
-        onExpire={() => setIsExpired(true)}
-      />
-    </div>
+      <div className="opacity-0">
+        <CountdownTimer
+          startDate={items?.start_date}
+          endDate={items?.end_date}
+          onExpire={() => setIsExpired(true)}
+        />
+      </div>
     </main>
   );
 }

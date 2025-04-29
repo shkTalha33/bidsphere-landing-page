@@ -126,7 +126,7 @@ export default function Page() {
     <main className="bg_mainsecondary p-2 md:py-4">
       <>
         <TopSection
-          title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
+                title={`${getGreeting()}, ${userData?.fname || ""} ${userData?.lname || ""}`}
           description={
             "you can do the live chat between the auctioneer and bidders."
           }

@@ -9,6 +9,8 @@ import SkeletonLayout from "../common/SkeletonLayout";
 import { setAuctionProduct } from "../redux/auctionProduct";
 import NoData from "../common/NoDataComponent";
 import useCurrency from "../hooks/useCurrency";
+import ApiFunction from "../api/apiFuntions";
+import toast from "react-hot-toast";
 
 export default function AuctionItems({
   items,
@@ -20,6 +22,7 @@ export default function AuctionItems({
   const router = useRouter();
   const dispatch = useDispatch();
   const { formatPrice, convert } = useCurrency();
+  const { userData } = ApiFunction();
 
   // Use the mutation hook from our updated API slice
   const [likeAuction, { isLoading: isLiking }] = useLikeAuctionMutation();
@@ -40,6 +43,10 @@ export default function AuctionItems({
   }, [items]);
 
   const toggleLike = async (auctionId, event) => {
+    if (!userData?._id) {
+      toast.error("Please login to continue");
+      return;
+    }
     event.stopPropagation(); // Prevent triggering other click handlers
 
     // Optimistic UI update
@@ -76,7 +83,7 @@ export default function AuctionItems({
         </div>
       ) : items?.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-5">
-          {items.map((item) => (
+          {items?.map((item) => (
             <div
               key={item._id}
               className="space-y-3 p-3 bg_white shadow-sm rounded-lg border border-[#ECEFF3] transition-all hover:shadow-md cursor-pointer"

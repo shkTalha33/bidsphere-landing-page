@@ -53,7 +53,7 @@ export default function Page() {
     <>
       <main className="bg_mainsecondary p-2 md:py-4">
         <TopSection
-          title={`${getGreeting()}, ${userData?.fname} ${userData?.lname}`}
+               title={`${getGreeting()}, ${userData?.fname || ""} ${userData?.lname || ""}`}
           description={"Here are your auctions whom you can join."}
           // button={button}
         />

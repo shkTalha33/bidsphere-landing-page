@@ -6,12 +6,15 @@ import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa6";
 import {
   appstore,
+  AppStoreIcon,
+  AppStoreIconw,
   auctionlogo,
   Logo11,
   Logo2,
   Logo3,
   Logo4,
   playstore,
+  PlayStoreIcon,
 } from "../assets/icons/icon";
 import { useFootersQuery } from "../redux/footerSlice";
 import { GetFooter } from "../api/ApiFile";
@@ -33,7 +36,7 @@ const Footer = () => {
             />
             <p className="text-sm max-w-md">{data?.footer?.desc}</p>
           </div>
-          <Link href="#" className="inline-block">
+          <Link href="/auctions" className="inline-block">
             <button className="bg-white text_dark px-8 text-sm md:text-base md:px-10 py-2 md:py-3 rounded-md poppins_medium capitalize">
               bid now
             </button>
@@ -47,12 +50,32 @@ const Footer = () => {
           </h3>
           <div className="space-y-4">
             <div>
-              <p className="mb-1 text-sm">{data?.footer?.phone1}</p>
-              <p className="text-sm">{data?.footer?.phone2}</p>
+              <a
+                href={`tel:${data?.footer?.phone1}`}
+                className="mb-1 text-sm block text-white hover:underline"
+              >
+                {data?.footer?.phone1}
+              </a>
+              <a
+                href={`tel:${data?.footer?.phone2}`}
+                className="text-sm block text-white hover:underline"
+              >
+                {data?.footer?.phone2}
+              </a>
             </div>
             <div>
-              <p className="mb-1 text-sm">{data?.footer?.email1}</p>
-              <p className="text-sm">{data?.footer?.email2}</p>
+              <a
+                href={`mailto:${data?.footer?.email1}`}
+                className="mb-1 text-sm block text-white hover:underline"
+              >
+                {data?.footer?.email1}
+              </a>
+              <a
+                href={`mailto:${data?.footer?.email2}`}
+                className="text-sm block text-white hover:underline"
+              >
+                {data?.footer?.email2}
+              </a>
             </div>
             <div>
               <p className="text-sm">{data?.footer?.address}</p>
@@ -65,36 +88,54 @@ const Footer = () => {
           <div className="flex gap-4">
             {data?.footer?.socials?.map((item, index) => {
               return (
-                <Link
+                <a
                   href={item?.link}
                   key={index}
-                  className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12  rounded-full"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full"
                 >
                   <img
                     src={item?.image}
                     className="rounded-full w-[100%] h-[100%]"
-                    alt=""
+                    alt={`social-${index}`}
                   />
-                </Link>
+                </a>
               );
             })}
           </div>
 
-          <div className="flex flex-wrap gap-2 md:gap-4">
-            <Link href="#">
+          <div className="flex justify-center md:justify-start gap-[1.145rem] mb-4 mb-md-0">
+            <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
               <Image
-                src={playstore}
-                className="w-28 h-8 md:w-36 md:h-11"
-                alt="Get it on Google Play"
+                alt="Play Store"
+                src={PlayStoreIcon}
+                className="h-[35px] w-[35px] object-contain"
               />
-            </Link>
-            <Link href="#">
+              <div className="flex flex-column">
+                <h5 className="color-0 poppins_regular text-[0.8rem]">
+                  GET IT ON{" "}
+                </h5>
+                <h4 className="poppins_medium text-[1.2rem] color-0">
+                  Google Play
+                </h4>
+              </div>
+            </div>
+            <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
               <Image
-                src={appstore}
-                className="w-28 h-8 md:w-36 md:h-11"
-                alt="Download on the App Store"
+                alt="Play Store"
+                src={AppStoreIconw}
+                className="h-[35px] w-[35px] object-contain"
               />
-            </Link>
+              <div className="flex flex-column">
+                <h5 className="color-0 poppins_regular text-[0.8rem]">
+                  Download on the
+                </h5>
+                <h4 className="poppins_medium text-[1.2rem] color-0">
+                  Apple Store
+                </h4>
+              </div>
+            </div>
           </div>
 
           <div className="flex gap-6 text-sm">
