@@ -79,9 +79,9 @@ export default function Experience() {
                     );
                   })}
                 </div>
-                <motion.button className="poppins_semibold text-sm md:text-lg text_white w-1/2 py-3 mx-auto bg_primary rounded-lg">
+                {/* <motion.button className="poppins_semibold text-sm md:text-lg text_white w-1/2 py-3 mx-auto bg_primary rounded-lg">
                   Read More
-                </motion.button>
+                </motion.button> */}
               </motion.div>
             </Col>
           </Row>

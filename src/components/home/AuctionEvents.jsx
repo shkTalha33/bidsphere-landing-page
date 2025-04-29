@@ -79,7 +79,7 @@ export default function AuctionEvents() {
                     <div className="poppins_semibold text_white text-4xl capitalize">
                       {data?.categories[1]?.name}
                     </div>
-                    <div className="poppins_regular text_white text-4xl mb-8 capitalize">
+                    <div className="poppins_regular text_white text-4xl mb-8 capitalize line-clamp-1">
                       {data?.categories[1]?.subtitle}
                     </div>
                   </div>
@@ -109,7 +109,7 @@ export default function AuctionEvents() {
                     <div className="poppins_semibold text_white text-4xl capitalize">
                       {data?.categories[2]?.name}
                     </div>
-                    <div className="poppins_regular text_white text-4xl mb-8 capitalize">
+                    <div className="poppins_regular text_white text-4xl mb-8 capitalize line-clamp-1">
                       {data?.categories[2]?.subtitle}
                     </div>
                   </div>
@@ -139,7 +139,7 @@ export default function AuctionEvents() {
                     <div className="poppins_semibold text_white text-4xl capitalize">
                       {data?.categories[3]?.name}
                     </div>
-                    <div className="poppins_regular text_white text-4xl mb-8 capitalize">
+                    <div className="poppins_regular text_white text-4xl mb-8 capitalize line-clamp-1">
                       {data?.categories[3]?.subtitle}
                     </div>
                   </div>

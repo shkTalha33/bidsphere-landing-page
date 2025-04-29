@@ -105,7 +105,7 @@ const Footer = () => {
             })}
           </div>
 
-          <div className="flex justify-center md:justify-start gap-[1.145rem] mb-4 mb-md-0">
+          <div className="flex justify-center max-[440px]:flex-col max-[440px]:items-center md:justify-start gap-[1.145rem] mb-4 mb-md-0">
             <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
               <Image
                 alt="Play Store"
@@ -113,10 +113,10 @@ const Footer = () => {
                 className="h-[35px] w-[35px] object-contain"
               />
               <div className="flex flex-column">
-                <h5 className="color-0 poppins_regular text-[0.8rem]">
+                <h5 className="color-0 poppins_regular whitespace-nowrap text-[0.8rem]">
                   GET IT ON{" "}
                 </h5>
-                <h4 className="poppins_medium text-[1.2rem] color-0">
+                <h4 className="poppins_medium whitespace-nowrap text-[1.2rem] color-0">
                   Google Play
                 </h4>
               </div>
@@ -131,7 +131,7 @@ const Footer = () => {
                 <h5 className="color-0 poppins_regular text-[0.8rem]">
                   Download on the
                 </h5>
-                <h4 className="poppins_medium text-[1.2rem] color-0">
+                <h4 className="poppins_medium whitespace-nowrap text-[1.2rem] color-0">
                   Apple Store
                 </h4>
               </div>
@@ -145,6 +145,9 @@ const Footer = () => {
 
             <Link href="/termCondition" className="hover:underline">
               Terms
+            </Link>
+            <Link href="/contactUS" className="hover:underline">
+              Contact Us
             </Link>
           </div>
         </div>

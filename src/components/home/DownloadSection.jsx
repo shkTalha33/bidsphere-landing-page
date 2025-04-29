@@ -31,7 +31,7 @@ export default function DownloadSection() {
               variants={slideIn("up", "tween", 0.3, 0.8)}
             >
               <Row className="items-center justify-center h-full">
-                <Col md="9" className="mx-auto">
+                <Col md="9">
                   <div className="flex gap-3 justify-center md:justify-start items-center  mb-[10px]">
                     <div className="w-8 h-2 bg_primary rounded-full"></div>
                     <h6 className="text-[#202020] poppins_semibold text-center text-xl capitalize">
@@ -52,7 +52,7 @@ export default function DownloadSection() {
                     risus a urna sollicitudin aliquet. Maecenas pretium
                     tristique sapien
                   </p>
-                  <div className="flex justify-center md:justify-start gap-[1.145rem] mb-4 mb-md-0">
+                  <div className="flex justify-center max-[440px]:items-center max-[1280px]:flex-col max-[767px]:flex-row max-[440px]:flex-col md:justify-start gap-[1.145rem] mb-4 mb-md-0">
                     <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
                       <Image
                         alt="Play Store"
@@ -61,8 +61,9 @@ export default function DownloadSection() {
                       />
                       <div className="flex flex-column">
                         <h5 className="color-0 poppins_regular text-[0.8rem]">
-                          GET IT ON                        </h5>
-                        <h4 className="poppins_medium text-[1.2rem] color-0">
+                          GET IT ON{" "}
+                        </h5>
+                        <h4 className="poppins_medium whitespace-nowrap text-[1.2rem] color-0">
                           Google Play
                         </h4>
                       </div>
@@ -77,7 +78,7 @@ export default function DownloadSection() {
                         <h5 className="color-0 poppins_regular text-[0.8rem]">
                           Download on the
                         </h5>
-                        <h4 className="poppins_medium text-[1.2rem] color-0">
+                        <h4 className="poppins_medium whitespace-nowrap text-[1.2rem] color-0">
                           Apple Store
                         </h4>
                       </div>
