@@ -106,7 +106,9 @@ const AuctionDetailPage = () => {
       ) : (
         <>
           <TopSection
-                  title={`${getGreeting()}, ${userData?.fname || ""} ${userData?.lname || ""}`}
+            title={`${getGreeting()}, ${userData?.fname || ""} ${
+              userData?.lname || ""
+            }`}
             description={"Here are your auctions whom you can join."}
             {...(item?.status === "start" && !isExpired && { button })}
           />
@@ -205,6 +207,7 @@ const AuctionDetailPage = () => {
                     <div className="poppins_regular text-sm">
                       {moment
                         .utc(item?.start_date)
+                        .local()
                         .format("DD MMMM, YYYY h:mm A")}{" "}
                     </div>
                   </Col>
@@ -215,7 +218,7 @@ const AuctionDetailPage = () => {
                     </div>
                     <div className="poppins_regular text-sm">
                       {moment
-                        .utc(item?.end_date)
+                        .utc(item?.end_date).local()
                         .format("DD MMMM, YYYY h:mm A")}{" "}
                     </div>
                   </Col>

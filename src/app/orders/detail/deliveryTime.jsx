@@ -4,7 +4,7 @@ import moment from "moment";
 const DeliveryTime = ({ orderDetail }) => {
   const formatDate = (dateStr) => {
     if (!dateStr) return null;
-    return moment(dateStr).format("DD-MMM-YYYY hh:mm A"); // Example: 25-Apr-2025 02:01 PM
+    return moment(dateStr).local().format("DD-MMM-YYYY hh:mm A"); // Example: 25-Apr-2025 02:01 PM
   };
 
   return (

@@ -221,13 +221,13 @@ const Invoice = ({
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Issued Date</p>
                 <p className="text-[#25324B] poppins_medium">
-                  {moment(orderDetail?.transaction?.issue_date).format("LLL")}
+                  {moment(orderDetail?.transaction?.issue_date).local().format("LLL")}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Expiry Date</p>
                 <p className="text-[#25324B] poppins_medium">
-                  {moment(orderDetail?.transaction?.expirey_date).format("LLL")}
+                  {moment(orderDetail?.transaction?.expirey_date).local().format("LLL")}
                 </p>
               </div>
               <div>
@@ -287,13 +287,13 @@ const Invoice = ({
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Delivery Date</p>
                 <p className="text-[#25324B] poppins_medium">
-                  {moment(orderDetail?.deliveryDate).format("LLL")}
+                  {moment(orderDetail?.deliveryDate).local().format("LLL")}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Shipped Date</p>
                 <p className="text-[#25324B] poppins_medium">
-                  {moment(orderDetail?.shippedDate).format("LLL")}
+                  {moment(orderDetail?.shippedDate).local().format("LLL")}
                 </p>
               </div>
               <div>

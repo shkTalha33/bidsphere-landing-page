@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 
@@ -7,31 +7,32 @@ const CountdownTimer = ({ startDate, endDate, onExpire }) => {
 
   useEffect(() => {
     const updateCountdown = () => {
-      const end = moment.utc(endDate); // stay in UTC
-      const now = moment.utc();        // use UTC now too
+      const now = moment.utc().local(); // current local time
+      const start = moment.utc(startDate).local();
+      const end = moment.utc(endDate).local();
 
-      if (end.isBefore(now)) {
-        setTimeLeft(`Ended on ${end.format("DD-MMMM-YYYY h:mm A")}`);
+      if (now.isBefore(start)) {
+        const timeUntilStart = moment.duration(start.diff(now));
+        const d = Math.floor(timeUntilStart.asDays());
+        const h = timeUntilStart.hours();
+        const m = timeUntilStart.minutes();
+        const s = timeUntilStart.seconds();
+        setTimeLeft(
+          `Starts in ${d}d ${h}h ${m}m ${s}s (Starts at ${start.format("DD-MMMM-YYYY h:mm A")})`
+        );
+      } else if (now.isBefore(end)) {
+        const timeUntilEnd = moment.duration(end.diff(now));
+        const d = Math.floor(timeUntilEnd.asDays());
+        const h = timeUntilEnd.hours();
+        const m = timeUntilEnd.minutes();
+        const s = timeUntilEnd.seconds();
+        setTimeLeft(
+          `Ends in ${d}d ${h}h ${m}m ${s}s (Ends at ${end.format("DD-MMMM-YYYY h:mm A")})`
+        );
+      } else {
+        setTimeLeft(`Auction ended on ${end.format("DD-MMMM-YYYY h:mm A")}`);
         if (onExpire) onExpire();
-        return;
       }
-
-      const timeLeftDuration = moment.duration(end.diff(now));
-      const leftDays = Math.floor(timeLeftDuration.asDays());
-      const leftHours = timeLeftDuration.hours();
-      const leftMinutes = timeLeftDuration.minutes();
-      const leftSeconds = timeLeftDuration.seconds();
-
-      let timeString = "";
-
-      if (leftDays > 0) timeString += `${leftDays}d `;
-      if (leftHours > 0) timeString += `${leftHours}h `;
-      if (leftMinutes > 0) timeString += `${leftMinutes}m `;
-
-      timeString += `${leftSeconds}s`;
-      timeString += ` (Ends at ${end.format("DD-MMMM-YYYY h:mm A")})`;
-
-      setTimeLeft(timeString);
     };
 
     updateCountdown();

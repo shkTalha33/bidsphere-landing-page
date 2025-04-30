@@ -158,7 +158,7 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                     message={"info"}
                     description={`Your order is shipped on ${moment(
                       orderDetail?.shippedDate
-                    )
+                    ).local()
                       .format("DD-MMMM-YYYY")
                       .toLowerCase()}. You will receive it soon.`}
                   />

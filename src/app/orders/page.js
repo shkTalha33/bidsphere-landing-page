@@ -116,7 +116,7 @@ const Page = () => {
         <div className="flex items-center justify-center capitalize">
           {moment
             .utc(row?.auction?.start_date)
-
+            .local()
             .format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
@@ -127,7 +127,10 @@ const Page = () => {
       maxWidth: "400px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize">
-          {moment.utc(row?.auction?.end_date).format("DD MMMM, YYYY h:mm A")}
+          {moment
+            .utc(row?.auction?.end_date)
+            .local()
+            .format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
     },
