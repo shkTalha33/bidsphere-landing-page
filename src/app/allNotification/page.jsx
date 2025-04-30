@@ -41,6 +41,9 @@ const Page = () => {
       case "order":
         router.push("/orders");
         break;
+      case "support":
+        router.push(`/supportReply/${item?.support?._id}`);
+        break;
       case "invoice":
         router.push(`/orders?invoice=${item?.bids?._id}`);
         break;
