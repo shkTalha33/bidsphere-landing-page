@@ -87,7 +87,7 @@ const Footer = () => {
 
         {/* Right Section - Social & Download */}
         <div className="space-y-8">
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             {data?.footer?.socials?.map((item, index) => {
               return (
                 <a
@@ -105,7 +105,7 @@ const Footer = () => {
                 </a>
               );
             })}
-          </div>
+          </div> */}
 
           <div className="flex justify-center max-[440px]:flex-col max-[440px]:items-center md:justify-start gap-[1.145rem] mb-4 mb-md-0">
             <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">

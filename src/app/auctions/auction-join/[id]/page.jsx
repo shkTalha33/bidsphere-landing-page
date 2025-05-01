@@ -43,6 +43,8 @@ export default function Page() {
   const [bidAmount, setBidAmount] = useState(0);
   const [participants, setParticipants] = useState([]);
   const [auctionData, setAuctionData] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [winnerLot, setWinnerLot] = useState(null);
   const token = useSelector((state) => state.auth?.accessToken);
   const socket = useSocket();
   const { id } = useParams();
@@ -57,11 +59,9 @@ export default function Page() {
     return "Good night";
   };
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [winnerLot, setWinnerLot] = useState(null);
-
-  console.table(winnerLot ,currentLot ,recentBids ,participants);
-  
+  console.log(currentLot, "currentLot");
+  console.log(winnerLot, "winnerLot");
+  console.log(userData, "userData");
 
   const confirmationItem = {
     title: "Confirm Bid",
@@ -116,7 +116,6 @@ export default function Page() {
 
   useEffect(() => {
     if (socket?.connected) {
-      socket.emit("authenticate", token);
       socket.emit("join_auction", id, (response) => {
         if (response?.success) {
           const matchedLot = response?.auction?.lots.find(
@@ -146,6 +145,8 @@ export default function Page() {
 
       // Listen for participant updates
       socket.on("user_joined", ({ user }) => {
+        console.log(user, "user join");
+
         setParticipants((prev) => {
           const isUserExists = prev.some(
             (participant) => participant?._id === user?._id
@@ -571,18 +572,18 @@ export default function Page() {
         <ModalHeader
           toggle={toggle}
           className={
-            winnerLot?.bid?.user === userData?._id
+            winnerLot?.bid?.user?._id === userData?._id
               ? "text-success"
               : "text-danger"
           }
         >
-          {winnerLot?.bid?.user === userData?._id
+          {winnerLot?.bid?.user?._id === userData?._id
             ? "🎉 Congratulations!"
             : "❌ Bidding Closed"}
         </ModalHeader>
 
         <ModalBody>
-          {winnerLot?.bid?.user === userData?._id ? (
+          {winnerLot?.bid?.user?._id === userData?._id ? (
             <Result
               icon={
                 <TrophyOutlined
