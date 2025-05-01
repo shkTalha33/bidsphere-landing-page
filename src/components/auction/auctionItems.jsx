@@ -11,6 +11,7 @@ import NoData from "../common/NoDataComponent";
 import useCurrency from "../hooks/useCurrency";
 import ApiFunction from "../api/apiFuntions";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 export default function AuctionItems({
   items,
@@ -23,6 +24,7 @@ export default function AuctionItems({
   const dispatch = useDispatch();
   const { formatPrice, convert } = useCurrency();
   const { userData } = ApiFunction();
+  const { t } = useTranslation();
 
   // Use the mutation hook from our updated API slice
   const [likeAuction, { isLoading: isLiking }] = useLikeAuctionMutation();
@@ -136,7 +138,7 @@ export default function AuctionItems({
           ))}
         </div>
       ) : (
-        <NoData description="There are no auctions to display" />
+        <NoData description={t("allAuction.heading4")} />
       )}
 
       {/* Loading indicator when fetching more data */}

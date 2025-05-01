@@ -156,7 +156,7 @@ export default function DepositTracking() {
 
   return (
     <>
-      <Col lg="9" className="">
+      <Col lg="9" >
         <div className="flex items-center justify-start gap-4 md:gap-10 w-full no-scrollbar overflow-auto bg-[#FAFAFA] py-3 px-3 px-md-5 rounded-[11px]">
           {filterButtons.map((button) => {
             return (

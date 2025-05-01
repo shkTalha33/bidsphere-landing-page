@@ -49,7 +49,7 @@ export default function PaymentStatics() {
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
-          <Col md="12" className="">
+          <Col md="12" >
             <Breadcrumbs pageTitle={"Payment"} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
               Payment
@@ -107,7 +107,7 @@ export default function PaymentStatics() {
                                 ? button?.darkImage
                                 : button?.lightImage
                             }
-                            className=""
+                            
                           />
                         </div>
                         {button?.title}

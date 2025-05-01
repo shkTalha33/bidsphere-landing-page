@@ -23,7 +23,7 @@ export const apiSlice = createApi({
       query: ({ endpoint, id, params }) => ({
         url: id ? `${endpoint}/${id}` : endpoint,
         method: "GET",
-        params,
+        params: { ...params, userlang: localStorage.getItem("language") },
       }),
       // Create a unique cache key for each tab type
       serializeQueryArgs: ({ endpointName, queryArgs }) => {

@@ -8,13 +8,15 @@ import { Check } from "react-feather";
 import { FaCheck } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { bounce, slideIn, staggerContainer } from "../utils/motion";
+import { useTranslation } from "react-i18next";
 
 export default function Experience() {
+  const { t } = useTranslation();
   const features = [
-    "Real-Time Bidding",
-    "Secure Transactions",
-    "Wide Range of Lots",
-    "Transparent Pricing",
+    t("about.heading5"),
+    t("about.heading6"),
+    t("about.heading7"),
+    t("about.heading8"),
   ];
 
   return (
@@ -30,7 +32,7 @@ export default function Experience() {
           <Row>
             <Col md="6">
               <motion.div
-                className=""
+                
                 variants={slideIn("left", "tween", 0.3, 0.8)}
               >
                 <Image src={experience} alt="experience" width={"90%"} />
@@ -44,24 +46,17 @@ export default function Experience() {
                 <div className="flex gap-3 justify-center md:justify-start items-center  mb-[10px]">
                   <div className="w-8 h-2 bg_primary rounded-full"></div>
                   <h6 className="text-[#202020] poppins_semibold text-xl capitalize">
-                    about Castle Auction
+                    {t("about.heading")}
                   </h6>
                 </div>
                 <h4 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center text-md-start text_primary poppins_medium capitalize mb-2 md:mb-8">
-                  experience of the <br />
+                  {t("about.heading2")} <br />
                   <span className="text-black poppins_medium">
-                    future auctions
+                    {t("about.heading3")}
                   </span>
                 </h4>
                 <p className="poppins_regular text-start md:text-start text-base sm:text-lg md:text-xl text-[#8B8B8B] mb-3 md:mb-8">
-                  Castle Auction is redefining the auction experience with
-                  cutting-edge digital solutions and transparent bidding. Our
-                  platform connects buyers and sellers in real-time, making
-                  auctions faster, smarter, and more accessible. Whether you're
-                  looking for rare collectibles or high-value assets, Castle
-                  Auction ensures a seamless and secure transaction every step
-                  of the way. Experience the future of auctions—where innovation
-                  meets trust.
+                  {t("about.heading4")}
                 </p>
 
                 <div className="grid grid-cols-2 gap-3 mb-4 md:mb-5">

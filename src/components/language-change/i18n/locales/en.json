@@ -1,0 +1,125 @@
+{
+  "nav": {
+    "auction": "Auction",
+    "payments": "Payments",
+    "orders": "Orders",
+    "contactus": "Contact Us",
+    "english": "English",
+    "arabic": "Arabic",
+    "login": "Login",
+    "signup": "Sign Up",
+    "profile": "Profile",
+    "currency": "Currency",
+    "logout": "Logout",
+    "home": "Home"
+  },
+  "homeSlider": {
+    "title": "Bid With Confidence, Win With Security & Experience The Future Of Auctions",
+    "subTitle": "Join a trusted marketplace where every bid is protected and every transaction is seamless.",
+    "button": "Bid Now"
+  },
+  "category": {
+    "heading": "What We Offer",
+    "heading2": "We Offer Creative",
+    "categories": "Categories",
+    "heading3": "At Castle-Auction, explore a diverse range of auction categories tailored for every collector and bidder. From exclusive lots to unique finds, we bring the best under one platform.",
+    "categoryNotFound": "No category Found"
+  },
+  "ongoing": {
+    "foryou": "for you",
+    "ongoing": "Ongoing",
+    "heading": "Discover all the exciting ongoing auctions at Castle-Auction. Bid in real-time and secure exclusive lots before time runs out.",
+    "heading2": "No Auction Events Available",
+    "heading3": "Please check back later."
+  },
+  "about": {
+    "heading": "about Castle Auction",
+    "heading2": "experience of the",
+    "heading3": "future auctions",
+    "heading4": "Castle Auction is redefining the auction experience with cutting-edge digital solutions and transparent bidding. Our platform connects buyers and sellers in real-time, making auctions faster, smarter, and more accessible. Whether you're looking for rare collectibles or high-value assets, Castle Auction ensures a seamless and secure transaction every step of the way. Experience the future of auctions—where innovation meets trust.",
+    "heading5": "Real-Time Bidding",
+    "heading6": "Secure Transactions",
+    "heading7": "Wide Range of Lots",
+    "heading8": "Transparent Pricing"
+  },
+  "mobileSection": {
+    "heading": "enjoy our application",
+    "heading2": "Download our",
+    "heading3": "Mobile App",
+    "heading4": "Experience seamless bidding on the go with the Castle Auction mobile app. Download now from the App Store or Google Play to stay connected, bid in real-time, and never miss an opportunity. Your next winning auction is just a tap away.",
+    "heading5": "GET IT ON",
+    "heading6": "Google Play",
+    "heading7": "Download on the",
+    "heading8": "Apple Store"
+  },
+  "emailSubscribe": {
+    "heading": "STAY UPDATED WITH CASTLE-AUCTION",
+    "heading2": "Subscribe with your email to get instant updates on new auctions, bidding events, and exclusive deals.",
+    "heading3": "Enter Your Email",
+    "heading4": "Get Started",
+    "heading5": "By subscribing, you agree to receive email updates from Castle-Auction about upcoming auctions and offers. Read our",
+    "heading6": "Terms and Conditions"
+  },
+  "footer": {
+    "heading": "Contacts",
+    "heading2": "Privacy",
+    "heading3": "Terms"
+  },
+  "privacy": {
+    "heading": "Privacy Policy"
+  },
+  "termConditions": {
+    "heading": "Terms & Conditions"
+  },
+  "contactUs": {
+    "heading": "Call Us",
+    "heading2": "Email Us",
+    "heading3": "Get In Touch",
+    "heading4": "It is a long established fact that a reader will be distracted by the readable content of a page words which even slightly when looking at its layout.",
+    "heading5": "Enter Your Name",
+    "heading6": "Your Message",
+    "heading7": "Write Your Message",
+    "heading8": "Send Message"
+  },
+  "allAuction": {
+    "heading": "All Auctions",
+    "heading2": "Trending Auctions",
+    "heading3": "Popular Auctions",
+    "heading4": "There are no auctions to display."
+  },
+  "payment": {
+    "heading": "Payment",
+    "heading2": "All Payments",
+    "heading3": "No records to show...",
+    "heading4": "Item Name",
+    "heading5": "Date & Time",
+    "heading6": "Amount"
+  },
+  "order": {
+    "heading": "All Orders",
+    "heading2": "In transit",
+    "heading3": "Shipped",
+    "heading4": "Delivered",
+    "heading5": "Auction Name",
+    "heading6": "Category",
+    "heading7": "Start Date",
+    "heading8": "End Date",
+    "heading9": "Invoice",
+    "heading10": "See Invoice",
+    "heading11": "No Invoice",
+    "heading12": "Status",
+    "heading13": "view details"
+  },
+  "categoryAuction": {
+    "heading": "Category Auctions",
+    "heading2": "No auction found in this category.",
+    "heading3": "See More"
+  },
+  "auctionDetails": {
+    "heading": "Starting Time",
+    "heading2": "Endinging Time",
+    "heading3": "Deposit Amount",
+    "heading4": "Description",
+    "heading5": "All Lots"
+  }
+}

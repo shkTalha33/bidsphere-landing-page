@@ -12,6 +12,7 @@ import ReactPaginate from "react-paginate";
 import { HashLoader } from "react-spinners";
 import { Input } from "reactstrap";
 import NoData from "../NoDataComponent";
+import { useTranslation } from "react-i18next";
 
 // const BootstrapCheckbox = forwardRef((props, ref) => (
 //     <div className='form-check'>
@@ -43,6 +44,7 @@ const ProductTable = ({
   // const [currentPage, setCurrentPage] = useState(0)
   const [searchValue, setSearchValue] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  const { t } = useTranslation();
 
   const handleModal = () => setModal(!modal);
 
@@ -181,9 +183,7 @@ const ProductTable = ({
               <DataTable
                 noHeader
                 pagination
-                noDataComponent={
-                  <NoData description={"No records to show..."} />
-                }
+                noDataComponent={<NoData description={t("payment.heading3")} />}
                 selectableRowsNoSelectAll
                 columns={columns}
                 paginationPerPage={10}

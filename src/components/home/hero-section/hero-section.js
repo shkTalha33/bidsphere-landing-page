@@ -1,9 +1,22 @@
 /* eslint-disable react/no-unescaped-entities */
-import { bounce, fadeIn, slideIn, staggerContainer, zoomIn } from "@/components/utils/motion";
+import {
+  bounce,
+  fadeIn,
+  slideIn,
+  staggerContainer,
+  zoomIn,
+} from "@/components/utils/motion";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { Container } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const HeroSection = () => {
+  const router = useRouter();
+  const { t } = useTranslation();
+  const handleour = () => {
+    router.push("/auctions");
+  };
   return (
     <main>
       <Container fluid className="px-0 relative pb-5">
@@ -26,17 +39,23 @@ const HeroSection = () => {
                 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold max-w-5xl leading-tight mb-6"
                 variants={fadeIn("up", "tween", 0.3, 0.8)}
               >
-                Bid With Confidence, Win With Security & Experience The Future
-                Of Auctions
+                {t("homeSlider.title")}
               </motion.h1>
 
-              <motion.p variants={fadeIn("down", "tween", 0.3, 0.8)} className="sm:text-lg md:text-xl mb-8 max-w-2xl">
-                Join a trusted marketplace where every bid is protected and
-                every transaction is seamless.
+              <motion.p
+                variants={fadeIn("down", "tween", 0.3, 0.8)}
+                className="sm:text-lg md:text-xl mb-8 max-w-2xl"
+              >
+                {t("homeSlider.subTitle")}
               </motion.p>
 
-              <motion.button variants={fadeIn("down", "tween", 0.3, 0.8)} className="bg-white text-black px-12 py-2 md:py-3 rounded-md sm:text-lg poppins_semibold hover:bg-gray-100 transition-colors">
-                Bid Now
+              <motion.button
+                onClick={handleour}
+                variants={fadeIn("down", "tween", 0.3, 0.8)}
+                className="bg-white text-black px-12 py-2 md:py-3 rounded-md sm:text-lg poppins_semibold hover:bg-gray-100 transition-colors"
+              >
+                {t("homeSlider.button")}
+                
               </motion.button>
             </div>
           </div>

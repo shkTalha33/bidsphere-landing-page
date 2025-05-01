@@ -67,7 +67,7 @@ export default function OrderDetails() {
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
-          <Col md="12" className="">
+          <Col md="12" >
             <Breadcrumbs pageTitle={"Orders"} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">Orders</h3>
           </Col>
@@ -100,7 +100,7 @@ export default function OrderDetails() {
                                 ? button?.darkImage
                                 : button?.lightImage
                             }
-                            className=""
+                            
                           />
                         </div>
                         {button?.title}
@@ -119,7 +119,7 @@ export default function OrderDetails() {
               })}
             </div>
           </Col>
-          <Col md="8" lg="9" className="">
+          <Col md="8" lg="9" >
             <div className="bg-[#FAFAFA] p-4 rounded-[11px] flex flex-col">
               <h4 className="poppins_semibold text-base md:text-xl text-[#202020] capitalize">
                 order details
@@ -139,7 +139,7 @@ export default function OrderDetails() {
                     </div>
                   </div>
                 </Col>
-                <Col xs="2" className="">
+                <Col xs="2" >
                   <div className="bg_lightsecondary flex items-center justify-center w-9 h-9 rounded-full ml-auto cursor-pointer">
                     <TbMessage color="#660000" size={24} />
                   </div>

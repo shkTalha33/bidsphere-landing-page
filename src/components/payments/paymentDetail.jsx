@@ -20,11 +20,13 @@ import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import ProductTable from "../common/dataTables/productTable";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 export default function PaymentDetail() {
   const { get } = ApiFunction();
   const [paymentHistory, setPaymentHistory] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const [page, setPage] = useState(0);
   const [lastId, setLastId] = useState(1);
@@ -45,7 +47,7 @@ export default function PaymentDetail() {
       ),
     },
     {
-      name: "Item Name",
+      name: t("payment.heading4"),
       minWidth: "150px",
       maxWidth: "350px",
       cell: (row) => (
@@ -62,7 +64,7 @@ export default function PaymentDetail() {
       ),
     },
     {
-      name: "Category",
+      name: t("order.heading6"),
       minWidth: "120px",
       maxWidth: "250px",
       cell: (row) => (
@@ -72,7 +74,7 @@ export default function PaymentDetail() {
       ),
     },
     {
-      name: "Invoice#",
+      name: t("order.heading9"),
       minWidth: "120px",
       maxWidth: "250px",
       cell: (row) => (
@@ -82,7 +84,7 @@ export default function PaymentDetail() {
       ),
     },
     {
-      name: "Date & Time",
+      name: t("payment.heading5"),
       minWidth: "150px",
       maxWidth: "350px",
       cell: (row) => (
@@ -94,7 +96,7 @@ export default function PaymentDetail() {
       ),
     },
     {
-      name: "Amount",
+      name: t("payment.heading6"),
       minWidth: "120px",
       maxWidth: "200px",
       cell: (row) => (
@@ -104,7 +106,7 @@ export default function PaymentDetail() {
       ),
     },
     {
-      name: "Status",
+      name: t("order.heading12"),
       minWidth: "120px",
       maxWidth: "200px",
       cell: (row) => (
@@ -149,10 +151,10 @@ export default function PaymentDetail() {
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
-          <Col md="12" className="">
-            <Breadcrumbs pageTitle={"Payment"} />
+          <Col md="12">
+            <Breadcrumbs pageTitle={t("payment.heading")} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
-              Payment
+              {t("payment.heading")}
             </h3>
           </Col>
         </Row>
@@ -160,7 +162,7 @@ export default function PaymentDetail() {
       <Container className="bg_white p-2 p-md-3 rounded-[9px] mt-4">
         <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px] mt-3">
           <ProductTable
-            rowHeading="all Payments"
+            rowHeading={t("payment.heading2")}
             count={count}
             loading={loading}
             setCurrentPage={setPage}

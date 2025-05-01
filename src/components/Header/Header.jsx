@@ -25,6 +25,8 @@ import NotificationDown from "./notificationDown";
 import { useSocket } from "../socketProvider/socketProvider";
 import toast from "react-hot-toast";
 import { BellOutlined } from "@ant-design/icons";
+import Language from "../language-change/language";
+import { useTranslation } from "react-i18next";
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -37,7 +39,7 @@ export default function Header() {
   const { currency } = useCurrency();
   const socket = useSocket();
   const isHomeOrHashRoute = pathname === "/";
-
+  const { t } = useTranslation();
   const handleLogoutFun = async () => {
     dispatch(setLogout());
     message.success("Logout Successfully");
@@ -141,7 +143,7 @@ export default function Header() {
             } 
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
           >
-            Auctions
+            {t("nav.auction")}
           </Link>
           <Link
             href="/payments"
@@ -154,7 +156,7 @@ export default function Header() {
             }
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
           >
-            Payments
+            {t("nav.payments")}
           </Link>
           <Link
             href="/orders"
@@ -167,7 +169,7 @@ export default function Header() {
             }
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
           >
-            Orders
+            {t("nav.orders")}
           </Link>
           <Link
             href="/contactUS"
@@ -180,11 +182,12 @@ export default function Header() {
             }
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
           >
-            Contact Us
+            {t("nav.contactus")}
           </Link>
         </div>
       </div>
       <div className="hidden d-md-flex items-center gap-[0.5rem]">
+        <Language />
         <div className="relative" ref={dropdownRef}>
           <div
             onClick={handleToggleNotification}
@@ -226,7 +229,7 @@ export default function Header() {
         </Link>
 
         <Dropdown menu={{ items }}>
-          <Space className="">
+          <Space>
             <div className="flex cursor-pointer gap-2 items-center w-fit">
               {userData?.profile ? (
                 <>
@@ -293,7 +296,7 @@ export default function Header() {
           } 
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
         >
-          Auctions
+          {t("nav.auction")}
         </Link>
         {/* <Link
           href="/payments"
@@ -327,13 +330,13 @@ export default function Header() {
           onClick={() => router.push("/auth/login")}
           className="px-[2rem] py-2 border-[1px] transition-colors bg_white duration-300 ease-in-out rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline"
         >
-          Login
+          {t("nav.login")}
         </button>
         <button
           onClick={() => router.push("/auth/sign-up")}
           className="px-[2rem] py-2 bg_primary text_white rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline primary_hover"
         >
-          Sign Up
+          {t("nav.signup")}
         </button>
       </div>
     </>
@@ -342,13 +345,17 @@ export default function Header() {
   const items = [
     {
       key: "1",
-      label: <Link href={"/profile/personal-information"}>Profile</Link>,
+      label: (
+        <Link href={"/profile/personal-information"}>{t("nav.profile")}</Link>
+      ),
       icon: <BiUser size={18} />,
     },
     {
       key: "3",
       label: (
-        <Link href={"/profile/change-currency"}>Currency {currency?.code}</Link>
+        <Link href={"/profile/change-currency"}>
+          {t("nav.currency")} {currency?.code}
+        </Link>
       ),
       icon: <MdOutlineCurrencyExchange size={18} />,
     },
@@ -361,7 +368,7 @@ export default function Header() {
           }}
           href={"/auth/login"}
         >
-          Logout
+          {t("nav.logout")}
         </Link>
       ),
       icon: <TbLogout size={18} />,
@@ -443,32 +450,36 @@ export default function Header() {
           {isLogin ? <AuthenticatedNav /> : <NonAuthenticatedNav />}
           <div className="flex gap-3 md:hidden">
             {userData?._id && (
-              <div className="relative" ref={dropdownRef}>
-                <div
-                  className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
-                  onClick={handleToggleNotification}
-                >
-                  <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
-                </div>
+              <>
+                <Language />
 
-                {showNotification && (
+                <div className="relative" ref={dropdownRef}>
                   <div
-                    className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50"
-                    onMouseEnter={() => (isMouseOver.current = true)}
-                    onMouseLeave={() => (isMouseOver.current = false)}
-                    style={{
-                      maxHeight: "70vh",
-                      overflowY: "auto",
-                      overscrollBehavior: "contain",
-                    }}
+                    className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+                    onClick={handleToggleNotification}
                   >
-                    <NotificationDown
-                      firstTime={hasFetched}
-                      setShowNotification={setShowNotification}
-                    />
+                    <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
                   </div>
-                )}
-              </div>
+
+                  {showNotification && (
+                    <div
+                      className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50"
+                      onMouseEnter={() => (isMouseOver.current = true)}
+                      onMouseLeave={() => (isMouseOver.current = false)}
+                      style={{
+                        maxHeight: "70vh",
+                        overflowY: "auto",
+                        overscrollBehavior: "contain",
+                      }}
+                    >
+                      <NotificationDown
+                        firstTime={hasFetched}
+                        setShowNotification={setShowNotification}
+                      />
+                    </div>
+                  )}
+                </div>
+              </>
             )}
             <div className="flex md:hidden">
               <button onClick={toggleMenu} aria-label="Toggle menu">
@@ -517,7 +528,7 @@ export default function Header() {
                 } cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
-                Auctions
+                {t("nav.auction")}
               </Link>
               <Link
                 href="/payments"
@@ -530,7 +541,7 @@ export default function Header() {
                 } cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
-                Payments
+                {t("nav.payments")}
               </Link>
               <Link
                 href="/orders"
@@ -543,7 +554,7 @@ export default function Header() {
                 } cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
-                Orders
+                {t("nav.orders")}
               </Link>
 
               {/* Mobile Action Icons */}
@@ -562,7 +573,7 @@ export default function Header() {
                 </Link>
               </div>
               <Dropdown menu={{ items }}>
-                <Space className="">
+                <Space>
                   <div className="flex cursor-pointer gap-2 items-center w-fit">
                     {userData?.profile ? (
                       <>
@@ -622,7 +633,7 @@ export default function Header() {
                 } cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
-                Home
+                {t("nav.home")}
               </Link>
               <Link
                 href="/auctions"
@@ -631,7 +642,7 @@ export default function Header() {
                 } cursor-pointer poppins_regular`}
                 onClick={handleNavClose}
               >
-                Auctions
+                {t("nav.auction")}
               </Link>
               <div className="flex justify-center gap-3 w-full mt-3">
                 <button
@@ -645,7 +656,7 @@ export default function Header() {
                       : "border-gray-300"
                   }`}
                 >
-                  Login
+                  {t("nav.login")}
                 </button>
                 <button
                   onClick={() => {
@@ -654,7 +665,7 @@ export default function Header() {
                   }}
                   className="px-[1.5rem] py-[0.5rem] rounded-3 text-[0.85rem] text_white cursor-pointer poppins_medium bg_primary no-underline primary_hover"
                 >
-                  Sign Up
+                  {t("nav.signup")}
                 </button>
               </div>
             </div>

@@ -7,7 +7,7 @@ const AuthHeading = ({ heading, subHeading, path, email, isSmall = false }) => {
     return (
         <>
             <div className={`pt-3`}>
-                <button className="" onClick={() => path ? router.push(path) : router.back()}>
+                <button  onClick={() => path ? router.push(path) : router.back()}>
                     <GoArrowLeft size={24} />
                 </button>
             </div>

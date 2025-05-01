@@ -6,9 +6,11 @@ import { getAuctions } from "../api/ApiFile";
 import Breadcrumbs from "../common/Breadcrumbs";
 import { useGetAuctionsQuery } from "../redux/apiSlice";
 import AuctionItems from "./auctionItems";
+import { useTranslation } from "react-i18next";
 
 export default function AllAuction() {
   const [activeTab, setActiveTab] = useState("all");
+  const { t } = useTranslation();
   const [lastId, setLastId] = useState({
     all: 1,
     popular: 1,
@@ -48,7 +50,6 @@ export default function AllAuction() {
   const trendingResults = useGetAuctionsQuery(trendingQueryParams);
   const popularResults = useGetAuctionsQuery(popularQueryParams);
 
-  
   // Select the correct query results based on active tab
   const getActiveTabResults = () => {
     switch (activeTab) {
@@ -77,19 +78,19 @@ export default function AllAuction() {
   const items = [
     {
       key: "all",
-      label: "All Auctions",
+      label: t("allAuction.heading"),
       data: allResults.data,
       loading: allResults.isFetching,
     },
     {
       key: "trending",
-      label: "Trending Auctions",
+      label: t("allAuction.heading2"),
       data: trendingResults.data,
       loading: trendingResults.isFetching,
     },
     {
       key: "popular",
-      label: "Popular Auctions",
+      label: t("allAuction.heading3"),
       data: popularResults.data,
       loading: popularResults.isFetching,
     },
@@ -114,7 +115,7 @@ export default function AllAuction() {
           <Col md="12">
             <Breadcrumbs pageTitle="Auctions" />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
-              All Auctions
+              {t("allAuction.heading")}
             </h3>
           </Col>
         </Row>

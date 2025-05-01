@@ -109,7 +109,7 @@ const RegistrationDetail = () => {
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
-          <Col md="12" className="">
+          <Col md="12" >
             <Breadcrumbs pageTitle={"Registration"} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
               Auction Registration
@@ -119,7 +119,7 @@ const RegistrationDetail = () => {
       </Container>
       <Container className="bg_white rounded-[9px] mt-2 md:mt-4 p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
-          <Col md="12" className="">
+          <Col md="12" >
             <h3 className="capitalize poppins_semibold text-lg sm:text-xl md:text-2xl text_dark mb-1 md:mb-[10px]">
               personal information
             </h3>
@@ -134,7 +134,7 @@ const RegistrationDetail = () => {
             <h3 className="capitalize poppins_regular text-xs sm:text-base md:text-lg text_primary mb-2">
               {progress}% to complete
             </h3>
-            <div className="">
+            <div >
               <Progress
                 percent={progress}
                 strokeColor={"#660000"}

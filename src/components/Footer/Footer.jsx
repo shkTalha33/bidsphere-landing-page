@@ -18,8 +18,10 @@ import {
 } from "../assets/icons/icon";
 import { useFootersQuery } from "../redux/footerSlice";
 import { GetFooter } from "../api/ApiFile";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
   const { data, isFetching, error } = useFootersQuery({
     endpoint: GetFooter,
   });
@@ -38,7 +40,7 @@ const Footer = () => {
           </div>
           <Link href="/auctions" className="inline-block">
             <button className="bg-white text_dark px-8 text-sm md:text-base md:px-10 py-2 md:py-3 rounded-md poppins_medium capitalize">
-              bid now
+              {t("homeSlider.button")}
             </button>
           </Link>
         </div>
@@ -46,7 +48,7 @@ const Footer = () => {
         {/* Middle Section - Contacts */}
         <div className="lg:px-12">
           <h3 className="text-lg md:text-2xl poppins_semibold mb-2 md:mb-8">
-            Contacts
+            {t("footer.heading")}
           </h3>
           <div className="space-y-4">
             <div>
@@ -114,10 +116,10 @@ const Footer = () => {
               />
               <div className="flex flex-column">
                 <h5 className="color-0 poppins_regular whitespace-nowrap text-[0.8rem]">
-                  GET IT ON{" "}
+                  {t("mobileSection.heading5")}{" "}
                 </h5>
                 <h4 className="poppins_medium whitespace-nowrap text-[1.2rem] color-0">
-                  Google Play
+                  {t("mobileSection.heading6")}
                 </h4>
               </div>
             </div>
@@ -129,10 +131,10 @@ const Footer = () => {
               />
               <div className="flex flex-column">
                 <h5 className="color-0 poppins_regular text-[0.8rem]">
-                  Download on the
+                  {t("mobileSection.heading7")}
                 </h5>
                 <h4 className="poppins_medium whitespace-nowrap text-[1.2rem] color-0">
-                  Apple Store
+                  {t("mobileSection.heading8")}
                 </h4>
               </div>
             </div>
@@ -140,14 +142,14 @@ const Footer = () => {
 
           <div className="flex gap-6 text-sm">
             <Link href="/privacyPolicy" className="hover:underline">
-              Privacy
+              {t("footer.heading2")}
             </Link>
 
             <Link href="/termCondition" className="hover:underline">
-              Terms
+              {t("footer.heading3")}
             </Link>
             <Link href="/contactUS" className="hover:underline">
-              Contact Us
+              {t("nav.contactus")}
             </Link>
           </div>
         </div>

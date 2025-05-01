@@ -6,11 +6,13 @@ import Breadcrumbs from "@/components/common/Breadcrumbs";
 import { Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
   const [privacyData, setPrivacyData] = useState("");
   const { get } = ApiFunction();
+  const { t } = useTranslation();
 
   const handlePrivacy = () => {
     setLoading(true);
@@ -37,9 +39,9 @@ const Page = () => {
       <Container className="bg_white rounded-[9px] mt-20 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12">
-            <Breadcrumbs pageTitle={"Privacy Policy"} />
+            <Breadcrumbs pageTitle={t("privacy.heading")} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
-              Privacy Policy
+              {t("privacy.heading")}
             </h3>
           </Col>
         </Row>

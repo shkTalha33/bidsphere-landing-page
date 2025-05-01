@@ -16,9 +16,11 @@ import { useGetAuctionsQuery } from "../redux/apiSlice";
 import { Spinner } from "react-bootstrap";
 import Image from "next/image";
 import { Skeleton } from "antd";
+import { useTranslation } from "react-i18next";
 
 export default function OurOffers() {
   const { get } = ApiFunction();
+  const { t } = useTranslation();
 
   const { data, isLoading, error } = useGetAuctionsQuery({
     endpoint: `${getCategory}`,
@@ -35,10 +37,10 @@ export default function OurOffers() {
       <Container>
         <Row>
           <SectionHeadings
-            title="What We Offer"
-            heading1={"We Offer Creative"}
-            heading2={"Categories"}
-            description="At Castle-Auction, explore a diverse range of auction categories tailored for every collector and bidder. From exclusive lots to unique finds, we bring the best under one platform."
+            title={t("category.heading")}
+            heading1={t("category.heading2")}
+            heading2={t("category.categories")}
+            description={t("category.heading3")}
           />
           <Col md="12">
             {isLoading ? (
@@ -76,7 +78,7 @@ export default function OurOffers() {
                         src={StaticImage}
                         alt=""
                       />
-                      <h5>No category Found</h5>
+                      <h5>{t("category.categoryNotFound")}</h5>
                     </div>
                   </>
                 )}

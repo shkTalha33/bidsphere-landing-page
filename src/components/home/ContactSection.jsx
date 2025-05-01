@@ -11,10 +11,12 @@ import { Input } from "antd";
 import ApiFunction from "../api/apiFuntions";
 import { notificationemail } from "../api/ApiFile";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 export default function ContactSection() {
   const router = useRouter();
   const { post } = ApiFunction();
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const schema = yup.object().shape({
     email: yup
@@ -73,7 +75,7 @@ export default function ContactSection() {
       >
         {" "}
         {/* Ensures content is above the overlay */}
-        <Container className="">
+        <Container >
           <div className="px-[1rem] bg_primary py-[2rem] md:py-[4rem] md:px-[4rem] w-full plusJakara_medium rounded-2xl">
             <motion.div
               className="flex items-center justify-center"
@@ -81,11 +83,10 @@ export default function ContactSection() {
             >
               <div className="max-w-[50rem]">
                 <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl poppins_semibold capitalize text-center m-auto mb-2 md:mb-4">
-                  STAY UPDATED WITH CASTLE-AUCTION
+                  {t("emailSubscribe.heading")}
                 </h2>
                 <p className="m-auto poppins_regular text-center text-sm md:text-lg capitalize mb-3 md:mb-4">
-                  Subscribe with your email to get instant updates on new
-                  auctions, bidding events, and exclusive deals.
+                  {t("emailSubscribe.heading2")}
                 </p>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -97,7 +98,7 @@ export default function ContactSection() {
                           control={control}
                           render={({ field }) => (
                             <Input
-                              placeholder="Your business email"
+                              placeholder={t("emailSubscribe.heading3")}
                               className="text_primary border-0 text-[0.8rem] sm:text-[1rem] flex-1"
                               {...field}
                             />
@@ -115,7 +116,7 @@ export default function ContactSection() {
                               </div>
                             </>
                           ) : (
-                            "Get Started"
+                            <>{t("emailSubscribe.heading4")}</>
                           )}
                         </button>
                       </div>
@@ -129,13 +130,12 @@ export default function ContactSection() {
                 </form>
 
                 <p className="text-xs poppins_regular">
-                  By subscribing, you agree to receive email updates from
-                  Castle-Auction about upcoming auctions and offers. Read our
+                  {t("emailSubscribe.heading5")}
                   <span
                     onClick={hanlePushr}
                     className="text_white ms-1 underline cursor-pointer"
                   >
-                    Terms and Conditions
+                    {t("emailSubscribe.heading6")}
                   </span>
                 </p>
               </div>

@@ -10,11 +10,12 @@ import { contactUs, contactUsApi, GetFooter } from "@/components/api/ApiFile";
 import { message } from "antd";
 import { FiPhone, FiMail, FiSend } from "react-icons/fi";
 import { useFootersQuery } from "@/components/redux/footerSlice";
+import { useTranslation } from "react-i18next";
 
 const Page = () => {
   const { post } = ApiFunction();
   const [loading, setLoading] = useState(false);
-
+  const { t } = useTranslation();
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup
@@ -69,9 +70,9 @@ const Page = () => {
       <Container className="bg-white rounded-lg mt-20 p-2 p-md-4 shadow-lg">
         <Row>
           <Col md="12">
-            <Breadcrumbs pageTitle={"Contact Us"} />
+            <Breadcrumbs pageTitle={t("nav.contactus")} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text-gray-800">
-              Contact Us
+              {t("nav.contactus")}
             </h3>
           </Col>
         </Row>
@@ -99,7 +100,7 @@ const Page = () => {
                       <FiPhone size={24} />
                     </div>
                     <h4 className="text-xl poppins_medium text-gray-800">
-                      Call Us
+                      {t("contactUs.heading")}
                     </h4>
                   </div>
                   <p className="text-gray-600 pl-14">{data?.footer?.phone1}</p>
@@ -123,7 +124,7 @@ const Page = () => {
                       <FiMail size={24} />
                     </div>
                     <h4 className="text-xl poppins_medium text-gray-800">
-                      Email Us
+                      {t("contactUs.heading2")}
                     </h4>
                   </div>
                   <p className="text-gray-600 pl-14">{data?.footer?.email1}</p>
@@ -136,13 +137,9 @@ const Page = () => {
           <Col lg="8" md="6">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <h4 className="text-xl poppins_semibold text-gray-800 mb-6">
-                Get In Touch
+                {t("contactUs.heading3")}
               </h4>
-              <p className="text-gray-600 mb-8">
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page words which even slightly when
-                looking at its layout.
-              </p>
+              <p className="text-gray-600 mb-8">{t("contactUs.heading4")}</p>
 
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-2">
@@ -150,7 +147,7 @@ const Page = () => {
                     htmlFor="name"
                     className="block text-sm poppins_medium text-gray-700 mb-2"
                   >
-                    Your Name
+                    {t("contactUs.heading5")}
                   </label>
                   <Controller
                     name="name"
@@ -158,7 +155,7 @@ const Page = () => {
                     render={({ field }) => (
                       <input
                         id="name"
-                        placeholder="Enter your name"
+                        placeholder={t("contactUs.heading5")}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300"
                         style={{ "--tw-ring-color": primaryColor }}
                         {...field}
@@ -178,7 +175,7 @@ const Page = () => {
                     htmlFor="email"
                     className="block text-sm poppins_medium text-gray-700 mb-2"
                   >
-                    Your Email
+                    {t("emailSubscribe.heading3")}
                   </label>
                   <Controller
                     name="email"
@@ -186,7 +183,7 @@ const Page = () => {
                     render={({ field }) => (
                       <input
                         id="email"
-                        placeholder="Enter your email"
+                        placeholder={t("emailSubscribe.heading3")}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300"
                         style={{ "--tw-ring-color": primaryColor }}
                         {...field}
@@ -206,7 +203,7 @@ const Page = () => {
                     htmlFor="message"
                     className="block text-sm poppins_medium text-gray-700 mb-2"
                   >
-                    Your Message
+                    {t("contactUs.heading6")}
                   </label>
                   <Controller
                     name="message"
@@ -214,7 +211,7 @@ const Page = () => {
                     render={({ field }) => (
                       <textarea
                         id="message"
-                        placeholder="Write your message here..."
+                        placeholder={t("contactUs.heading7")}
                         rows={5}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300 resize-none"
                         style={{ "--tw-ring-color": primaryColor }}
@@ -240,7 +237,7 @@ const Page = () => {
                     <Spinner size="sm" className="mr-2" />
                   ) : (
                     <>
-                      <FiSend className="mr-2" /> Send Message
+                      <FiSend className="mr-2" />{t("contactUs.heading8")}
                     </>
                   )}
                 </button>

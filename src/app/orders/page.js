@@ -20,6 +20,7 @@ import ProductTable from "@/components/common/dataTables/productTable";
 import OrderDetails from "./detail/orderDetail";
 import { MdPayments } from "react-icons/md";
 import Invoice from "./invoice/invoice";
+import { useTranslation } from "react-i18next";
 
 const Page = () => {
   const { get } = ApiFunction();
@@ -37,14 +38,15 @@ const Page = () => {
   const searchParams = useSearchParams();
   const urlParams = new URLSearchParams(searchParams);
   const urlId = urlParams.get("id");
+  const { t } = useTranslation();
   const urlInvoice = urlParams.get("invoice");
 
   const sideButtons = [
-    { title: "all orders", status: "all", icon: <FaList /> },
+    { title: t("order.heading"), status: "all", icon: <FaList /> },
     // { title: "Payement", status: "payement", icon: <MdPayments /> },
-    { title: "in transit", status: "transit", icon: <FaTruck /> },
-    { title: "shipped", status: "shipped", icon: <FaShippingFast /> },
-    { title: "delivered", status: "delivered", icon: <FaBox /> },
+    { title: t("order.heading2"), status: "transit", icon: <FaTruck /> },
+    { title: t("order.heading3"), status: "shipped", icon: <FaShippingFast /> },
+    { title: t("order.heading4"), status: "delivered", icon: <FaBox /> },
   ];
 
   const handleGetOrder = (status) => {
@@ -83,7 +85,7 @@ const Page = () => {
 
   const columns = [
     {
-      name: "Auction Name",
+      name: t("order.heading5"),
       minWidth: "150px",
       maxWidth: "350px",
       cell: (row) => (
@@ -98,7 +100,7 @@ const Page = () => {
       ),
     },
     {
-      name: "Category",
+      name: t("order.heading6"),
       minWidth: "120px",
       maxWidth: "250px",
       cell: (row) => (
@@ -109,7 +111,7 @@ const Page = () => {
     },
 
     {
-      name: "Start Date",
+      name: t("order.heading7"),
       minWidth: "200px",
       maxWidth: "400px",
       cell: (row) => (
@@ -122,7 +124,7 @@ const Page = () => {
       ),
     },
     {
-      name: "End Date",
+      name: t("order.heading8"),
       minWidth: "200px",
       maxWidth: "400px",
       cell: (row) => (
@@ -135,7 +137,7 @@ const Page = () => {
       ),
     },
     {
-      name: "Invoice",
+      name: t("order.heading9"),
       minWidth: "140px",
       maxWidth: "300px",
       cell: (row) => (
@@ -145,16 +147,16 @@ const Page = () => {
               onClick={() => handleinvoice(row)}
               className="h-6 md:h-10 px-2 flex items-center justify-center text-white cursor-pointer text-[0.8rem] rounded-[10px] w-fit shadow bg-gradient-to-r from-[#660000] to-[#993333] hover:from-[#550000] hover:to-[#800000] transition-all duration-300"
             >
-              See Invoice
+              {t("order.heading10")}
             </div>
           ) : (
-            <h4 className="text-center text-gray-400 italic">No Invoice</h4>
+            <h4 className="text-center text-gray-400 italic">{t("order.heading10")}</h4>
           )}
         </>
       ),
     },
     {
-      name: "Status",
+      name: t("order.heading11"),
       minWidth: "120px",
       maxWidth: "200px",
       cell: (row) => (
@@ -166,7 +168,7 @@ const Page = () => {
       ),
     },
     {
-      name: "Action",
+      name: t("order.heading12"),
       minWidth: "100px",
       maxWidth: "120px",
       cell: (row) => (
@@ -178,7 +180,7 @@ const Page = () => {
               handleDetail(row);
             }}
           >
-            view details
+            {t("order.heading13")}
           </div>
           {/* )} */}
         </>
@@ -246,9 +248,9 @@ const Page = () => {
       <Container className="bg_white rounded-[9px] mt-20 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12">
-            <Breadcrumbs pageTitle={"Orders"} />
+            <Breadcrumbs pageTitle={t("nav.orders")} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
-              Orders
+              {t("nav.orders")}
             </h3>
           </Col>
         </Row>
@@ -331,7 +333,7 @@ const Page = () => {
             ) : (
               <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px]">
                 <ProductTable
-                  rowHeading="all orders"
+                  rowHeading={t("order.heading")}
                   count={count}
                   loading={loading}
                   setCurrentPage={setPage}

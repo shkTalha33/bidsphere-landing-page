@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
 import CountdownTimer from "../../../components/CountdownTimer/CountdownTimer";
+import { useTranslation } from "react-i18next";
 const AuctionDetailPage = () => {
   const router = useRouter();
   const [item, setItem] = useState([]);
@@ -29,6 +30,7 @@ const AuctionDetailPage = () => {
   const { get, userData } = ApiFunction();
   const { id } = useParams();
   const { formatPrice, convert } = useCurrency();
+  const { t } = useTranslation();
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -202,7 +204,7 @@ const AuctionDetailPage = () => {
                 <Row className="justify-center my-3">
                   <Col md="6">
                     <div className="poppins_medium text-base text_primary">
-                      Starting Time
+                      {t("auctionDetails.heading")}
                     </div>
                     <div className="poppins_regular text-sm">
                       {moment
@@ -214,11 +216,12 @@ const AuctionDetailPage = () => {
 
                   <Col md="6">
                     <div className="poppins_medium text-base text_primary">
-                      Ending Time
+                      {t("auctionDetails.heading2")}
                     </div>
                     <div className="poppins_regular text-sm">
                       {moment
-                        .utc(item?.end_date).local()
+                        .utc(item?.end_date)
+                        .local()
                         .format("DD MMMM, YYYY h:mm A")}{" "}
                     </div>
                   </Col>
@@ -226,7 +229,7 @@ const AuctionDetailPage = () => {
                 <Row className="justify-center my-3">
                   <Col md="6">
                     <div className="poppins_medium text-base text_primary">
-                      Deposit Amount
+                      {t("auctionDetails.heading3")}
                     </div>
                   </Col>
                   <Col md="6">
@@ -238,7 +241,7 @@ const AuctionDetailPage = () => {
                 <Row className="justify-center my-3">
                   <Col md="12">
                     <div className="poppins_medium text-base text_primary">
-                      Description
+                      {t("auctionDetails.heading4")}
                     </div>
                   </Col>
                   <Col md="12">
@@ -257,7 +260,7 @@ const AuctionDetailPage = () => {
           <Container>
             <div>
               <p className="poppins_medium text-2xl mb-0 ">
-                All Lots({item?.lots?.length})
+                {t("auctionDetails.heading5")}({item?.lots?.length})
               </p>
             </div>
           </Container>

@@ -55,7 +55,7 @@ export default function Services() {
                         className="w-10 md:w-[50px]"
                         alt={service?.image}
                       />
-                      <div className="">
+                      <div >
                         <p className="text-[#1B212C] text-xl poppins_medium">
                           {service?.title}
                         </p>

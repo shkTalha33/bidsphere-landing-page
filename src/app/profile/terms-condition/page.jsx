@@ -9,12 +9,14 @@ import TopSection from "@/components/common/TopSection";
 import TabHeader from "@/components/tabHeader";
 import { Skeleton } from "antd";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 /* eslint-disable @next/next/no-img-element */
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
   const [termData, setTermData] = useState("");
   const { get } = ApiFunction();
+  const { t } = useTranslation();
 
   const handleTerms = () => {
     setLoading(true);

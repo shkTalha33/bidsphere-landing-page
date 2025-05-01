@@ -190,7 +190,7 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
     errors,
   }) => (
     <Col md="6">
-      <Label className="">{title}</Label>
+      <Label >{title}</Label>
       <p className="text-[#959595] text-[14px] poppins_regular">{subtitle}</p>
       <div
         className={`border-2 ${

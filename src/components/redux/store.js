@@ -13,6 +13,7 @@ import { currencySlice } from "./currency";
 import { footerApiSlice } from "./footerSlice";
 import registerReducer from "./registrationSlice/resgiterSlice";
 import stripKeyReducer from "./stripKey/stripKey";
+import languageReducer from "./language/languageSlice";
 const rootReducer = combineReducers({
   auth: authSlice,
   sidebar: sidebarSlice,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   currency: currencySlice.reducer,
   register: registerReducer,
   stripKey: stripKeyReducer,
+  language: languageReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
   [apiSlice2.reducerPath]: apiSlice2.reducer,
   [footerApiSlice.reducerPath]: footerApiSlice.reducer,
@@ -31,7 +33,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "cart", "register", "stripKey"],
+  whitelist: ["auth", "cart", "register", "stripKey" , "language"],
   blacklist: [apiSlice.reducerPath],
 };
 

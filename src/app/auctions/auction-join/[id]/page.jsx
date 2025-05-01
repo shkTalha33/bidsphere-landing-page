@@ -60,6 +60,9 @@ export default function Page() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [winnerLot, setWinnerLot] = useState(null);
 
+  console.table(winnerLot ,currentLot ,recentBids ,participants);
+  
+
   const confirmationItem = {
     title: "Confirm Bid",
     description: `You have placed a bid for ${formatPrice(

@@ -7,7 +7,7 @@ const StepperHeading = ({ heading, subHeading, path, currentStep, email, isSmall
     return (
         <>
             <div className={` ${isSmall ? 'pt-3' : 'pt-[54px]'} `}>
-                <button disabled={currentStep === 1} className="" onClick={() => path()}>
+                <button disabled={currentStep === 1}  onClick={() => path()}>
                     <GoArrowLeft size={24} />
                 </button>
             </div>

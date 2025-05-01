@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { BeatLoader } from "react-spinners";
 
 const Page = () => {
@@ -22,6 +23,7 @@ const Page = () => {
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pagiLoading, setPagiLoading] = useState(false);
+  const { t } = useTranslation();
 
   // handle data by cat id
   const handleAuctionData = () => {
@@ -64,7 +66,7 @@ const Page = () => {
             <Col md="12">
               <Breadcrumbs pageTitle="Auctions" />
               <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
-                Category Auctions
+                {t("categoryAuction.heading")}
               </h3>
             </Col>
           </Row>
@@ -98,7 +100,7 @@ const Page = () => {
                       alt=""
                     />
                     <div className="text-center poppins_medium mt-2">
-                      No auction found in this category.
+                      {t("categoryAuction.heading2")}
                     </div>
                   </div>
                 </>
@@ -115,7 +117,7 @@ const Page = () => {
                         {pagiLoading ? (
                           <BeatLoader color="#fff" size={10} />
                         ) : (
-                          <>See More</>
+                          <>{t("categoryAuction.heading3")}</>
                         )}
                       </button>
                     </section>

@@ -59,7 +59,7 @@ export default function RegistrationReviewPage({
           <Row className="g-2">
             <Col md="12">
               <Row className="my-2 bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
-                <Col md="6" className="">
+                <Col md="6" >
                   <div className="rounded-md px-3 py-2">
                     <p className="text-base poppins_semibold ">Name</p>
                     <p className="text-base poppins_semibold text-[#818898]">{`${
@@ -67,7 +67,7 @@ export default function RegistrationReviewPage({
                     } ${data?.lname || formData?.lname || "N/A"}`}</p>
                   </div>
                 </Col>
-                <Col md="6" className="">
+                <Col md="6" >
                   <div className="rounded-md px-3 py-2">
                     <p className="text-base poppins_semibold">Phone Number</p>
                     <p className="text-base poppins_semibold text-[#818898]">
@@ -77,7 +77,7 @@ export default function RegistrationReviewPage({
                 </Col>
               </Row>
               <Row className=" bg-[#F9F9F9] my-2 rounded-md shadow-[0_0_20px_rgba(255,255,255,0.8)] ">
-                <Col md="6" className="">
+                <Col md="6" >
                   <div className="rounded-md px-3 py-2 ">
                     <p className="text-base poppins_semibold">Email</p>
                     <p className="text-base poppins_semibold text-[#818898]">
@@ -85,7 +85,7 @@ export default function RegistrationReviewPage({
                     </p>
                   </div>
                 </Col>
-                <Col md="6" className="">
+                <Col md="6" >
                   <div className="rounded-md px-3 py-2 my-2">
                     <p className="text-base poppins_semibold">Country</p>
                     <p className="text-base poppins_semibold text-[#818898]">
@@ -95,7 +95,7 @@ export default function RegistrationReviewPage({
                 </Col>
               </Row>
               <Row className="bg-[#F9F9F9] my-2 shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
-                <Col md="12" className="">
+                <Col md="12" >
                   <div className="rounded-md px-3 py-2 ">
                     <p className="text-base poppins_semibold  mb-2">
                       Identity Proof
@@ -128,7 +128,7 @@ export default function RegistrationReviewPage({
                 </Col>
               </Row>
               <Row className="bg-[#F9F9F9] my-2 shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
-                <Col md="12" className="">
+                <Col md="12" >
                   <div className="rounded-md px-3 py-2 ">
                     <p className="text-base poppins_semibold mb-2">
                       Proof of Funds
@@ -160,7 +160,7 @@ export default function RegistrationReviewPage({
                 </Col>
               </Row>
               <Row className=" bg-[#F9F9F9] my-2 rounded-md shadow-[0_0_20px_rgba(255,255,255,0.8)] ">
-                <Col md="12" className="">
+                <Col md="12" >
                   <div className="rounded-md px-3 py-2 ">
                     <p className="text-base poppins_semibold">
                       Deposit Amount{" "}
@@ -174,7 +174,7 @@ export default function RegistrationReviewPage({
                 </Col>
               </Row>
               <Row className=" bg-[#F9F9F9] my-2 rounded-md shadow-[0_0_20px_rgba(255,255,255,0.8)] ">
-                <Col md="12" className="">
+                <Col md="12" >
                   <div className="rounded-md px-3 py-2">
                     <p className="text-base poppins_semibold">Payment Option</p>
                     <p className="text-base poppins_semibold text-[#818898]">

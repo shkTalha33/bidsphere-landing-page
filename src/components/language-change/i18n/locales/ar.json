@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "auction": "مزاد",
+    "becomePartner": "Become a Partner",
+    "searchPlaceholder": "Search all products",
+    "profile": "Profile",
+    "shops": "Shops",
+    "home": "Home",
+    "search": "Search",
+    "live": "Live",
+    "myOrder": "My Order",
+    "trackOrder": "Track Order",
+    "logout": "Logout",
+    "channel": "Channel"
+  }
+}

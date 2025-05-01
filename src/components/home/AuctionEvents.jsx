@@ -11,9 +11,11 @@ import { getCategory } from "../api/ApiFile";
 import Image from "next/image";
 import { StaticImage } from "../assets/icons/icon";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 export default function AuctionEvents() {
   const { formatPrice, convert } = useCurrency();
   const router = useRouter();
+  const { t } = useTranslation();
 
   const { data, isLoading, error } = useGetAuctionsQuery({
     endpoint: `${getCategory}`,
@@ -27,7 +29,7 @@ export default function AuctionEvents() {
       variants={staggerContainer}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.10 }}
+      viewport={{ once: true, amount: 0.1 }}
       className="pb-4 md:pb-[5rem] bg-white overflow-hidden mt-3"
     >
       {data?.categories?.length > 0 ? (
@@ -57,7 +59,7 @@ export default function AuctionEvents() {
                     onClick={() => handleCatAuction(data?.categories[0])}
                     className="bg_darkprimary poppins_regular text-sm rounded-xl h-10 text-white w-36"
                   >
-                    Bid Now
+                    {t("homeSlider.button")}
                   </button>
                 </motion.div>
               </Col>
@@ -87,7 +89,7 @@ export default function AuctionEvents() {
                     onClick={() => handleCatAuction(data?.categories[1])}
                     className="bg-[#FBD118] poppins_regular text-sm rounded-xl h-10 text-white w-36"
                   >
-                    Bid Now
+                    {t("homeSlider.button")}
                   </button>
                 </motion.div>
               </Col>
@@ -117,7 +119,7 @@ export default function AuctionEvents() {
                     onClick={() => handleCatAuction(data?.categories[2])}
                     className="bg-[#FBD118] poppins_regular text-sm rounded-xl h-10 text-white w-36"
                   >
-                    Bid Now
+                    {t("homeSlider.button")}
                   </button>
                 </motion.div>
               </Col>
@@ -147,7 +149,7 @@ export default function AuctionEvents() {
                     onClick={() => handleCatAuction(data?.categories[3])}
                     className="bg_darkprimary poppins_regular text-sm rounded-xl h-10 text-white w-36"
                   >
-                    Bid Now
+                    {t("homeSlider.button")}
                   </button>
                 </motion.div>
               </Col>
@@ -177,7 +179,7 @@ export default function AuctionEvents() {
                     onClick={() => handleCatAuction(data?.categories[4])}
                     className="bg_darkprimary poppins_regular text-sm rounded-xl h-10 text-white w-36"
                   >
-                    Bid Now
+                    {t("homeSlider.button")}
                   </button>
                 </motion.div>
               </Col>
@@ -195,9 +197,9 @@ export default function AuctionEvents() {
               />
 
               <h1 className="text-2xl font-bold mb-0">
-                No Auction Events Available
+                {t("ongoing.heading2")}
               </h1>
-              <p className="mb-0">Please check back later.</p>
+              <p className="mb-0"> {t("ongoing.heading3")}</p>
             </div>
           </div>
         </>
