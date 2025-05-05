@@ -75,7 +75,7 @@ export default function ContactSection() {
       >
         {" "}
         {/* Ensures content is above the overlay */}
-        <Container >
+        <Container>
           <div className="px-[1rem] bg_primary py-[2rem] md:py-[4rem] md:px-[4rem] w-full plusJakara_medium rounded-2xl">
             <motion.div
               className="flex items-center justify-center"
@@ -129,7 +129,7 @@ export default function ContactSection() {
                   </div>
                 </form>
 
-                <p className="text-xs poppins_regular">
+                <p className="text-xs poppins_regular mt-4">
                   {t("emailSubscribe.heading5")}
                   <span
                     onClick={hanlePushr}

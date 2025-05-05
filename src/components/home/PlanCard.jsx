@@ -18,17 +18,17 @@ export default function PlansCard({ plan, index }) {
       viewport={{ once: true, amount: 0.25 }}
       variants={fadeIn("up", "tween", (index + 1) * 0.1, 1)}
       onClick={() => handleCatAuction(plan)}
-      className="relative h-[300px] w-[100%] rounded-xl overflow-hidden cursor-pointer group"
+      className="relative h-[300px] w-full rounded-xl overflow-hidden cursor-pointer group"
     >
       {/* Background Image */}
       <img
         src={plan?.image}
         alt={plan?.name}
-        className="w-full h-full object-cover transform scale-100 transition-all duration-500 group-hover:scale-105 group-hover:filter-none filter blur-sm"
+        className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
       />
 
-      {/* Overlay Blur/Darkness */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-all duration-500 group-hover:bg-transparent"></div>
+      {/* Black Overlay (visible by default, hides on hover) */}
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm bg-opacity-60 transition-all duration-500 group-hover:opacity-0 pointer-events-none"></div>
 
       {/* Text Content */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">

@@ -99,7 +99,6 @@ const ChatMessageList = () => {
     const message = input.value;
     const data = {
       lot: chatUser?.lot?._id,
-
       message: message,
       type: "user",
     };

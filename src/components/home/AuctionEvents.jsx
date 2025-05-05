@@ -39,10 +39,10 @@ export default function AuctionEvents() {
               <Col md="6" className="d-flex">
                 <motion.div
                   variants={slideIn("left", "damping", 0.3, 0.8)}
-                  className="w-full rounded-2xl flex flex-col justify-between p-16"
+                  className="w-full rounded-2xl flex flex-col justify-between p-16 border"
                   style={{
                     background: `url(${data?.categories[0]?.image})`,
-                    backgroundSize: "cover",
+                    backgroundSize: "100% 100%",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                   }}
@@ -69,10 +69,10 @@ export default function AuctionEvents() {
               <Col md="6" className="d-flex">
                 <motion.div
                   variants={slideIn("up", "damping", 0.3, 0.8)}
-                  className="w-full rounded-2xl flex flex-col justify-between p-16"
+                  className="w-full rounded-2xl flex flex-col justify-between p-16 border"
                   style={{
                     background: `url(${data?.categories[1]?.image})`,
-                    backgroundSize: "cover",
+                    backgroundSize: "100% 100%",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                   }}
@@ -99,10 +99,10 @@ export default function AuctionEvents() {
               <Col md="4">
                 <motion.div
                   variants={slideIn("up", "damping", 0.3, 0.8)}
-                  className="w-full rounded-2xl flex flex-col justify-between px-8 py-16"
+                  className="w-full rounded-2xl flex flex-col justify-between px-8 py-16 border"
                   style={{
                     background: `url(${data?.categories[2]?.image})`,
-                    backgroundSize: "cover",
+                    backgroundSize: "100% 100%",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                   }}
@@ -129,10 +129,10 @@ export default function AuctionEvents() {
               <Col md="4">
                 <motion.div
                   variants={slideIn("up", "damping", 0.3, 0.8)}
-                  className="w-full rounded-2xl flex flex-col justify-between px-8 py-16"
+                  className="w-full rounded-2xl flex flex-col justify-between px-8 py-16 border"
                   style={{
                     background: `url(${data?.categories[3]?.image})`,
-                    backgroundSize: "cover",
+                    backgroundSize: "100% 100%",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                   }}
@@ -159,10 +159,10 @@ export default function AuctionEvents() {
               <Col md="4">
                 <motion.div
                   variants={slideIn("right", "damping", 0.3, 0.8)}
-                  className="w-full rounded-2xl flex flex-col justify-between px-8 py-16"
+                  className="w-full rounded-2xl flex flex-col justify-between px-8 py-16 border"
                   style={{
                     background: `url(${data?.categories[4]?.image})`,
-                    backgroundSize: "cover",
+                    backgroundSize: "100% 100%",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                   }}

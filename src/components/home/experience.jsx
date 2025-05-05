@@ -14,9 +14,9 @@ export default function Experience() {
   const { t } = useTranslation();
   const features = [
     t("about.heading5"),
-    t("about.heading6"),
+    // t("about.heading6"),
     t("about.heading7"),
-    t("about.heading8"),
+    // t("about.heading8"),
   ];
 
   return (
