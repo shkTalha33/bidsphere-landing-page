@@ -83,7 +83,7 @@ const Page = () => {
           {/* Contact Info Cards */}
           <Col lg="4" md="6" className="mb-4 md:mb-0">
             <Row className="g-3">
-              <Col xs="12" className="bg-white p-6 rounded-lg shadow-lg h-full">
+              <Col xs="12" className="bg-white p-3 rounded-lg shadow-lg h-full">
                 {/* Call Us Card */}
                 <div
                   className="rounded-lg transition-all duration-300 cursor-pointer group"
@@ -94,20 +94,20 @@ const Page = () => {
                 >
                   <div className="flex items-center">
                     <div
-                      className="text-white p-3 rounded-full transition-all duration-300 group-hover:shadow-md mr-4"
+                      className="text-white p-2 rounded-full transition-all duration-300 group-hover:shadow-md mr-4"
                       style={{ backgroundColor: primaryColor }}
                     >
-                      <FiPhone size={24} />
+                      <FiPhone size={18} />
                     </div>
                     <h4 className="text-xl poppins_medium text-gray-800">
                       {t("contactUs.heading")}
                     </h4>
                   </div>
-                  <p className="text-gray-600 pl-14">{data?.footer?.phone1}</p>
+                  <p className="text-gray-600 pl-12">{data?.footer?.phone1}</p>
                 </div>
               </Col>
 
-              <Col xs="12" className="bg-white p-6 rounded-lg shadow-lg h-full">
+              <Col xs="12" className="bg-white p-3 rounded-lg shadow-lg h-full">
                 {/* Email Us Card */}
                 <div
                   className="rounded-lg transition-all duration-300 cursor-pointer group"
@@ -118,16 +118,16 @@ const Page = () => {
                 >
                   <div className="flex items-center">
                     <div
-                      className="text-white p-3 rounded-full transition-all duration-300 group-hover:shadow-md mr-4"
+                      className="text-white p-2 rounded-full transition-all duration-300 group-hover:shadow-md mr-4"
                       style={{ backgroundColor: primaryColor }}
                     >
-                      <FiMail size={24} />
+                      <FiMail size={18} />
                     </div>
                     <h4 className="text-xl poppins_medium text-gray-800">
                       {t("contactUs.heading2")}
                     </h4>
                   </div>
-                  <p className="text-gray-600 pl-14">{data?.footer?.email1}</p>
+                  <p className="text-gray-600 pl-12">{data?.footer?.email1}</p>
                 </div>
               </Col>
             </Row>
@@ -230,14 +230,14 @@ const Page = () => {
                 <button
                   disabled={loading}
                   type="submit"
-                  className="flex items-center justify-center w-full sm:w-auto px-8 py-3 text-white poppins_medium rounded-lg transition-all duration-300 hover:opacity-90"
-                  style={{ backgroundColor: primaryColor }}
+                  className="flex items-center bg_primary justify-center w-full sm:w-auto px-3 whitespace-nowrap py-3 text-white poppins_medium rounded-lg transition-all duration-300 hover:opacity-90"
                 >
                   {loading ? (
                     <Spinner size="sm" className="mr-2" />
                   ) : (
                     <>
-                      <FiSend className="mr-2" />{t("contactUs.heading8")}
+                      <FiSend className="mr-2" />
+                      {t("contactUs.heading8")}
                     </>
                   )}
                 </button>

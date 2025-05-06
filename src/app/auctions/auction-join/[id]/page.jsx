@@ -59,10 +59,6 @@ export default function Page() {
     return "Good night";
   };
 
-  console.log(currentLot, "currentLot");
-  console.log(winnerLot, "winnerLot");
-  console.log(userData, "userData");
-
   const confirmationItem = {
     title: "Confirm Bid",
     description: `You have placed a bid for ${formatPrice(
@@ -88,18 +84,21 @@ export default function Page() {
   const [priceOptions, setPriceOptions] = useState([]);
   const getPriceOptions = () => {
     let basePrice = 0;
+    const increment = Number(currentLot?.minincrement) || 1000;
+
     if (recentBids?.length > 0) {
       const latestBid = Number(recentBids[0]?.price || 0);
-      basePrice = latestBid + 1000;
+      basePrice = latestBid + increment;
     } else if (currentLot?.minprice) {
-      basePrice = Number(currentLot?.minprice) + 1000;
+      basePrice = Number(currentLot?.minprice) + increment;
     }
+
     const options = Array.from({ length: 4 }, (_, i) =>
-      String(basePrice + i * 1000)
+      String(basePrice + i * increment)
     );
+
     return options;
   };
-
   useEffect(() => {
     setPriceOptions(getPriceOptions());
   }, [recentBids, currentLot]);
@@ -122,6 +121,7 @@ export default function Page() {
             (lot) => lot?.item?._id === response?.auction?.current_lot
           );
           setCurrentLot(matchedLot || null);
+
           setRecentBids(response?.lastBids);
         }
       });
@@ -140,13 +140,16 @@ export default function Page() {
 
       // Listen for auction updates
       socket.on("auction", (data) => {
-        setAuctionData(data?.auction);
+        setAuctionData(data);
+        const matchedLot = data?.auction?.lots?.find(
+          (lot) => lot?.item?._id === data?.auction?.current_lot
+        );
+
+        setCurrentLot(matchedLot || null);
       });
 
       // Listen for participant updates
       socket.on("user_joined", ({ user }) => {
-        console.log(user, "user join");
-
         setParticipants((prev) => {
           const isUserExists = prev.some(
             (participant) => participant?._id === user?._id
@@ -155,10 +158,23 @@ export default function Page() {
         });
       });
 
+      // Listen for auction bids
+      const bidAiData = {
+        auctionId: id,
+        lotId: currentLot?.item?._id,
+        page: 1,
+        limit: 10,
+      };
+      socket.emit("get_auction_bids", bidAiData, (data) => {
+        // setRecentBids(data);
+        console.log(data, "data");
+      });
+
       return () => {
         socket.off("new_bid");
         socket.off("auction");
         socket.off("user_joined");
+        socket.off("get_auction_bids");
       };
     }
   }, [socket]);
@@ -179,6 +195,8 @@ export default function Page() {
         toast.success(response.message);
         setBidAmount("");
       }
+      setActiveButton("custom");
+      setBidAmount("");
       setOpenBiddingConfirmationModal(false);
     });
   };
@@ -289,14 +307,13 @@ export default function Page() {
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="poppins_medium text-xl sm:text-2xl text-white mb-0 capitalize">
-                      {currentLot?.item?.name}
+                      {currentLot?.item?.name || userData?.lang === "en"
+                        ? currentLot?.item?.name?.en
+                        : currentLot?.item?.name?.ar}
                     </p>
                     <p className="poppins_regular text-sm text-white mb-0 capitalize">
                       Auction
                     </p>
-                  </div>
-                  <div className="mb-0">
-                    <ChevronRight className="text-white text-2xl" />
                   </div>
                 </div>
               </div>
@@ -481,6 +498,7 @@ export default function Page() {
                           disabled={
                             currentLot?.status === "winner" || winnerLot?.bid
                           }
+                          value={bidAmount}
                           onChange={(e) => setBidAmount(e.target.value)}
                           className="text-center py-2 md:py-3 rounded-2xl poppins_semibold text-[14px] bg-transparent border border-[#21CD9D] text_primary flex-grow"
                         />
@@ -496,7 +514,12 @@ export default function Page() {
                                 "You are not allowed to bid on this lot anymore."
                               );
                             } else {
-                              setOpenBiddingConfirmationModal(true);
+                              if (bidAmount > 0) {
+                                setOpenBiddingConfirmationModal(true);
+                              } else {
+                                toast.error("Please enter a valid bid amount.");
+                              }
+                              // setOpenBiddingConfirmationModal(true);
                             }
                           }}
                         >

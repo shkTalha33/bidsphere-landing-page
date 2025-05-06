@@ -177,7 +177,7 @@ export default function PaymentDetail() {
           return (
             <button
               onClick={() => handleShow(row)}
-              className="bg-gradient-to-r from-[#660000] via-[#800000] to-[#990000] text-white text-sm font-medium py-1.5 px-3 rounded-md hover:opacity-90 transition"
+              className="bg-gradient-to-r from-[#660000] via-[#800000] to-[#990000] whitespace-nowrap text-white text-sm font-medium py-1.5 px-3 rounded-md hover:opacity-90 transition"
             >
               Request Refund
             </button>

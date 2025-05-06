@@ -23,6 +23,8 @@ export default function ForYou() {
     return handleError(error);
   }
 
+
+
   return (
     <>
       <motion.main
