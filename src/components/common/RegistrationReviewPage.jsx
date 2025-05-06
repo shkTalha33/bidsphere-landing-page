@@ -50,6 +50,9 @@ export default function RegistrationReviewPage({
         setLoading(false);
       });
   };
+
+  console.log(data, "data");
+
   return (
     <>
       {isLoading ? (
@@ -57,135 +60,139 @@ export default function RegistrationReviewPage({
       ) : (
         <Container className="bg-white rounded-lg p-2">
           <Row className="g-2">
-            <Col md="12">
-              <Row className="my-2 bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
-                <Col md="6" >
-                  <div className="rounded-md px-3 py-2">
-                    <p className="text-base poppins_semibold ">Name</p>
-                    <p className="text-base poppins_semibold text-[#818898]">{`${
-                      data?.fname || formData?.fname || "N/A"
-                    } ${data?.lname || formData?.lname || "N/A"}`}</p>
+            <Col md="6">
+              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+                <div className="rounded-md px-3 py-2">
+                  <p className="text-base poppins_semibold">Name</p>
+                  <p className="text-base poppins_regular text-[#818898]">
+                    {`${data?.fname || formData?.fname || "N/A"} ${
+                      data?.lname || formData?.lname || "N/A"
+                    }`}
+                  </p>
+                </div>
+              </div>
+            </Col>
+
+            <Col md="6">
+              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+                <div className="rounded-md px-3 py-2">
+                  <p className="text-base poppins_semibold">Phone Number</p>
+                  <p className="text-base poppins_regular text-[#818898]">
+                    {data?.phone || formData?.phone || "N/A"}
+                  </p>
+                </div>
+              </div>
+            </Col>
+
+            <Col md="6">
+              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+                <div className="rounded-md px-3 py-2">
+                  <p className="text-base poppins_semibold">Email</p>
+                  <p className="text-base poppins_regular text-[#818898]">
+                    {data?.email || formData?.email || "N/A"}
+                  </p>
+                </div>
+              </div>
+            </Col>
+
+            <Col md="6">
+              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+                <div className="rounded-md px-3 py-2">
+                  <p className="text-base poppins_semibold">Country</p>
+                  <p className="text-base poppins_regular text-[#818898]">
+                    {data?.country || formData?.country || "N/A"}
+                  </p>
+                </div>
+              </div>
+            </Col>
+
+            <Col md="6">
+              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+                <div className="rounded-md px-3 py-2">
+                  <p className="text-base poppins_semibold mb-2">
+                    Identity Proof
+                  </p>
+                  <div className="flex gap-3 items-start flex-wrap">
+                    {(data?.id_proof || formData?.id_proof)?.map(
+                      (file, index) => (
+                        <Link href={file?.url} target="_blank" key={index}>
+                          <div className="flex flex-col gap-2">
+                            <Image
+                              src={file.type === "pdf" ? pdfIcon : file?.url}
+                              alt={file?.title}
+                              width={48}
+                              height={48}
+                              className="!h-12 !w-12"
+                            />
+                            <p className="mb-0 text_primary poppins_medium hover:underline text-xs flex flex-wrap w-12">
+                              {file?.title}
+                            </p>
+                          </div>
+                        </Link>
+                      )
+                    )}
                   </div>
-                </Col>
-                <Col md="6" >
-                  <div className="rounded-md px-3 py-2">
-                    <p className="text-base poppins_semibold">Phone Number</p>
-                    <p className="text-base poppins_semibold text-[#818898]">
-                      {data?.phone || formData?.phone || "N/A"}
-                    </p>
+                </div>
+              </div>
+            </Col>
+
+            <Col md="6">
+              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+                <div className="rounded-md px-3 py-2">
+                  <p className="text-base poppins_semibold mb-2">
+                    Proof of Funds
+                  </p>
+                  <div className="flex gap-2 items-start flex-wrap">
+                    {(data?.funds_proof || formData?.funds_proof)?.map(
+                      (file, index) => (
+                        <Link href={file?.url} target="_blank" key={index}>
+                          <div className="flex flex-col gap-2 me-4">
+                            <Image
+                              src={file.type === "pdf" ? pdfIcon : file?.url}
+                              alt={file?.title}
+                              width={48}
+                              height={48}
+                              className="!h-12 !w-12"
+                            />
+                            <p className="mb-0 text_primary poppins_medium hover:underline text-xs flex flex-wrap w-12">
+                              {file?.title}
+                            </p>
+                          </div>
+                        </Link>
+                      )
+                    )}
                   </div>
-                </Col>
-              </Row>
-              <Row className=" bg-[#F9F9F9] my-2 rounded-md shadow-[0_0_20px_rgba(255,255,255,0.8)] ">
-                <Col md="6" >
-                  <div className="rounded-md px-3 py-2 ">
-                    <p className="text-base poppins_semibold">Email</p>
-                    <p className="text-base poppins_semibold text-[#818898]">
-                      {data?.email || formData?.email || "N/A"}
-                    </p>
-                  </div>
-                </Col>
-                <Col md="6" >
-                  <div className="rounded-md px-3 py-2 my-2">
-                    <p className="text-base poppins_semibold">Country</p>
-                    <p className="text-base poppins_semibold text-[#818898]">
-                      {data?.country || formData?.country || "N/A"}
-                    </p>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="bg-[#F9F9F9] my-2 shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
-                <Col md="12" >
-                  <div className="rounded-md px-3 py-2 ">
-                    <p className="text-base poppins_semibold  mb-2">
-                      Identity Proof
-                    </p>
-                    <div className="flex gap-3 items-start flex-wrap">
-                      {data?.id_proof?.map ||
-                        formData?.id_proof?.map((file, index) => {
-                          return (
-                            <Link href={file?.url} target="_blank" key={index}>
-                              <div className="flex flex-col gap-2 ">
-                                <Image
-                                  key={index}
-                                  src={
-                                    file.type === "pdf" ? pdfIcon : file?.url
-                                  }
-                                  alt={file?.title}
-                                  width={48}
-                                  height={48}
-                                  className="!h-12 !w-12"
-                                />
-                                <p className="mb-0 text_primary poppins_medium hover:underline text-xs flex flex-wrap w-12">
-                                  {file?.title}
-                                </p>
-                              </div>
-                            </Link>
-                          );
-                        })}
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="bg-[#F9F9F9] my-2 shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
-                <Col md="12" >
-                  <div className="rounded-md px-3 py-2 ">
-                    <p className="text-base poppins_semibold mb-2">
-                      Proof of Funds
-                    </p>
-                    <div className="flex gap-2 items-start flex-wrap">
-                      {data?.funds_proof?.map ||
-                        formData?.funds_proof?.map((file, index) => {
-                          return (
-                            <Link href={file?.url} target="_blank" key={index}>
-                              <div className="flex flex-col gap-2 me-4">
-                                <Image
-                                  src={
-                                    file.type === "pdf" ? pdfIcon : file?.url
-                                  }
-                                  alt={file?.title}
-                                  width={48}
-                                  height={48}
-                                  className="!h-12 !w-12"
-                                />
-                                <p className="mb-0 text_primary poppins_medium hover:underline text-xs flex flex-wrap w-12">
-                                  {file?.title}
-                                </p>
-                              </div>
-                            </Link>
-                          );
-                        })}
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className=" bg-[#F9F9F9] my-2 rounded-md shadow-[0_0_20px_rgba(255,255,255,0.8)] ">
-                <Col md="12" >
-                  <div className="rounded-md px-3 py-2 ">
-                    <p className="text-base poppins_semibold">
-                      Deposit Amount{" "}
-                    </p>
-                    <p className="text-base poppins_semibold text-[#818898]">
-                      {data?.amount || formData?.amount
-                        ? formatPrice(data?.amount || formData?.amount)
-                        : "N/A"}
-                    </p>
-                  </div>
-                </Col>
-              </Row>
-              <Row className=" bg-[#F9F9F9] my-2 rounded-md shadow-[0_0_20px_rgba(255,255,255,0.8)] ">
-                <Col md="12" >
-                  <div className="rounded-md px-3 py-2">
-                    <p className="text-base poppins_semibold">Payment Option</p>
-                    <p className="text-base poppins_semibold text-[#818898]">
-                      {/* { data?.paymentId || "N/A"} */}
-                      Pay with Stripe
-                    </p>
-                  </div>
-                </Col>
-              </Row>
+                </div>
+              </div>
+            </Col>
+
+            <Col md="6">
+              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+                <div className="rounded-md px-3 py-2">
+                  <p className="text-base poppins_semibold">Deposit Amount</p>
+                  <p className="text-base poppins_regular text-[#818898]">
+                    {data?.amount || formData?.amount
+                      ? formatPrice(data?.amount || formData?.amount)
+                      : "N/A"}
+                  </p>
+                </div>
+              </div>
+            </Col>
+
+            <Col md="6">
+              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+                <div className="rounded-md px-3 py-2">
+                  <p className="text-base poppins_semibold">Payment Option</p>
+                  <p className="text-base poppins_regular text-[#818898]">
+                    {data?.walletBalance
+                      ? "Pay with Wallet"
+                      : "Pay with Stripe"}
+                  </p>
+                </div>
+              </div>
             </Col>
           </Row>
+
           {pageType === "registration" && (
             <Row className="mt-4">
               <Col lg="6" className="text-end ml-auto">

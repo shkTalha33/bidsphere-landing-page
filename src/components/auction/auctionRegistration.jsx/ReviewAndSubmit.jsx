@@ -7,7 +7,11 @@ const ReviewAndSubmit = ({ progress }) => {
   );
 
   return (
-    <RegistrationReviewPage data={data} pageType="registration" progress={progress} />
+    <RegistrationReviewPage
+      data={data}
+      pageType="registration"
+      progress={progress}
+    />
   );
 };
 

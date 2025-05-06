@@ -65,7 +65,7 @@ export default function ContactSection() {
 
   return (
     <>
-      <div className="w-full h-[3rem] md:h-[4.75rem] bg_white "></div>
+      {/* <div className="w-full h-[3rem] md:h-[4.75rem] bg_white "></div> */}
       <motion.section
         variants={staggerContainer}
         initial="hidden"

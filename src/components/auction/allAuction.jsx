@@ -110,29 +110,31 @@ export default function AllAuction() {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px] mt-20 p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
-        <Row>
-          <Col md="12">
-            <Breadcrumbs pageTitle="Auctions" />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
-              {t("allAuction.heading")}
-            </h3>
-          </Col>
-        </Row>
-      </Container>
+      <main className="!mt-[7rem]">
+        <Container className="bg_white rounded-[9px]  p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+          <Row>
+            <Col md="12">
+              <Breadcrumbs pageTitle="Auctions" />
+              <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+                {t("allAuction.heading")}
+              </h3>
+            </Col>
+          </Row>
+        </Container>
 
-      <Container className="bg_mainsecondary rounded-[9px] mt-4">
-        <Row>
-          <Col md="12" className="!px-0">
-            <Tabs
-              activeKey={activeTab}
-              size="large"
-              items={items}
-              onChange={onChange}
-            />
-          </Col>
-        </Row>
-      </Container>
+        <Container className="bg_mainsecondary rounded-[9px] mt-4">
+          <Row>
+            <Col md="12" className="!px-0">
+              <Tabs
+                activeKey={activeTab}
+                size="large"
+                items={items}
+                onChange={onChange}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </main>
     </>
   );
 }

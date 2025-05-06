@@ -59,6 +59,9 @@ const getFaqById = "pages/faqs";
 const getInvoiceDetail = "auction/order/details";
 const notificationemail = "support/subscribe";
 const getSupportDetail = "support/details";
+// refund api
+const refundAdmin = "deposit/request-refund";
+const refundWallet = "deposit/add-to-wallet";
 export {
   login,
   imageUpload,
@@ -108,5 +111,7 @@ export {
   getFaqById,
   getInvoiceDetail,
   notificationemail,
-  getSupportDetail
+  getSupportDetail,
+  refundAdmin,
+  refundWallet,
 };

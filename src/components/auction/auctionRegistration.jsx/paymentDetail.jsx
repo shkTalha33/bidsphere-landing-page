@@ -84,11 +84,19 @@ const PaymentDetail = ({
     fetchAuctionDetail();
   }, []);
 
+  const [walletUsed, setWalletUsed] = useState(false);
+
   const handlenavoiu = () => {
-    const data = {
-      paymentId: stripKeysData?.paymentId,
-      amount: item?.depositamount,
-    };
+    const data = walletUsed
+      ? {
+          walletBalance: item?.depositamount,
+          amount: item?.depositamount,
+        }
+      : {
+          paymentId: stripKeysData?.paymentId,
+          amount: item?.depositamount,
+        };
+
     if (!isCompleted?.security) {
       if (progress === 66) {
         dispatch(setsliceProgress(34));
@@ -187,38 +195,73 @@ const PaymentDetail = ({
               </div>
             </Col>
             <Col md="6" className="text-center">
-              <div>
-                {formData?.paymentId || urlStatus === "succeeded" ? (
-                  <>
-                    <div className="mb-3 text-lg poppins_semibold">
-                      Payment Already Done with Strip
-                    </div>
-                  </>
+              {/* Wallet Balance Display at Top */}
+              <div className="bg-gray-100 p-3 rounded-md mb-4 text-left">
+                <div className="text-sm text-gray-700">
+                  Wallet Balance:{" "}
+                  <span className="font-bold text-black">
+                    ${userData?.walletBalance || 0}
+                  </span>
+                </div>
+              </div>
+
+              <div className="bg-white shadow-md rounded-lg p-4">
+                {formData?.paymentId ||
+                urlStatus === "succeeded" ||
+                walletUsed ? (
+                  <div className="mb-3 text-lg poppins_semibold text-green-600">
+                    Payment Done with{" "}
+                    <span className="font-bold">
+                      {walletUsed ? "Wallet" : "Stripe"}
+                    </span>
+                  </div>
                 ) : (
                   <>
-                    <div className="mb-3 text-lg poppins_semibold">
-                      Payment with Stripe
+                    <div className="mb-4 text-lg poppins_semibold text-gray-800">
+                      Choose a Payment Method
                     </div>
-                    <div
-                      onClick={handleCreatePayment}
-                      className="bg_primary w-fit cursor-pointer text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg flex items-center justify-center gap-2"
-                    >
-                      <FaCreditCard size={20} /> {/* Stripe icon */}
-                      Pay with Stripe
+
+                    <div className="flex max-[1286px]:flex-col items-center justify-center gap-3">
+                      {/* Stripe Button */}
+                      <div
+                        onClick={() => {
+                          handleCreatePayment();
+                          setWalletUsed(false);
+                        }}
+                        className="bg-blue-600 whitespace-nowrap hover:bg-blue-700 transition-all w-full sm:w-auto cursor-pointer text-white px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg flex items-center justify-center gap-2"
+                      >
+                        <FaCreditCard size={20} />
+                        Pay with Stripe
+                      </div>
+
+                      {/* Wallet Button */}
+                      {userData?.walletBalance >= item?.depositamount ? (
+                        <div
+                          onClick={() => setWalletUsed(true)}
+                          className="bg-green-600 whitespace-nowrap hover:bg-green-700 transition-all w-full sm:w-auto cursor-pointer text-white px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
+                        >
+                          Pay with Wallet
+                        </div>
+                      ) : (
+                        <div className="text-red-500 text-sm mt-2">
+                          Insufficient Wallet Balance. Please pay
+                          with Stripe.
+                        </div>
+                      )}
                     </div>
                   </>
                 )}
               </div>
+
+              {/* NEXT Button */}
               <div className="flex justify-end mt-3">
-                {urlStatus === "succeeded" && (
-                  <>
-                    <div
-                      onClick={handlenavoiu}
-                      className="bg_primary w-fit cursor-pointer text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
-                    >
-                      Next
-                    </div>
-                  </>
+                {(urlStatus === "succeeded" || walletUsed) && (
+                  <div
+                    onClick={handlenavoiu}
+                    className="bg_primary hover:bg-indigo-700 transition-all w-fit cursor-pointer text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
+                  >
+                    Next
+                  </div>
                 )}
               </div>
             </Col>

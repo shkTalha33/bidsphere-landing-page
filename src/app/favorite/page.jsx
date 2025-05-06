@@ -31,27 +31,29 @@ export default function FavoritesPage() {
   }, [isError, error]);
 
   return (
-    <main className="bg_mainsecondary p-4">
-      <div className="container">
-        <div className="bg_white rounded-[9px] mt-20 mb-4 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
-          <Row>
-            <Col md="12" >
-              <Breadcrumbs pageTitle={"Favourite"} />
-              <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
-                Favourite Auctions
-              </h3>
-            </Col>
-          </Row>
+    <main className="bg_mainsecondary p-2  md:py-4">
+      <section className="!mt-[7rem] ">
+        <div className="container ">
+          <div className="bg_white rounded-[9px] mb-4 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+            <Row>
+              <Col md="12">
+                <Breadcrumbs pageTitle={"Favourite"} />
+                <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+                  Favourite Auctions
+                </h3>
+              </Col>
+            </Row>
+          </div>
+          <FavoriteAuctionItems
+            items={data?.auctions || []}
+            count={data?.count?.totalPage || 0}
+            loading={isFetching}
+            lastId={lastId}
+            handleLoadMore={handleLoadMore}
+            toggleFavorite={toggleFavorite}
+          />
         </div>
-        <FavoriteAuctionItems
-          items={data?.auctions || []}
-          count={data?.count?.totalPage || 0}
-          loading={isFetching}
-          lastId={lastId}
-          handleLoadMore={handleLoadMore}
-          toggleFavorite={toggleFavorite}
-        />
-      </div>
+      </section>
     </main>
   );
 }

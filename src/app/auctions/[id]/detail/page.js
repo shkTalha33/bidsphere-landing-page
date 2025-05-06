@@ -62,7 +62,7 @@ export default function Page() {
             <p className="poppins_semibold text-2xl capitalize">{data?.name}</p>
             <div
               onClick={handlenavi}
-              className="px-5 py-2 cursor-pointer bg-[#f5f5f5] text_primary text-sm rounded-2xl capitalize"
+              className="px-5 py-2 cursor-pointer bg_primary text-white text-sm rounded-2xl capitalize"
             >
               {data?.status}
             </div>

@@ -461,6 +461,14 @@ const ProfilePage = () => {
                           {userData?.email}
                         </p>
                       </div>
+                      <div className="border-t pt-6 mt-6">
+                        <h3 className="poppins_medium text-gray-700">
+                          Wallet Balance
+                        </h3>
+                        <p className="text-[#16A34A] text-lg poppins_semibold">
+                          ${userData?.walletBalance?.toFixed(2) || "0.00"} USD
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
