@@ -40,8 +40,10 @@ const ChatMessage = () => {
   const params = new URLSearchParams(searchParams);
   const urlDataEnq = params.get("query");
 
+
   useEffect(() => {
     const urlData = urlDataEnq ? decryptData(urlDataEnq) : "";
+    
     if (urlData) {
       setActiveChatId(urlData?._id);
       setResponsiveChat(true);

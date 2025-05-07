@@ -29,12 +29,9 @@ const ChatMessageList = () => {
   const [chatMsg, setChatMsg] = useState([]);
   const [usersId, setUsersId] = useState("");
   const [lastMsgId, setLastMsgId] = useState("");
-  const videoCallData = useSelector(
-    (state) => state.notification?.videoCallData
-  );
+
   const chatMessagesRef = useRef(null);
   const [lastId, setLastId] = useState(0);
-  const [count, setCount] = useState(0);
 
   const [newMsg, setNewMsg] = useState(false);
   // const socketRef = useRef();
@@ -56,11 +53,7 @@ const ChatMessageList = () => {
   useEffect(() => {
     if (socket) {
       const handleMessage = (message) => {
-        // const isActiveChat =
-        //   activeChatId === message?.sender || userData?._id === message?.sender;
-        
         const isActiveChat = chatUser?.lot?._id === activeChatId;
-
         if (isActiveChat) {
           setChatMsg((prevChat) => [...prevChat, message]);
         }
@@ -81,17 +74,43 @@ const ChatMessageList = () => {
             return new Date(lastMsgB) - new Date(lastMsgA);
           });
         });
+        // add new chat message to the chat list
+        setChatListData((prevData) => {
+          const alreadyExists = prevData?.some(
+            (item) => item?._id === message?.conversationId
+          );
+          if (!alreadyExists) {
+            const newChatObj = {
+              _id: message?.conversationId,
+              lot: chatUser?.lot,
+              createdAt: message?.createdAt,
+              updateAt: message?.createdAt,
+              lastMsg: {
+                _id: message?._id,
+                sender: message?.sender,
+                conversationId: message?.conversationId,
+                message: message?.message,
+                deleted_by: message?.deleted_by,
+                seen: message?.seen,
+                createdAt: message?.createdAt,
+                __v: message?.__v,
+              },
+              unseen: 0,
+            };
+            // Add the new object at the start
+            return [newChatObj, ...prevData];
+          }
+          return prevData;
+        });
       };
 
       socket.on("receive-message", handleMessage);
-
       return () => {
         socket.off("receive-message", handleMessage);
         socket.off("send-lot-message");
       };
     }
   }, [activeChatId, socket, userData?._id]);
-
 
   const sendMessage = async (e) => {
     e.preventDefault();

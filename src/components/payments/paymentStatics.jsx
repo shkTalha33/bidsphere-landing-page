@@ -49,7 +49,7 @@ export default function PaymentStatics() {
     <>
       <Container className="bg_white rounded-[9px] mt-20 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
-          <Col md="12" >
+          <Col md="12">
             <Breadcrumbs pageTitle={"Payment"} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
               Payment
@@ -81,7 +81,7 @@ export default function PaymentStatics() {
         </div>
         <Row className="rounded-[9px] mt-5 g-3">
           <Col lg="3">
-            <div className="flex flex-col gap-4 items-center justify-center">
+            <div className="flex flex-col gap-3 items-center justify-center">
               {sideButtons.map((button) => {
                 return (
                   <button
@@ -89,7 +89,7 @@ export default function PaymentStatics() {
                       currentActiveButton === button?.key
                         ? "bg_primary text-white"
                         : "bg-[#F5F5F5] text-[#909495]"
-                    } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
+                    } rounded-[10px] w-full flex items-center justify-start gap-2 p-3 capitalize`}
                     onClick={() => setCurrentActiveButton(button?.key)}
                   >
                     <div className="flex items-center w-full justify-between">
@@ -107,7 +107,6 @@ export default function PaymentStatics() {
                                 ? button?.darkImage
                                 : button?.lightImage
                             }
-                            
                           />
                         </div>
                         {button?.title}

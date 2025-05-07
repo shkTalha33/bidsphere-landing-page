@@ -150,13 +150,13 @@ const Page = () => {
               {t("order.heading10")}
             </div>
           ) : (
-            <h4 className="text-center text-gray-400 italic">{t("order.heading10")}</h4>
+            <h4 className="text-center poppins_regular text-gray-400 italic">{t("order.heading11")}</h4>
           )}
         </>
       ),
     },
     {
-      name: t("order.heading11"),
+      name: t("order.heading12"),
       minWidth: "120px",
       maxWidth: "200px",
       cell: (row) => (
@@ -168,7 +168,7 @@ const Page = () => {
       ),
     },
     {
-      name: t("order.heading12"),
+      name: t("order.heading13"),
       minWidth: "100px",
       maxWidth: "120px",
       cell: (row) => (
@@ -258,7 +258,7 @@ const Page = () => {
       <Container className="bg_white p-2 p-md-2 rounded-[9px] mt-2 md:mt-4">
         <Row className="rounded-[9px] g-3">
           <Col md="3">
-            <div className="flex flex-col gap-2 gap-md-4 items-center justify-center">
+            <div className="flex flex-col gap-3  items-center justify-center">
               {sideButtons?.map((button) => {
                 const isActive = currentActiveButton === button.status;
                 return (
@@ -268,7 +268,7 @@ const Page = () => {
                       isActive
                         ? "bg_primary text-white"
                         : "bg-[#F5F5F5] text-[#909495]"
-                    } rounded-[10px] w-full flex items-center justify-start gap-4 p-2 p-md-4 capitalize`}
+                    } rounded-[10px] w-full flex items-center justify-start gap-2 p-3 capitalize`}
                     onClick={() => {
                       handlePageChange();
                       handleGetOrder(button.status);

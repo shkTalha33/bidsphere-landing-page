@@ -19,7 +19,7 @@ const AuctionConfirmationModal = ({ item, openModal, setOpenModal }) => {
       //   paddingRight: "16px",
       // }}
     >
-      <div className="flex flex-col gap-2 gap-md-4 items-center justify-center py-5">
+      <div className="flex flex-col gap-3 items-center justify-center py-5">
         <div className="relative mx-auto text-center">
           <PiMoneyWavyLight className="text_primary h-[4rem] w-[4rem]" />
         </div>

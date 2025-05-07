@@ -8,7 +8,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 import { socketURL } from "../api/axiosInstance";
 
@@ -23,14 +22,13 @@ export const SocketProvider = ({ children }) => {
       : null;
   const [socket, setSocket] = useState(null);
   const socketRef = useRef(null);
-  const dispatch = useDispatch(null);
 
   useEffect(() => {
     const initializeSocket = async () => {
       try {
         const newSocket = io(socketURL, {
           reconnectionAttempts: 15,
-          transports: ["websocket"],
+          transports: ["websocket",],
           reconnection: true,
           reconnectionDelay: 1000,
           reconnectionDelayMax: 5000,
@@ -40,6 +38,7 @@ export const SocketProvider = ({ children }) => {
 
         newSocket.on("connect", () => {
           console.log("Connected to socket server");
+
           // Re-authenticate if needed
           newSocket.emit("authenticate", token);
         });
@@ -54,10 +53,10 @@ export const SocketProvider = ({ children }) => {
         newSocket.on("unauthorized", (error) => {
           console.error("Unauthorized socket connection:", error.message);
         });
-        newSocket.on('reconnect', (attemptNumber) => {
-          console.log('Reconnected after', attemptNumber, 'attempts');
+        newSocket.on("reconnect", (attemptNumber) => {
+          console.log("Reconnected after", attemptNumber, "attempts");
           // Re-authenticate after reconnection
-          newSocket.emit('authenticate', token);
+          newSocket.emit("authenticate", token);
         });
         newSocket.on("disconnect", (reason) => {
           console.warn("Socket disconnected:", reason);
@@ -65,7 +64,7 @@ export const SocketProvider = ({ children }) => {
           setTimeout(() => {
             console.log("Reconnecting socket...");
             initializeSocket();
-          }, 3000); // 3-second delay before reconnecting
+          }, 3000);
         });
 
         socketRef.current = newSocket;

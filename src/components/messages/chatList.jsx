@@ -62,6 +62,7 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
 
   // seen message api ended
 
+
   const isActive = id === activeChatId;
   useEffect(() => {
     if (isActive) {
@@ -152,7 +153,8 @@ const ChatList = () => {
   const { get, header1, userData } = ApiFunction();
 
   const [listLoading, setListLoading] = useState(false);
-  // get all conversatioin api start
+
+
   const handleChatList = async (id) => {
     setListLoading(true);
     const getConversation = getAllConversation;

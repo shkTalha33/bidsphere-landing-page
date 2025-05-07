@@ -197,15 +197,16 @@ const Invoice = ({
                   >
                     <TbArrowBackUp color="#660000" size={24} />
                   </div>
-                  {orderDetail?.transaction?.status === "pending" && (
-                    <div
-                      onClick={handleShow}
-                      className="text-[1rem] py-[5px] px-[10px] bg-[#660000] text-white rounded-[8px] poppins_regular whitespace-nowrap flex items-center gap-2 cursor-pointer"
-                    >
-                      <BsCash />
-                      Make a payment
-                    </div>
-                  )}
+                  {orderDetail?.transaction?.status === "pending" ||
+                    (orderDetail?.transaction?.status === "rejected" && (
+                      <div
+                        onClick={handleShow}
+                        className="text-[1rem] py-[5px] px-[10px] bg-[#660000] text-white rounded-[8px] poppins_regular whitespace-nowrap flex items-center gap-2 cursor-pointer"
+                      >
+                        <BsCash />
+                        Make a payment
+                      </div>
+                    ))}
                 </div>
               </Col>
             </Row>
@@ -221,13 +222,17 @@ const Invoice = ({
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Issued Date</p>
                 <p className="text-[#25324B] poppins_medium">
-                  {moment(orderDetail?.transaction?.issue_date).local().format("LLL")}
+                  {moment(orderDetail?.transaction?.issue_date)
+                    .local()
+                    .format("LLL")}
                 </p>
               </div>
               <div>
                 <p className="text-[#7C8493] text-sm mb-1">Expiry Date</p>
                 <p className="text-[#25324B] poppins_medium">
-                  {moment(orderDetail?.transaction?.expirey_date).local().format("LLL")}
+                  {moment(orderDetail?.transaction?.expirey_date)
+                    .local()
+                    .format("LLL")}
                 </p>
               </div>
               <div>

@@ -167,7 +167,6 @@ export default function Page() {
       };
       socket.emit("get_auction_bids", bidAiData, (data) => {
         // setRecentBids(data);
-        console.log(data, "data");
       });
 
       return () => {

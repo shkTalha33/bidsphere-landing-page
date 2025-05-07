@@ -51,8 +51,6 @@ export default function RegistrationReviewPage({
       });
   };
 
-  console.log(data, "data");
-
   return (
     <>
       {isLoading ? (

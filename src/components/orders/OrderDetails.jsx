@@ -76,14 +76,14 @@ export default function OrderDetails() {
       <Container className="bg_white p-2 p-md-3 p-lg-5 rounded-[9px] mt-4">
         <Row className="rounded-[9px] g-3">
           <Col md="4" lg="3">
-            <div className="flex flex-col gap-4 items-center justify-center">
+            <div className="flex flex-col gap-3 items-center justify-center">
               {sideButtons.map((button) => {
                 return (
                   <button
                     className={`${currentActiveButton === button?.title
                       ? "bg_primary text-white"
                       : "bg-[#F5F5F5] text-[#909495]"
-                      } rounded-[10px] w-full flex items-center justify-start gap-4 p-4 capitalize`}
+                      } rounded-[10px] w-full flex items-center justify-start gap-2 p-3 capitalize`}
                     onClick={() => setCurrentActiveButton(button?.title)}
                   >
                     <div className="flex items-center w-full justify-between">
