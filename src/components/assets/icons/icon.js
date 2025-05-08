@@ -105,6 +105,7 @@ import noData from "../png/noData.webp";
 import PlayStoreIcon from "../png/playstoreicon.png";
 import AppStoreIcon from "../png/appleicon.png";
 import AppStoreIconw from "../png/apple-logow.png";
+import bannerImage from "../png/image001.jpg"
 
 export {
   avataruser,
@@ -211,5 +212,6 @@ export {
   Logo11,
   PlayStoreIcon,
   AppStoreIcon,
-  AppStoreIconw
+  AppStoreIconw,
+  bannerImage
 };

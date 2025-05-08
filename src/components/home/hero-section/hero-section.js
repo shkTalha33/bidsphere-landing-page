@@ -27,12 +27,7 @@ const HeroSection = () => {
           whileInView="show"
           viewport={{ once: true, amount: 0.25 }}
         >
-          <div
-            className="w-full h-[853px] relative bg-cover bg-center"
-            style={{
-              backgroundImage: `url(/assets/landingimage.png)`,
-            }}
-          >
+          <div className="w-full h-[800px] relative bg-cover bg-center herobanner">
             <div className="bg-overlay2"></div>
             <div className="absolute inset-0 z-50 flex flex-col items-center justify-center text-center text-white px-4">
               <motion.h1
@@ -55,7 +50,6 @@ const HeroSection = () => {
                 className="bg-white text-black px-12 py-2 md:py-3 rounded-md sm:text-lg poppins_semibold hover:bg-gray-100 transition-colors"
               >
                 {t("homeSlider.button")}
-                
               </motion.button>
             </div>
           </div>
