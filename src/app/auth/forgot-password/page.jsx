@@ -60,7 +60,6 @@ const Page = () => {
     try {
       const response = await post(sendCodeForgotPassword, data);
       if (response.success) {
-
         dispatch(setIsForgotPassword(true));
         const data = {
           email: values?.email,
@@ -80,7 +79,7 @@ const Page = () => {
   };
 
   return (
-    <AuthLayout  isCenter={true}>
+    <AuthLayout isCenter={true}>
       <>
         <AuthHeading
           heading={"Forgot Password!"}

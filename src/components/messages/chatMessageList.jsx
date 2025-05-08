@@ -49,13 +49,14 @@ const ChatMessageList = () => {
   useEffect(() => {
     setLastId(chatMsg[0]?._id);
   }, [chatMsg]);
-
   useEffect(() => {
     if (socket) {
       const handleMessage = (message) => {
         const isActiveChat = chatUser?.lot?._id === activeChatId;
-        if (isActiveChat) {
-          setChatMsg((prevChat) => [...prevChat, message]);
+        if (message?.conversationId === chatUser?.lastMsg?.conversationId) {
+          if (isActiveChat) {
+            setChatMsg((prevChat) => [...prevChat, message]);
+          }
         }
         setChatListData((prevChatList) => {
           let updatedChatList = prevChatList?.map((conversation) => {
