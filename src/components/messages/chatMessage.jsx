@@ -7,13 +7,13 @@ const ChatMessage = ({ message, timestamp, left }) => {
     <div>
       <div
         className={`pb-3 regular_font text-[0.8rem] ${
-          left ? "chat-message-left " : "chat-message-right"
+          !left ? "chat-message-left " : "chat-message-right"
         }`}
       >
         <div>
           <div
             className={`flex-shrink-1regular-fontfs_08 ${
-              left ? "chat_card_left" : "chat_card_right"
+              !left ? "chat_card_left" : "chat_card_right"
             }`}
             style={{
               padding: "0.7rem 0.9rem",
@@ -25,7 +25,7 @@ const ChatMessage = ({ message, timestamp, left }) => {
           </div>
           <div
             className={`text-nowrap regular_font text-[0.8rem] fs_07 ${
-              left ? "chat-message-left" : "chat-message-right"
+              !left ? "chat-message-left" : "chat-message-right"
             }`}
             style={{ color: "#848FAC" }}
           >

@@ -39,6 +39,13 @@ const Page = () => {
     setIsPasswordHidden((prevState) => !prevState);
   };
 
+  const [isConfirmPasswordHidden, setIsConfirmPasswordHidden] = useState(true);
+
+  const toggleConfirmPassword = (e) => {
+    e.preventDefault();
+    setIsConfirmPasswordHidden((prev) => !prev);
+  };
+
   const schema = Yup.object().shape({
     fname: Yup.string()
       .required("First name is required")
@@ -54,9 +61,13 @@ const Page = () => {
         (value) => value && value.length >= 10
       ),
     email: Yup.string().email("Invalid email").required("Email is required"),
+
     password: Yup.string()
       .required("Password is required")
       .min(8, "Password must be at least 8 characters"),
+    confirmPassword: Yup.string()
+      .required("Confirm password is required")
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
   });
 
   const {
@@ -354,6 +365,49 @@ const Page = () => {
             {errors.password && (
               <p className="text-red-500 text-xs m-1 poppins_regular">
                 {errors.password.message}
+              </p>
+            )}
+          </div>
+          <div className="col-span-6">
+            <Label
+              for="confirmPassword"
+              className="mb-2 text-sm poppins_regular text_secondary2"
+            >
+              Confirm Password
+            </Label>
+            <div className="relative">
+              <button
+                className="absolute right-5 inset-y-0 my-auto"
+                onClick={toggleConfirmPassword}
+              >
+                {!isConfirmPasswordHidden ? (
+                  <BsEyeFill size={20} className="text_black" />
+                ) : (
+                  <BsEyeSlashFill size={20} className="text_black" />
+                )}
+              </button>
+              <Controller
+                name="confirmPassword"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type={isConfirmPasswordHidden ? "password" : "text"}
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    className={`h-12 w-full poppins_regular sm:text-sm ${
+                      errors.confirmPassword
+                        ? "border-red-500 ring-red-500 focus:ring-red-500"
+                        : ""
+                    }`}
+                  />
+                )}
+              />
+            </div>
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-xs m-1 poppins_regular">
+                {errors.confirmPassword.message}
               </p>
             )}
           </div>

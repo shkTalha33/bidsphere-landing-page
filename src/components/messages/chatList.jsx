@@ -23,13 +23,14 @@ import { avataruser } from "../assets/icons/icon";
 import { Spinner } from "react-bootstrap";
 
 const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
-  const { userData } = ApiFunction();
   const [badge, setBadge] = useState(false);
   const { activeChatId, setActiveChatId } = useActiveChat();
   const { setChatUser } = useChatUser();
   const { setResponsiveChat } = useResponsiveChat();
+  const userData = useSelector((state) => state.auth?.userData);
 
   const toggleData = async (chatData) => {
+    
     setChatUser(chatData);
     setResponsiveChat(true);
     setActiveChatId(chatData?.lot?._id); // Set the active chat ID
@@ -61,7 +62,6 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
   };
 
   // seen message api ended
-
 
   const isActive = id === activeChatId;
   useEffect(() => {
@@ -151,9 +151,72 @@ const ChatList = () => {
   const hasFetchedChatList = useRef(false);
   const { activeChatId, setActiveChatId } = useActiveChat();
   const { get, header1, userData } = ApiFunction();
-
+  const { chatUser, setChatUser } = useChatUser();
   const [listLoading, setListLoading] = useState(false);
 
+  const socket = useSocket();
+  // get all conversatioin api start
+
+  useEffect(() => {
+    if (!socket) return;
+    if (!chatUser) {
+      const handleNewConversation = (message) => {
+
+        setChatListData((prevChatList) => {
+          let updatedChatList = prevChatList?.map((conversation) => {
+            if (conversation?._id === message?.conversationId) {
+              return {
+                ...conversation,
+                lastMsg: message,
+              };
+            }
+            return conversation;
+          });
+
+          return updatedChatList.sort((a, b) => {
+            const lastMsgA = a?.lastMsg?.createdAt;
+            const lastMsgB = b?.lastMsg?.createdAt;
+            return new Date(lastMsgB) - new Date(lastMsgA);
+          });
+        });
+        setChatListData((prevData) => {
+          const alreadyExists = prevData?.some(
+            (item) => item?._id === message?.conversationId
+          );
+          if (!alreadyExists) {
+            const newChatObj = {
+              _id: message?.conversationId,
+              lot: message?.lot,
+              createdAt: message?.createdAt,
+              updateAt: message?.createdAt,
+              lastMsg: {
+                _id: message?._id,
+                sender: message?.sender,
+                conversationId: message?.conversationId,
+                message: message?.message,
+                deleted_by: message?.deleted_by,
+                seen: message?.seen,
+                createdAt: message?.createdAt,
+                __v: message?.__v,
+              },
+              otherUser: message?.sender,
+              unseen: 0,
+            };
+
+            // setChatUser(newChatObj);
+            setActiveChatId(message?.lot?._id);
+            // Add the new object at the start
+            return [newChatObj, ...prevData];
+          }
+          return prevData;
+        });
+      };
+      socket.on("receive-message", handleNewConversation);
+      return () => {
+        socket.off("receive-message", handleNewConversation);
+      };
+    }
+  }, [socket]);
 
   const handleChatList = async (id) => {
     setListLoading(true);

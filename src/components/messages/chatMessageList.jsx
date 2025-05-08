@@ -23,12 +23,13 @@ import { avataruser } from "../assets/icons/icon";
 import { Spinner } from "react-bootstrap";
 
 const ChatMessageList = () => {
-  const { userData, baseURL, get, post } = ApiFunction();
+  const { baseURL, get, post } = ApiFunction();
   const router = useRouter();
   const dispatch = useDispatch();
   const [chatMsg, setChatMsg] = useState([]);
   const [usersId, setUsersId] = useState("");
   const [lastMsgId, setLastMsgId] = useState("");
+  const userData = useSelector((state) => state.auth?.userData);
 
   const chatMessagesRef = useRef(null);
   const [lastId, setLastId] = useState(0);
@@ -40,6 +41,7 @@ const ChatMessageList = () => {
   const [isLoading3, setIsLoading3] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
 
+
   //// context APi
   const { chatUser } = useChatUser();
   const { activeChatId } = useActiveChat();
@@ -49,15 +51,20 @@ const ChatMessageList = () => {
   useEffect(() => {
     setLastId(chatMsg[0]?._id);
   }, [chatMsg]);
+
   useEffect(() => {
     if (socket) {
       const handleMessage = (message) => {
+        
         const isActiveChat = chatUser?.lot?._id === activeChatId;
-        if (message?.conversationId === chatUser?.lastMsg?.conversationId) {
+      
+        
+        // if (message?.conversationId === chatUser?.lastMsg?.conversationId) {
+         
           if (isActiveChat) {
             setChatMsg((prevChat) => [...prevChat, message]);
           }
-        }
+        // }
         setChatListData((prevChatList) => {
           let updatedChatList = prevChatList?.map((conversation) => {
             if (conversation?._id === message?.conversationId) {
@@ -98,7 +105,6 @@ const ChatMessageList = () => {
               },
               unseen: 0,
             };
-            // Add the new object at the start
             return [newChatObj, ...prevData];
           }
           return prevData;
@@ -108,7 +114,6 @@ const ChatMessageList = () => {
       socket.on("receive-message", handleMessage);
       return () => {
         socket.off("receive-message", handleMessage);
-        socket.off("send-lot-message");
       };
     }
   }, [activeChatId, socket, userData?._id]);
@@ -297,7 +302,13 @@ const ChatMessageList = () => {
                 )}
                 <div className="d-flex flex-column">
                   <>
-                    <span className=" text_white text-sm regular_font fs_11">{`${chatUser?.lot?.name}`}</span>
+                    <span className=" text_white text-sm regular_font fs_11">{`${
+                      chatUser?.lot?.name
+                        ? chatUser?.lot?.name
+                        : userData?.lang === "en"
+                        ? chatUser?.lot?.name?.en
+                        : chatUser?.lot?.name?.ar
+                    }`}</span>
                     <span className="regular_font text_white text-sm fs_08">
                       {chatUser?.lot?.active}
                     </span>
@@ -355,7 +366,7 @@ const ChatMessageList = () => {
                 chatMsg?.map((msg, index) => (
                   <Fragment key={index}>
                     <ChatMessage
-                      left={userData?._id === msg?.sender ? false : true}
+                      left={userData?._id === (msg?.sender?._id || msg?.sender)}
                       message={msg?.message}
                       timestamp={`${msg?.createdAt}`}
                     />
