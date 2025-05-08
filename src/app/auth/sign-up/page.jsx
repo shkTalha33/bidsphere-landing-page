@@ -163,7 +163,15 @@ const Page = () => {
           ...values,
           // code: response.verificationCode,
         };
-        dispatch(setTempData(newData));
+        const datane = {
+          email: newData?.email,
+          phone: newData?.phone,
+          fname: newData?.fname,
+          lname: newData?.lname,
+          password: newData?.password,
+        };
+
+        dispatch(setTempData(datane));
         router.push("/auth/verify-code");
       }
     } catch (error) {
