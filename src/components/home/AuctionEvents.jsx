@@ -41,7 +41,6 @@ export default function AuctionEvents() {
             {/* Card 1 */}
             <Col xs={12} md={6} lg={4}>
               <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-1 border border-gray-100">
-                <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-blue-300 rounded-full mb-4"></div>
                 <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
                   Comprehensive Auction Display
                 </h3>
@@ -57,7 +56,6 @@ export default function AuctionEvents() {
             {/* Card 2 */}
             <Col xs={12} md={6} lg={4}>
               <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-1 border border-gray-100">
-                <div className="w-12 h-1 bg-gradient-to-r from-purple-500 to-pink-400 rounded-full mb-4"></div>
                 <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
                   Digital Bidding & Accurate Valuation
                 </h3>
@@ -72,7 +70,6 @@ export default function AuctionEvents() {
             {/* Card 3 */}
             <Col xs={12} md={6} lg={4}>
               <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-1 border border-gray-100">
-                <div className="w-12 h-1 bg-gradient-to-r from-green-500 to-emerald-400 rounded-full mb-4"></div>
                 <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
                   Expert Consulting & Support
                 </h3>
