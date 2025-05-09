@@ -21,6 +21,7 @@ import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
 import CountdownTimer from "../../../components/CountdownTimer/CountdownTimer";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 const AuctionDetailPage = () => {
   const router = useRouter();
   const [item, setItem] = useState([]);
@@ -73,13 +74,30 @@ const AuctionDetailPage = () => {
   }, [item]);
 
   const handleRegister = () => {
+    const now = moment.utc();
+    const startTime = moment.utc(item?.start_date);
+  
+    if (item?.status === "active") {
+      if (startTime.isBefore(now)) {
+        toast.error("You can register once the admin starts the auction.");
+      } else {
+        toast.error(
+          `You can register for this auction starting from ${startTime
+            .local()
+            .format("DD MMMM, YYYY h:mm A")}`
+        );
+      }
+      return;
+    }
+  
     if (userData) {
       router.push(`/auctions/${id}/registration`);
     } else {
       message.error("Please login to register the auction!");
     }
   };
-
+  
+  
   const handleJoin = () => {
     if (userData) {
       router.push(`/auctions/auction-join/${id}`);
@@ -90,6 +108,12 @@ const AuctionDetailPage = () => {
 
   const isRegister = !item?.applications || item.applications.length === 0;
   const [isExpired, setIsExpired] = useState(false);
+  const isActive = item?.status === "active";
+
+
+
+
+  
   const button = {
     icon: <Plus className="w-4 h-4 md:w-5 md:h-5 text-white" />,
     text: isRegister ? "Register Auction" : "Join Auction",
@@ -97,7 +121,6 @@ const AuctionDetailPage = () => {
     className:
       "h-8 shadow md:h-10 bg_primary text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center",
   };
-
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
       {loading ? (
@@ -112,7 +135,9 @@ const AuctionDetailPage = () => {
               userData?.lname || ""
             }`}
             description={"Here are your auctions whom you can join."}
-            {...(item?.status === "start" && !isExpired && { button })}
+            // button={button}
+            // {...(item?.status === "start" && !isExpired && { button })}
+            {...(!isExpired && { button })}
           />
 
           <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
@@ -149,7 +174,7 @@ const AuctionDetailPage = () => {
                   className="relative bg_white rounded-[10px] w-100 h-100 flex items-center justify-center cursor-pointer group overflow-hidden !h-[500px]"
                   onClick={() => handleImagePreview(selectedImage)}
                 >
-                  <div
+                  {/* <div
                     className="absolute inset-0 w-full h-full"
                     style={{
                       backgroundImage: `url(${selectedImage})`,
@@ -157,15 +182,15 @@ const AuctionDetailPage = () => {
                       backgroundPosition: "center",
                       filter: "blur(10px)", // Blur effect only on background
                     }}
-                  ></div>
+                  ></div> */}
 
                   {/* Sharp Image */}
-                  <div className="relative z-10 p-3">
+                  <div className="relative z-10">
                     {selectedImage && (
                       <Image
                         src={selectedImage}
                         width={600}
-                        height={400}
+                        height={600}
                         quality={100}
                         className="rounded-[10px] object-contain"
                         alt="auction item preview"
@@ -183,17 +208,17 @@ const AuctionDetailPage = () => {
               <Col
                 md="12"
                 lg="5"
-                className="bg_white p-3 md:p-4 rounded-lg d-flex flex-column max-h-[700px] overflow-y-auto"
+                className="bg_white p-3 rounded-lg d-flex flex-column max-h-[700px] overflow-y-auto"
               >
                 <Row>
                   <Col md="12">
-                    <div className="bg_primary py-3 sm:px-6 rounded-xl relative">
+                    <div className="py-2 rounded-xl relative">
                       <div className="flex items-start justify-between">
                         <div>
-                          <p className="poppins_medium text-xl sm:text-2xl text-white mb-0 capitalize">
+                          <p className="poppins_medium text-xl sm:text-2xl  mb-0 capitalize">
                             {item?.name}
                           </p>
-                          <p className="poppins_regular text-sm text-white mb-0 capitalize">
+                          <p className="poppins_regular text-sm  mb-0 capitalize">
                             {item?.category?.name}
                           </p>
                         </div>
@@ -201,7 +226,7 @@ const AuctionDetailPage = () => {
                     </div>
                   </Col>
                 </Row>
-                <Row className="justify-center my-3">
+                <Row className="justify-center my-2 mt-3">
                   <Col md="6">
                     <div className="poppins_medium text-base text_primary">
                       {t("auctionDetails.heading")}
@@ -226,26 +251,30 @@ const AuctionDetailPage = () => {
                     </div>
                   </Col>
                 </Row>
-                <Row className="justify-center my-3">
+                <Row className="justify-center my-2 ">
                   <Col md="6">
                     <div className="poppins_medium text-base text_primary">
                       {t("auctionDetails.heading3")}
                     </div>
-                  </Col>
-                  <Col md="6">
                     <div className="poppins_regular">
                       {formatPrice(convert(item?.depositamount, "LBP"))}
                     </div>
                   </Col>
-                </Row>
-                <Row className="justify-center my-3">
-                  <Col md="12">
+                  <Col md="6">
                     <div className="poppins_medium text-base text_primary">
+                      Status
+                    </div>
+                    <div className="poppins_regular">{item?.status}</div>
+                  </Col>
+                </Row>
+                <Row className="justify-center my-2">
+                  <Col md="12">
+                    <div className="poppins_medium text-[1.2rem] text-black">
                       {t("auctionDetails.heading4")}
                     </div>
                   </Col>
                   <Col md="12">
-                    <div className="poppins_regular text_dark">
+                    <div className="poppins_regular abDatadi text_dark">
                       <p
                         dangerouslySetInnerHTML={{
                           __html: item?.additionalinfo,

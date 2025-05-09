@@ -28,8 +28,11 @@ export default function AuctionCard({ item, index }) {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.25 }}
-      className="bg-[#F3F3F3F2] rounded-xl overflow-hidden"
+      className="bg-[#F3F3F3F2] rounded-xl overflow-hidden cursor-pointer"
       variants={fadeIn("down", "tween", (index + 1) * 0.1, 1)}
+      onClick={() => {
+        handleAuctionDetail(item);
+      }}
     >
       <Image
         src={item?.images[0]}
@@ -37,9 +40,6 @@ export default function AuctionCard({ item, index }) {
         width={300}
         height={200}
         className="w-full !h-[200px] max-h-[200px] object-cover cursor-pointer"
-        onClick={() => {
-          handleAuctionDetail(item);
-        }}
       />
       <div className="p-2">
         <p className="poppins_regular text_darkprimary text-[10px] mt-2">
@@ -51,17 +51,15 @@ export default function AuctionCard({ item, index }) {
           </p>
         </p>
 
-        <p className="poppins_mediumtext_darkprimary text-[1.25rem]">
+        <p className="poppins_semibold mt-[7px] leading-[1.2] text_darkprimary text-[1.25rem]">
           {item?.name}
         </p>
-        <div className="flex items-center justify-start gap-2">
-          <p className="mb-0 text_darkprimary text-lg">
+        <div className="flex items-center justify-start gap-2 mt-[5px]">
+          <span className="text-gray text-[0.8rem]">Deposit Amount</span>
+          <h5 className="mb-0 text_darkprimary text-lg">
             {" "}
-            {formatPrice(convert(item?.lots[0]?.minprice, "LBP"))}
-          </p>
-          <p className="mb-0 text_seccondary text-sm">
-            {formatPrice(convert(item?.lots[0]?.minincrement, "LBP"))}
-          </p>
+            {formatPrice(convert(item?.depositamount, "LBP"))}
+          </h5>
         </div>
       </div>
     </motion.div>

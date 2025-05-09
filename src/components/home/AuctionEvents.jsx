@@ -40,11 +40,11 @@ export default function AuctionEvents() {
           <Row className="justify-center gap-y-6">
             {/* Card 1 */}
             <Col xs={12} md={6} lg={4}>
-              <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-1 border border-gray-100">
+              <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full hover:-translate-y-1 border border-gray-100">
                 <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
                   Comprehensive Auction Display
                 </h3>
-                <p className="text-[#555] text-sm poppins_medium leading-relaxed">
+                <p className="text-[#555] text-sm poppins_regular leading-relaxed">
                   A large physical site that allows the display of hundreds of
                   heavy equipment, vehicles, horses and livestock, in addition
                   to real estate, office and home furniture, antiques, and
@@ -55,7 +55,7 @@ export default function AuctionEvents() {
 
             {/* Card 2 */}
             <Col xs={12} md={6} lg={4}>
-              <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-1 border border-gray-100">
+              <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full hover:-translate-y-1 border border-gray-100">
                 <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
                   Digital Bidding & Accurate Valuation
                 </h3>
@@ -69,7 +69,7 @@ export default function AuctionEvents() {
 
             {/* Card 3 */}
             <Col xs={12} md={6} lg={4}>
-              <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-1 border border-gray-100">
+              <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full hover:-translate-y-1 border border-gray-100">
                 <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
                   Expert Consulting & Support
                 </h3>

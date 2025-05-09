@@ -22,23 +22,13 @@ import { useSocket } from "@/components/socketProvider/socketProvider";
 
 export default function Page() {
   const { get, userData } = ApiFunction();
-  const [activeButton, setActiveButton] = useState("custom");
-  const [openWinBidModal, setOpenWinBidModal] = useState(false);
   const [openBiddingConfirmationModal, setOpenBiddingConfirmationModal] =
     useState(false);
   const [previewModal, setPreviewModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const { formatPrice, convert } = useCurrency();
   const [currentLot, setCurrentLot] = useState(null);
-  const [recentBids, setRecentBids] = useState([]);
-  const [bidAmount, setBidAmount] = useState("");
-  const [participants, setParticipants] = useState([]);
-  const token = useSelector((state) => state.auth?.accessToken);
-  const socket = useSocket();
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const router = useRouter();
-
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) return "Good morning";
@@ -48,37 +38,6 @@ export default function Page() {
   };
 
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const bidders = [
-    {
-      id: 1,
-      name: "Ronald Richards",
-      bid: "$24.5k",
-      avatar: avataruser,
-      timeAgo: "2m",
-    },
-    {
-      id: 2,
-      name: "Cameron Williamson",
-      bid: "$20k",
-      avatar: avataruser,
-      timeAgo: "1m",
-    },
-    {
-      id: 3,
-      name: "Guy Hawkins",
-      bid: "$18k",
-      avatar: avataruser,
-      timeAgo: "2m",
-    },
-  ];
-
-  const button = {
-    icon: <Heart className="w-4 h-4 md:w-5 md:h-5 text-white" />,
-    onClick: () => console.log("Heart clicked!"),
-    className:
-      "w-8 h-8 md:w-10 md:h-10 bg-black rounded-full flex items-center justify-center",
-  };
 
   const confirmationItem = {
     title: "Confirm Bid",
@@ -100,22 +59,6 @@ export default function Page() {
       },
     ],
   };
-
-  const winBidItem = {
-    title: "win the bid",
-    description: "You have won the bid of 3500$",
-    image: winBid,
-    buttons: [
-      {
-        btnText: "okay",
-        onClick: () => setOpenWinBidModal(false),
-        className:
-          "rounded-[10px] bg_primary text-white poppins_medium text-lg border border-[#660000] w-full py-3",
-      },
-    ],
-  };
-
-  const priceOptions = ["$20k", "$21k", "$22k", "$23k"];
 
   const handleImagePreview = (image) => {
     setSelectedImage(image);
@@ -147,62 +90,6 @@ export default function Page() {
       setSelectedImage(currentLot.images[0]);
     }
   }, [currentLot]);
-
-  useEffect(() => {
-    if (socket?.connected) {
-      // Authenticate user
-      socket.emit("authenticate", token);
-
-      // Join the auction
-      socket.emit("join_auction", id, (response) => {
-        if (response.success) {
-          setCurrentLot(response.currentLot);
-          setRecentBids(response.recentBids);
-        }
-      });
-
-      // Listen for new bids
-      socket.on("new_bid", (bid) => {
-        setRecentBids((prevBids) => [bid, ...prevBids.slice(0, 9)]);
-      });
-
-      // Listen for auction updates
-      socket.on("auction", (data) => {
-        setCurrentLot(data.auction.current_lot);
-      });
-
-      // Listen for participant updates
-      socket.on("user_joined", ({ user }) => {
-        setParticipants((prev) => {
-          const isUserExists = prev.some(
-            (participant) => participant?._id === user?._id
-          );
-          return isUserExists ? prev : [...prev, user];
-        });
-      });
-
-      return () => {
-        socket.off("new_bid");
-        socket.off("auction");
-        socket.off("user_joined");
-      };
-    }
-  }, [socket]);
-
-  const placeBid = () => {
-    if (!bidAmount) return;
-    socket.emit(
-      "place_bid",
-      { id, lotId: currentLot?._id, bidAmount },
-      (response) => {
-        if (!response.success) {
-          alert(response.message);
-        } else {
-          setBidAmount("");
-        }
-      }
-    );
-  };
 
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
@@ -254,7 +141,7 @@ export default function Page() {
                   className="relative bg_white rounded-[10px] w-100 h-100 flex items-center justify-center cursor-pointer group overflow-hidden max-h-[700px]"
                   onClick={() => handleImagePreview(selectedImage)}
                 >
-                  <div
+                  {/* <div
                     className="absolute inset-0 w-full h-full"
                     style={{
                       backgroundImage: `url(${selectedImage})`,
@@ -262,7 +149,7 @@ export default function Page() {
                       backgroundPosition: "center",
                       filter: "blur(10px)", // Blur effect only on background
                     }}
-                  ></div>
+                  ></div> */}
 
                   {/* Sharp Image */}
                   <div className="relative z-10 p-3">
@@ -291,14 +178,11 @@ export default function Page() {
                 className="bg_white p-3 md:p-4 rounded-lg d-flex flex-column max-h-[700px] overflow-y-auto"
               >
                 {/* Green Header Section */}
-                <div className="bg_primary pt-4 py-16 px-3 sm:px-6 rounded-xl relative">
+                <div className=" pt-4 py-4 px-3 sm:px-6 rounded-xl relative">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="poppins_medium text-xl sm:text-2xl text-white mb-0 capitalize">
+                      <p className="poppins_medium text-xl sm:text-2xl  mb-0 capitalize">
                         {currentLot?.name}
-                      </p>
-                      <p className="poppins_regular text-sm text-white mb-0 capitalize">
-                        Auction
                       </p>
                     </div>
                     <div className="mb-0">
@@ -308,59 +192,54 @@ export default function Page() {
                 </div>
 
                 {/* Price and Bidding Status Section */}
-                <div className="w-[90%] mx-auto relative -mt-10 mb-6">
-                  <Row className="py-4 bg-[#F3F2F2] rounded-[10px] mx-0">
+                <div className="w-[100%] mx-auto relative mb-2 mt-[1rem]">
+                  <Row className="py-4 bg-[#F3F2F2] rounded-[10px] g-3 mx-0">
                     <Col sm="6" className="border-r border-gray-300 px-4">
                       <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                        Starting price
+                        Lot Price
                       </p>
                       <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
-                        {formatPrice(convert(5000, "LBP"))}
+                        {formatPrice(convert(currentLot?.price, "LBP"))}
                       </p>
-                      <div className="flex items-center justify-start mb-2 md:mb-0 mt-2 gap-2">
-                        <Avatar.Group
-                          size="default"
-                          maxCount={4}
-                          maxStyle={{
-                            color: "#f56a00",
-                            backgroundColor: "#fde3cf",
+                    </Col>
+                    <Col sm="6" className=" px-4">
+                      <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
+                        Lot Status
+                      </p>
+                      <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
+                        {currentLot?.status}
+                      </p>
+                    </Col>
+                    <Col sm="6" className="border-r border-gray-300 px-4">
+                      <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
+                        Category
+                      </p>
+                      <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
+                        {currentLot?.category?.name}
+                      </p>
+                    </Col>
+                    <Col sm="6" className=" px-4">
+                      <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
+                        Category Status
+                      </p>
+                      <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
+                        {currentLot?.category?.status}
+                      </p>
+                    </Col>
+                    <Col sm="12" className=" px-4">
+                      <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
+                        Lot Description
+                      </p>
+                      <div className="poppins_regular abDatadi">
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: currentLot?.additionalinfo,
                           }}
-                        >
-                          {participants?.map((user, index) => {
-                            return (
-                              <Image
-                                src={user?.profilepicture || avataruser}
-                                alt=""
-                                key={index}
-                                className="rounded-full w-[2rem] h-[2rem]"
-                              />
-                            );
-                          })}
-                        </Avatar.Group>
-                        <p className="poppins_regular text-[15px] text-[#1C201F] mb-0">
-                          are live
-                        </p>
+                        />
                       </div>
                     </Col>
                   </Row>
                 </div>
-
-                {/* Live Auction Header */}
-                {/* <Row className="px-6 items-center mx-0">
-                  <Col xs="8" sm="6" className="px-0">
-                    <div className="flex items-center justify-start gap-2">
-                      <TbLivePhoto size={20} />
-                      <p className="capitalize poppins_semibold text-lg mb-0">
-                        Live Auction
-                      </p>
-                    </div>
-                  </Col>
-                  <Col xs="4" sm="6" className="px-0">
-                    <p className="capitalize poppins_regular text-[14px] text-end mb-0">
-                      {participants?.length} Bids made
-                    </p>
-                  </Col>
-                </Row> */}
               </Col>
             </Row>
           </Container>

@@ -144,6 +144,10 @@ export default function Page() {
         const matchedLot = data?.auction?.lots?.find(
           (lot) => lot?.item?._id === data?.auction?.current_lot
         );
+        // fihal k liy 0 krwya ha ok
+        if (currentLot?.item?._id !== data?.auction?.current_lot) {
+          setRecentBids([]);
+        }
 
         setCurrentLot(matchedLot || null);
       });
@@ -216,6 +220,34 @@ export default function Page() {
     router.push(`/auctionChat/${id}`);
   };
 
+  // custom bid option
+
+  const handlecustomBid = () => {
+    let minRequiredBid = 0;
+
+    if (recentBids?.length === 0) {
+      // No bids yet → use minprice + minincrement
+      minRequiredBid = currentLot?.minprice + currentLot?.minincrement;
+    } else {
+      // Existing bids → use last bid price + minincrement
+      minRequiredBid = recentBids[0]?.price + currentLot?.minincrement;
+    }
+
+    if (bidAmount > 0) {
+      if (bidAmount >= minRequiredBid) {
+        setOpenBiddingConfirmationModal(true);
+      } else {
+        toast.error(
+          `Your bid must be at least  ${formatPrice(
+            convert(minRequiredBid || 0, "LBP")
+          )}`
+        );
+      }
+    } else {
+      toast.error("Please enter a valid bid amount.");
+    }
+  };
+
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
       <>
@@ -265,7 +297,7 @@ export default function Page() {
                 className="relative bg_white rounded-[10px] w-100 h-100 flex items-center justify-center cursor-pointer group overflow-hidden max-h-[700px]"
                 onClick={() => handleImagePreview(selectedImage)}
               >
-                <div
+                {/* <div
                   className="absolute inset-0 w-full h-full"
                   style={{
                     backgroundImage: `url(${selectedImage})`,
@@ -273,7 +305,7 @@ export default function Page() {
                     backgroundPosition: "center",
                     filter: "blur(10px)", // Blur effect only on background
                   }}
-                ></div>
+                ></div> */}
 
                 {/* Sharp Image */}
                 <div className="relative z-10 p-3">
@@ -322,11 +354,12 @@ export default function Page() {
                 <Row className="py-4 bg-[#F3F2F2] rounded-[10px] mx-0">
                   <Col sm="6" className="border-r border-gray-300 px-4">
                     <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                      Starting price
+                      Bid price
                     </p>
                     <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                       {formatPrice(convert(currentLot?.minprice || 0, "LBP"))}
                     </p>
+
                     <div className="flex items-center justify-start mb-2 md:mb-0 mt-2 gap-1">
                       {/* {participants?.map((user, index) => {
                         return (
@@ -372,13 +405,16 @@ export default function Page() {
                     <p className="text-[#1B212C] mb-0 text-xs sm:text-sm poppins_regular capitalize">
                       {formatPrice(convert(recentBids?.[0]?.price || 0, "LBP"))}
                     </p>
-                    <p className="text-[#1B212C] mb-0 mt-2 text-[15px] poppins_regular capitalize flex items-center justify-start gap-2">
-                      {/* <CountdownTimer
-                        startDate={item?.start_date}
-                        endDate={item?.end_date}
-                        onExpire={() => setIsExpired(true)}
-                      /> */}
-                    </p>
+                    <div>
+                      <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
+                        Bid increment price
+                      </p>
+                      <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
+                        {formatPrice(
+                          convert(currentLot?.minincrement || 0, "LBP")
+                        )}
+                      </p>
+                    </div>
                   </Col>
                 </Row>
               </div>
@@ -504,23 +540,7 @@ export default function Page() {
 
                         <button
                           className="bg_primary flex items-center justify-center rounded-2xl p-2 md:p-3"
-                          onClick={() => {
-                            if (
-                              currentLot?.status === "winner" ||
-                              winnerLot?.bid
-                            ) {
-                              toast.error(
-                                "You are not allowed to bid on this lot anymore."
-                              );
-                            } else {
-                              if (bidAmount > 0) {
-                                setOpenBiddingConfirmationModal(true);
-                              } else {
-                                toast.error("Please enter a valid bid amount.");
-                              }
-                              // setOpenBiddingConfirmationModal(true);
-                            }
-                          }}
+                          onClick={() => handlecustomBid()}
                         >
                           <Check size={24} className="text-white" />
                         </button>
@@ -547,15 +567,10 @@ export default function Page() {
                       <button
                         className="capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg"
                         onClick={() => {
-                          if (
-                            currentLot?.status === "winner" ||
-                            winnerLot?.bid
-                          ) {
-                            toast.error(
-                              "You are not allowed to bid on this lot anymore."
-                            );
-                          } else {
+                          if (bidAmount > 0) {
                             setOpenBiddingConfirmationModal(true);
+                          } else {
+                            toast.error("Please enter a valid bid amount.");
                           }
                         }}
                       >
