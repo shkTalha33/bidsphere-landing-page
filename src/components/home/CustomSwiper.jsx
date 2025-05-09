@@ -28,7 +28,7 @@ const CustomSwiper = ({
           }
           pagination={pagination}
           modules={[Navigation, Pagination]}
-          className="mySwiper mx-3"
+          className="mySwiper mx-2"
           breakpoints={{
             0: { slidesPerView: 1 },
             768: { slidesPerView: 2 },

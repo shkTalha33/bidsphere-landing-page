@@ -31,7 +31,7 @@ export default function ForYou() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
-        className="pb-4 md:pb-[5rem] bg_white overflow-hidden"
+        className="pb-4 md:pb-[4rem] bg_white overflow-hidden"
       >
         <Container>
           <Row>
