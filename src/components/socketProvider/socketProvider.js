@@ -28,7 +28,7 @@ export const SocketProvider = ({ children }) => {
       try {
         const newSocket = io(socketURL, {
           reconnectionAttempts: 15,
-          transports: ["websocket",],
+          transports: ["websocket"],
           reconnection: true,
           reconnectionDelay: 1000,
           reconnectionDelayMax: 5000,

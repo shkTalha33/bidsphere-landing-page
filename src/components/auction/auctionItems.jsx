@@ -19,6 +19,7 @@ export default function AuctionItems({
   count,
   lastId,
   handleLoadMore,
+  filtering = true,
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -77,7 +78,7 @@ export default function AuctionItems({
 
   return (
     <>
-      {loading && items?.length === 0 ? (
+      {(loading && items?.length === 0) || (filtering && loading) ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-3">
           {Array.from({ length: 8 }).map((_, index) => (
             <SkeletonLayout key={index} />

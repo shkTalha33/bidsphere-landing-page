@@ -1,22 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+// Updated AllAuction.js with independent filtering for each tab
 "use client";
 import { Input, Tabs } from "antd";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Col, Container, Row } from "reactstrap";
 import { getAllCategory, getAuctions, getSubcategory } from "../api/ApiFile";
 import Breadcrumbs from "../common/Breadcrumbs";
 import { useGetAuctionsQuery } from "../redux/apiSlice";
 import AuctionItems from "./auctionItems";
 import { useTranslation } from "react-i18next";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { FiFilter } from "react-icons/fi";
-import { Button, Modal, Spinner } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import Select from "react-select";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ApiFunction from "../api/apiFuntions";
-import { useEffect } from "react";
 
 export default function AllAuction() {
   const [activeTab, setActiveTab] = useState("all");
@@ -26,8 +25,25 @@ export default function AllAuction() {
   const { get } = ApiFunction();
   const [allCategory, setAllCategory] = useState([]);
   const [subCategoryData, setSubCategoryData] = useState([]);
-  const [categoryId, setCategoryId] = useState("");
+  const [filtering, setFiltering] = useState(false);
 
+  // Independent filter states for each tab
+  const [filters, setFilters] = useState({
+    all: {
+      categoryId: "",
+      filterVersion: 0,
+    },
+    trending: {
+      categoryId: "",
+      filterVersion: 0,
+    },
+    popular: {
+      categoryId: "",
+      filterVersion: 0,
+    },
+  });
+
+  // Independent pagination for each tab
   const [lastId, setLastId] = useState({
     all: 1,
     popular: 1,
@@ -37,33 +53,48 @@ export default function AllAuction() {
   useEffect(() => {
     handleAllCategory();
   }, []);
-  // Define query parameters for all tabs
 
+  // Define query parameters for all tabs with proper dependency tracking
   const allQueryParams = useMemo(
     () => ({
       endpoint: getAuctions,
       id: lastId.all,
-      params: { subcategory: categoryId },
+      params: filters.all.categoryId
+        ? { subcategory: filters.all.categoryId }
+        : {},
+      filterVersion: filters.all.filterVersion,
     }),
-    [lastId.all]
+    [lastId.all, filters.all]
   );
 
   const trendingQueryParams = useMemo(
     () => ({
       endpoint: getAuctions,
       id: lastId.trending,
-      params: { trending: true },
+      params: {
+        trending: true,
+        ...(filters.trending.categoryId
+          ? { subcategory: filters.trending.categoryId }
+          : {}),
+      },
+      filterVersion: filters.trending.filterVersion,
     }),
-    [lastId.trending]
+    [lastId.trending, filters.trending]
   );
 
   const popularQueryParams = useMemo(
     () => ({
       endpoint: getAuctions,
       id: lastId.popular,
-      params: { popular: true },
+      params: {
+        popular: true,
+        ...(filters.popular.categoryId
+          ? { subcategory: filters.popular.categoryId }
+          : {}),
+      },
+      filterVersion: filters.popular.filterVersion,
     }),
-    [lastId.popular]
+    [lastId.popular, filters.popular]
   );
 
   // Use separate queries for each tab to ensure data isolation
@@ -96,22 +127,31 @@ export default function AllAuction() {
     setActiveTab(key);
   };
 
+  // Get filter status for the current tab
+  const isFiltered = useMemo(() => {
+    return filters[activeTab].categoryId !== "";
+  }, [filters, activeTab]);
+
   const items = [
     {
       key: "all",
-      label: t("allAuction.heading"),
+      label: <div className="flex items-center">{t("allAuction.heading")}</div>,
       data: allResults.data,
       loading: allResults.isFetching,
     },
     {
       key: "trending",
-      label: t("allAuction.heading2"),
+      label: (
+        <div className="flex items-center">{t("allAuction.heading2")}</div>
+      ),
       data: trendingResults.data,
       loading: trendingResults.isFetching,
     },
     {
       key: "popular",
-      label: t("allAuction.heading3"),
+      label: (
+        <div className="flex items-center">{t("allAuction.heading3")}</div>
+      ),
       data: popularResults.data,
       loading: popularResults.isFetching,
     },
@@ -125,12 +165,12 @@ export default function AllAuction() {
         count={tab.data?.count?.totalPage || 0}
         lastId={lastId[tab.key]}
         handleLoadMore={handleLoadMore}
+        filtering={filtering}
       />
     ),
   }));
 
   // filter section start
-
   const schema = yup.object().shape({
     category: yup.string().required("Please select a category"),
     subCategory: yup.string().required("Please select Sub category"),
@@ -142,7 +182,6 @@ export default function AllAuction() {
     reset,
     watch,
     setValue,
-    clearErrors,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -153,6 +192,22 @@ export default function AllAuction() {
   });
 
   const selectedCategory = watch("category");
+
+  // Set form values when opening modal based on current tab's filters
+  const handleOpenFilter = () => {
+    // If the current tab has filters, pre-populate the form
+    const currentTabFilter = filters[activeTab];
+    if (currentTabFilter.categoryId) {
+      // Find the category and subcategory based on the stored subcategory ID
+      // This would require an additional API call or lookup in your data
+      // For now, just reset the form as we don't have the reverse lookup
+      reset();
+    } else {
+      reset();
+    }
+    setShow(true);
+  };
+
   const handleClose = () => {
     reset();
     setShow(false);
@@ -204,21 +259,58 @@ export default function AllAuction() {
       setSubCategoryData([]);
       setValue("subCategory", "");
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, setValue]);
 
   const onSubmit = (data) => {
-    setCategoryId(data?.subCategory);
+    // Update only the current tab's filters
+    setFilters((prev) => ({
+      ...prev,
+      [activeTab]: {
+        categoryId: data.subCategory,
+        filterVersion: prev[activeTab].filterVersion + 1,
+      },
+    }));
+    setFiltering(true);
+
+    setLastId((prev) => ({
+      ...prev,
+      [activeTab]: 1,
+    }));
+
+    handleClose();
+  };
+
+  // Function to clear filters for current tab only
+  const clearFilters = () => {
+    setFilters((prev) => ({
+      ...prev,
+      [activeTab]: {
+        categoryId: "",
+        filterVersion: prev[activeTab].filterVersion + 1,
+      },
+    }));
+
+    setLastId((prev) => ({
+      ...prev,
+      [activeTab]: 1,
+    }));
+
+    reset();
     handleClose();
   };
 
   return (
     <>
-      <Container className="bg_white rounded-[9px]  p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container className="bg_white rounded-[9px] p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle="Auctions" />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
-              {t("allAuction.heading")}
+              {activeTab === "trending"
+                ? t("allAuction.heading2")
+                : activeTab === "popular"
+                ? t("allAuction.heading3")
+                : t("allAuction.heading")}
             </h3>
           </Col>
         </Row>
@@ -226,10 +318,19 @@ export default function AllAuction() {
 
       <Container className="bg_mainsecondary rounded-[9px] mt-4">
         <Row>
+          <Col md="12">
+            <div className="w-full text-end">
+              <div
+                onClick={handleOpenFilter}
+                className={`ml-auto mb-4 ${
+                  isFiltered ? "bg_primary" : "bg-1"
+                } w-[2.5rem] h-[2.5rem] rounded-full items-center justify-center flex sm:hidden cursor-pointer`}
+              >
+                <FiFilter className="text-white w-[1.5rem] h-[1.5rem]" />
+              </div>
+            </div>
+          </Col>
           <Col md="12" className="!px-0">
-            {/* <div className="">
-              elo jsdh
-            </div> */}
             <div className="relative">
               <Tabs
                 activeKey={activeTab}
@@ -238,10 +339,14 @@ export default function AllAuction() {
                 onChange={onChange}
               />
               <div
-                onClick={handleShow}
+                onClick={handleOpenFilter}
                 className="absolute right-[15px] top-[1.6rem]"
               >
-                <div className="bg-1 w-[2.5rem] h-[2.5rem] rounded-full flex items-center justify-center cursor-pointer">
+                <div
+                  className={`${
+                    isFiltered ? "bg_primary" : "bg-1"
+                  } w-[2.5rem] h-[2.5rem] rounded-full items-center justify-center hidden sm:flex cursor-pointer`}
+                >
                   <FiFilter className="text-white w-[1.5rem] h-[1.5rem]" />
                 </div>
               </div>
@@ -252,10 +357,16 @@ export default function AllAuction() {
 
       <Modal centered backdrop="static" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>
+            Filter{" "}
+            {activeTab === "trending"
+              ? "Trending Auctions"
+              : activeTab === "popular"
+              ? "Popular Auctions"
+              : "All Auctions"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {" "}
           <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto">
             <div className="flex flex-col gap-2 mb-4">
               <label htmlFor="category" className="poppins_regular">
@@ -284,6 +395,7 @@ export default function AllAuction() {
                 </p>
               )}
             </div>
+
             <div className="flex flex-col gap-2 mb-4">
               <label htmlFor="subCategory" className="poppins_regular">
                 Select Sub Category
@@ -303,6 +415,7 @@ export default function AllAuction() {
                     value={subCategoryData.find(
                       (opt) => opt.value === field.value
                     )}
+                    isDisabled={!selectedCategory}
                   />
                 )}
               />
@@ -314,12 +427,25 @@ export default function AllAuction() {
               )}
             </div>
 
-            <Button
-              type="submit"
-              className="w-full h-[3.5rem] mt-6 bg_primary border-0"
-            >
-              OK
-            </Button>
+            <div className="flex gap-2 mt-6">
+              {isFiltered && (
+                <Button
+                  type="button"
+                  onClick={clearFilters}
+                  className="flex-1 h-[3.5rem] !bg-gray-200 !hover:bg-gray-300 text-dark border-0"
+                >
+                  Clear Filters
+                </Button>
+              )}
+              <Button
+                type="submit"
+                className={`${
+                  isFiltered ? "flex-1" : "w-full"
+                } h-[3.5rem] bg_primary hover:bg-[#660000] border-0`}
+              >
+                Apply Filters
+              </Button>
+            </div>
           </form>
         </Modal.Body>
       </Modal>
