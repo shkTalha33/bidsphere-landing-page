@@ -10,7 +10,7 @@ export default function Home() {
   const { loading } = useCurrency();
 
   return (
-    <main className="bg-gray-100 pt-20 flex flex-col items-start min-h-screen">
+    <main className="bg-gray-100 flex flex-col items-start">
       <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-6">
         <div className="w-full lg:w-1/4">
           <TabHeader />

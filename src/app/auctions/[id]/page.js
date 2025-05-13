@@ -223,6 +223,24 @@ const AuctionDetailPage = () => {
                 </Row>
                 <Row className="justify-center my-2 mt-3">
                   <Col md="6">
+                    <div className="poppins_medium text-base text-[#8B0000]">
+                      Category
+                    </div>
+                    <div className="poppins_regular text-sm inline-block mt-2 px-3 py-1 border border-black-300 rounded-full  text-black">
+                      {item?.category?.name}
+                    </div>
+                  </Col>
+                  <Col md="6">
+                    <div className="poppins_medium text-base text-[#8B0000]">
+                      Sub Category
+                    </div>
+                    <div className="poppins_regular text-sm inline-block mt-2 px-3 py-1 border border-black-300 rounded-full  text-black">
+                      {item?.subcategory?.title}
+                    </div>
+                  </Col>
+                </Row>
+                <Row className="justify-center my-2 mt-3">
+                  <Col md="6">
                     <div className="poppins_medium text-base text_primary">
                       {t("auctionDetails.heading")}
                     </div>
