@@ -107,7 +107,7 @@ const RegistrationDetail = () => {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px] mt-20 p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container className="bg_white rounded-[9px] p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12" >
             <Breadcrumbs pageTitle={"Registration"} />

@@ -48,7 +48,7 @@ export default function AuctionLots({ items, loading }) {
                       </p>
                     </div>
                     <p className="poppins_medium text-sm">
-                      {formatPrice(convert(item?.item?.price, "LBP"))}
+                      {formatPrice(convert(item?.item?.price, "LYD"))}
                     </p>
                   </div>
                 </div>

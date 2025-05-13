@@ -34,7 +34,7 @@ const OrderSummary = ({ orderDetail }) => {
       <div className="mb-4">
         <p className="text-sm text-gray-500">Winning Price</p>
         <p className="text-base poppins_semibold text-green-600">
-          {formatPrice(convert(orderDetail?.price, "LBP"))}
+          {formatPrice(convert(orderDetail?.price, "LYD"))}
         </p>
       </div>
 

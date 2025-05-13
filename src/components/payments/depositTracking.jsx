@@ -91,7 +91,7 @@ export default function DepositTracking() {
       maxWidth: "200px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize cursor-pointer">
-          {formatPrice(convert(row?.auction?.depositamount, "LBP"))}
+          {formatPrice(convert(row?.auction?.depositamount, "LYD"))}
         </div>
       ),
     },

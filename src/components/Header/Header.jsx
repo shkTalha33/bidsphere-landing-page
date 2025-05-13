@@ -15,7 +15,6 @@ import { Container } from "reactstrap";
 import ApiFunction from "../api/apiFuntions";
 import { avataruser, Logo1, Logo11 } from "../assets/icons/icon";
 import { setLogout, setUserData } from "../redux/loginForm";
-import { worldCurrencies } from "../utils/WorldCurrency";
 import useCurrency from "../hooks/useCurrency";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiChatSmile2Line } from "react-icons/ri";
@@ -27,6 +26,16 @@ import toast from "react-hot-toast";
 import { BellOutlined } from "@ant-design/icons";
 import Language from "../language-change/language";
 import { useTranslation } from "react-i18next";
+import {
+  getMessageUnseen,
+  getNotifications,
+  incrementMessageUnseen,
+  incrementNotification,
+  resetNotification,
+  setMessageUnseen,
+  setNotifications,
+} from "../redux/notificationSlice/notificationSlice";
+import { NotificationToast } from "../NotificationToast/NotificationToast";
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -39,6 +48,8 @@ export default function Header() {
   const { currency } = useCurrency();
   const socket = useSocket();
   const isHomeOrHashRoute = pathname === "/";
+  const notificationsCount = useSelector(getNotifications);
+  const unseenMessageCount = useSelector(getMessageUnseen);
   const { t } = useTranslation();
   const handleLogoutFun = async () => {
     dispatch(setLogout());
@@ -97,6 +108,7 @@ export default function Header() {
       }
       return next;
     });
+    dispatch(resetNotification());
   };
 
   useEffect(() => {
@@ -198,7 +210,7 @@ export default function Header() {
 
           {showNotification && (
             <div
-              className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50"
+              className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D] z-50"
               onMouseEnter={() => (isMouseOver.current = true)}
               onMouseLeave={() => (isMouseOver.current = false)}
               style={{
@@ -213,13 +225,24 @@ export default function Header() {
               />
             </div>
           )}
+          {notificationsCount > 0 && (
+            <div className="absolute text-[0.6rem] top-[-9px] min-w-[1.2rem] h-[1.2rem] flex items-center justify-center right-[-5px] bg-danger p-1 text-white  border rounded-full shadow-[0px_4px_22.9px_0px_#0000000D] z-50">
+              {notificationsCount > 10 ? "10+" : notificationsCount}
+            </div>
+          )}
         </div>
-
-        <div
-          onClick={handleChatnaoo}
-          className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
-        >
-          <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
+        <div className="relative">
+          <div
+            onClick={handleChatnaoo}
+            className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+          >
+            <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
+          </div>
+          {unseenMessageCount > 0 && (
+            <div className="absolute text-[0.6rem] top-[-11px] min-w-[1.2rem] h-[1.2rem] flex items-center justify-center right-[-11px] bg-danger p-1 text-white  border rounded-full shadow-[0px_4px_22.9px_0px_#0000000D] z-50">
+              {unseenMessageCount > 10 ? "10+" : unseenMessageCount}
+            </div>
+          )}
         </div>
         <Link
           href={`/favorite`}
@@ -405,24 +428,29 @@ export default function Header() {
   useEffect(() => {
     if (socket) {
       socket.on("notification", (data) => {
-        toast.success(
-          <div>
-            <strong>{data?.user?.fname}</strong>: {data?.description}
-          </div>,
-          {
-            icon: <BellOutlined style={{ color: "#1890ff", fontSize: 20 }} />,
-            position: "top-right",
-            autoClose: 4000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          }
-        );
+        dispatch(incrementNotification());
+        if (data?.type === "message") {
+          dispatch(incrementMessageUnseen(1));
+        }
+
+        toast.success(<NotificationToast data={data} />, {
+          position: "top-right",
+          autoClose: 3500,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          hideProgressBar: false,
+        });
+      });
+
+      socket.on("noti-unseen", (data) => {
+        dispatch(setNotifications(data?.notifications || 0));
+        dispatch(setMessageUnseen(data?.messageUnseen || 0));
       });
 
       return () => {
         socket.off("notification");
+        socket.off("noti-unseen");
       };
     }
   }, [socket]);
@@ -463,7 +491,7 @@ export default function Header() {
 
                   {showNotification && (
                     <div
-                      className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-lg z-50"
+                      className="absolute right-0 mt-2 w-[20rem] bg-white border rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D] z-50"
                       onMouseEnter={() => (isMouseOver.current = true)}
                       onMouseLeave={() => (isMouseOver.current = false)}
                       style={{
@@ -476,6 +504,11 @@ export default function Header() {
                         firstTime={hasFetched}
                         setShowNotification={setShowNotification}
                       />
+                    </div>
+                  )}
+                  {notificationsCount > 0 && (
+                    <div className="absolute text-[0.6rem] top-[-5px] min-w-[1.2rem] h-[1.2rem] flex items-center justify-center right-[-5px] bg-danger p-1 text-white  border rounded-full shadow-[0px_4px_22.9px_0px_#0000000D] z-50">
+                      {notificationsCount > 10 ? "10+" : notificationsCount}
                     </div>
                   )}
                 </div>
@@ -559,11 +592,18 @@ export default function Header() {
 
               {/* Mobile Action Icons */}
               <div className="flex justify-center gap-6 w-full mt-2">
-                <div
-                  onClick={handleChatnaoo}
-                  className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
-                >
-                  <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
+                <div className="relative">
+                  <div
+                    onClick={handleChatnaoo}
+                    className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+                  >
+                    <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
+                  </div>
+                  {unseenMessageCount > 0 && (
+                    <div className="absolute text-[0.6rem] top-[-11px] min-w-[1.2rem] h-[1.2rem] flex items-center justify-center right-[-11px] bg-danger p-1 text-white  border rounded-full shadow-[0px_4px_22.9px_0px_#0000000D] z-50">
+                      {unseenMessageCount > 10 ? "10+" : unseenMessageCount}
+                    </div>
+                  )}
                 </div>
                 <Link
                   href={"/favorite"}

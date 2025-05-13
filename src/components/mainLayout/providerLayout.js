@@ -15,15 +15,15 @@ const ProviderLayout = ({ children }) => {
   return (
     <>
       <Provider store={store}>
-        <SocketProvider>
-          <I18nextProvider i18n={i18n}>
+        <I18nextProvider i18n={i18n}>
+          <SocketProvider>
             {pathname.startsWith("/vender") ? (
               <SidebarLayout>{children}</SidebarLayout>
             ) : (
               <MainLayout>{children}</MainLayout>
             )}
-          </I18nextProvider>
-        </SocketProvider>
+          </SocketProvider>
+        </I18nextProvider>
       </Provider>
     </>
   );

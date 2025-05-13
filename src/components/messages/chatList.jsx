@@ -5,7 +5,7 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   useActiveChat,
   useChatList,
@@ -13,27 +13,42 @@ import {
   useResponsiveChat,
 } from "./context";
 
-import Skeleton from "react-loading-skeleton";
-
 import Image from "next/image";
 import { getAllConversation } from "../api/ApiFile";
 import ApiFunction from "../api/apiFuntions";
 import { useSocket } from "../socketProvider/socketProvider";
-import { avataruser } from "../assets/icons/icon";
+import { avataruser, StaticImage } from "../assets/icons/icon";
 import { Spinner } from "react-bootstrap";
+import { Skeleton } from "antd";
+import { decrementMessageUnseen } from "../redux/notificationSlice/notificationSlice";
 
 const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
   const [badge, setBadge] = useState(false);
   const { activeChatId, setActiveChatId } = useActiveChat();
+  const { chatListData, setChatListData } = useChatList();
   const { setChatUser } = useChatUser();
   const { setResponsiveChat } = useResponsiveChat();
   const userData = useSelector((state) => state.auth?.userData);
+  const dispatch = useDispatch();
 
   const toggleData = async (chatData) => {
-    
+    socket.emit("seen-msg", {
+      lot: chatData?.lot?._id,
+      type: "user",
+    });
+    const unseenToRemove = chatData?.unseen || 0;
+    if (unseenToRemove > 0) {
+      dispatch(decrementMessageUnseen(unseenToRemove));
+    }
+    setChatListData((prevData) =>
+      prevData?.map((item) =>
+        item?._id === chatData?._id ? { ...item, unseen: 0 } : item
+      )
+    );
+
     setChatUser(chatData);
     setResponsiveChat(true);
-    setActiveChatId(chatData?.lot?._id); // Set the active chat ID
+    setActiveChatId(chatData?.lot?._id);
     HandleSeenMessage(chatData?.lot?._id);
   };
 
@@ -76,7 +91,7 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
   }, [data]);
 
   return (
-    <div>
+    <>
       <div
         className={`_link_  border-0 `}
         style={{ cursor: "pointer" }}
@@ -137,9 +152,14 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
               </h6>
             </div>
           </div>
+          {data?.unseen > 0 && (
+            <div className="poppins_light text-[0.8rem] text-danger">
+              <span>{data?.unseen}</span>
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -161,7 +181,6 @@ const ChatList = () => {
     if (!socket) return;
     if (!chatUser) {
       const handleNewConversation = (message) => {
-
         setChatListData((prevChatList) => {
           let updatedChatList = prevChatList?.map((conversation) => {
             if (conversation?._id === message?.conversationId) {
@@ -200,11 +219,11 @@ const ChatList = () => {
                 __v: message?.__v,
               },
               otherUser: message?.sender,
-              unseen: 0,
+              unseen: 1,
             };
 
-            // setChatUser(newChatObj);
             setActiveChatId(message?.lot?._id);
+
             // Add the new object at the start
             return [newChatObj, ...prevData];
           }
@@ -294,41 +313,52 @@ const ChatList = () => {
     }
   }, [chatListData]);
 
-  const skeletonCount = 4;
-
   return (
     <>
       <>
-        {listLoading && (
+        {listLoading ? (
           <>
-            {/* {[...Array(skeletonCount)].map((_, index) => ( */}
-            {/* <div key={index} className="chatSkltonmain mt-3"> */}
-            <div className="flex justify-center mt-10">
-              <Spinner />
+            <div className="flex justify-center p-3 mt-3">
+              <Skeleton active={true} className="w-full h-10" />
             </div>
-            {/* </div> */}
-            {/* ))} */}
+          </>
+        ) : (
+          <>
+            <div
+              className="chat_height_contol scrolbar"
+              ref={chatContainerRef}
+              onScroll={handleScroll}
+            >
+              {chatListData?.length > 0 ? (
+                chatListData?.map((chat, index) => (
+                  <Fragment key={chat?._id}>
+                    <ChatUsers
+                      id={chat?.lot?._id}
+                      img={chat?.lot?.images[0] || ""}
+                      data={chat}
+                      name={`${chat?.lot?.name}`}
+                      discrip={chat?.lastMsg?.message}
+                      timestamp={chat?.lastMsg?.createdAt}
+                    />
+                  </Fragment>
+                ))
+              ) : (
+                <>
+                  <div className="flex justify-center flex-col items-center gap-1 p-3 mt-3">
+                    <Image
+                      src={StaticImage}
+                      className="w-[4rem] h-[4rem]"
+                      alt=""
+                    />
+                    <h1 className="text-center text-gray-500">
+                      No Chats Found
+                    </h1>
+                  </div>
+                </>
+              )}
+            </div>
           </>
         )}
-        <div
-          className="chat_height_contol scrolbar"
-          ref={chatContainerRef}
-          onScroll={handleScroll}
-        >
-          {chatListData?.length > 0 &&
-            chatListData?.map((chat, index) => (
-              <Fragment key={chat?._id}>
-                <ChatUsers
-                  id={chat?.lot?._id}
-                  img={chat?.lot?.images[0] || ""}
-                  data={chat}
-                  name={`${chat?.lot?.name}`}
-                  discrip={chat?.lastMsg?.message}
-                  timestamp={chat?.lastMsg?.createdAt}
-                />
-              </Fragment>
-            ))}
-        </div>
       </>
     </>
   );

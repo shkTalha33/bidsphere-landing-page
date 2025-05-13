@@ -3,7 +3,7 @@ import { worldCurrencies } from "../utils/WorldCurrency";
 
 // Get initial currency from localStorage if available (client-side only)
 let initialSelectedCurrency =
-  worldCurrencies.find((c) => c.code === "LBP") || worldCurrencies[0];
+  worldCurrencies.find((c) => c.code === "LYD") || worldCurrencies[0];
 if (typeof window !== "undefined") {
   const savedCurrency = localStorage.getItem("preferredCurrency");
   if (savedCurrency) {

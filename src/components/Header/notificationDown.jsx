@@ -128,7 +128,7 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
         </h4>
         <div
           id="scrollableDiv"
-          className="p-4 max-h-[300px] overflow-y-auto w-[300px] sm:w-[320px]"
+          className="px-4 max-h-[300px] mt-3 overflow-y-auto w-[300px] sm:w-[320px]"
         >
           {loading ? (
             <div className="flex justify-center items-center h-20 mt-4">

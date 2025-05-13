@@ -1,5 +1,5 @@
 export const formatPrice = (price) => {
   if (typeof price !== "number") return "N/A";
 
-  return `${price} LBP`;
+  return `${price} LYD`;
 };

@@ -199,7 +199,7 @@ export default function Page() {
                         Lot Price
                       </p>
                       <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
-                        {formatPrice(convert(currentLot?.price, "LBP"))}
+                        {formatPrice(convert(currentLot?.price, "LYD"))}
                       </p>
                     </Col>
                     <Col sm="6" className=" px-4">

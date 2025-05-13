@@ -251,7 +251,7 @@ const Invoice = ({
                 <p className="text-[#7C8493] text-sm mb-1">Amount Paid</p>
                 <p className="text-[#25324B] poppins_medium">
                   {formatPrice(
-                    convert(orderDetail?.transaction?.amount, "LBP")
+                    convert(orderDetail?.transaction?.amount, "LYD")
                   )}
                 </p>
               </div>

@@ -11,7 +11,7 @@ export default function Services() {
     {
       image: shipping,
       title: "Free Shipping",
-      description: `Free Ship Over ${formatPrice(convert(150, "LBP"))}`,
+      description: `Free Ship Over ${formatPrice(convert(150, "LYD"))}`,
     },
     {
       image: deal,

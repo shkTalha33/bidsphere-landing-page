@@ -67,7 +67,7 @@ const Page = () => {
 
   return (
     <>
-      <Container className="bg-white rounded-lg mt-20 p-2 p-md-4 shadow-lg">
+      <Container className="bg-white rounded-lg p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={t("nav.contactus")} />
@@ -83,7 +83,7 @@ const Page = () => {
           {/* Contact Info Cards */}
           <Col lg="4" md="6" className="mb-4 md:mb-0">
             <Row className="g-3">
-              <Col xs="12" className="bg-white p-3 rounded-lg shadow-lg h-full">
+              <Col xs="12" className="bg-white p-3 rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D] h-full">
                 {/* Call Us Card */}
                 <div
                   className="rounded-lg transition-all duration-300 cursor-pointer group"
@@ -107,7 +107,7 @@ const Page = () => {
                 </div>
               </Col>
 
-              <Col xs="12" className="bg-white p-3 rounded-lg shadow-lg h-full">
+              <Col xs="12" className="bg-white p-3 rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D] h-full">
                 {/* Email Us Card */}
                 <div
                   className="rounded-lg transition-all duration-300 cursor-pointer group"
@@ -135,7 +135,7 @@ const Page = () => {
 
           {/* Contact Form */}
           <Col lg="8" md="6">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
+            <div className="bg-white p-6 rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D]">
               <h4 className="text-xl poppins_semibold text-gray-800 mb-6">
                 {t("contactUs.heading3")}
               </h4>

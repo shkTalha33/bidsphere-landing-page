@@ -77,7 +77,7 @@ export default function AuctionItems({
 
   return (
     <>
-      {loading && items.length === 0 ? (
+      {loading && items?.length === 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-3">
           {Array.from({ length: 8 }).map((_, index) => (
             <SkeletonLayout key={index} />
@@ -124,7 +124,7 @@ export default function AuctionItems({
                     {item.name}
                   </p>
                   <p className="poppins_medium text-sm">
-                    {formatPrice(convert(item?.depositamount, "LBP"))}
+                    {formatPrice(convert(item?.depositamount, "LYD"))}
                   </p>
                 </div>
                 <button

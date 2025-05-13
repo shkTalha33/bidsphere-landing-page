@@ -57,7 +57,7 @@ const Language = () => {
       {/* Dropdown Menu */}
       {isDropdownOpen && (
         <div
-          className="absolute right-0 w-24 bg-white border border-gray-200 rounded shadow-lg z-10"
+          className="absolute right-0 w-24 bg-white border border-gray-200 rounded shadow-[0px_4px_22.9px_0px_#0000000D] z-10"
           onMouseEnter={() => setIsDropdownOpen(true)}
           onMouseLeave={() => setIsDropdownOpen(false)}
         >

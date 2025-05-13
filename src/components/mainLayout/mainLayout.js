@@ -6,10 +6,8 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
-import axios from "axios";
 import { getLatestCurrencyRate } from "../api/ApiFile";
 import { handleError } from "../api/errorHandler";
-import debounce from "debounce";
 import ApiFunction from "../api/apiFuntions";
 import { setCurrencies } from "../redux/currency";
 
@@ -44,10 +42,12 @@ const MainLayout = ({ children }) => {
     handleUser();
   }, []);
 
+  const excludeRoutes = ["/auth/login", "/auth/signup",'/'];
+
   return (
     <>
       {!isPublicRoute && <Header />}
-      {children}
+      <main className={`min-h-screen ${!excludeRoutes.includes(pathname) && "!mt-[5rem] bg_mainsecondary p-2  md:py-4 !pt-[30px]"}`}>{children}</main>
       {!isPublicRoute ? <Footer /> : null}
     </>
   );

@@ -41,7 +41,6 @@ const ChatMessageList = () => {
   const [isLoading3, setIsLoading3] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
 
-
   //// context APi
   const { chatUser } = useChatUser();
   const { activeChatId } = useActiveChat();
@@ -55,15 +54,12 @@ const ChatMessageList = () => {
   useEffect(() => {
     if (socket) {
       const handleMessage = (message) => {
-        
         const isActiveChat = chatUser?.lot?._id === activeChatId;
-      
-        
         // if (message?.conversationId === chatUser?.lastMsg?.conversationId) {
-         
-          if (isActiveChat) {
-            setChatMsg((prevChat) => [...prevChat, message]);
-          }
+
+        if (isActiveChat) {
+          setChatMsg((prevChat) => [...prevChat, message]);
+        }
         // }
         setChatListData((prevChatList) => {
           let updatedChatList = prevChatList?.map((conversation) => {

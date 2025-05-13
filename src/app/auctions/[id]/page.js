@@ -76,7 +76,7 @@ const AuctionDetailPage = () => {
   const handleRegister = () => {
     const now = moment.utc();
     const startTime = moment.utc(item?.start_date);
-  
+
     if (item?.status === "active") {
       if (startTime.isBefore(now)) {
         toast.error("You can register once the admin starts the auction.");
@@ -89,15 +89,14 @@ const AuctionDetailPage = () => {
       }
       return;
     }
-  
+
     if (userData) {
       router.push(`/auctions/${id}/registration`);
     } else {
       message.error("Please login to register the auction!");
     }
   };
-  
-  
+
   const handleJoin = () => {
     if (userData) {
       router.push(`/auctions/auction-join/${id}`);
@@ -110,10 +109,6 @@ const AuctionDetailPage = () => {
   const [isExpired, setIsExpired] = useState(false);
   const isActive = item?.status === "active";
 
-
-
-
-  
   const button = {
     icon: <Plus className="w-4 h-4 md:w-5 md:h-5 text-white" />,
     text: isRegister ? "Register Auction" : "Join Auction",
@@ -257,7 +252,7 @@ const AuctionDetailPage = () => {
                       {t("auctionDetails.heading3")}
                     </div>
                     <div className="poppins_regular">
-                      {formatPrice(convert(item?.depositamount, "LBP"))}
+                      {formatPrice(convert(item?.depositamount, "LYD"))}
                     </div>
                   </Col>
                   <Col md="6">

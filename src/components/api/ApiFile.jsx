@@ -62,6 +62,8 @@ const getSupportDetail = "support/details";
 // refund api
 const refundAdmin = "deposit/request-refund";
 const refundWallet = "deposit/add-to-wallet";
+const getAllCategory = "cat/all";
+const getSubcategory = "subcat/all";
 export {
   login,
   imageUpload,
@@ -114,4 +116,6 @@ export {
   getSupportDetail,
   refundAdmin,
   refundWallet,
+  getAllCategory,
+  getSubcategory
 };

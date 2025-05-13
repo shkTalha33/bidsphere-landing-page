@@ -30,7 +30,7 @@ import ApiFunction from "../api/apiFuntions";
 
 const ChatMessage = () => {
   const { userData, baseURL } = ApiFunction();
-  const { chatListData, setChatListData, updateChatList } = useChatList();
+  const { updateChatList } = useChatList();
   const { chatUser, setChatUser } = useChatUser();
   const router = useRouter();
   const { activeChatId, setActiveChatId } = useActiveChat();
@@ -40,10 +40,9 @@ const ChatMessage = () => {
   const params = new URLSearchParams(searchParams);
   const urlDataEnq = params.get("query");
 
-
   useEffect(() => {
     const urlData = urlDataEnq ? decryptData(urlDataEnq) : "";
-    
+
     if (urlData) {
       setActiveChatId(urlData?._id);
       setResponsiveChat(true);
@@ -70,7 +69,7 @@ const ChatMessage = () => {
   };
   return (
     <div className="bg-light">
-      <div className="min-h-[80vh] container-lg px-0 px-lg-2 mx-auto pt-1 pb-5 mt-[7rem]">
+      <div className="min-h-[80vh] container-lg px-0 px-lg-2 mx-auto pt-1 pb-5 mt-[2rem]">
         <div className="pt-3">
           <div>
             <div className="chat_grid">

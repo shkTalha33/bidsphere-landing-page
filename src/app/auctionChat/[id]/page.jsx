@@ -123,7 +123,7 @@ export default function Page() {
   };
 
   return (
-    <main className="bg_mainsecondary p-2 md:py-4">
+    <main className="bg_mainsecondary">
       <>
         <TopSection
                 title={`${getGreeting()}, ${userData?.fname || ""} ${userData?.lname || ""}`}
@@ -261,7 +261,7 @@ export default function Page() {
                       </p>
                       <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                         {formatPrice(
-                          convert(auctionData?.minprice || 0, "LBP")
+                          convert(auctionData?.minprice || 0, "LYD")
                         )}
                       </p>
                     </div>

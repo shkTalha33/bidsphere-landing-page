@@ -150,7 +150,9 @@ const Page = () => {
               {t("order.heading10")}
             </div>
           ) : (
-            <h4 className="text-center poppins_regular text-gray-400 italic">{t("order.heading11")}</h4>
+            <h4 className="text-center poppins_regular text-gray-400 italic">
+              {t("order.heading11")}
+            </h4>
           )}
         </>
       ),
@@ -245,111 +247,113 @@ const Page = () => {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px] mt-20 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
-        <Row>
-          <Col md="12">
-            <Breadcrumbs pageTitle={t("nav.orders")} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
-              {t("nav.orders")}
-            </h3>
-          </Col>
-        </Row>
-      </Container>
-      <Container className="bg_white p-2 p-md-2 rounded-[9px] mt-2 md:mt-4">
-        <Row className="rounded-[9px] g-3">
-          <Col md="3">
-            <div className="flex flex-col gap-3  items-center justify-center">
-              {sideButtons?.map((button) => {
-                const isActive = currentActiveButton === button.status;
-                return (
-                  <button
-                    key={button.title}
-                    className={`${
-                      isActive
-                        ? "bg_primary text-white"
-                        : "bg-[#F5F5F5] text-[#909495]"
-                    } rounded-[10px] w-full flex items-center justify-start gap-2 p-3 capitalize`}
-                    onClick={() => {
-                      handlePageChange();
-                      handleGetOrder(button.status);
-                      setCurrentActiveButton(button.status);
-                      // Check if the status is "payement"
-                      // if (button?.status === "payement") {
-                      //   handleInvoicePayement();
-                      // } else {
-                      //   handleGetOrder(button.status);
-                      // }
-                    }}
-                  >
-                    <div className="flex items-center w-full justify-between">
-                      <div className="flex gap-3 items-center">
-                        <div className="w-7 h-7">
-                          <div
-                            className={`w-100 h-100 sm:w-9 sm:h-9 ${
-                              isActive ? "bg-white" : "bg_primary"
-                            } flex items-center justify-center p-2 rounded-full`}
-                          >
-                            {React.cloneElement(button?.icon, {
-                              color: isActive ? "#7D0303" : "#ffffff", // adjust color codes
-                              size: 16,
-                            })}
+      <main>
+        <Container className="bg_white rounded-[9px] p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+          <Row>
+            <Col md="12">
+              <Breadcrumbs pageTitle={t("nav.orders")} />
+              <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+                {t("nav.orders")}
+              </h3>
+            </Col>
+          </Row>
+        </Container>
+        <Container className="bg_white p-2 p-md-2 rounded-[9px] mt-2 md:mt-4">
+          <Row className="rounded-[9px] g-3">
+            <Col md="3">
+              <div className="flex flex-col gap-3  items-center justify-center">
+                {sideButtons?.map((button) => {
+                  const isActive = currentActiveButton === button.status;
+                  return (
+                    <button
+                      key={button.title}
+                      className={`${
+                        isActive
+                          ? "bg_primary text-white"
+                          : "bg-[#F5F5F5] text-[#909495]"
+                      } rounded-[10px] w-full flex items-center justify-start gap-2 p-3 capitalize`}
+                      onClick={() => {
+                        handlePageChange();
+                        handleGetOrder(button.status);
+                        setCurrentActiveButton(button.status);
+                        // Check if the status is "payement"
+                        // if (button?.status === "payement") {
+                        //   handleInvoicePayement();
+                        // } else {
+                        //   handleGetOrder(button.status);
+                        // }
+                      }}
+                    >
+                      <div className="flex items-center w-full justify-between">
+                        <div className="flex gap-3 items-center">
+                          <div className="w-7 h-7">
+                            <div
+                              className={`w-100 h-100 sm:w-9 sm:h-9 ${
+                                isActive ? "bg-white" : "bg_primary"
+                              } flex items-center justify-center p-2 rounded-full`}
+                            >
+                              {React.cloneElement(button?.icon, {
+                                color: isActive ? "#7D0303" : "#ffffff", // adjust color codes
+                                size: 16,
+                              })}
+                            </div>
+                          </div>
+
+                          <div className="text-sm sm:text-base">
+                            {button?.title}
                           </div>
                         </div>
-
-                        <div className="text-sm sm:text-base">
-                          {button?.title}
+                        <div
+                          className={`${
+                            isActive
+                              ? "bg-white text_dark"
+                              : "bg_primary text-white"
+                          } flex items-center justify-center p-1 rounded-full`}
+                        >
+                          <FaArrowRight size={15} />
                         </div>
                       </div>
-                      <div
-                        className={`${
-                          isActive
-                            ? "bg-white text_dark"
-                            : "bg_primary text-white"
-                        } flex items-center justify-center p-1 rounded-full`}
-                      >
-                        <FaArrowRight size={15} />
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </Col>
-          <Col md="9">
-            {urlInvoice ? (
-              <Invoice
-                orderDetail={orderDetail}
-                detailLoading={detailLoading}
-                setData={setData}
-                setOrderDetail={setOrderDetail}
-                urlInvoice={urlInvoice}
-              />
-            ) : urlId ? (
-              <OrderDetails
-                orderDetail={orderDetail}
-                detailLoading={detailLoading}
-                backrout={"/orders"}
-              />
-            ) : (
-              <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px]">
-                <ProductTable
-                  rowHeading={t("order.heading")}
-                  count={count}
-                  loading={loading}
-                  setCurrentPage={setPage}
-                  currentPage={page}
-                  columns={columns}
-                  data={data}
-                  setPageNumber={setPage}
-                  type="search"
-                  setLastId={setLastId}
-                  itemsPerPage={itemsPerPage}
-                />
+                    </button>
+                  );
+                })}
               </div>
-            )}
-          </Col>
-        </Row>
-      </Container>
+            </Col>
+            <Col md="9">
+              {urlInvoice ? (
+                <Invoice
+                  orderDetail={orderDetail}
+                  detailLoading={detailLoading}
+                  setData={setData}
+                  setOrderDetail={setOrderDetail}
+                  urlInvoice={urlInvoice}
+                />
+              ) : urlId ? (
+                <OrderDetails
+                  orderDetail={orderDetail}
+                  detailLoading={detailLoading}
+                  backrout={"/orders"}
+                />
+              ) : (
+                <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px]">
+                  <ProductTable
+                    rowHeading={t("order.heading")}
+                    count={count}
+                    loading={loading}
+                    setCurrentPage={setPage}
+                    currentPage={page}
+                    columns={columns}
+                    data={data}
+                    setPageNumber={setPage}
+                    type="search"
+                    setLastId={setLastId}
+                    itemsPerPage={itemsPerPage}
+                  />
+                </div>
+              )}
+            </Col>
+          </Row>
+        </Container>
+      </main>
     </>
   );
 };

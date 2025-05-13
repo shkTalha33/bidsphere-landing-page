@@ -43,12 +43,12 @@ export default function AuctionCard({ item, index }) {
       />
       <div className="p-2">
         <p className="poppins_regular text_darkprimary text-[10px] mt-2">
-          <p className="poppins_regular gap-1 text_darkprimary text-[10px] mt-2">
+          <div className="poppins_regular gap-1 text_darkprimary text-[10px] mt-2">
             <CountdownTimer
               startDate={item?.start_date}
               endDate={item?.end_date}
             />
-          </p>
+          </div>
         </p>
 
         <p className="poppins_semibold mt-[7px] leading-[1.2] text_darkprimary text-[1.25rem]">
@@ -58,7 +58,7 @@ export default function AuctionCard({ item, index }) {
           <span className="text-gray text-[0.8rem]">Deposit Amount</span>
           <h5 className="mb-0 text_darkprimary text-lg">
             {" "}
-            {formatPrice(convert(item?.depositamount, "LBP"))}
+            {formatPrice(convert(item?.depositamount, "LYD"))}
           </h5>
         </div>
       </div>

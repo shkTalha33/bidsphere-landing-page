@@ -40,9 +40,9 @@ const CountdownTimer = ({ startDate, endDate, onExpire }) => {
   }, [startDate, endDate, onExpire]);
 
   return (
-    <p className="poppins_regular text_darkprimary text-[10px] mt-2">
+    <span className="poppins_regular text_darkprimary text-[10px] mt-2">
       {timeLeft}
-    </p>
+    </span>
   );
 };
 

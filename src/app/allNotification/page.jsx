@@ -109,7 +109,7 @@ const Page = () => {
       });
   };
   return (
-    <Container className="bg-white rounded-lg mt-20 p-2 p-md-4 shadow-lg">
+    <Container className="bg-white rounded-lg p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
       <Row>
         <Col md="12">
           <Breadcrumbs pageTitle={"All Notifications"} />
@@ -131,7 +131,7 @@ const Page = () => {
                 <div
                   key={index}
                   onClick={() => handleNotificationClick(item)}
-                  className="relative group cursor-pointer flex items-start gap-3 p-3 bg-gray-100 hover:bg-white border rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg"
+                  className="relative group cursor-pointer flex items-start gap-3 p-3 bg-gray-100 hover:bg-white border rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-[0px_4px_22.9px_0px_#0000000D]"
                 >
                   {/* Profile Image */}
                   <div>

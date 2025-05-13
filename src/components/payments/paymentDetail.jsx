@@ -120,7 +120,7 @@ export default function PaymentDetail() {
       maxWidth: "200px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize cursor-pointer">
-          {formatPrice(convert(row?.auction?.depositamount, "LBP"))}
+          {formatPrice(convert(row?.auction?.depositamount, "LYD"))}
         </div>
       ),
     },
@@ -289,7 +289,7 @@ export default function PaymentDetail() {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px] mt-20 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container className="bg_white rounded-[9px] p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={t("payment.heading")} />
@@ -320,7 +320,7 @@ export default function PaymentDetail() {
           <div className="flex items-center flex-wrap gap-2 gap-md-3 justify-between">
             <div className="flex gap-2 gap-md-4 flex-wrap items-center">
               <p className="poppins_semibold text-2xl sm:text-3xl md:text-4xl text-white mb-0">
-                {formatPrice(convert(450.54, "LBP"))}
+                {formatPrice(convert(450.54, "LYD"))}
               </p>
               <p className="poppins_regular text-sm sm:text-xl md:text-2xl text-white mb-0">
                 is Available balance

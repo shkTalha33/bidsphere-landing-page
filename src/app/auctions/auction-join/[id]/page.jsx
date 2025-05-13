@@ -27,7 +27,6 @@ import {
   SmileOutlined,
   TrophyOutlined,
 } from "@ant-design/icons";
-import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
 
 export default function Page() {
   const { get, userData } = ApiFunction();
@@ -62,7 +61,7 @@ export default function Page() {
   const confirmationItem = {
     title: "Confirm Bid",
     description: `You have placed a bid for ${formatPrice(
-      convert(bidAmount || 0, "LBP")
+      convert(bidAmount || 0, "LYD")
     )}. Should we place this as your Bid?`,
     image: confirmBid,
     buttons: [
@@ -112,7 +111,6 @@ export default function Page() {
       setSelectedImage(currentLot?.item?.images[0]);
     }
   }, [currentLot]);
-
   useEffect(() => {
     if (socket?.connected) {
       socket.emit("join_auction", id, (response) => {
@@ -121,8 +119,6 @@ export default function Page() {
             (lot) => lot?.item?._id === response?.auction?.current_lot
           );
           setCurrentLot(matchedLot || null);
-
-          setRecentBids(response?.lastBids);
         }
       });
 
@@ -144,10 +140,6 @@ export default function Page() {
         const matchedLot = data?.auction?.lots?.find(
           (lot) => lot?.item?._id === data?.auction?.current_lot
         );
-        // fihal k liy 0 krwya ha ok
-        if (currentLot?.item?._id !== data?.auction?.current_lot) {
-          setRecentBids([]);
-        }
 
         setCurrentLot(matchedLot || null);
       });
@@ -163,24 +155,33 @@ export default function Page() {
       });
 
       // Listen for auction bids
-      const bidAiData = {
-        auctionId: id,
-        lotId: currentLot?.item?._id,
-        page: 1,
-        limit: 10,
-      };
-      socket.emit("get_auction_bids", bidAiData, (data) => {
-        // setRecentBids(data);
-      });
 
       return () => {
         socket.off("new_bid");
         socket.off("auction");
         socket.off("user_joined");
-        socket.off("get_auction_bids");
+        socket.off("lot_winner_selected");
       };
     }
   }, [socket]);
+
+  useEffect(() => {
+    if (socket?.connected) {
+      if (currentLot?.item?._id) {
+        const bidAiData = {
+          auctionId: id,
+          lotId: currentLot?.item?._id,
+          page: 1,
+          limit: 100,
+        };
+        socket.emit("get_auction_bids", bidAiData, (response) => {
+          if (response?.success) {
+            setRecentBids(response?.bids);
+          }
+        });
+      }
+    }
+  }, [socket, currentLot]);
 
   const placeBid = () => {
     if (!bidAmount) return;
@@ -221,16 +222,20 @@ export default function Page() {
   };
 
   // custom bid option
-
   const handlecustomBid = () => {
+    if (!currentLot?.minprice || !currentLot?.minincrement) {
+      toast.error("Lot information is missing.");
+      return;
+    }
+
     let minRequiredBid = 0;
 
-    if (recentBids?.length === 0) {
-      // No bids yet → use minprice + minincrement
-      minRequiredBid = currentLot?.minprice + currentLot?.minincrement;
+    if (!recentBids || recentBids.length === 0) {
+      // No recent bids → use just the minprice
+      minRequiredBid = currentLot.minprice;
     } else {
-      // Existing bids → use last bid price + minincrement
-      minRequiredBid = recentBids[0]?.price + currentLot?.minincrement;
+      // There are recent bids → use last bid price + increment
+      minRequiredBid = recentBids[0].price + currentLot.minincrement;
     }
 
     if (bidAmount > 0) {
@@ -238,8 +243,8 @@ export default function Page() {
         setOpenBiddingConfirmationModal(true);
       } else {
         toast.error(
-          `Your bid must be at least  ${formatPrice(
-            convert(minRequiredBid || 0, "LBP")
+          `Your bid must be at least ${formatPrice(
+            convert(minRequiredBid, "LYD")
           )}`
         );
       }
@@ -249,7 +254,7 @@ export default function Page() {
   };
 
   return (
-    <main className="bg_mainsecondary p-2 md:py-4">
+    <main className="bg_mainsecondary">
       <>
         <TopSection
           title={`${getGreeting()}, ${userData?.fname || ""} ${
@@ -357,7 +362,7 @@ export default function Page() {
                       Bid price
                     </p>
                     <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
-                      {formatPrice(convert(currentLot?.minprice || 0, "LBP"))}
+                      {formatPrice(convert(currentLot?.minprice || 0, "LYD"))}
                     </p>
 
                     <div className="flex items-center justify-start mb-2 md:mb-0 mt-2 gap-1">
@@ -403,7 +408,7 @@ export default function Page() {
                       Current Bid Price
                     </p>
                     <p className="text-[#1B212C] mb-0 text-xs sm:text-sm poppins_regular capitalize">
-                      {formatPrice(convert(recentBids?.[0]?.price || 0, "LBP"))}
+                      {formatPrice(convert(recentBids?.[0]?.price || 0, "LYD"))}
                     </p>
                     <div>
                       <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
@@ -411,7 +416,7 @@ export default function Page() {
                       </p>
                       <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                         {formatPrice(
-                          convert(currentLot?.minincrement || 0, "LBP")
+                          convert(currentLot?.minincrement || 0, "LYD")
                         )}
                       </p>
                     </div>
@@ -486,7 +491,7 @@ export default function Page() {
                           </div>
                         </div>
                         <p className="capitalize poppins_regular text-[14px] text-end mb-0">
-                          {formatPrice(convert(bid?.price || 0, "LBP"))}
+                          {formatPrice(convert(bid?.price || 0, "LYD"))}
                         </p>
                       </div>
                     ))}
@@ -509,7 +514,7 @@ export default function Page() {
                             setBidAmount(price);
                           }}
                         >
-                          {formatPrice(convert(price || 0, "LBP"))}
+                          {formatPrice(convert(price || 0, "LYD"))}
                         </button>
                       ))}
                       <button
@@ -575,7 +580,7 @@ export default function Page() {
                         }}
                       >
                         Place Bid For{" "}
-                        {formatPrice(convert(bidAmount || 0, "LBP"))}
+                        {formatPrice(convert(bidAmount || 0, "LYD"))}
                       </button>
                     )}
                   </div>
