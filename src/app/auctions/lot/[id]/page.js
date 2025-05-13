@@ -90,6 +90,7 @@ export default function Page() {
       setSelectedImage(currentLot.images[0]);
     }
   }, [currentLot]);
+  
 
   return (
     <main className="bg_mainsecondary p-2 md:py-4">

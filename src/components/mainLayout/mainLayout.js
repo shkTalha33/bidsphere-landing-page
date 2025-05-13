@@ -42,12 +42,28 @@ const MainLayout = ({ children }) => {
     handleUser();
   }, []);
 
-  const excludeRoutes = ["/auth/login", "/auth/signup",'/'];
+  const excludeRoutes = [
+    "/auth/login",
+    "/auth/sign-up",
+    "/auth/choose-location",
+    "/auth/forgot-password",
+    "/auth/reset-password",
+    "/auth/verify-code",
+    "/auth/verify-phone-number",
+    "/",
+  ];
 
   return (
     <>
       {!isPublicRoute && <Header />}
-      <main className={`min-h-screen ${!excludeRoutes.includes(pathname) && "!mt-[5rem] bg_mainsecondary p-2  md:py-4 !pt-[30px]"}`}>{children}</main>
+      <main
+        className={`min-h-screen ${
+          !excludeRoutes.includes(pathname) &&
+          "!mt-[5rem] bg_mainsecondary p-2  md:py-4 !pt-[30px]"
+        }`}
+      >
+        {children}
+      </main>
       {!isPublicRoute ? <Footer /> : null}
     </>
   );

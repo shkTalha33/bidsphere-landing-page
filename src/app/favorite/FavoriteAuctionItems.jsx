@@ -8,6 +8,8 @@ import SkeletonLayout from "@/components/common/SkeletonLayout";
 import { setAuctionProduct } from "@/components/redux/auctionProduct";
 import { formatPrice } from "@/components/utils/formatPrice";
 import ApiFunction from "@/components/api/apiFuntions";
+import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
+import useCurrency from "@/components/hooks/useCurrency";
 
 export default function FavoriteAuctionItems({
   items = [],
@@ -20,6 +22,7 @@ export default function FavoriteAuctionItems({
   const router = useRouter();
   const dispatch = useDispatch();
   const { userData } = ApiFunction();
+  const { formatPrice, convert } = useCurrency();
 
   // No need for likedItems state as all items are liked in favorites view
 
@@ -36,9 +39,9 @@ export default function FavoriteAuctionItems({
 
   const handleToggleFavorite = async (auctionId, event) => {
     if (!userData?._id) {
-          toast.error("Please login to continue");
-          return;
-        }
+      toast.error("Please login to continue");
+      return;
+    }
     event.stopPropagation(); // Prevent triggering other click handlers
 
     // Apply a visual transition effect for item removal
@@ -102,32 +105,45 @@ export default function FavoriteAuctionItems({
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg_primary text-white px-2 py-1 rounded-[4px] text-sm poppins_regular">
-                    {`${item?.lots?.length || 0} Lots`}
+                    {/* {`${item?.lots?.length || 0} Lots`} */}
+                      {item?.category?.name}
                   </span>
                 </div>
                 {/* Unlike Button (always filled heart in favorites) */}
                 <button
-                  onClick={(e) => handleToggleFavorite(item._id, e)}
+                  onClick={(e) => handleToggleFavorite(item?._id, e)}
                   className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#433F46] flex items-center justify-center transition-all hover:bg-[#2D2A30]"
                 >
                   <IoHeartSharp className="w-5 h-5 text-red-500" />
                 </button>
               </div>
-              <div className="flex items-center justify-between gap-2 mt-4">
+              <div className="flex flex-col justify-between mt-2">
+                <div className="poppins_regular text_darkprimary text-[10px] mt-2">
+                  <CountdownTimer
+                    startDate={item?.start_date}
+                    endDate={item?.end_date}
+                  />
+                </div>
                 <div>
-                  <p className="poppins_medium text-base capitalize">
+                 <p className="poppins_semibold mt-[7px] leading-[1.2] text_darkprimary text-[1.25rem]">
                     {item.name}
                   </p>
-                  <p className="poppins_medium text-sm">
-                    {formatPrice(item.depositamount)}
-                  </p>
+                  <div className="flex items-center justify-start gap-2 mt-[5px]">
+                    <span className="text-gray text-[0.8rem]">
+                      Deposit Amount
+                    </span>
+                    <h5 className="mb-0 text_darkprimary text-lg">
+                      {" "}
+                      {formatPrice(convert(item?.depositamount, "LYD"))}
+                    </h5>
+                  </div>
                 </div>
-                <button
+                {/* <button
                   className="bg_primary text_white py-2 px-7 rounded-lg hover:opacity-90 transition-opacity"
                   onClick={(e) => handleContinue(item, e)}
                 >
                   Continue
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

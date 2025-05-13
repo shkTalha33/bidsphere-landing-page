@@ -12,6 +12,7 @@ import useCurrency from "../hooks/useCurrency";
 import ApiFunction from "../api/apiFuntions";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import CountdownTimer from "../CountdownTimer/CountdownTimer";
 
 export default function AuctionItems({
   items,
@@ -19,6 +20,7 @@ export default function AuctionItems({
   count,
   lastId,
   handleLoadMore,
+  filtering = true,
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -70,14 +72,14 @@ export default function AuctionItems({
   };
 
   const handleContinue = (item, event) => {
-    event.stopPropagation(); // Prevent triggering the parent card click
+    event.stopPropagation();
     dispatch(setAuctionProduct(item));
     router.push(`/auctions/lot?auctionId=${item._id}`);
   };
 
   return (
     <>
-      {loading && items?.length === 0 ? (
+      {(loading && items?.length === 0) || (filtering && loading) ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-3">
           {Array.from({ length: 8 }).map((_, index) => (
             <SkeletonLayout key={index} />
@@ -102,7 +104,8 @@ export default function AuctionItems({
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg_primary text-white px-2 py-1 rounded-[4px] text-sm poppins_regular">
-                    {`${item?.lots?.length || 0} Lots`}
+                    {/* {`${item?.lots?.length || 0} Lots`} */}
+                    {item?.category?.name}
                   </span>
                 </div>
                 {/* Like Button */}
@@ -118,21 +121,33 @@ export default function AuctionItems({
                   />
                 </button>
               </div>
-              <div className="flex items-center justify-between gap-2 mt-4">
+              <div className="flex flex-col justify-between mt-2">
+                <div className="poppins_regular text_darkprimary text-[10px] mt-2">
+                  <CountdownTimer
+                    startDate={item?.start_date}
+                    endDate={item?.end_date}
+                  />
+                </div>
                 <div>
-                  <p className="poppins_medium text-base capitalize">
-                    {item.name}
-                  </p>
-                  <p className="poppins_medium text-sm">
-                    {formatPrice(convert(item?.depositamount, "LYD"))}
+                  <p className="poppins_semibold mt-[7px] leading-[1.2] text_darkprimary text-[1.25rem]">
+                    {item?.name}
                   </p>
                 </div>
-                <button
+                <div className="flex items-center justify-start gap-2 mt-[5px]">
+                  <span className="text-gray text-[0.8rem]">
+                    Deposit Amount
+                  </span>
+                  <h5 className="mb-0 text_darkprimary text-lg">
+                    {" "}
+                    {formatPrice(convert(item?.depositamount, "LYD"))}
+                  </h5>
+                </div>
+                {/* <button
                   className="bg_primary text_white py-2 px-7 rounded-lg hover:opacity-90 transition-opacity"
                   onClick={(e) => handleContinue(item, e)}
                 >
                   Continue
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

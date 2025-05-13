@@ -8,8 +8,10 @@ import useCurrency from "../hooks/useCurrency";
 export default function AuctionLots({ items, loading }) {
   const { formatPrice, convert } = useCurrency();
   const router = useRouter();
-  const handleAuctionDetail = (id) => {
-    router.push(`/auctions/lot/${id}`);
+  const handleAuctionDetail = (item) => {
+    router.push(
+      `/auctions/lot/detail/?item=${encodeURIComponent(JSON.stringify(item))}`
+    );
   };
 
   return (
@@ -35,7 +37,7 @@ export default function AuctionLots({ items, loading }) {
                       width={300}
                       height={200}
                       className="w-full !h-[200px] max-h-[200px] object-cover rounded-xl cursor-pointer"
-                      onClick={() => handleAuctionDetail(item?.item?._id)}
+                      onClick={() => handleAuctionDetail(item)}
                     />
                   </div>
                   <div className="flex items-center justify-between gap-2">

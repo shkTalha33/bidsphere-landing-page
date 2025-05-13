@@ -27,9 +27,11 @@ export const apiSlice = createApi({
       }),
       // Create a unique cache key for each tab type
       serializeQueryArgs: ({ endpointName, queryArgs }) => {
-        const { endpoint, params } = queryArgs;
-        // Include all params in the cache key to ensure different tabs have different caches
-        return `${endpointName}-${endpoint}-${JSON.stringify(params || {})}`;
+        const { endpoint, params, filterVersion } = queryArgs;
+        // Include all params plus the filterVersion in the cache key
+        return `${endpointName}-${endpoint}-${
+          filterVersion || ""
+        }-${JSON.stringify(params || {})}`;
       },
       // Merge incoming data with existing data for "load more"
       merge: (currentCache, newItems, { arg }) => {
