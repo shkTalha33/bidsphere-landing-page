@@ -125,7 +125,7 @@ export default function PaymentDetail() {
       ),
     },
     {
-      name: "Auction Status",
+      name: t("payment.heading7"),
       minWidth: "120px",
       maxWidth: "200px",
       cell: (row) => {
@@ -156,7 +156,7 @@ export default function PaymentDetail() {
     },
 
     {
-      name: "Refund",
+      name: t("payment.heading8"),
       minWidth: "120px",
       maxWidth: "200px",
       cell: (row) => {
@@ -167,7 +167,7 @@ export default function PaymentDetail() {
         if (auctionStatus !== "complete") {
           return (
             <span className="text-gray-500 text-sm">
-              ⛔ Refund not available until auction completes
+              ⛔ {t("payment.heading9")}
             </span>
           );
         }
@@ -179,7 +179,7 @@ export default function PaymentDetail() {
               onClick={() => handleShow(row)}
               className="bg-gradient-to-r from-[#660000] via-[#800000] to-[#990000] whitespace-nowrap text-white text-sm font-medium py-1.5 px-3 rounded-md hover:opacity-90 transition"
             >
-              Request Refund
+              {t("payment.heading10")}
             </button>
           );
         }
@@ -188,7 +188,7 @@ export default function PaymentDetail() {
         if (refundStatus === "refunded") {
           return (
             <span className="text-green-600 text-sm poppins_medium">
-              ✅ Refund completed
+              ✅{t("payment.heading11")}
             </span>
           );
         }
@@ -197,7 +197,7 @@ export default function PaymentDetail() {
         if (refundStatus === "request") {
           return (
             <span className="text-yellow-600 text-sm">
-              ⏳ Refund Request Sent to Admin
+              ⏳{t("payment.heading12")}
             </span>
           );
         }
@@ -415,25 +415,25 @@ export default function PaymentDetail() {
         <Modal show={show} centered backdrop="static" onHide={handleClose}>
           <Modal.Header closeButton className="bg-white">
             <Modal.Title className="text-dark poppins_medium">
-              Refund or Add to Wallet
+              {t("payment.heading13")}
             </Modal.Title>
           </Modal.Header>
 
           <Modal.Body className="p-4 bg-white text-gray-800 rounded-b-xl">
             <p className="text-base mb-4">
-              The auction for your selected lot has been{" "}
-              <strong>successfully completed</strong>. You now have the option
-              to:
+              {t("payment.heading14")} <strong>{t("payment.heading15")}</strong>
+              .{t("payment.heading16")}
             </p>
             <ul className="list-disc list-inside text-sm poppins_regular mb-4">
-              <li>Request a refund from the admin</li>
+              <li>{t("payment.heading17")}</li>
               <li>
-                Or add the paid amount directly to your{" "}
-                <strong>Castle Auction</strong> wallet for future bidding
+                {t("payment.heading18")}{" "}
+                <strong>{t("payment.heading19")}</strong>{" "}
+                {t("payment.heading20")}
               </li>
             </ul>
             <p className="text-sm text-gray-600 italic">
-              Please choose one of the options below to proceed.
+              {t("payment.heading21")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 mt-5 justify-center">
@@ -444,8 +444,8 @@ export default function PaymentDetail() {
                 disabled={loadingType === "wallet" || loadingType === "admin"}
               >
                 {loadingType === "admin"
-                  ? "Loading..."
-                  : "Contact Admin for Refund"}
+                  ? `${t("payment.heading22")}`
+                  : `${t("payment.heading23")}`}
               </button>
 
               {/* Add to Wallet Button */}
@@ -455,8 +455,8 @@ export default function PaymentDetail() {
                 disabled={loadingType === "admin" || loadingType === "wallet"}
               >
                 {loadingType === "wallet"
-                  ? "Loading..."
-                  : "Add Amount to Wallet"}
+                  ? `${t("payment.heading22")}`
+                  : `${t("payment.heading24")}`}
               </button>
             </div>
           </Modal.Body>

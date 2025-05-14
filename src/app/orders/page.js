@@ -259,7 +259,7 @@ const Page = () => {
           </Row>
         </Container>
         <Container className="bg_white p-2 p-md-2 rounded-[9px] mt-2 md:mt-4">
-          <Row className="rounded-[9px] g-3">
+          <Row className="rounded-[9px] g-3 min-h-screen ">
             <Col md="3">
               <div className="flex flex-col gap-3  items-center justify-center">
                 {sideButtons?.map((button) => {

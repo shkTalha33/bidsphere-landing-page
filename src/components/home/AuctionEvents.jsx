@@ -32,7 +32,7 @@ export default function AuctionEvents() {
           <div className="flex justify-center items-center flex-col gap-1 mb-[18px]">
             <div className="w-8 h-2 bg_primary rounded-full"></div>
             <p className="text-[#202020] poppins_semibold text-2xl text-center capitalize">
-              Our Services
+              {t("services.services")}
             </p>
           </div>
 
@@ -42,13 +42,10 @@ export default function AuctionEvents() {
             <Col xs={12} md={6} lg={4}>
               <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full hover:-translate-y-1 border border-gray-100">
                 <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
-                  Comprehensive Auction Display
+                  {t("services.heading")}
                 </h3>
                 <p className="text-[#555] text-sm poppins_regular leading-relaxed">
-                  A large physical site that allows the display of hundreds of
-                  heavy equipment, vehicles, horses and livestock, in addition
-                  to real estate, office and home furniture, antiques, and
-                  agricultural products.
+                  {t("services.heading1")}
                 </p>
               </div>
             </Col>
@@ -57,12 +54,10 @@ export default function AuctionEvents() {
             <Col xs={12} md={6} lg={4}>
               <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full hover:-translate-y-1 border border-gray-100">
                 <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
-                  Digital Bidding & Accurate Valuation
+                  {t("services.heading2")}
                 </h3>
                 <p className="text-[#555] text-sm poppins_medium leading-relaxed">
-                  Live online auctions for remote bidding through our digital
-                  platform. Accurate valuation services for sellers to determine
-                  the true value of their items.
+                  {t("services.heading3")}
                 </p>
               </div>
             </Col>
@@ -71,11 +66,10 @@ export default function AuctionEvents() {
             <Col xs={12} md={6} lg={4}>
               <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full hover:-translate-y-1 border border-gray-100">
                 <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
-                  Expert Consulting & Support
+                  {t("services.heading4")}
                 </h3>
                 <p className="text-[#555] text-sm poppins_medium leading-relaxed">
-                  Consulting: Personalized support and guidance throughout the
-                  process. We assist you in every step of the auction lifecycle.
+                  {t("services.heading5")}
                 </p>
               </div>
             </Col>
@@ -85,13 +79,10 @@ export default function AuctionEvents() {
           <div className="flex justify-center items-center flex-col mb-[18px]">
             <div className="w-8 h-2 bg_primary rounded-full mb-2"></div>
             <p className="text-[#202020] poppins_semibold text-2xl text-center capitalize">
-              Vision & Mission
+              {t("services.heading6")}
             </p>
             <h5 className="poppins_regular text-[#8F8F8F] text-center sm:w-[70%] mx-auto mt-[1rem]">
-              To become a leading auction house in Libya and the region, driven
-              by transparency, trust, and technology. To provide a fair and
-              accessible platform for everyone to showcase goods and participate
-              in auctions with confidence.
+              {t("services.heading7")}
             </h5>
           </div>
         </Col>

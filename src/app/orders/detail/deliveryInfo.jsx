@@ -1,42 +1,56 @@
-import React from 'react';
+import React from "react";
+import { useTranslation } from "react-i18next";
 
 const DeliveryInfo = ({ orderDetail }) => {
+  const { t } = useTranslation();
   return (
     <div className="rounded-lg p-4">
-      <h2 className="text-lg poppins_semibold text-gray-800 mb-4">Delivery Information</h2>
+      <h2 className="text-lg capitalize poppins_semibold text-gray-800 mb-4">
+        {t("order.heading17")}
+      </h2>
 
       {orderDetail?.address && (
         <div className="mb-4">
-          <p className="text-sm text-gray-500">Customer Address</p>
-          <p className="text-base poppins_medium text-gray-800">{orderDetail.address}</p>
+          <p className="text-sm text-gray-500">{t("order.heading24")}</p>
+          <p className="text-base poppins_medium text-gray-800">
+            {orderDetail.address}
+          </p>
         </div>
       )}
 
       {orderDetail?.trackingnumber && (
         <div className="mb-4">
-          <p className="text-sm text-gray-500">Tracking Number</p>
-          <p className="text-base poppins_medium text-gray-800">{orderDetail.trackingnumber}</p>
+          <p className="text-sm text-gray-500">{t("order.heaing25")}</p>
+          <p className="text-base poppins_medium text-gray-800">
+            {orderDetail.trackingnumber}
+          </p>
         </div>
       )}
 
       {orderDetail?.provider && (
         <div className="mb-4">
-          <p className="text-sm text-gray-500">Delivery Provider</p>
-          <p className="text-base poppins_medium text-gray-800">{orderDetail.provider}</p>
+          <p className="text-sm text-gray-500">{t("order.heaing26")}</p>
+          <p className="text-base poppins_medium text-gray-800">
+            {orderDetail.provider}
+          </p>
         </div>
       )}
 
       {orderDetail?.orderstatus && (
         <div className="mb-4">
-          <p className="text-sm text-gray-500">Order Status</p>
-          <p className="text-base poppins_medium text-yellow-600 capitalize">{orderDetail.orderstatus}</p>
+          <p className="text-sm text-gray-500">{t("order.heaing23")}</p>
+          <p className="text-base poppins_medium text-yellow-600 capitalize">
+            {orderDetail.orderstatus}
+          </p>
         </div>
       )}
 
       {orderDetail?.wpLabel && (
         <div className="mt-4">
-          <p className="text-sm text-gray-500">WP Label</p>
-          <p className="text-base poppins_medium text-gray-800">{orderDetail.wpLabel}</p>
+          <p className="text-sm text-gray-500">{t("order.heaing27")}</p>
+          <p className="text-base poppins_medium text-gray-800">
+            {orderDetail.wpLabel}
+          </p>
         </div>
       )}
     </div>

@@ -31,6 +31,7 @@ import moment from "moment";
 import OrderSummary from "./orderSummary";
 import DeliveryInfo from "./deliveryInfo";
 import DeliveryTime from "./deliveryTime";
+import { useTranslation } from "react-i18next";
 
 export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
   const [currentActiveButton, setCurrentActiveButton] = useState("all orders");
@@ -40,10 +41,12 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
   const onChange = (key) => {};
   const { userData } = ApiFunction();
 
+  const { t } = useTranslation();
+
   const orderDetailButtons = [
-    "order summary",
-    "delivery information",
-    "delivery timeline",
+    `${t("order.heading16")}`,
+    `${t("order.heading17")}`,
+    `${t("order.heading18")}`,
   ];
 
   const handleBakcOr = () => {
@@ -79,7 +82,7 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
             <section>
               <div className="bg-[#FAFAFA] p-4 rounded-[11px] flex flex-col">
                 <h4 className="poppins_semibold text-base md:text-xl text-[#202020] capitalize">
-                  order details
+                  {t("order.heading14")}
                 </h4>
 
                 <Row className="bg_white rounded-[7px] border-1 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3 mt-4">
@@ -118,7 +121,10 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                   </Col>
                 </Row>
                 <section className="mt-3">
-                  <h4 className="poppins_medium text-[1.5rem]">Lot Detail</h4>
+                  <h4 className="poppins_medium text-[1.5rem]">
+                    {" "}
+                    {t("order.heading15")}
+                  </h4>
                   <div className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
                     <div className="flex item-center gap-2">
                       <div className="w-[3rem] h-[3rem]">
@@ -156,11 +162,12 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                   <AlertSection
                     type={"info"}
                     message={"info"}
-                    description={`Your order is shipped on ${moment(
+                    description={`${t("order.heading32")} ${moment(
                       orderDetail?.shippedDate
-                    ).local()
+                    )
+                      .local()
                       .format("DD-MMMM-YYYY")
-                      .toLowerCase()}. You will receive it soon.`}
+                      .toLowerCase()}. ${t("order.heading33")}`}
                   />
                 </Row>
                 <Row className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">

@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import Autocomplete from "react-google-autocomplete";
 import { updateProfile } from "@/components/api/ApiFile";
 import { setUserData } from "@/components/redux/loginForm";
+import { useTranslation } from "react-i18next";
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { userData, GoogleApiKey, put } = ApiFunction();
@@ -28,6 +29,7 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [locationDetails, setLocationDetails] = useState({});
+  const { t } = useTranslation();
   // ////
 
   const schema = yup.object().shape({
@@ -36,20 +38,20 @@ const ProfilePage = () => {
       .test("trim-start", "No leading spaces allowed", (value) => {
         return !value || value === value.trimStart();
       })
-      .required("First name is required"),
+      .required(`${t("profil.heading13")}`),
     lname: yup
       .string()
       .test("trim-start", "No leading spaces allowed", (value) => {
         return !value || value === value.trimStart();
       })
-      .required("Last name is required"),
+      .required(`${t("profil.heading14")}`),
 
     address: yup
       .string()
       .test("trim-start", "No leading spaces allowed", (value) => {
         return !value || value === value.trimStart();
       })
-      .required("Address is required"),
+      .required(`${t("profil.heading15")}`),
 
     phone: yup
       .string()
@@ -57,12 +59,12 @@ const ProfilePage = () => {
         /^\+?[0-9\s()-]{5,}$/,
         "Phone number must contain only digits and can include spaces, parentheses, or dashes"
       )
-      .required("Phone number is required"),
+      .required(`${t("profil.heading16")}`),
 
     profile: yup
       .string()
       .url("Profile image must be a valid URL")
-      .required("Profile image is required"),
+      .required(`${t("profil.heading17")}`),
   });
 
   const {
@@ -162,9 +164,9 @@ const ProfilePage = () => {
           <div className="w-full bg-white p-4 flex justify-between items-center rounded-lg shadow-sm">
             <div className="flex flex-col w-full">
               <h1 className="text-2xl poppins_semibold">
-                Personal information
+                {t("profil.heading")}
               </h1>
-              <p className="text-gray-600">You can do management here.</p>
+              <p className="text-gray-600">{t("profil.heading1")}</p>
             </div>
             <button
               onClick={() => setIsEditing((prev) => !prev)}
@@ -220,21 +222,22 @@ const ProfilePage = () => {
                         className="form-control borderCus absolute opacity-0 rounded-md p-2"
                         onChange={(e) => handleImageChange(e, setValue)}
                       />
-                      Upload Profile
+
+                      {t("profil.heading2")}
                       {errors.profile && (
                         <p className="text-red-500">{errors.profile.message}</p>
                       )}
                     </div>
                   </div>
                   <div className="flex flex-col mb-4">
-                    <label htmlFor="fname">First name</label>
+                    <label htmlFor="fname">{t("profil.heading3")}</label>
                     <Controller
                       name="fname"
                       control={control}
                       render={({ field }) => (
                         <Input
                           id="fname"
-                          placeholder="Enter your First name"
+                          placeholder={t("profil.heading4")}
                           className="border p-2"
                           {...field}
                         />
@@ -247,14 +250,14 @@ const ProfilePage = () => {
                     )}
                   </div>
                   <div className="flex flex-col mb-4">
-                    <label htmlFor="lname">Last name</label>
+                    <label htmlFor="lname"> {t("profil.heading5")}</label>
                     <Controller
                       name="lname"
                       control={control}
                       render={({ field }) => (
                         <Input
                           id="lname"
-                          placeholder="Enter your Last name"
+                          placeholder={t("profil.heading6")}
                           className="border p-2"
                           {...field}
                         />
@@ -267,11 +270,11 @@ const ProfilePage = () => {
                     )}
                   </div>
                   <div className="flex flex-col mb-4">
-                    <label htmlFor="address">Address</label>
+                    <label htmlFor="address">{t("profil.heading7")} </label>
                     <Controller
                       name="address"
                       control={control}
-                      rules={{ required: "Address is required" }}
+                      rules={{ required: `${t("profil.heading8")}` }}
                       render={({ field: { onChange, value, ref } }) => (
                         <Autocomplete
                           apiKey={GoogleApiKey}
@@ -286,7 +289,7 @@ const ProfilePage = () => {
                           }}
                           options={{ types: ["address"] }}
                           defaultValue={value}
-                          placeholder="Enter your address"
+                          placeholder={t("profil.heading9")}
                           ref={ref}
                         />
                       )}
@@ -301,14 +304,14 @@ const ProfilePage = () => {
 
                   {/* Phone */}
                   <div className="flex flex-col mb-4">
-                    <label htmlFor="phone">Phone</label>
+                    <label htmlFor="phone">{t("profil.heading10")}</label>
                     <Controller
                       name="phone"
                       control={control}
                       render={({ field }) => (
                         <Input
                           id="phone"
-                          placeholder="Enter your phone number"
+                          placeholder={t("profil.heading11")}
                           className="border p-2"
                           {...field}
                         />
@@ -327,7 +330,11 @@ const ProfilePage = () => {
                     type="submit"
                   >
                     {" "}
-                    {loading ? <>Loading...</> : <>Update Profile</>}
+                    {loading ? (
+                      <>{t("payment.heading22")}</>
+                    ) : (
+                      <>{t("profil.heading12")}</>
+                    )}
                   </Button>
                 </form>
               </>
@@ -337,11 +344,10 @@ const ProfilePage = () => {
                   <div className="flex flex-col md:flex-row items-start w-full">
                     <div className="w-full md:w-1/2">
                       <h2 className="text-2xl poppins_semibold mb-2">
-                        Profile Photo
+                        {t("profil.heading18")}
                       </h2>
                       <p className="text-gray-700 poppins_medium">
-                        This image will be shown publicly as your profile
-                        picture.
+                        {t("profil.heading19")}
                       </p>
                     </div>
                     <div className="w-full md:w-1/2 flex items-center gap-6 mt-6 md:mt-0">
@@ -420,17 +426,16 @@ const ProfilePage = () => {
                   <div className="flex flex-col md:flex-row">
                     <div className="w-full md:w-1/2 mb-6 md:mb-0">
                       <h2 className="text-2xl poppins_semibold mb-2">
-                        Personal information
+                        {t("profil.heading")}
                       </h2>
                       <p className="text-gray-700 poppins_medium">
-                        This info will be shown publicly as your personal
-                        information.
+                        {t("profil.heading20")}
                       </p>
                     </div>
                     <div className="w-full md:w-1/2 space-y-6">
                       <div>
                         <h3 className="poppins_medium text-gray-700 poppins_medium">
-                          Full Name
+                          {t("profil.heading21")}
                         </h3>
                         <p className="text-gray-900 poppins_regular">
                           {`${userData?.fname} ${userData?.lname}`}
@@ -439,7 +444,7 @@ const ProfilePage = () => {
 
                       <div>
                         <h3 className="poppins_medium text-gray-700 poppins_medium">
-                          Address
+                          {t("profil.heading7")}
                         </h3>
                         <p className="text-gray-900 poppins_regular">
                           {userData?.address}
@@ -447,7 +452,7 @@ const ProfilePage = () => {
                       </div>
                       <div>
                         <h3 className="poppins_medium text-gray-700 poppins_medium">
-                          Phone Number
+                          {t("profil.heading22")}
                         </h3>
                         <p className="text-gray-900 poppins_regular">
                           {userData?.phone}
@@ -455,7 +460,7 @@ const ProfilePage = () => {
                       </div>
                       <div>
                         <h3 className="poppins_medium text-gray-700 poppins_medium">
-                          Email
+                          {t("profil.heading23")}
                         </h3>
                         <p className="text-gray-900 poppins_regular">
                           {userData?.email}
@@ -463,7 +468,7 @@ const ProfilePage = () => {
                       </div>
                       <div className="border-t pt-6 mt-6">
                         <h3 className="poppins_medium text-gray-700">
-                          Wallet Balance
+                          {t("profil.heading24")}
                         </h3>
                         <p className="text-[#16A34A] text-lg poppins_semibold">
                           ${userData?.walletBalance?.toFixed(2) || "0.00"} USD

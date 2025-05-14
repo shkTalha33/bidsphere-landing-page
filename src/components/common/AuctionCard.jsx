@@ -14,10 +14,12 @@ import { useRouter } from "next/navigation";
 import useCurrency from "../hooks/useCurrency";
 import moment from "moment";
 import CountdownTimer from "../CountdownTimer/CountdownTimer";
+import { useTranslation } from "react-i18next";
 export default function AuctionCard({ item, index }) {
   const { formatPrice, convert } = useCurrency();
   const router = useRouter();
   const dispatch = useDispatch();
+    const { t } = useTranslation();
 
   const handleAuctionDetail = (item) => {
     dispatch(setAuctionProduct(item));
@@ -55,7 +57,7 @@ export default function AuctionCard({ item, index }) {
           {item?.name}
         </p>
         <div className="flex items-center justify-start gap-2 mt-[5px]">
-          <span className="text-gray text-[0.8rem]">Deposit Amount</span>
+          <span className="text-gray text-[0.8rem]">{t("ongoing.heading4")}</span>
           <h5 className="mb-0 text_darkprimary text-lg">
             {" "}
             {formatPrice(convert(item?.depositamount, "LYD"))}
