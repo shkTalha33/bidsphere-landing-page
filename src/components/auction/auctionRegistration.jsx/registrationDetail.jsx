@@ -12,20 +12,51 @@ import ReviewAndSubmit from "./ReviewAndSubmit";
 import {
   selectActiveStep,
   selectProgress,
+  selectRegisterData,
   setActiveStep,
+  setRegisterData,
+  setsliceProgress,
 } from "@/components/redux/registrationSlice/resgiterSlice";
 import { useDispatch, useSelector } from "react-redux";
+import ApiFunction from "@/components/api/apiFuntions";
+import { getAuctionRegister } from "@/components/api/ApiFile";
 
 const RegistrationDetail = () => {
+  const { get, userData } = ApiFunction();
+  const dispatch = useDispatch();
+  const searchParams = useSearchParams();
+  const formData = useSelector(selectRegisterData);
   // const [progress, setProgress] = useState(0);
   const progress = useSelector(selectProgress); // This should give the updated progress
 
   const [data, setData] = useState({});
   // const [active, setActive] = useState("personal");
   const active = useSelector(selectActiveStep);
-  
-  const dispatch = useDispatch();
-  const searchParams = useSearchParams();
+  // get register data
+  const handleRegisterAuction = () => {
+    const api = `${getAuctionRegister}/${userData?._id}`;
+    get(api)
+      .then((res) => {
+        if (res?.success && res?.data) {
+          dispatch(setRegisterData(res?.data));
+
+          if (progress === 0 && progress !== 66) {
+            dispatch(setsliceProgress(66));
+          }
+          setIsCompleted((prev) => ({ ...prev, personal: true }));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (!formData?.fname && userData?._id) {
+      handleRegisterAuction();
+    }
+  }, [formData, userData]);
+
   const [isCompleted, setIsCompleted] = useState({
     personal: false,
     document: false,
@@ -75,11 +106,7 @@ const RegistrationDetail = () => {
       label: "Review & Submit",
       disabled: progress < 100,
       children: (
-        <ReviewAndSubmit
-          data={data}
-          setData={setData}
-          progress={progress}
-        />
+        <ReviewAndSubmit data={data} setData={setData} progress={progress} />
       ),
     },
   ];
@@ -109,7 +136,7 @@ const RegistrationDetail = () => {
     <>
       <Container className="bg_white rounded-[9px] p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
-          <Col md="12" >
+          <Col md="12">
             <Breadcrumbs pageTitle={"Registration"} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
               Auction Registration
@@ -119,7 +146,7 @@ const RegistrationDetail = () => {
       </Container>
       <Container className="bg_white rounded-[9px] mt-2 md:mt-4 p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
-          <Col md="12" >
+          <Col md="12">
             <h3 className="capitalize poppins_semibold text-lg sm:text-xl md:text-2xl text_dark mb-1 md:mb-[10px]">
               personal information
             </h3>
@@ -134,7 +161,7 @@ const RegistrationDetail = () => {
             <h3 className="capitalize poppins_regular text-xs sm:text-base md:text-lg text_primary mb-2">
               {progress}% to complete
             </h3>
-            <div >
+            <div>
               <Progress
                 percent={progress}
                 strokeColor={"#660000"}

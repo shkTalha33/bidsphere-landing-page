@@ -77,18 +77,18 @@ const AuctionDetailPage = () => {
     const now = moment.utc();
     const startTime = moment.utc(item?.start_date);
 
-    if (item?.status === "active") {
-      if (startTime.isBefore(now)) {
-        toast.error("You can register once the admin starts the auction.");
-      } else {
-        toast.error(
-          `You can register for this auction starting from ${startTime
-            .local()
-            .format("DD MMMM, YYYY h:mm A")}`
-        );
-      }
-      return;
-    }
+    // if (item?.status === "active") {
+    //   if (startTime.isBefore(now)) {
+    //     toast.error("You can register once the admin starts the auction.");
+    //   } else {
+    //     toast.error(
+    //       `You can register for this auction starting from ${startTime
+    //         .local()
+    //         .format("DD MMMM, YYYY h:mm A")}`
+    //     );
+    //   }
+    //   return;
+    // }
 
     if (userData) {
       router.push(`/auctions/${id}/registration`);
@@ -105,17 +105,21 @@ const AuctionDetailPage = () => {
     }
   };
 
-  const isRegister = !item?.applications || item.applications.length === 0;
+  const isRegister = !item?.applications || item?.applications?.length === 0;
   const [isExpired, setIsExpired] = useState(false);
   const isActive = item?.status === "active";
 
+  
   const button = {
     icon: <Plus className="w-4 h-4 md:w-5 md:h-5 text-white" />,
     text: isRegister ? "Register Auction" : "Join Auction",
     onClick: isRegister ? handleRegister : handleJoin,
+
     className:
       "h-8 shadow md:h-10 bg_primary text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center",
   };
+  console.log(item, "item");
+
   return (
     <main className="bg_mainsecondary p-2 md:py-4">
       {loading ? (
@@ -132,7 +136,8 @@ const AuctionDetailPage = () => {
             description={"Here are your auctions whom you can join."}
             // button={button}
             // {...(item?.status === "start" && !isExpired && { button })}
-            {...(!isExpired && { button })}
+            // {...(!isExpired && { button })}
+            {...{ button }}
           />
 
           <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">

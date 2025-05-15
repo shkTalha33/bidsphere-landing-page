@@ -64,6 +64,7 @@ const refundAdmin = "deposit/request-refund";
 const refundWallet = "deposit/add-to-wallet";
 const getAllCategory = "cat/all";
 const getSubcategory = "subcat/all";
+const getAuctionRegister = "applications/latest";
 export {
   login,
   imageUpload,
@@ -117,5 +118,6 @@ export {
   refundAdmin,
   refundWallet,
   getAllCategory,
-  getSubcategory
+  getSubcategory,
+  getAuctionRegister,
 };

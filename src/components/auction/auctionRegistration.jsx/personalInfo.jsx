@@ -46,11 +46,11 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
   });
 
   const handleCountryChange = (e, field) => {
-    const country = e.target.value;
-    field.onChange(country);
-    setSelectedCountry(country);
+    const countryName = e.target.value;
+    field.onChange(countryName);
+    setSelectedCountry(countryName);
 
-    const countryData = allCountries.find(([name, code]) => code === country);
+    const countryData = allCountries.find(([name]) => name === countryName);
     setRegions(countryData ? countryData[2]?.map(([region]) => region) : []);
   };
 
@@ -202,8 +202,8 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
                   onChange={(e) => handleCountryChange(e, field)}
                 >
                   <option value="">Select Country</option>
-                  {allCountries?.map(([name, code]) => (
-                    <option key={code} value={code}>
+                  {allCountries?.map(([name]) => (
+                    <option key={name} value={name}>
                       {name}
                     </option>
                   ))}

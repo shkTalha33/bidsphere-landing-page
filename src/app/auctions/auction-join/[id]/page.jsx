@@ -27,11 +27,11 @@ import {
   SmileOutlined,
   TrophyOutlined,
 } from "@ant-design/icons";
+import moment from "moment";
 
 export default function Page() {
   const { get, userData } = ApiFunction();
   const [activeButton, setActiveButton] = useState("custom");
-  const [openWinBidModal, setOpenWinBidModal] = useState(false);
   const [openBiddingConfirmationModal, setOpenBiddingConfirmationModal] =
     useState(false);
   const [previewModal, setPreviewModal] = useState(false);
@@ -45,6 +45,7 @@ export default function Page() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [winnerLot, setWinnerLot] = useState(null);
   const token = useSelector((state) => state.auth?.accessToken);
+  const [applicationData, setApplicationData] = useState(null);
   const socket = useSocket();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -57,6 +58,9 @@ export default function Page() {
     if (hour >= 17 && hour < 21) return "Good evening";
     return "Good night";
   };
+
+  // console.log(applicationData, "applicationData");
+  // console.log(auctionData, "auctionData");
 
   const confirmationItem = {
     title: "Confirm Bid",
@@ -111,14 +115,22 @@ export default function Page() {
       setSelectedImage(currentLot?.item?.images[0]);
     }
   }, [currentLot]);
+
   useEffect(() => {
     if (socket?.connected) {
       socket.emit("join_auction", id, (response) => {
         if (response?.success) {
-          const matchedLot = response?.auction?.lots.find(
-            (lot) => lot?.item?._id === response?.auction?.current_lot
-          );
-          setCurrentLot(matchedLot || null);
+          setApplicationData(response?.application);
+          setAuctionData(response?.auction);
+
+          if (response?.auction?.current_lot) {
+            const matchedLot = response?.auction?.lots.find(
+              (lot) => lot?.item?._id === response?.auction?.current_lot
+            );
+            setCurrentLot(matchedLot || null);
+          } else {
+            setCurrentLot(response?.auction?.lots[0]);
+          }
         }
       });
 
@@ -136,12 +148,16 @@ export default function Page() {
 
       // Listen for auction updates
       socket.on("auction", (data) => {
-        setAuctionData(data);
-        const matchedLot = data?.auction?.lots?.find(
-          (lot) => lot?.item?._id === data?.auction?.current_lot
-        );
+        // setAuctionData(data);
+        if (data?.auction?.current_lot) {
+          const matchedLot = data?.auction?.lots?.find(
+            (lot) => lot?.item?._id === data?.auction?.current_lot
+          );
 
-        setCurrentLot(matchedLot || null);
+          setCurrentLot(matchedLot || null);
+        } else {
+          setCurrentLot(data?.auction?.lots[0]);
+        }
       });
 
       // Listen for participant updates
@@ -205,13 +221,38 @@ export default function Page() {
     });
   };
 
-  const button = {
+  // const button = {
+  //   icon: <GiPodiumWinner className="w-5 h-5 mr-2 text-yellow-300" />,
+  //   text: "Winner Announced",
+  //   onClick: null, // disabled or no action
+  //   className:
+  //     "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
+  // };
+
+  const winnerButton = {
     icon: <GiPodiumWinner className="w-5 h-5 mr-2 text-yellow-300" />,
     text: "Winner Announced",
-    onClick: null, // disabled or no action
+    onClick: null,
     className:
       "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
   };
+
+  const rejectedButton = {
+    icon: null,
+    text: "Apply Again",
+    onClick: () => router.push(`/auctions/${id}/registration`),
+    className:
+      "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
+  };
+
+  // Choose button conditionally
+  let topButton = undefined;
+
+  if (currentLot?.status === "winner" || winnerLot?.bid) {
+    topButton = winnerButton;
+  } else if (applicationData?.status === "rejected") {
+    topButton = rejectedButton;
+  }
 
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -222,31 +263,56 @@ export default function Page() {
   };
 
   // custom bid option
-  const handlecustomBid = () => {
+  const handleCustomBid = (type) => {
+    const now = moment.utc();
+    const startTime = moment.utc(auctionData?.start_date);
+
+    if (applicationData?.status === "pending") {
+      toast.error("Your application is pending. Please wait for approval.");
+      return;
+    }
+
+    if (applicationData?.status === "rejected") {
+      toast.error("Your application is rejected. Please apply again.");
+      return;
+    }
+
+    if (now.isBefore(startTime)) {
+      toast.error(
+        `You can bid for this auction starting from ${startTime
+          .local()
+          .format("DD MMMM, YYYY h:mm A")}`
+      );
+      return;
+    }
+
     if (!currentLot?.minprice || !currentLot?.minincrement) {
       toast.error("Lot information is missing.");
       return;
     }
 
     let minRequiredBid = 0;
-
     if (!recentBids || recentBids.length === 0) {
-      // No recent bids → use just the minprice
       minRequiredBid = currentLot.minprice;
     } else {
-      // There are recent bids → use last bid price + increment
       minRequiredBid = recentBids[0].price + currentLot.minincrement;
     }
 
     if (bidAmount > 0) {
-      if (bidAmount >= minRequiredBid) {
+      if (type === "manual") {
+        // Manual Bid: only check valid bidAmount
         setOpenBiddingConfirmationModal(true);
-      } else {
-        toast.error(
-          `Your bid must be at least ${formatPrice(
-            convert(minRequiredBid, "LYD")
-          )}`
-        );
+      } else if (type === "custom") {
+        // Custom Bid: ensure bidAmount >= minRequiredBid
+        if (bidAmount >= minRequiredBid) {
+          setOpenBiddingConfirmationModal(true);
+        } else {
+          toast.error(
+            `Your bid must be at least ${formatPrice(
+              convert(minRequiredBid, "LYD")
+            )}`
+          );
+        }
       }
     } else {
       toast.error("Please enter a valid bid amount.");
@@ -261,11 +327,7 @@ export default function Page() {
             userData?.lname || ""
           }`}
           description={"Here are your auctions whom you can join."}
-          button={
-            currentLot?.status === "winner" || winnerLot?.bid
-              ? button
-              : undefined
-          }
+          button={topButton}
         />
 
         <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
@@ -366,16 +428,6 @@ export default function Page() {
                     </p>
 
                     <div className="flex items-center justify-start mb-2 md:mb-0 mt-2 gap-1">
-                      {/* {participants?.map((user, index) => {
-                        return (
-                          <Image
-                            src={user?.profilepicture || avataruser}
-                            alt=""
-                            key={index}
-                            className="rounded-full w-[2rem] h-[2rem]"
-                          />
-                        );
-                      })} */}
                       {participants?.slice(0, 3).map((user, index) => {
                         const initial = user?.fname
                           .trim()
@@ -419,6 +471,29 @@ export default function Page() {
                           convert(currentLot?.minincrement || 0, "LYD")
                         )}
                       </p>
+                    </div>
+                  </Col>
+                  <Col sm="6" className="border-r border-gray-300 px-4">
+                    <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
+                      Bid Starting time
+                    </p>
+                    <div className="poppins_regular text-sm">
+                      {moment
+                        .utc(auctionData?.start_date)
+                        .local()
+                        .format("DD MMMM, YYYY h:mm A")}{" "}
+                    </div>
+                  </Col>
+
+                  <Col sm="6" className="px-4">
+                    <p className="text-[#1B212C] mb-0 text-base sm:text-lg poppins_semibold capitalize">
+                      Bid End time
+                    </p>
+                    <div className="poppins_regular text-sm">
+                      {moment
+                        .utc(auctionData?.end_date)
+                        .local()
+                        .format("DD MMMM, YYYY h:mm A")}{" "}
                     </div>
                   </Col>
                 </Row>
@@ -545,7 +620,7 @@ export default function Page() {
 
                         <button
                           className="bg_primary flex items-center justify-center rounded-2xl p-2 md:p-3"
-                          onClick={() => handlecustomBid()}
+                          onClick={() => handleCustomBid("custom")}
                         >
                           <Check size={24} className="text-white" />
                         </button>
@@ -571,13 +646,7 @@ export default function Page() {
                     ) : (
                       <button
                         className="capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg"
-                        onClick={() => {
-                          if (bidAmount > 0) {
-                            setOpenBiddingConfirmationModal(true);
-                          } else {
-                            toast.error("Please enter a valid bid amount.");
-                          }
-                        }}
+                        onClick={() => handleCustomBid("manual")}
                       >
                         Place Bid For{" "}
                         {formatPrice(convert(bidAmount || 0, "LYD"))}
