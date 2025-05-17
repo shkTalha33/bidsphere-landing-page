@@ -494,6 +494,8 @@ export default function Page() {
     setValue("region", "");
   };
 
+
+  // submit reject resaon
   const onSubmit = (data) => {
     setRejectLoading(true);
     const api = `${registerAgain}/${applicationData?._id}`;
@@ -513,6 +515,7 @@ export default function Page() {
           setApplicationData(res?.application);
           toast.success("Application updated successfully");
           toggleReject();
+
         }
         setRejectLoading(false);
       })
