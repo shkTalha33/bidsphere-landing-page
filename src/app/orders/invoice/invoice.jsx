@@ -29,6 +29,7 @@ const Invoice = ({
   setData,
   setOrderDetail,
   urlInvoice,
+  accountDetail,
 }) => {
   const { formatPrice, convert } = useCurrency();
   const router = useRouter();
@@ -152,9 +153,6 @@ const Invoice = ({
       });
   };
 
-  console.log(orderDetail, "orderDetaild");
-  console.log(orderDetail?.transaction?.status, "status");
-
   return (
     <Container className="bg_white rounded-[9px] p-4">
       {detailLoading ? (
@@ -213,6 +211,29 @@ const Invoice = ({
                 </div>
               </Col>
             </Row>
+            <h3 className="text-[#25324B] mb-2 text-[1.2rem] poppins_medium">
+              Admin Account Detail
+            </h3>
+            <div className="grid md:grid-cols-2 gap-4 mb-4 border-b pb-3">
+              <div>
+                <p className="text-[#7C8493] text-sm mb-1">Bank Name</p>
+                <p className="text-[#25324B] poppins_medium">
+                  {accountDetail?.accountDetails?.bankname}
+                </p>
+              </div>
+              <div>
+                <p className="text-[#7C8493] text-sm mb-1">Account Number</p>
+                <p className="text-[#25324B] poppins_medium">
+                  {accountDetail?.accountDetails?.acc_number}
+                </p>
+              </div>
+              <div>
+                <p className="text-[#7C8493] text-sm mb-1">Account Name</p>
+                <p className="text-[#25324B] poppins_medium">
+                  {accountDetail?.accountDetails?.acc_name}
+                </p>
+              </div>
+            </div>
 
             {/* Invoice Details */}
             <div className="grid md:grid-cols-2 gap-4 mb-4">

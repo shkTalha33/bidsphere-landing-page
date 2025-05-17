@@ -61,6 +61,7 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
       //   router.push("/");
     }
   };
+  
 
   // handle get notification by api
   const lastId = notifications?.[notifications?.length - 1]?._id;
