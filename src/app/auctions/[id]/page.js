@@ -118,7 +118,6 @@ const AuctionDetailPage = () => {
     className:
       "h-8 shadow md:h-10 bg_primary text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center",
   };
-  console.log(item, "item");
 
   return (
     <main className="bg_mainsecondary p-2 md:py-4">

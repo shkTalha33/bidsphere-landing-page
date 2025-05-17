@@ -85,6 +85,7 @@ export default function Page() {
   const dispatch = useDispatch();
   const router = useRouter();
   const [show, setShow] = useState(false);
+  const [rejectLoading, setRejectLoading] = useState(false);
 
   const [modalReject, setModalReject] = useState(false);
 
@@ -98,8 +99,6 @@ export default function Page() {
     return "Good night";
   };
 
-  console.log(applicationData, "applicationData");
-  // console.log(auctionData, "auctionData");
 
   const confirmationItem = {
     title: "Confirm Bid",
@@ -278,7 +277,7 @@ export default function Page() {
 
   const rejectedButton = {
     icon: null,
-    text: "Apply Again w",
+    text: "Apply Again",
     onClick: () => toggleReject(),
     className:
       "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
@@ -497,6 +496,7 @@ export default function Page() {
   };
 
   const onSubmit = (data) => {
+    setRejectLoading(true);
     const api = `${registerAgain}/${applicationData?._id}`;
     const apiData = {
       fname: data?.fname,
@@ -512,10 +512,13 @@ export default function Page() {
       .then((res) => {
         if (res?.success) {
           setApplicationData(res?.application);
+          toast.success("Application updated successfully");
         }
+        setRejectLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setRejectLoading(false);
       });
   };
 
@@ -1172,8 +1175,12 @@ export default function Page() {
               </Col>
 
               <Col md={12} className="mt-3">
-                <Button color="primary" type="submit">
-                  Submit
+                <Button disabled={rejectLoading} className="bg_primary w-[100%]" type="submit">
+                  {rejectLoading ? (
+                    <Spinner size="sm" color="white" />
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               </Col>
             </Row>
