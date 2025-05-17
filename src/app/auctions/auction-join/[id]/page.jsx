@@ -99,7 +99,6 @@ export default function Page() {
     return "Good night";
   };
 
-
   const confirmationItem = {
     title: "Confirm Bid",
     description: `You have placed a bid for ${formatPrice(
@@ -513,6 +512,7 @@ export default function Page() {
         if (res?.success) {
           setApplicationData(res?.application);
           toast.success("Application updated successfully");
+          toggleReject();
         }
         setRejectLoading(false);
       })
@@ -1175,7 +1175,11 @@ export default function Page() {
               </Col>
 
               <Col md={12} className="mt-3">
-                <Button disabled={rejectLoading} className="bg_primary w-[100%]" type="submit">
+                <Button
+                  disabled={rejectLoading}
+                  className="bg_primary w-[100%]"
+                  type="submit"
+                >
                   {rejectLoading ? (
                     <Spinner size="sm" color="white" />
                   ) : (
