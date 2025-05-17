@@ -40,13 +40,14 @@ const Page = () => {
   const urlId = urlParams.get("id");
   const { t } = useTranslation();
   const urlInvoice = urlParams.get("invoice");
+  const [accountDetail, setAccountDetail] = useState(null);
 
   const sideButtons = [
     { title: t("order.heading"), status: "all", icon: <FaList /> },
     // { title: "Payement", status: "payement", icon: <MdPayments /> },
     { title: t("order.heading2"), status: "transit", icon: <FaTruck /> },
     { title: t("order.heading3"), status: "shipped", icon: <FaShippingFast /> },
-    { title: t("order.heading4"), status: "delivered", icon: <FaBox /> },
+    { title: t("order.heading4"), status: "completed", icon: <FaBox /> },
   ];
 
   const handleGetOrder = (status) => {
@@ -197,6 +198,7 @@ const Page = () => {
     get(api)
       .then((res) => {
         if (res?.success) {
+          setAccountDetail(res?.accountDetails);
           setOrderDetail(res?.order);
         }
         setDetailLoading(false);
@@ -326,6 +328,7 @@ const Page = () => {
                   setData={setData}
                   setOrderDetail={setOrderDetail}
                   urlInvoice={urlInvoice}
+                  accountDetail={accountDetail}
                 />
               ) : urlId ? (
                 <OrderDetails

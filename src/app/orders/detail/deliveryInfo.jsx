@@ -20,7 +20,7 @@ const DeliveryInfo = ({ orderDetail }) => {
 
       {orderDetail?.trackingnumber && (
         <div className="mb-4">
-          <p className="text-sm text-gray-500">{t("order.heaing25")}</p>
+          <p className="text-sm text-gray-500">{t("order.heading25")}</p>
           <p className="text-base poppins_medium text-gray-800">
             {orderDetail.trackingnumber}
           </p>
@@ -29,7 +29,7 @@ const DeliveryInfo = ({ orderDetail }) => {
 
       {orderDetail?.provider && (
         <div className="mb-4">
-          <p className="text-sm text-gray-500">{t("order.heaing26")}</p>
+          <p className="text-sm text-gray-500">{t("order.heading26")}</p>
           <p className="text-base poppins_medium text-gray-800">
             {orderDetail.provider}
           </p>
@@ -38,7 +38,7 @@ const DeliveryInfo = ({ orderDetail }) => {
 
       {orderDetail?.orderstatus && (
         <div className="mb-4">
-          <p className="text-sm text-gray-500">{t("order.heaing23")}</p>
+          <p className="text-sm text-gray-500">{t("order.heading23")}</p>
           <p className="text-base poppins_medium text-yellow-600 capitalize">
             {orderDetail.orderstatus}
           </p>
@@ -47,7 +47,7 @@ const DeliveryInfo = ({ orderDetail }) => {
 
       {orderDetail?.wpLabel && (
         <div className="mt-4">
-          <p className="text-sm text-gray-500">{t("order.heaing27")}</p>
+          <p className="text-sm text-gray-500">{t("order.heading27")}</p>
           <p className="text-base poppins_medium text-gray-800">
             {orderDetail.wpLabel}
           </p>

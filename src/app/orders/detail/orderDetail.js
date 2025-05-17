@@ -88,19 +88,22 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                 <Row className="bg_white rounded-[7px] border-1 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3 mt-4">
                   <Col xs="10">
                     <div className="flex items-start gap-4">
-                      <div className="h-[4rem] w-[4rem]">
-                        <img
-                          src={orderDetail?.auction?.images[0]}
-                          alt=""
-                          className="rounded-[50%] w-[100%] h-[100%] object-cover"
-                        />
+                      <div>
+                        <div className="h-[4rem] w-[4rem]">
+                          <img
+                            src={orderDetail?.auction?.images[0]}
+                            alt=""
+                            className="rounded-[50%] w-[100%] h-[100%] object-cover"
+                          />
+                        </div>
                       </div>
+
                       <div className="flex justify-center flex-col w-[100%]">
                         <p className="text-[#25324B] poppins_semibold text-sm sm:text-base md:text-[22px] capitalize mb-0">
                           {orderDetail?.auction?.name}
                         </p>
                         <div
-                          className="text-[#7C8493] poppins_medium line-clamp-2 text-[10px] capitalize mb-0 abDatadi"
+                          className="text-[#7C8493] poppins_medium line-clamp-2 mt-1 text-[10px] capitalize mb-0 abDatadi"
                           dangerouslySetInnerHTML={{
                             __html: orderDetail?.auction?.additionalinfo,
                           }}
@@ -127,13 +130,16 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                   </h4>
                   <div className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
                     <div className="flex item-center gap-2">
-                      <div className="w-[3rem] h-[3rem]">
-                        <img
-                          alt=""
-                          src={orderDetail?.lot?.images[0]}
-                          className="rounded-[50%] w-[100%] h-[100%]"
-                        />
+                      <div>
+                        <div className="w-[3rem] h-[3rem]">
+                          <img
+                            alt=""
+                            src={orderDetail?.lot?.images[0]}
+                            className="rounded-[50%] border w-[100%] h-[100%]"
+                          />
+                        </div>
                       </div>
+
                       <div className="flex justify-between w-[100%]">
                         <div className="flex flex-col w-[100%]">
                           <h5>{orderDetail?.lot?.name}</h5>
@@ -158,18 +164,18 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                   </div>
                   {/* {orderDetail?.lot?} */}
                 </section>
-                <Row className="mt-2">
+                {/* <Row className="mt-2">
                   <AlertSection
-                    type={"info"}
-                    message={"info"}
-                    description={`${t("order.heading32")} ${moment(
+                    type="info"
+                    message="Info"
+                    description={`Your order is shipped ${moment(
                       orderDetail?.shippedDate
                     )
                       .local()
                       .format("DD-MMMM-YYYY")
-                      .toLowerCase()}. ${t("order.heading33")}`}
+                      .toLowerCase()}. You will receive it soon.`}
                   />
-                </Row>
+                </Row> */}
                 <Row className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
                   <Col md="12">
                     <div className="border-1 border-[#DCE1EF] rounded-[43px] p-2 flex items-center justify-start gap-2 overflow-auto no-scrollbar">

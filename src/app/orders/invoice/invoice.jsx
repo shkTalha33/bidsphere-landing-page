@@ -152,6 +152,9 @@ const Invoice = ({
       });
   };
 
+  console.log(orderDetail, "orderDetaild");
+  console.log(orderDetail?.transaction?.status, "status");
+
   return (
     <Container className="bg_white rounded-[9px] p-4">
       {detailLoading ? (
@@ -197,16 +200,16 @@ const Invoice = ({
                   >
                     <TbArrowBackUp color="#660000" size={24} />
                   </div>
-                  {orderDetail?.transaction?.status === "pending" ||
-                    (orderDetail?.transaction?.status === "rejected" && (
-                      <div
-                        onClick={handleShow}
-                        className="text-[1rem] py-[5px] px-[10px] bg-[#660000] text-white rounded-[8px] poppins_regular whitespace-nowrap flex items-center gap-2 cursor-pointer"
-                      >
-                        <BsCash />
-                        Make a payment
-                      </div>
-                    ))}
+                  {(orderDetail?.transaction?.status === "pending" ||
+                    orderDetail?.transaction?.status === "rejected") && (
+                    <div
+                      onClick={handleShow}
+                      className="text-[1rem] py-[5px] px-[10px] bg-[#660000] text-white rounded-[8px] poppins_regular whitespace-nowrap flex items-center gap-2 cursor-pointer"
+                    >
+                      <BsCash />
+                      Make a payment
+                    </div>
+                  )}
                 </div>
               </Col>
             </Row>

@@ -3,7 +3,12 @@
 import ApiFunction from "@/components/api/apiFuntions";
 import { getAuctionLot } from "@/components/api/ApiFile";
 import { handleError } from "@/components/api/errorHandler";
-import { avataruser, confirmBid, winBid } from "@/components/assets/icons/icon";
+import {
+  avataruser,
+  confirmBid,
+  uploadfileIcon,
+  winBid,
+} from "@/components/assets/icons/icon";
 import AuctionConfirmationModal from "@/components/common/auctionConfirmationModal";
 import TopSection from "@/components/common/TopSection";
 import useCurrency from "@/components/hooks/useCurrency";
@@ -17,7 +22,19 @@ import { FaRegClock } from "react-icons/fa6";
 import { TbLivePhoto } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
-import { Col, Container, Modal, ModalBody, ModalHeader, Row } from "reactstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  FormFeedback,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Row,
+} from "reactstrap";
 import { useSocket } from "@/components/socketProvider/socketProvider";
 import toast from "react-hot-toast";
 import { GiPodiumWinner } from "react-icons/gi";
@@ -28,6 +45,12 @@ import {
   TrophyOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import { allCountries } from "country-region-data";
+import { Spinner } from "react-bootstrap";
+import Link from "next/link";
 
 export default function Page() {
   const { get, userData } = ApiFunction();
@@ -50,6 +73,11 @@ export default function Page() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const router = useRouter();
+  const [show, setShow] = useState(false);
+
+  const [modalReject, setModalReject] = useState(false);
+
+  const toggleReject = () => setModalReject(!modalReject);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -239,8 +267,8 @@ export default function Page() {
 
   const rejectedButton = {
     icon: null,
-    text: "Apply Again",
-    onClick: () => router.push(`/auctions/${id}/registration`),
+    text: "Apply Again w",
+    onClick: () => toggleReject(),
     className:
       "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
   };
@@ -318,6 +346,73 @@ export default function Page() {
       toast.error("Please enter a valid bid amount.");
     }
   };
+
+  // ///////////
+
+  const schema = Yup.object().shape({
+    fname: Yup.string().required("First name is required"),
+    lname: Yup.string().required("Last name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    phone: Yup.string().required("Phone number is required"),
+    country: Yup.string().required("Country is required"),
+    region: Yup.string().required("Region is required"),
+    id_proof: Yup.array()
+      .min(1, "At least one identity proof photo is required")
+      .required("Identity proof photos are required"),
+    funds_proof: Yup.array()
+      .min(1, "At least one proof of funds photo is required")
+      .required("Proof of funds photos are required"),
+  });
+
+  const [regions, setRegions] = useState([]);
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      fname: "",
+      lname: "",
+      email: "",
+      phone: "",
+      country: "",
+      region: "",
+      id_proof: [],
+      funds_proof: [],
+    },
+  });
+
+  useEffect(() => {
+    if (applicationData) {
+      Object.entries(applicationData).forEach(([key, value]) => {
+        setValue(key, value || "");
+      });
+
+      const countryData = allCountries.find(
+        ([name]) => name === applicationData.country
+      );
+      if (countryData) {
+        setRegions(countryData[2]?.map(([r]) => r));
+      }
+    }
+  }, [applicationData, setValue]);
+
+  const handleCountryChange = (e, field) => {
+    const selected = e.target.value;
+    field.onChange(selected);
+    const found = allCountries.find(([name]) => name === selected);
+    setRegions(found ? found[2].map(([region]) => region) : []);
+    setValue("region", "");
+  };
+
+  const onSubmit = (data) => {
+    console.log("Submitted Data:", data);
+  };
+
+  console.log(applicationData, "applicationData");
 
   return (
     <main className="bg_mainsecondary">
@@ -717,6 +812,136 @@ export default function Page() {
               status="error"
             />
           )}
+        </ModalBody>
+      </Modal>
+
+      {/* reject request modal  */}
+      <Modal
+        isOpen={modalReject}
+        centered
+        backdrop="static"
+        scrollable
+        toggle={toggleReject}
+      >
+        <ModalHeader toggle={toggleReject}>Modal title</ModalHeader>
+        <ModalBody>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Row>
+              <Col md={12}>
+                <Label>First Name</Label>
+                <Controller
+                  name="fname"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      invalid={!!errors.fname}
+                      placeholder="Enter First Name"
+                    />
+                  )}
+                />
+                <FormFeedback>{errors.fname?.message}</FormFeedback>
+              </Col>
+
+              <Col md={12}>
+                <Label>Last Name</Label>
+                <Controller
+                  name="lname"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      invalid={!!errors.lname}
+                      placeholder="Enter Last Name"
+                    />
+                  )}
+                />
+                <FormFeedback>{errors.lname?.message}</FormFeedback>
+              </Col>
+
+              <Col md={12}>
+                <Label>Email</Label>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      type="email"
+                      {...field}
+                      invalid={!!errors.email}
+                      placeholder="Enter Email"
+                    />
+                  )}
+                />
+                <FormFeedback>{errors.email?.message}</FormFeedback>
+              </Col>
+
+              <Col md={12}>
+                <Label>Phone</Label>
+                <Controller
+                  name="phone"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      invalid={!!errors.phone}
+                      placeholder="Enter Phone Number"
+                    />
+                  )}
+                />
+                <FormFeedback>{errors.phone?.message}</FormFeedback>
+              </Col>
+
+              <Col md={12}>
+                <Label>Country</Label>
+                <Controller
+                  name="country"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      type="select"
+                      {...field}
+                      invalid={!!errors.country}
+                      onChange={(e) => handleCountryChange(e, field)}
+                    >
+                      <option value="">Select Country</option>
+                      {allCountries.map(([name]) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </Input>
+                  )}
+                />
+                <FormFeedback>{errors.country?.message}</FormFeedback>
+              </Col>
+
+              <Col md={12}>
+                <Label>Region</Label>
+                <Controller
+                  name="region"
+                  control={control}
+                  render={({ field }) => (
+                    <Input type="select" {...field} invalid={!!errors.region}>
+                      <option value="">Select Region</option>
+                      {regions.map((r) => (
+                        <option key={r} value={r}>
+                          {r}
+                        </option>
+                      ))}
+                    </Input>
+                  )}
+                />
+                <FormFeedback>{errors.region?.message}</FormFeedback>
+              </Col>
+
+              <Col md={12} className="mt-3">
+                <Button color="primary" type="submit">
+                  Submit
+                </Button>
+              </Col>
+            </Row>
+          </Form>
         </ModalBody>
       </Modal>
     </main>
