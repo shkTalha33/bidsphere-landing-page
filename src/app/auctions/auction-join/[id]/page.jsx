@@ -1,11 +1,17 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import { getAuctionLot } from "@/components/api/ApiFile";
+import {
+  getAuctionLot,
+  getAuctionRegister,
+  registerAgain,
+} from "@/components/api/ApiFile";
 import { handleError } from "@/components/api/errorHandler";
 import {
   avataruser,
   confirmBid,
+  pdfIcon,
   uploadfileIcon,
   winBid,
 } from "@/components/assets/icons/icon";
@@ -51,9 +57,10 @@ import * as Yup from "yup";
 import { allCountries } from "country-region-data";
 import { Spinner } from "react-bootstrap";
 import Link from "next/link";
+import { uploadFile } from "@/components/api/uploadFile";
 
 export default function Page() {
-  const { get, userData } = ApiFunction();
+  const { get, userData, put } = ApiFunction();
   const [activeButton, setActiveButton] = useState("custom");
   const [openBiddingConfirmationModal, setOpenBiddingConfirmationModal] =
     useState(false);
@@ -69,6 +76,10 @@ export default function Page() {
   const [winnerLot, setWinnerLot] = useState(null);
   const token = useSelector((state) => state.auth?.accessToken);
   const [applicationData, setApplicationData] = useState(null);
+  const [selectedIdentityFiles, setSelectedIdentityFiles] = useState([]);
+  const [selectedFundsFiles, setSelectedFundsFiles] = useState([]);
+  const [fileLoadingIdentity, setFileLoadingIdentity] = useState(false);
+  const [fileLoadingFunds, setFileLoadingFunds] = useState(false);
   const socket = useSocket();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -87,7 +98,7 @@ export default function Page() {
     return "Good night";
   };
 
-  // console.log(applicationData, "applicationData");
+  console.log(applicationData, "applicationData");
   // console.log(auctionData, "auctionData");
 
   const confirmationItem = {
@@ -370,6 +381,7 @@ export default function Page() {
     control,
     handleSubmit,
     setValue,
+    trigger,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -397,8 +409,84 @@ export default function Page() {
       if (countryData) {
         setRegions(countryData[2]?.map(([r]) => r));
       }
+      setSelectedIdentityFiles(applicationData.id_proof);
+      setSelectedFundsFiles(applicationData.funds_proof);
     }
   }, [applicationData, setValue]);
+
+  function getFileDetails(filename) {
+    let parts = filename.split(".");
+    return {
+      title: parts.slice(0, -1).join("."),
+      type: parts.pop(),
+    };
+  }
+
+  const handleFileChange = async (event, type) => {
+    let files = Array.from(event.target.files);
+    if (type === "identity") {
+      const totalFiles = selectedIdentityFiles?.length + files.length;
+      if (totalFiles > 5) {
+        return toast.error("Cannot upload more than 5 files");
+      }
+    }
+    if (type === "funds") {
+      const totalFiles = selectedFundsFiles.length + files.length;
+      if (totalFiles > 5) {
+        return toast.error("Cannot upload more than 5 files");
+      }
+    }
+    if (files.length === 0) return;
+    const isIdentity = type === "identity";
+    const setLoading = isIdentity
+      ? setFileLoadingIdentity
+      : setFileLoadingFunds;
+    const setFiles = isIdentity
+      ? setSelectedIdentityFiles
+      : setSelectedFundsFiles;
+    const currentFiles = isIdentity
+      ? selectedIdentityFiles
+      : selectedFundsFiles;
+    const fieldName = isIdentity ? "id_proof" : "funds_proof";
+
+    try {
+      const uploadedUrls = [...currentFiles];
+      let acceptPdf = true;
+      setLoading(true);
+      for (const file of files) {
+        const { title, type } = getFileDetails(file?.name);
+        const response = await uploadFile(file, acceptPdf);
+        const imageData = {
+          title,
+          type,
+          url: response.data.image || response.data.video,
+        };
+        uploadedUrls.push(imageData);
+      }
+
+      setFiles(uploadedUrls);
+      setValue(fieldName, uploadedUrls, { shouldValidate: true });
+      await trigger(fieldName);
+    } catch (err) {
+      handleError(err);
+    }
+    setLoading(false);
+  };
+
+  const handleFileRemove = (index, type) => {
+    const isIdentity = type === "identity";
+    const setFiles = isIdentity
+      ? setSelectedIdentityFiles
+      : setSelectedFundsFiles;
+    const currentFiles = isIdentity
+      ? selectedIdentityFiles
+      : selectedFundsFiles;
+    const fieldName = isIdentity ? "id_proof" : "funds_proof";
+
+    const updatedFiles = currentFiles.filter((_, i) => i !== index);
+    setFiles(updatedFiles);
+    setValue(fieldName, updatedFiles, { shouldValidate: true });
+  };
 
   const handleCountryChange = (e, field) => {
     const selected = e.target.value;
@@ -409,10 +497,27 @@ export default function Page() {
   };
 
   const onSubmit = (data) => {
-    console.log("Submitted Data:", data);
+    const api = `${registerAgain}/${applicationData?._id}`;
+    const apiData = {
+      fname: data?.fname,
+      lname: data?.lname,
+      email: data?.email,
+      phone: data?.phone,
+      country: data?.country,
+      region: data?.region,
+      id_proof: data?.id_proof,
+      funds_proof: data?.funds_proof,
+    };
+    put(api, apiData)
+      .then((res) => {
+        if (res?.success) {
+          setApplicationData(res?.application);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-
-  console.log(applicationData, "applicationData");
 
   return (
     <main className="bg_mainsecondary">
@@ -823,7 +928,9 @@ export default function Page() {
         scrollable
         toggle={toggleReject}
       >
-        <ModalHeader toggle={toggleReject}>Modal title</ModalHeader>
+        <ModalHeader toggle={toggleReject}>
+          Application Rejected – Reapply Below
+        </ModalHeader>
         <ModalBody>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Row>
@@ -905,8 +1012,8 @@ export default function Page() {
                       onChange={(e) => handleCountryChange(e, field)}
                     >
                       <option value="">Select Country</option>
-                      {allCountries.map(([name]) => (
-                        <option key={name} value={name}>
+                      {allCountries.map(([name, code]) => (
+                        <option key={code} value={name}>
                           {name}
                         </option>
                       ))}
@@ -933,6 +1040,135 @@ export default function Page() {
                   )}
                 />
                 <FormFeedback>{errors.region?.message}</FormFeedback>
+              </Col>
+
+              {/* Identity Proof Upload Section */}
+              <Col md={12} className="mt-3">
+                <Label>
+                  Upload Identity Proof (Passport, Driver's License)
+                </Label>
+                <Input
+                  type="file"
+                  multiple
+                  accept="image/*,.pdf"
+                  onChange={(e) => handleFileChange(e, "identity")}
+                  className="mb-2"
+                />
+                {errors.id_proof && (
+                  <FormFeedback className="d-block">
+                    {errors.id_proof.message}
+                  </FormFeedback>
+                )}
+
+                {/* Display selected identity files */}
+
+                {selectedIdentityFiles.length > 0 && (
+                  <div className="mt-3 d-flex gap-2 flex-wrap">
+                    {selectedIdentityFiles?.map((file, index) => (
+                      <div key={index} className="position-relative">
+                        <>
+                          <Link href={file?.url} target="_blank">
+                            {file?.type === "pdf" ? (
+                              <Image
+                                src={pdfIcon}
+                                key={index}
+                                width={96}
+                                height={96}
+                                alt={`Upload ${index + 1}`}
+                                className="w-24 h-24 object-cover rounded"
+                              />
+                            ) : (
+                              <Image
+                                src={file?.url}
+                                key={index}
+                                width={96}
+                                height={96}
+                                alt={`Upload ${index + 1}`}
+                                className="w-24 h-24 object-cover rounded"
+                              />
+                            )}
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => handleFileRemove(index, "identity")}
+                            className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-6 h-6"
+                          >
+                            ×
+                          </button>
+                        </>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {fileLoadingIdentity && (
+                  <div className="w-24 h-24 border border-gray-200 flex justify-center items-center rounded">
+                    <Spinner size="sm" color="red" />
+                  </div>
+                )}
+              </Col>
+
+              {/* Funds Proof Upload Section */}
+              <Col md={12} className="mt-3">
+                <Label>
+                  Upload Proof of Funds (Bank Statement, Income Proof)
+                </Label>
+                <Input
+                  type="file"
+                  multiple
+                  accept="image/*,.pdf"
+                  onChange={(e) => handleFileChange(e, "funds")}
+                  className="mb-2"
+                />
+                {errors.funds_proof && (
+                  <FormFeedback className="d-block">
+                    {errors.funds_proof.message}
+                  </FormFeedback>
+                )}
+
+                {/* Display selected funds files */}
+                {selectedFundsFiles.length > 0 && (
+                  <div className="mt-3 d-flex gap-2 flex-wrap">
+                    {selectedFundsFiles?.map((file, index) => (
+                      <div key={index} className="position-relative">
+                        <>
+                          <Link href={file?.url} target="_blank">
+                            {file?.type === "pdf" ? (
+                              <Image
+                                src={pdfIcon}
+                                key={index}
+                                width={96}
+                                height={96}
+                                alt={`Upload ${index + 1}`}
+                                className="w-24 h-24 object-cover rounded"
+                              />
+                            ) : (
+                              <Image
+                                src={file?.url}
+                                key={index}
+                                width={96}
+                                height={96}
+                                alt={`Upload ${index + 1}`}
+                                className="w-24 h-24 object-cover rounded"
+                              />
+                            )}
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => handleFileRemove(index, "funds")}
+                            className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-6 h-6"
+                          >
+                            ×
+                          </button>
+                        </>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {fileLoadingFunds && (
+                  <div className="w-24 h-24 border border-gray-200 flex justify-center items-center rounded">
+                    <Spinner size="sm" color="red" />
+                  </div>
+                )}
               </Col>
 
               <Col md={12} className="mt-3">

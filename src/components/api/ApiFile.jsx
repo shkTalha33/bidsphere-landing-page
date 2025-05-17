@@ -65,6 +65,7 @@ const refundWallet = "deposit/add-to-wallet";
 const getAllCategory = "cat/all";
 const getSubcategory = "subcat/all";
 const getAuctionRegister = "applications/latest";
+const registerAgain ="auction/edit-registration"
 export {
   login,
   imageUpload,
@@ -120,4 +121,5 @@ export {
   getAllCategory,
   getSubcategory,
   getAuctionRegister,
+  registerAgain
 };
