@@ -23,33 +23,30 @@ const OrderSummary = ({ orderDetail }) => {
         </div>
 
         <div>
-          <p className="text-sm text-gray-500">User Email</p>
+          <p className="text-sm text-gray-500">{t("order.heading34")}</p>
           <p className="text-base poppins_medium text-gray-800">
             {user?.email}
           </p>
         </div>
         <div>
-          <p className="text-sm text-gray-500">User Phone</p>
+          <p className="text-sm text-gray-500">{t("order.heading35")}</p>
           <p className="text-base poppins_medium text-gray-800">
             {user?.phone}
           </p>
         </div>
         <div>
           <p className="text-sm text-gray-500">{t("order.heading20")}</p>
-          <p className="text-base poppins_medium text-gray-800">
-            {lot?.name}
-          </p>
+          <p className="text-base poppins_medium text-gray-800">{lot?.name}</p>
         </div>
         <div>
-          <p className="text-sm text-gray-500">Lot Price</p>
+          <p className="text-sm text-gray-500">{t("order.heading21")}</p>
           <p className="text-base poppins_medium text-gray-800">
-            
-              {formatPrice(convert(lot?.price, "LYD"))}
+            {formatPrice(convert(lot?.price, "LYD"))}
           </p>
         </div>
 
         <div>
-          <p className="text-sm text-gray-500">Order Id</p>
+          <p className="text-sm text-gray-500">{t("order.heading37")}</p>
           <p className="text-base poppins_medium text-gray-800 capitalize">
             {orderDetail?.orderNumber}
           </p>

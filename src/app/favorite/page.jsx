@@ -8,10 +8,11 @@ import {
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import FavoriteAuctionItems from "./FavoriteAuctionItems"; // We'll create this next
+import { useTranslation } from "react-i18next";
 
 export default function FavoritesPage() {
   const [lastId, setLastId] = useState(1);
-
+  const { t } = useTranslation();
   // Use the new favorites query
   const { data, isFetching, isError, error } =
     useGetFavoriteAuctionsQuery(lastId);
@@ -38,7 +39,7 @@ export default function FavoritesPage() {
             <Col md="12">
               <Breadcrumbs pageTitle={"Favourite"} />
               <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
-                Favourite Auctions
+                {t("favorite.heading1")}
               </h3>
             </Col>
           </Row>

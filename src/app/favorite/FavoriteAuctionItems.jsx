@@ -10,6 +10,7 @@ import { formatPrice } from "@/components/utils/formatPrice";
 import ApiFunction from "@/components/api/apiFuntions";
 import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
 import useCurrency from "@/components/hooks/useCurrency";
+import { useTranslation } from "react-i18next";
 
 export default function FavoriteAuctionItems({
   items = [],
@@ -23,7 +24,7 @@ export default function FavoriteAuctionItems({
   const dispatch = useDispatch();
   const { userData } = ApiFunction();
   const { formatPrice, convert } = useCurrency();
-
+  const { t } = useTranslation();
   // No need for likedItems state as all items are liked in favorites view
 
   const handleAuctionDetail = (item) => {
@@ -106,7 +107,7 @@ export default function FavoriteAuctionItems({
                 <div className="absolute top-4 left-4">
                   <span className="bg_primary text-white px-2 py-1 rounded-[4px] text-sm poppins_regular">
                     {/* {`${item?.lots?.length || 0} Lots`} */}
-                      {item?.category?.name}
+                    {item?.category?.name}
                   </span>
                 </div>
                 {/* Unlike Button (always filled heart in favorites) */}
@@ -125,12 +126,12 @@ export default function FavoriteAuctionItems({
                   />
                 </div>
                 <div>
-                 <p className="poppins_semibold mt-[7px] leading-[1.2] text_darkprimary text-[1.25rem]">
+                  <p className="poppins_semibold mt-[7px] leading-[1.2] text_darkprimary text-[1.25rem]">
                     {item.name}
                   </p>
                   <div className="flex items-center justify-start gap-2 mt-[5px]">
                     <span className="text-gray text-[0.8rem]">
-                      Deposit Amount
+                      {t("auctionDetails.heading3")}
                     </span>
                     <h5 className="mb-0 text_darkprimary text-lg">
                       {" "}
@@ -166,7 +167,7 @@ export default function FavoriteAuctionItems({
             className="bg_primary text_white py-2 px-5 rounded-md hover:opacity-90 transition-opacity"
             onClick={handleLoadMore}
           >
-            Load More
+            {t("favorite.heading2")}
           </button>
         </div>
       )}

@@ -14,6 +14,7 @@ import { Spinner } from "react-bootstrap";
 import { useSocket } from "@/components/socketProvider/socketProvider";
 import { useSelector } from "react-redux";
 import { encryptData } from "../api/encrypted";
+import { useTranslation } from "react-i18next";
 const NotificationDown = ({ firstTime, setShowNotification }) => {
   const { get, token } = ApiFunction();
   const [notifications, setNotifications] = useState([]);
@@ -21,7 +22,7 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const socket = useSocket();
-
+  const { t } = useTranslation();
   const router = useRouter();
 
   const handleNotificationClick = (item) => {
@@ -125,7 +126,7 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
     <>
       <section>
         <h4 className="text-md poppins_semibold px-3 mt-2 text-gray-800 pb-2">
-          Notifications
+          {t("notification.heading1")}
         </h4>
         <div
           id="scrollableDiv"
@@ -140,7 +141,7 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
               <ul className="space-y-2">
                 {notifications?.length === 0 ? (
                   <div className="text-center text-gray-500 py-4 text-sm">
-                    No notifications
+                    {t("notification.heading2")}
                   </div>
                 ) : (
                   notifications?.map((item) => (
@@ -211,7 +212,7 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
                 onClick={() => handleGetNotificationAll()}
                 className=" text-gray-800 text-[1rem] p-2 poppins_medium  hover:text-blue-500 transition-all duration-200"
               >
-                See All
+                {t("notification.heading3")}
               </button>
             </div>
           </div>

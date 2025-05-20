@@ -21,6 +21,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 // import { getChatList } from "../../api/message_api";
 import { Search } from "react-feather";
+import { useTranslation } from "react-i18next";
 
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -39,6 +40,7 @@ const ChatMessage = () => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const urlDataEnq = params.get("query");
+  const { t } = useTranslation();
 
   useEffect(() => {
     const urlData = urlDataEnq ? decryptData(urlDataEnq) : "";
@@ -82,7 +84,7 @@ const ChatMessage = () => {
                   <div className="d-flex align-items-center justify-content-between px-3"></div>
                   <hr style={{ color: "#EDEEF0" }} className="mb-1" />
                   <h5 className="semibold_font px-[10px] py-[1rem]">
-                    All Conversation
+                    {t("message.heading1")}
                   </h5>
                   {/* <div className="position-relative mx-3 my-[12px]">
                     <span className="position-absolute mt-2 ms-3">
@@ -117,8 +119,7 @@ const ChatMessage = () => {
                       style={{ color: "#2D3D38" }}
                       className="text-center regular_font mt-2"
                     >
-                      Choose from your existing conversations, start a new one,
-                      or just keep swimming.
+                      {t("message.heading2")}
                     </h6>
                   </div>
                 )}

@@ -58,6 +58,7 @@ import { allCountries } from "country-region-data";
 import { Spinner } from "react-bootstrap";
 import Link from "next/link";
 import { uploadFile } from "@/components/api/uploadFile";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
   const { get, userData, put } = ApiFunction();
@@ -86,34 +87,34 @@ export default function Page() {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [rejectLoading, setRejectLoading] = useState(false);
-
+  const { t } = useTranslation();
   const [modalReject, setModalReject] = useState(false);
 
   const toggleReject = () => setModalReject(!modalReject);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour >= 5 && hour < 12) return "Good morning";
-    if (hour >= 12 && hour < 17) return "Good afternoon";
-    if (hour >= 17 && hour < 21) return "Good evening";
-    return "Good night";
+    if (hour >= 5 && hour < 12) return t("auctionJoin.heading1");
+    if (hour >= 12 && hour < 17) return t("auctionJoin.heading2");
+    if (hour >= 17 && hour < 21) return t("auctionJoin.heading3");
+    return t("auctionJoin.heading4");
   };
 
   const confirmationItem = {
-    title: "Confirm Bid",
-    description: `You have placed a bid for ${formatPrice(
+    title: t("auctionJoin.heading5"),
+    description: `${t("auctionJoin.heading6")} ${formatPrice(
       convert(bidAmount || 0, "LYD")
-    )}. Should we place this as your Bid?`,
+    )}. ${t("auctionJoin.heading7")}`,
     image: confirmBid,
     buttons: [
       {
-        btnText: "Yes, Place My Bid",
+        btnText: t("auctionJoin.heading8"),
         onClick: () => placeBid(),
         className:
           "rounded-[10px] bg_primary text-white poppins_medium text-xs sm:text-base md:text-lg border border-[#21CD9D] w-full py-2 md:py-3",
       },
       {
-        btnText: "Cancel",
+        btnText: t("auctionJoin.heading9"),
         onClick: () => setOpenBiddingConfirmationModal(false),
         className:
           "rounded-[10px] bg-white text_primary border border-[#21CD9D] poppins_medium text-xs sm:text-base md:text-lg w-full py-2 md:py-3",
@@ -268,7 +269,7 @@ export default function Page() {
 
   const winnerButton = {
     icon: <GiPodiumWinner className="w-5 h-5 mr-2 text-yellow-300" />,
-    text: "Winner Announced",
+    text: t("auctionJoin.heading10"),
     onClick: null,
     className:
       "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
@@ -276,7 +277,7 @@ export default function Page() {
 
   const rejectedButton = {
     icon: null,
-    text: "Apply Again",
+    text: t("auctionJoin.heading11"),
     onClick: () => toggleReject(),
     className:
       "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
@@ -305,18 +306,18 @@ export default function Page() {
     const startTime = moment.utc(auctionData?.start_date);
 
     if (applicationData?.status === "pending") {
-      toast.error("Your application is pending. Please wait for approval.");
+      toast.error(t("auctionJoin.heading12"));
       return;
     }
 
     if (applicationData?.status === "rejected") {
-      toast.error("Your application is rejected. Please apply again.");
+      toast.error(t("auctionJoin.heading13"));
       return;
     }
 
     if (now.isBefore(startTime)) {
       toast.error(
-        `You can bid for this auction starting from ${startTime
+        `${t("auctionJoin.heading14")} ${startTime
           .local()
           .format("DD MMMM, YYYY h:mm A")}`
       );
@@ -324,7 +325,7 @@ export default function Page() {
     }
 
     if (!currentLot?.minprice || !currentLot?.minincrement) {
-      toast.error("Lot information is missing.");
+      toast.error(t("auctionJoin.heading15"));
       return;
     }
 
@@ -345,32 +346,34 @@ export default function Page() {
           setOpenBiddingConfirmationModal(true);
         } else {
           toast.error(
-            `Your bid must be at least ${formatPrice(
+            `${t("auctionJoin.heading16")} ${formatPrice(
               convert(minRequiredBid, "LYD")
             )}`
           );
         }
       }
     } else {
-      toast.error("Please enter a valid bid amount.");
+      toast.error(t("auctionJoin.heading17"));
     }
   };
 
   // ///////////
 
   const schema = Yup.object().shape({
-    fname: Yup.string().required("First name is required"),
-    lname: Yup.string().required("Last name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    phone: Yup.string().required("Phone number is required"),
-    country: Yup.string().required("Country is required"),
-    region: Yup.string().required("Region is required"),
+    fname: Yup.string().required(t("profile.heading13")),
+    lname: Yup.string().required(t("profile.heading14")),
+    email: Yup.string()
+      .email("Invalid email")
+      .required(t("auctionRegistration.heading9")),
+    phone: Yup.string().required(t("profile.heading16")),
+    country: Yup.string().required(t("auctionRegistratione.heading10")),
+    region: Yup.string().required(t("auctionRegistratione.heading11")),
     id_proof: Yup.array()
-      .min(1, "At least one identity proof photo is required")
-      .required("Identity proof photos are required"),
+      .min(1, t("auctionRegistration.heading19"))
+      .required(t("auctionRegistration.heading20")),
     funds_proof: Yup.array()
-      .min(1, "At least one proof of funds photo is required")
-      .required("Proof of funds photos are required"),
+      .min(1, t("auctionRegistration.heading21"))
+      .required(t("auctionRegistration.heading22")),
   });
 
   const [regions, setRegions] = useState([]);
@@ -425,13 +428,13 @@ export default function Page() {
     if (type === "identity") {
       const totalFiles = selectedIdentityFiles?.length + files.length;
       if (totalFiles > 5) {
-        return toast.error("Cannot upload more than 5 files");
+        return toast.error(t("auctionRegistration.heading23"));
       }
     }
     if (type === "funds") {
       const totalFiles = selectedFundsFiles.length + files.length;
       if (totalFiles > 5) {
-        return toast.error("Cannot upload more than 5 files");
+        return toast.error(t("auctionRegistration.heading24"));
       }
     }
     if (files.length === 0) return;
@@ -494,7 +497,6 @@ export default function Page() {
     setValue("region", "");
   };
 
-
   // submit reject resaon
   const onSubmit = (data) => {
     setRejectLoading(true);
@@ -513,9 +515,8 @@ export default function Page() {
       .then((res) => {
         if (res?.success) {
           setApplicationData(res?.application);
-          toast.success("Application updated successfully");
+          toast.success(t("auctionJoin.heading25"));
           toggleReject();
-
         }
         setRejectLoading(false);
       })
@@ -532,7 +533,7 @@ export default function Page() {
           title={`${getGreeting()}, ${userData?.fname || ""} ${
             userData?.lname || ""
           }`}
-          description={"Here are your auctions whom you can join."}
+          description={t("auctionJoin.heading18")}
           button={topButton}
         />
 
@@ -616,7 +617,7 @@ export default function Page() {
                         : currentLot?.item?.name?.ar}
                     </p>
                     <p className="poppins_regular text-sm text-white mb-0 capitalize">
-                      Auction
+                      {t("nav.auction")}
                     </p>
                   </div>
                 </div>
@@ -627,7 +628,7 @@ export default function Page() {
                 <Row className="py-4 bg-[#F3F2F2] rounded-[10px] mx-0">
                   <Col sm="6" className="border-r border-gray-300 px-4">
                     <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                      Bid price
+                      {t("auctionJoin.heading19")}
                     </p>
                     <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                       {formatPrice(convert(currentLot?.minprice || 0, "LYD"))}
@@ -656,21 +657,21 @@ export default function Page() {
                       )}
 
                       <p className="poppins_regular text-[15px] text-[#1C201F] mb-0">
-                        are live
+                        {t("auctionJoin.heading20")}
                       </p>
                     </div>
                   </Col>
 
                   <Col sm="6" className="px-4">
                     <p className="text-[#1B212C] mb-0 text-base sm:text-lg poppins_semibold capitalize">
-                      Current Bid Price
+                      {t("auctionJoin.heading21")}
                     </p>
                     <p className="text-[#1B212C] mb-0 text-xs sm:text-sm poppins_regular capitalize">
                       {formatPrice(convert(recentBids?.[0]?.price || 0, "LYD"))}
                     </p>
                     <div>
                       <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                        Bid increment price
+                        {t("auctionJoin.heading22")}
                       </p>
                       <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                         {formatPrice(
@@ -681,7 +682,7 @@ export default function Page() {
                   </Col>
                   <Col sm="6" className="border-r border-gray-300 px-4">
                     <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                      Bid Starting time
+                      {t("auctionJoin.heading23")}
                     </p>
                     <div className="poppins_regular text-sm">
                       {moment
@@ -693,7 +694,7 @@ export default function Page() {
 
                   <Col sm="6" className="px-4">
                     <p className="text-[#1B212C] mb-0 text-base sm:text-lg poppins_semibold capitalize">
-                      Bid End time
+                      {t("auctionJoin.heading24")}
                     </p>
                     <div className="poppins_regular text-sm">
                       {moment
@@ -712,11 +713,10 @@ export default function Page() {
                     <div className="flex flex-col items-center justify-center bg-green-50 border border-green-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
                       <CheckCircleOutlined className="text-green-500 text-5xl mb-4" />
                       <h2 className="text-xl poppins_medium text-green-600 mb-2">
-                        Congratulations!
+                        {t("auctionJoin.heading25")}
                       </h2>
                       <p className="text-gray-700">
-                        🎉 You have won this lot!. You can no longer place a bid
-                        for this item.
+                        🎉 {t("auctionJoin.heading26")}
                       </p>
                     </div>
                   ) : (
@@ -724,11 +724,10 @@ export default function Page() {
                       <div className="flex flex-col items-center justify-center bg-red-50 border border-red-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
                         <CloseCircleOutlined className="text-red-500 text-5xl mb-4" />
                         <h2 className="text-xl poppins_medium text-red-600 mb-2">
-                          Winner Announced
+                          {t("auctionJoin.heading27")}
                         </h2>
                         <p className="text-gray-700">
-                          This lot is now closed as a winner has been selected.
-                          You can no longer place a bid for this item.
+                          {t("auctionJoin.heading28")}
                         </p>
                       </div>
                     </>
@@ -742,13 +741,13 @@ export default function Page() {
                       <div className="flex items-center justify-start gap-2">
                         <TbLivePhoto size={20} />
                         <p className="capitalize poppins_semibold text-lg mb-0">
-                          Live Auction
+                          {t("auctionJoin.heading29")}
                         </p>
                       </div>
                     </Col>
                     <Col xs="4" sm="6" className="px-0">
                       <p className="capitalize poppins_regular text-[14px] text-end mb-0">
-                        {recentBids?.length} Bids made
+                        {recentBids?.length} {t("auctionJoin.heading30")}
                       </p>
                     </Col>
                   </Row>
@@ -806,7 +805,7 @@ export default function Page() {
                         }`}
                         onClick={() => setActiveButton("custom")}
                       >
-                        Use Custom Bid
+                        {t("auctionJoin.heading31")}
                       </button>
                     </div>
 
@@ -815,7 +814,7 @@ export default function Page() {
                       <div className="flex items-center justify-start gap-3 mt-3">
                         <input
                           type="number"
-                          placeholder="Enter your bid"
+                          placeholder={t("auctionJoin.heading32")}
                           disabled={
                             currentLot?.status === "winner" || winnerLot?.bid
                           }
@@ -840,9 +839,7 @@ export default function Page() {
                             ) {
                               setActiveButton("");
                             } else {
-                              toast.error(
-                                "You are not allowed to bid on this lot anymore."
-                              );
+                              toast.error(t("auctionJoin.heading33"));
                             }
                           }}
                         >
@@ -854,7 +851,7 @@ export default function Page() {
                         className="capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg"
                         onClick={() => handleCustomBid("manual")}
                       >
-                        Place Bid For{" "}
+                        {t("auctionJoin.heading34")}{" "}
                         {formatPrice(convert(bidAmount || 0, "LYD"))}
                       </button>
                     )}
@@ -867,7 +864,7 @@ export default function Page() {
                   onClick={handlechat}
                   className="bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium px-4 py-2 rounded-[10px] cursor-pointer shadow-md hover:scale-105 transition-transform duration-300"
                 >
-                  Live Chat
+                  {t("auctionJoin.heading35")}
                 </div>
               </section>
             </Col>
@@ -895,8 +892,8 @@ export default function Page() {
           }
         >
           {winnerLot?.bid?.user?._id === userData?._id
-            ? "🎉 Congratulations!"
-            : "❌ Bidding Closed"}
+            ? "🎉 " + t("auctionJoin.heading36")
+            : "❌ " + t("auctionJoin.heading37")}
         </ModalHeader>
 
         <ModalBody>
@@ -907,8 +904,8 @@ export default function Page() {
                   style={{ color: "#FFC107", fontSize: "60px" }}
                 />
               }
-              title="You've won this auction!"
-              subTitle="Congratulations on winning the lot! The auction has ended in your favor. Please proceed to complete the transaction if required."
+              title={t("auctionJoin.heading38")}
+              subTitle={t("auctionJoin.heading39")}
               status="success"
             />
           ) : (
@@ -935,13 +932,13 @@ export default function Page() {
         toggle={toggleReject}
       >
         <ModalHeader toggle={toggleReject}>
-          Application Rejected – Reapply Below
+          {t("auctionJoin.heading40")}
         </ModalHeader>
         <ModalBody>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Row>
               <Col md={12}>
-                <Label>First Name</Label>
+                <Label>{t("profile.heading3")}</Label>
                 <Controller
                   name="fname"
                   control={control}
@@ -949,7 +946,7 @@ export default function Page() {
                     <Input
                       {...field}
                       invalid={!!errors.fname}
-                      placeholder="Enter First Name"
+                      placeholder={t("profile.heading4")}
                     />
                   )}
                 />
@@ -957,7 +954,7 @@ export default function Page() {
               </Col>
 
               <Col md={12}>
-                <Label>Last Name</Label>
+                <Label>{t("profile.heading5")}</Label>
                 <Controller
                   name="lname"
                   control={control}
@@ -965,7 +962,7 @@ export default function Page() {
                     <Input
                       {...field}
                       invalid={!!errors.lname}
-                      placeholder="Enter Last Name"
+                      placeholder={t("profile.heading6")}
                     />
                   )}
                 />
@@ -973,7 +970,7 @@ export default function Page() {
               </Col>
 
               <Col md={12}>
-                <Label>Email</Label>
+                <Label>{t("profile.heading23")}</Label>
                 <Controller
                   name="email"
                   control={control}
@@ -982,7 +979,7 @@ export default function Page() {
                       type="email"
                       {...field}
                       invalid={!!errors.email}
-                      placeholder="Enter Email"
+                      placeholder={t("auctionRegistration.heading14")}
                     />
                   )}
                 />
@@ -990,7 +987,7 @@ export default function Page() {
               </Col>
 
               <Col md={12}>
-                <Label>Phone</Label>
+                <Label>{t("profile.heading10")}</Label>
                 <Controller
                   name="phone"
                   control={control}
@@ -998,7 +995,7 @@ export default function Page() {
                     <Input
                       {...field}
                       invalid={!!errors.phone}
-                      placeholder="Enter Phone Number"
+                      placeholder={t("profile.heading11")}
                     />
                   )}
                 />
@@ -1006,7 +1003,7 @@ export default function Page() {
               </Col>
 
               <Col md={12}>
-                <Label>Country</Label>
+                <Label>{t("auctionRegistration.heading16")}</Label>
                 <Controller
                   name="country"
                   control={control}
@@ -1017,7 +1014,9 @@ export default function Page() {
                       invalid={!!errors.country}
                       onChange={(e) => handleCountryChange(e, field)}
                     >
-                      <option value="">Select Country</option>
+                      <option value="">
+                        {t("auctionRegistration.heading26")}
+                      </option>
                       {allCountries.map(([name, code]) => (
                         <option key={code} value={name}>
                           {name}
@@ -1030,13 +1029,15 @@ export default function Page() {
               </Col>
 
               <Col md={12}>
-                <Label>Region</Label>
+                <Label>{t("auctionRegistration.heading17")}</Label>
                 <Controller
                   name="region"
                   control={control}
                   render={({ field }) => (
                     <Input type="select" {...field} invalid={!!errors.region}>
-                      <option value="">Select Region</option>
+                      <option value="">
+                        {t("auctionRegistration.heading27")}
+                      </option>
                       {regions.map((r) => (
                         <option key={r} value={r}>
                           {r}
@@ -1050,9 +1051,7 @@ export default function Page() {
 
               {/* Identity Proof Upload Section */}
               <Col md={12} className="mt-3">
-                <Label>
-                  Upload Identity Proof (Passport, Driver's License)
-                </Label>
+                <Label>{t("auctionJoin.heading42")}</Label>
                 <Input
                   type="file"
                   multiple
@@ -1115,9 +1114,7 @@ export default function Page() {
 
               {/* Funds Proof Upload Section */}
               <Col md={12} className="mt-3">
-                <Label>
-                  Upload Proof of Funds (Bank Statement, Income Proof)
-                </Label>
+                <Label>{t("auctionJoin.heading42")}</Label>
                 <Input
                   type="file"
                   multiple
@@ -1186,7 +1183,7 @@ export default function Page() {
                   {rejectLoading ? (
                     <Spinner size="sm" color="white" />
                   ) : (
-                    "Submit"
+                    t("auctionJoin.heading43")
                   )}
                 </Button>
               </Col>

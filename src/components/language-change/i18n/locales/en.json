@@ -78,10 +78,21 @@
     "heading3": "Terms"
   },
   "privacy": {
-    "heading": "Privacy Policy"
+    "heading": "Privacy Policy",
+    "heading2": "Not Found",
+    "heading3": "See Privacy Policy Here."
   },
   "termConditions": {
-    "heading": "Terms & Conditions"
+    "heading": "Terms & Conditions",
+    "heading2": "See Terms And Conditions Here."
+  },
+  "changeCurrency": {
+    "heading": "Currency",
+    "heading2": "You can change currency here",
+    "heading3": "Currency Settings",
+    "heading4": "Select Currency",
+    "heading5": "Current currency",
+    "heading6": "Your currency preference will be saved for future visits."
   },
   "contactUs": {
     "heading": "Call Us",
@@ -163,7 +174,41 @@
     "heading30": "In Transit Date",
     "heading31": "Expected Delivery",
     "heading32": "Your order is shipped",
-    "heading33": "You will receive it soon."
+    "heading33": "You will receive it soon.",
+    "heading34": "User Email",
+    "heading35": "User Phone",
+    "heading36": "Lot Price",
+    "heading37": "Order Id",
+    "heading38": "Proof image must be a valid URL",
+    "heading39": "Proof image is required",
+    "heading40": "Please specify other method",
+    "heading41": "Payment method is required",
+    "heading42": "Payment NOT uploaded!",
+    "heading43": "Payment uploaded successfully!",
+    "heading44": "Invoice Detail",
+    "heading45": "Make a payment",
+    "heading46": "Admin Account Detail",
+    "heading47": "Bank Name",
+    "heading48": "Account Number",
+    "heading49": "Account Name",
+    "heading50": "Invoice Number",
+    "heading51": "Issued Date",
+    "heading52": "Expiry Date",
+    "heading53": "Payment Method",
+    "heading54": "Payment Status",
+    "heading55": "Amount Paid",
+    "heading56": "Payment Proof",
+    "heading57": "Customer",
+    "heading58": "Email",
+    "heading59": "Shipping Address",
+    "heading60": "Delivery Date",
+    "heading61": "Shipped Date",
+    "heading62": "Tracking Number",
+    "heading63": "Upload Proof Image",
+    "heading64": "Select Payment Method",
+    "heading65": "Enter Other Method",
+  
+    "heading66": "Upload"
   },
   "categoryAuction": {
     "heading": "Category Auctions",
@@ -208,7 +253,13 @@
     "heading21": "Full Name",
     "heading22": "Phone Number",
     "heading23": "Email",
-    "heading24": "Wallet Balance"
+    "heading24": "Wallet Balance",
+    "heading25": "Frequently Asked Questions",
+    "heading26": "Didn't find what you were looking for?",
+    "heading27": "Contact our customer service",
+    "heading28": "No FAQs found",
+    "heading29": "Help Centre",
+    "heading30": "Won Lots"
   },
   "auctionRegistration": {
     "heading": "Auction Registration",
@@ -228,6 +279,91 @@
     "heading15": "Phone Number",
     "heading16": "Country",
     "heading17": "Region",
-    "heading18": "Next"
+    "heading18": "Next",
+    "heading19": "At least one identity proof photo is required",
+    "heading20": "Identity proof photos are required",
+    "heading21": "At least one proof of funds photo is required",
+    "heading22": "Proof of funds photos are required",
+    "heading23": "Cannot upload more than 5 files",
+    "heading24": "You can upload up to 5 files",
+    "heading25": "Application updated successfully",
+    "heading26": "Select Country",
+    "heading27": "Select Region"
+  },
+  "auctionJoin": {
+    "heading1": "Good morning",
+    "heading2": "Good afternoon",
+    "heading3": "Good evening",
+    "heading4": "Good night",
+    "heading5": "Confirm Bid",
+    "heading6": "You have placed a bid for",
+    "heading7": "Should we place this as your Bid?",
+    "heading8": "Yes, Place My Bid",
+    "heading9": "Cancel",
+    "heading10": "Winner Announced",
+    "heading11": "Apply Again",
+    "heading12": "Your application is pending. Please wait for approval.",
+    "heading13": "Your application is rejected. Please apply again.",
+    "heading14": "You can bid for this auction starting from",
+    "heading15": "Lot information is missing.",
+    "heading16": "Your bid must be at least",
+    "heading17": "Please enter a valid bid amount.",
+    "heading18": "Here are your auctions whom you can join.",
+    "heading19": "Bid price",
+    "heading20": "are live",
+    "heading21": "Current Bid Price",
+    "heading22": "Bid increment price",
+    "heading23": "Bid Starting time",
+    "heading24": "Bid End time",
+    "heading25": "Congratulations!",
+    "heading26": "You have won this lot!. You can no longer place a bid for this item.",
+    "heading27": "Winner Announced",
+    "heading28": "This lot is now closed as a winner has been selected. You can no longer place a bid for this item.",
+    "heading29": "Live Auction",
+    "heading30": "Bids made",
+    "heading31": "Use Custom Bid",
+    "heading32": "Enter your bid",
+    "heading33": "You are not allowed to bid on this lot anymore.",
+    "heading34": "Place Bid For",
+    "heading35": "Live Chat",
+    "heading36": "You've won this auction!",
+    "heading37": "You didn't win this auction!",
+    "heading38": "You've won this auction!",
+    "heading39": "Congratulations on winning the lot! The auction has ended in your favor. Please proceed to complete the transaction if required.",
+    "heading40": "Application Rejected – Reapply Below",
+    "heading41": "Upload Identity Proof (Passport, Driver's License)",
+    "heading42": "Upload Proof of Funds (Bank Statement, Income Proof)",
+    "heading43": "Submit",
+    "heading44": "Lot Details",
+    "heading45": "Starting price",
+    "heading46": "Back",
+    "heading47": "you can do the live chat between the auctioneer and bidders."
+  },
+  "notification": {
+    "heading1": "Notifications",
+    "heading2": "No notifications",
+    "heading3": "See All",
+    "heading4": "All Notifications",
+    "heading5": "No notifications found.",
+    "heading6": "See More"
+  },
+  "message": {
+    "heading1": "All Conversation",
+    "heading2": "Choose from your existing conversations, start a new one, or just keep swimming.",
+    "heading3": "No Chats Found"
+  },
+  "favorite": {
+    "heading1": "Favourite Auctions",
+    "heading2": "Load More"
+  },
+  "lotDetail": {
+    "heading1": "Here are your auctions whom you can join.",
+    "heading2": "Lot Price",
+    "heading3": "Lot Status",
+    "heading4": "Lot minimum Price",
+    "heading5": "Bid increment price",
+    "heading6": "Category",
+    "heading7": "Lot Description"
   }
+
 }

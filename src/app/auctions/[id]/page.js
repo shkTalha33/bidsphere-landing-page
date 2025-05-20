@@ -35,10 +35,10 @@ const AuctionDetailPage = () => {
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour >= 5 && hour < 12) return "Good morning";
-    if (hour >= 12 && hour < 17) return "Good afternoon";
-    if (hour >= 17 && hour < 21) return "Good evening";
-    return "Good night";
+    if (hour >= 5 && hour < 12) return t("auctionJoin.heading1");
+    if (hour >= 12 && hour < 17) return t("auctionJoin.heading2");
+    if (hour >= 17 && hour < 21) return t("auctionJoin.heading3");
+    return t("auctionJoin.heading4");
   };
 
   const handleImagePreview = (image) => {

@@ -9,6 +9,7 @@ import debounce from "debounce";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Container } from "reactstrap";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
   const [data, setData] = useState([]);
@@ -16,13 +17,14 @@ export default function Page() {
   const { id } = useParams();
   const { get, userData } = ApiFunction();
   const navigate = useRouter();
+  const { t } = useTranslation();
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour >= 5 && hour < 12) return "Good morning";
-    if (hour >= 12 && hour < 17) return "Good afternoon";
-    if (hour >= 17 && hour < 21) return "Good evening";
-    return "Good night";
+    if (hour >= 5 && hour < 12) return t("auctionJoin.heading1");
+    if (hour >= 12 && hour < 17) return t("auctionJoin.heading2");
+    if (hour >= 17 && hour < 21) return t("auctionJoin.heading3");
+    return t("auctionJoin.heading4");
   };
 
   const fetchAuctionDetail = debounce(async () => {

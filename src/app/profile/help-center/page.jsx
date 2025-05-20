@@ -16,6 +16,7 @@ import { Fragment, useState, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
 import { HashLoader } from "react-spinners";
 /* eslint-disable @next/next/no-img-element */
+import { useTranslation } from "react-i18next";
 
 const ProfilePage = () => {
   const { get } = ApiFunction();
@@ -29,6 +30,7 @@ const ProfilePage = () => {
   const [pagiLoading, setPagiLoading] = useState(false);
   const [count, setCount] = useState(0);
   const router = useRouter();
+  const { t } = useTranslation();
 
   //   ////////
 
@@ -112,14 +114,14 @@ const ProfilePage = () => {
           <TopSection
             description="See your FAQs here.."
             mt={0}
-            title="Help Centre"
+            title= {t("profil.heading29")}
           />
           <div className="bg-white px-8 rounded-lg w-full shadow-sm">
             <div className="p-3 p-md-4 rounded-4 bg_white">
               <h6
                 className={`text-lg md:text-xl text-center text-md-start mb-4 xl:text-2xl poppins_medium`}
               >
-                Frequently Asked Questions
+                {t("profil.heading25")}
               </h6>
               <div className="flex max-[900px]:flex-wrap gap-2">
                 <div className="w-100 max-[900px]:w-100 min-[900px]:max-w-[300px]">
@@ -157,7 +159,7 @@ const ProfilePage = () => {
                             alt="No Data"
                           />
                           <h5 className="text-center text-gray-500">
-                            No Category Found
+                            {t("category.categoryNotFound")}
                           </h5>
                         </div>
                       </>
@@ -166,16 +168,16 @@ const ProfilePage = () => {
                   <div className="hidden lg:block contact-help-center rounded-2 bg-blue-700 mt-6">
                     <div className="p-4">
                       <p className="mb-2 sm:text-[12px] md:text-[15px] lg:text-[18px] poppins_medium text_white">
-                        Didn't find what you were looking for?
+                        {t("profil.heading26")}
                       </p>
                       <p className="md:text-[10px] lg:text-[14px] poppins_normal text_white">
-                        Contact our customer service{" "}
+                        {t("profil.heading27")}
                       </p>
                       <button
                         onClick={() => navigate("/contactUS")}
                         className="rounded-none bg-white text-blue-700 px-4 py-2 mt-2 poppins_medium hover:bg-gray-100 transition-colors"
                       >
-                        Contact Us
+                        {t("nav.contactus")}
                       </button>
                     </div>
                   </div>
@@ -222,7 +224,7 @@ const ProfilePage = () => {
                                 alt="No Data"
                               />
                               <h1 className="text-center text-[1rem]">
-                                No FAQs found
+                                {t("profil.heading28")}
                               </h1>
                             </div>
                           </div>

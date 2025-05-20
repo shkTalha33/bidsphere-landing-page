@@ -21,7 +21,7 @@ import { avataruser, StaticImage } from "../assets/icons/icon";
 import { Spinner } from "react-bootstrap";
 import { Skeleton } from "antd";
 import { decrementMessageUnseen } from "../redux/notificationSlice/notificationSlice";
-
+import { useTranslation } from "react-i18next";
 const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
   const [badge, setBadge] = useState(false);
   const { activeChatId, setActiveChatId } = useActiveChat();
@@ -30,7 +30,7 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
   const { setResponsiveChat } = useResponsiveChat();
   const userData = useSelector((state) => state.auth?.userData);
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const toggleData = async (chatData) => {
     socket.emit("seen-msg", {
       lot: chatData?.lot?._id,
@@ -351,7 +351,7 @@ const ChatList = () => {
                       alt=""
                     />
                     <h1 className="text-center text-gray-500">
-                      No Chats Found
+                      {t("message.heading3")}
                     </h1>
                   </div>
                 </>

@@ -2,19 +2,20 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
-const navItems = [
-  { label: "Personal Information", path: "/profile/personal-information" },
-  { label: "Won Lots", path: "/profile/won-lots" },
-  { label: "Help Centre", path: "/profile/help-center" },
-  { label: "Privacy Policy", path: "/profile/privacy-policy" },
-  { label: "Terms & Conditions", path: "/profile/terms-condition" },
-  { label: "Currency", path: "/profile/change-currency" },
-];
 const TabHeader = () => {
+  const { t } = useTranslation();
   const userData = useSelector((state) => state.auth?.userData);
   const pathname = usePathname();
-
+  const navItems = [
+    { label: t("profil.heading"), path: "/profile/personal-information" },
+    { label: t("profil.heading29"), path: "/profile/won-lots" },
+    { label: t("profil.heading30"), path: "/profile/help-center" },
+    { label: t("privacy.heading"), path: "/profile/privacy-policy" },
+    { label: t("termConditions.heading"), path: "/profile/terms-condition" },
+    { label: t("changeCurrency.heading"), path: "/profile/change-currency" },
+  ];
   return (
     <div className="rounded flex h-100 flex-col gap-2 p-3 bg-white">
       {navItems.map((item, index) => (

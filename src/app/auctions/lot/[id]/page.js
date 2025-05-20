@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
 import { useSocket } from "@/components/socketProvider/socketProvider";
-
+import { useTranslation } from "react-i18next";
 export default function Page() {
   const { get, userData } = ApiFunction();
   const [openBiddingConfirmationModal, setOpenBiddingConfirmationModal] =
@@ -29,12 +29,13 @@ export default function Page() {
   const { formatPrice, convert } = useCurrency();
   const [currentLot, setCurrentLot] = useState(null);
   const { id } = useParams();
+  const { t } = useTranslation();
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour >= 5 && hour < 12) return "Good morning";
-    if (hour >= 12 && hour < 17) return "Good afternoon";
-    if (hour >= 17 && hour < 21) return "Good evening";
-    return "Good night";
+    if (hour >= 5 && hour < 12) return t("auctionJoin.heading1");
+    if (hour >= 12 && hour < 17) return t("auctionJoin.heading2");
+    if (hour >= 17 && hour < 21) return t("auctionJoin.heading3");
+    return t("auctionJoin.heading4");
   };
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -90,7 +91,6 @@ export default function Page() {
       setSelectedImage(currentLot.images[0]);
     }
   }, [currentLot]);
-  
 
   return (
     <main className="bg_mainsecondary p-2 md:py-4">

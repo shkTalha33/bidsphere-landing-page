@@ -5,10 +5,11 @@ import useCurrency from "@/components/hooks/useCurrency";
 import CurrencyConverter from "@/components/common/CurrencyConverter";
 import TabHeader from "@/components/tabHeader";
 import TopSection from "@/components/common/TopSection";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const { loading } = useCurrency();
-
+  const { t } = useTranslation();
   return (
     <main className="bg-gray-100 flex flex-col items-start">
       <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-6">
@@ -17,9 +18,9 @@ export default function Home() {
         </div>
         <div className="w-full flex flex-col items-start gap-3 lg:w-3/4">
           <TopSection
-            description="You can change currency here"
+            description={t("changeCurrency.heading2")}
             mt={0}
-            title="Currency"
+            title={t("changeCurrency.heading")}
           />
 
           {loading ? (

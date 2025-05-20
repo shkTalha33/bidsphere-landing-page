@@ -1,30 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
-import { getAuctionLot } from "@/components/api/ApiFile";
-import { handleError } from "@/components/api/errorHandler";
-import { avataruser, confirmBid, winBid } from "@/components/assets/icons/icon";
-import AuctionConfirmationModal from "@/components/common/auctionConfirmationModal";
 import TopSection from "@/components/common/TopSection";
 import useCurrency from "@/components/hooks/useCurrency";
-import { Avatar } from "antd";
-import debounce from "debounce";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Check, ChevronRight, Heart, Maximize2, X } from "react-feather";
-import { FaRegClock } from "react-icons/fa6";
-import { TbLivePhoto } from "react-icons/tb";
+
 import { useDispatch, useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
-import { useSocket } from "@/components/socketProvider/socketProvider";
 import { getLanguage } from "@/components/redux/language/languageSlice";
+import { useTranslation } from "react-i18next";
 
 const Page = () => {
   const { get, userData } = ApiFunction();
-  const [openBiddingConfirmationModal, setOpenBiddingConfirmationModal] =
-    useState(false);
   const [previewModal, setPreviewModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const { formatPrice, convert } = useCurrency();
@@ -32,7 +23,7 @@ const Page = () => {
   const searchParams = useSearchParams();
   const itemParam = searchParams.get("item");
   const userLanguage = useSelector(getLanguage);
-
+  const { t } = useTranslation();
   useEffect(() => {
     if (itemParam) {
       try {
@@ -49,34 +40,13 @@ const Page = () => {
   const { id } = useParams();
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour >= 5 && hour < 12) return "Good morning";
-    if (hour >= 12 && hour < 17) return "Good afternoon";
-    if (hour >= 17 && hour < 21) return "Good evening";
-    return "Good night";
+    if (hour >= 5 && hour < 12) return t("auctionJoin.heading1");
+    if (hour >= 12 && hour < 17) return t("auctionJoin.heading2");
+    if (hour >= 17 && hour < 21) return t("auctionJoin.heading3");
+    return t("auctionJoin.heading4");
   };
 
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const confirmationItem = {
-    title: "Confirm Bid",
-    description:
-      "You have placed a bid for $35,000. Should we place this as your Bid?",
-    image: confirmBid,
-    buttons: [
-      {
-        btnText: "Yes, Place My Bid",
-        // onClick: () => router.push("/auctions/registration"),
-        className:
-          "rounded-[10px] bg_primary text-white poppins_medium text-xs sm:text-base md:text-lg border border-[#660000] w-full py-2 md:py-3",
-      },
-      {
-        btnText: "Cancel",
-        onClick: () => setOpenBiddingConfirmationModal(false),
-        className:
-          "rounded-[10px] bg-white text_primary border border-[#660000] poppins_medium text-xs sm:text-base md:text-lg w-full py-2 md:py-3",
-      },
-    ],
-  };
 
   const handleImagePreview = (image) => {
     setSelectedImage(image);
@@ -88,7 +58,6 @@ const Page = () => {
       setSelectedImage(currentLot?.item?.images[0]);
     }
   }, [currentLot]);
-
 
   return (
     <>
@@ -104,7 +73,7 @@ const Page = () => {
               title={`${getGreeting()}, ${userData?.fname || ""} ${
                 userData?.lname || ""
               }`}
-              description={"Here are your auctions whom you can join."}
+              description={t("lotDetail.heading1")}
               button={""}
             />
             <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
@@ -196,7 +165,7 @@ const Page = () => {
                     <Row className="py-4 bg-[#F3F2F2] rounded-[10px] g-3 mx-0">
                       <Col sm="6" className="border-r border-gray-300 px-4">
                         <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                          Lot Price
+                          {t("order.heading36")}
                         </p>
                         <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                           {formatPrice(convert(currentLot?.item?.price, "LYD"))}
@@ -204,7 +173,7 @@ const Page = () => {
                       </Col>
                       <Col sm="6" className=" px-4">
                         <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                          Lot Status
+                          {t("lotDetail.heading2")}
                         </p>
                         <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                           {currentLot?.item?.status}
@@ -212,7 +181,7 @@ const Page = () => {
                       </Col>
                       <Col sm="6" className="border-r border-gray-300 px-4">
                         <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                          Lot minimum Price
+                          {t("lotDetail.heading3")}
                         </p>
                         <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                           {formatPrice(convert(currentLot?.minprice, "LYD"))}
@@ -220,7 +189,7 @@ const Page = () => {
                       </Col>
                       <Col sm="6" className=" px-4">
                         <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                          Bid increment price
+                          {t("lotDetail.heading4")}
                         </p>
                         <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                           {formatPrice(
@@ -230,15 +199,17 @@ const Page = () => {
                       </Col>
                       <Col sm="6" className="border-r border-gray-300 px-4">
                         <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                          Category
+                          {t("lotDetail.heading5")}
                         </p>
                         <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
-                          {userLanguage === "en" ?  currentLot?.item?.category?.name?.en : currentLot?.item?.category?.name?.ar}
+                          {userLanguage === "en"
+                            ? currentLot?.item?.category?.name?.en
+                            : currentLot?.item?.category?.name?.ar}
                         </p>
                       </Col>
                       <Col sm="6" className=" px-4">
                         <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                          Category Status
+                          {t("lotDetail.heading6")}
                         </p>
                         <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                           {currentLot?.item?.category?.status}
@@ -246,7 +217,7 @@ const Page = () => {
                       </Col>
                       <Col sm="12" className=" px-4">
                         <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                          Lot Description
+                          {t("lotDetail.heading7")}
                         </p>
                         <div className="poppins_regular abDatadi">
                           <p
@@ -265,11 +236,6 @@ const Page = () => {
         )}
 
         {/* Modals */}
-        <AuctionConfirmationModal
-          openModal={openBiddingConfirmationModal}
-          setOpenModal={setOpenBiddingConfirmationModal}
-          item={confirmationItem}
-        />
 
         {/* Image Preview Modal */}
         <Modal

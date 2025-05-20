@@ -9,11 +9,13 @@ import TopSection from "@/components/common/TopSection";
 import TabHeader from "@/components/tabHeader";
 import { Skeleton } from "antd";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const PrivacyPolicyPage = () => {
   const [loading, setLoading] = useState(false);
   const [privacyData, setPrivacyData] = useState("");
   const { get } = ApiFunction();
+  const { t } = useTranslation();
 
   const handlePrivacy = () => {
     setLoading(true);
@@ -43,9 +45,9 @@ const PrivacyPolicyPage = () => {
         </div>
         <div className="w-full flex flex-col items-start gap-3 lg:w-3/4">
           <TopSection
-            description="See Privacy Policy Here."
+            description={t("privacy.heading3")}
             mt={0}
-            title="Privacy Policy"
+            title={t("privacy.heading")}
           />
           <div className="bg-white px-8 py-6 rounded-lg w-full shadow-sm">
             {loading ? (
@@ -53,7 +55,7 @@ const PrivacyPolicyPage = () => {
             ) : privacyData?.description ? (
               <>
                 <h5 className="text-xl md:text-2xl poppins_medium mb-3">
-                  Privacy Policy
+                  {t("privacy.heading")}
                 </h5>
                 <div
                   className="ckData"
@@ -61,7 +63,9 @@ const PrivacyPolicyPage = () => {
                 />
               </>
             ) : (
-              <div className="text-center py-4 text-gray-500">Not Found</div>
+              <div className="text-center py-4 text-gray-500">
+                {t("privacy.heading2")}
+              </div>
             )}
           </div>
         </div>

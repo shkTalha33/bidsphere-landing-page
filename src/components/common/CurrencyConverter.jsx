@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedCurrency } from "../redux/currency";
+import { useTranslation } from "react-i18next";
 
 const CurrencyConverter = () => {
   const dispatch = useDispatch();
@@ -9,7 +10,7 @@ const CurrencyConverter = () => {
     (state) => state.currency
   );
   const [mounted, setMounted] = useState(false);
-
+  const { t } = useTranslation();
   // Handle currency change
   const handleCurrencyChange = (e) => {
     const currencyCode = e.target.value;
@@ -28,10 +29,10 @@ const CurrencyConverter = () => {
 
   return (
     <div className="currency-converter p-4 bg-gray-100 rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Currency Settings</h2>
+      <h2 className="text-xl font-bold mb-4">{t("changeCurrency.heading3")}</h2>
       <div className="flex items-center space-x-2">
         <label htmlFor="currency-select" className="text-gray-700">
-          Select Currency:
+          {t("changeCurrency.heading4")}:
         </label>
         <select
           id="currency-select"
@@ -39,7 +40,7 @@ const CurrencyConverter = () => {
           onChange={handleCurrencyChange}
           className="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          {currencies.map((currency) => (
+          {currencies?.map((currency) => (
             <option key={currency.code} value={currency.code}>
               {currency.name} ({currency.symbol})
             </option>
@@ -48,13 +49,13 @@ const CurrencyConverter = () => {
       </div>
       <div className="mt-4">
         <p className="text-sm text-gray-600">
-          Current currency:{" "}
+          {t("changeCurrency.heading5")}:{" "}
           <span className="poppins_medium">
             {selectedCurrency.name} ({selectedCurrency.symbol})
           </span>
         </p>
         <p className="text-xs text-gray-500 mt-1">
-          Your currency preference will be saved for future visits.
+          {t("changeCurrency.heading6")}
         </p>
       </div>
     </div>

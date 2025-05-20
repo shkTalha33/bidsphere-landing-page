@@ -34,7 +34,6 @@ import DeliveryTime from "./deliveryTime";
 import { useTranslation } from "react-i18next";
 
 export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
-  const [currentActiveButton, setCurrentActiveButton] = useState("all orders");
   const [currentSelectedButton, setCurrentSelectedButton] =
     useState("order summary");
   const router = useRouter();

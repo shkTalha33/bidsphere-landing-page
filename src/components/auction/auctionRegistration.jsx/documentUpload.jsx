@@ -45,9 +45,6 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
       .required("Proof of funds photos are required"),
   });
 
-
-  console.log(formData , "formData");
-  
   const {
     handleSubmit,
     setValue,
@@ -61,11 +58,6 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
       funds_proof: [],
     },
   });
-
-  const id_proof = watch("id_proof");
-  const funds_proof = watch("funds_proof");
-  console.log(id_proof , "id_proof");
-  console.log(funds_proof , "funds_proof");
 
   useEffect(() => {
     if (
@@ -199,7 +191,7 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
     errors,
   }) => (
     <Col md="6">
-      <Label >{title}</Label>
+      <Label>{title}</Label>
       <p className="text-[#959595] text-[14px] poppins_regular">{subtitle}</p>
       <div
         className={`border-2 ${

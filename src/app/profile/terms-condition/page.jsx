@@ -45,9 +45,9 @@ const Page = () => {
         </div>
         <div className="w-full flex flex-col items-start gap-3 lg:w-3/4">
           <TopSection
-            description="See Terms And Conditions Here."
+            description={t("termConditions.heading2")}
             mt={0}
-            title="Terms And Conditions"
+            title={t("termConditions.heading")}
           />
           <div className="bg-white px-8 py-6 rounded-lg w-full shadow-sm">
             <div className="p-3 p-md-4 rounded-4 bg_white">
@@ -56,7 +56,7 @@ const Page = () => {
               ) : (
                 <>
                   <h5 className="text-xl md:text-2xl poppins_medium mb-3">
-                    Term & Condition
+                    {t("termConditions.heading")}
                   </h5>
 
                   <div

@@ -23,6 +23,7 @@ import { getInvoiceDetail, invoicePayment } from "@/components/api/ApiFile";
 import toast from "react-hot-toast";
 import DownloadInvoice from "./downloadInvoice";
 import { handleError } from "@/components/api/errorHandler";
+import { useTranslation } from "react-i18next";
 const Invoice = ({
   orderDetail,
   detailLoading,
@@ -39,6 +40,7 @@ const Invoice = ({
   // payment proof modal
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
+  const { t } = useTranslation();
   const handleBakcOr = () => {
     router.push("/orders");
   };
@@ -53,9 +55,9 @@ const Invoice = ({
   const schema = yup.object().shape({
     proofImg: yup
       .string()
-      .url("Proof image must be a valid URL")
-      .required("Proof image is required"),
-    paymentMethod: yup.string().required("Payment method is required"),
+      .url(t("order.heading38"))
+      .required(t("order.heading39")),
+    paymentMethod: yup.string().required(t("order.heading40")),
     otherMethod: yup.string().when("paymentMethod", {
       is: (val) => val === "Other",
       then: (schema) => schema.required("Please specify other method"),
@@ -141,9 +143,9 @@ const Invoice = ({
             )
           );
           handleClose();
-          toast.success("Payment uploaded successfully!");
+          toast.success(t("order.heading43"));
         } else {
-          toast.error("Payment NOT uploaded!");
+          toast.error(t("order.heading42"));
         }
         setLoading(false);
       })
@@ -161,7 +163,7 @@ const Invoice = ({
         <>
           <section>
             <h4 className="poppins_semibold text-base md:text-xl text-[#202020] capitalize mb-4">
-              Invoice Detail
+              {t("order.heading44")}
             </h4>
 
             {/* Auction Info */}
@@ -205,30 +207,36 @@ const Invoice = ({
                       className="text-[1rem] py-[5px] px-[10px] bg-[#660000] text-white rounded-[8px] poppins_regular whitespace-nowrap flex items-center gap-2 cursor-pointer"
                     >
                       <BsCash />
-                      Make a payment
+                      {t("order.heading45")}
                     </div>
                   )}
                 </div>
               </Col>
             </Row>
             <h3 className="text-[#25324B] mb-2 text-[1.2rem] poppins_medium">
-              Admin Account Detail
+              {t("order.heading46")}
             </h3>
             <div className="grid md:grid-cols-2 gap-4 mb-4 border-b pb-3">
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Bank Name</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading47")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {accountDetail?.accountDetails?.bankname}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Account Number</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading48")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {accountDetail?.accountDetails?.acc_number}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Account Name</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading49")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {accountDetail?.accountDetails?.acc_name}
                 </p>
@@ -238,13 +246,17 @@ const Invoice = ({
             {/* Invoice Details */}
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Invoice Number</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading50")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.transaction?.invoice_num}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Issued Date</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading51")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {moment(orderDetail?.transaction?.issue_date)
                     .local()
@@ -252,7 +264,9 @@ const Invoice = ({
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Expiry Date</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading52")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {moment(orderDetail?.transaction?.expirey_date)
                     .local()
@@ -260,19 +274,25 @@ const Invoice = ({
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Payment Method</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading53")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.transaction?.paymentMethodType}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Payment Status</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading54")}
+                </p>
                 <p className="text-[#28a745] poppins_semibold capitalize">
                   {orderDetail?.transaction?.status}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Amount Paid</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading55")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {formatPrice(
                     convert(orderDetail?.transaction?.amount, "LYD")
@@ -284,7 +304,9 @@ const Invoice = ({
             {/* Payment Proof Image */}
             {orderDetail?.transaction?.paymentImage && (
               <div className="mb-4">
-                <p className="text-[#7C8493] text-sm mb-2">Payment Proof</p>
+                <p className="text-[#7C8493] text-sm mb-2">
+                  {t("order.heading56")}
+                </p>
                 <img
                   src={orderDetail.transaction.paymentImage}
                   alt="Payment Proof"
@@ -296,37 +318,49 @@ const Invoice = ({
             {/* Shipping Info */}
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Customer</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading57")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.user?.fname} {orderDetail?.user?.lname}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Email</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading58")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.user?.email}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Shipping Address</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading59")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.address}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Delivery Date</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading60")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {moment(orderDetail?.deliveryDate).local().format("LLL")}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Shipped Date</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading61")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {moment(orderDetail?.shippedDate).local().format("LLL")}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">Tracking Number</p>
+                <p className="text-[#7C8493] text-sm mb-1">
+                  {t("order.heading62")}
+                </p>
                 <p className="text-[#25324B] poppins_medium">
                   {orderDetail?.trackingnumber}
                 </p>
@@ -344,7 +378,7 @@ const Invoice = ({
       <Modal show={show} backdrop="static" centered onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title className="poppins_regular text-[1rem]">
-            Make a Payement
+            {t("order.heading45")}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -360,7 +394,7 @@ const Invoice = ({
                   className="form-control borderCus absolute opacity-0 rounded-md p-2"
                   onChange={(e) => handleImageChange(e, setValue)}
                 />
-                Upload Proof Image
+                {t("order.heading63")}
               </div>
               <div className="relative flex shrink-0 overflow-hidden">
                 {isUploading ? (
@@ -397,7 +431,7 @@ const Invoice = ({
             {/* Select payment method */}
             <div className="flex flex-col gap-2 mb-4">
               <label htmlFor="paymentMethod  poppins_regular">
-                Select Payment Method
+                {t("order.heading64")}
               </label>
               <Controller
                 name="paymentMethod"
@@ -427,7 +461,7 @@ const Invoice = ({
             {selectedPayment === "Other" && (
               <div className="flex flex-col gap-2 mb-4">
                 <label htmlFor="otherMethod poppins_regular">
-                  Enter Other Method
+                  {t("order.heading65")}
                 </label>
                 <Controller
                   name="otherMethod"
@@ -455,7 +489,11 @@ const Invoice = ({
               type="submit"
             >
               {" "}
-              {loading ? <>Loading...</> : <>Upload</>}
+              {loading ? (
+                <>{t("payment.heading22")}</>
+              ) : (
+                <>{t("order.heading66")}</>
+              )}
             </Button>
           </form>
         </Modal.Body>

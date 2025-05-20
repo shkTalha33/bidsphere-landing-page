@@ -20,6 +20,7 @@ import { Skeleton } from "antd";
 import Image from "next/image";
 import { ChevronRight, Maximize2 } from "react-feather";
 import useCurrency from "@/components/hooks/useCurrency";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
   const { get, userData } = ApiFunction();
@@ -32,16 +33,17 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [auctionData, setAuctionData] = useState({});
   const { formatPrice, convert } = useCurrency();
+  const { t } = useTranslation();
   const schema = yup.object().shape({
     message: yup.string().trim().required("Message is required"),
   });
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour >= 5 && hour < 12) return "Good morning";
-    if (hour >= 12 && hour < 17) return "Good afternoon";
-    if (hour >= 17 && hour < 21) return "Good evening";
-    return "Good night";
+    if (hour >= 5 && hour < 12) return t("auctionJoin.heading1");
+    if (hour >= 12 && hour < 17) return t("auctionJoin.heading2");
+    if (hour >= 17 && hour < 21) return t("auctionJoin.heading3");
+    return t("auctionJoin.heading4");
   };
 
   //   get chat auction data
@@ -94,10 +96,14 @@ export default function Page() {
     if (!socket?.connected) return;
     socket.emit("join_auction", id, (response) => {
       if (response?.success) {
-        const matchedLot = response?.auction?.lots.find(
-          (lot) => lot?.item?._id === response?.auction?.current_lot
-        );
-        setAuctionData(matchedLot || null);
+        if (response?.auction?.current_lot) {
+          const matchedLot = response?.auction?.lots.find(
+            (lot) => lot?.item?._id === response?.auction?.current_lot
+          );
+          setAuctionData(matchedLot || null);
+        } else {
+          setAuctionData(response?.auction?.lots[0]);
+        }
       }
     });
 
@@ -116,7 +122,7 @@ export default function Page() {
   };
   const button = {
     icon: <TiArrowBack className="w-5 h-5 mr-2 text-yellow-300" />,
-    text: "Back",
+    text: t("auctionJoin.heading46"),
     onClick: backnavi,
     className:
       "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_semibold px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
@@ -126,10 +132,10 @@ export default function Page() {
     <main className="bg_mainsecondary">
       <>
         <TopSection
-                title={`${getGreeting()}, ${userData?.fname || ""} ${userData?.lname || ""}`}
-          description={
-            "you can do the live chat between the auctioneer and bidders."
-          }
+          title={`${getGreeting()}, ${userData?.fname || ""} ${
+            userData?.lname || ""
+          }`}
+          description={t("auctionJoin.heading47")}
           button={button}
         />
 
@@ -218,7 +224,7 @@ export default function Page() {
                   className="bg_white max-[767px]:!hidden p-3 md:p-4 rounded-lg d-flex flex-column max-h-[700px] overflow-y-auto"
                 >
                   <h5 className="text-[1.5rem] poppins_medium mb-3">
-                    Lot Details
+                    {t("auctionJoin.heading44")}
                   </h5>
                   {auctionData?.item?.images?.map((image, index) => (
                     <div
@@ -247,7 +253,7 @@ export default function Page() {
                             {auctionData?.item?.name}
                           </p>
                           <p className="poppins_regular text-sm text-white mb-0 capitalize">
-                            Auction
+                            {t("nav.auction")}
                           </p>
                         </div>
                         <div className="mb-0">
@@ -257,7 +263,7 @@ export default function Page() {
                     </div>
                     <div className="bg-[#F3F2F2] mt-3 p-2 rounded-[10px]">
                       <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                        Starting price
+                        {t("auctionJoin.heading45")}
                       </p>
                       <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
                         {formatPrice(

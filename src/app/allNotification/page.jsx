@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Button, Spinner } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { MdDeleteForever } from "react-icons/md";
-
+import { useTranslation } from "react-i18next";
 const Page = () => {
   const { get, deleteData } = ApiFunction();
   const [notifications, setNotifications] = useState([]);
@@ -23,7 +23,7 @@ const Page = () => {
   const [hasMore, setHasMore] = useState(true);
   const socket = useSocket();
   const router = useRouter();
-
+  const { t } = useTranslation();
   const handleNotificationClick = (item) => {
     switch (item?.type) {
       case "message": {
@@ -114,7 +114,7 @@ const Page = () => {
         <Col md="12">
           <Breadcrumbs pageTitle={"All Notifications"} />
           <h3 className="text-2xl poppins_medium text-gray-800 mb-4">
-            All Notifications
+            {t("notification.heading4")}
           </h3>
 
           {loading ? (
@@ -123,7 +123,7 @@ const Page = () => {
             </div>
           ) : notifications?.length === 0 ? (
             <div className="text-center text-gray-500">
-              No notifications found.
+              {t("notification.heading5")}
             </div>
           ) : (
             <div className="space-y-4">
@@ -169,7 +169,7 @@ const Page = () => {
                     <p className="text-gray-600 mt-1">{item?.description}</p>
                     {item?.auction?.name && (
                       <p className="text-sm text-gray-500 mt-1">
-                        Auction: {item?.auction?.name}
+                        {t("nav.auction")} {item?.auction?.name}
                       </p>
                     )}
                   </div>
@@ -193,7 +193,9 @@ const Page = () => {
                     onClick={handleGetNotification}
                     className="mt-4 bg_primary hover:bg_primary border-none text-white px-4 py-2 rounded shadow transition-transform hover:scale-105"
                   >
-                    {loadingMore ? "Loading..." : "See More"}
+                    {loadingMore
+                      ? t("payment.heading22")
+                      : t("notification.heading6")}
                   </button>
                 </div>
               )}
