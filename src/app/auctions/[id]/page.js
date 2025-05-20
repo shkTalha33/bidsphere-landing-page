@@ -93,7 +93,7 @@ const AuctionDetailPage = () => {
     if (userData) {
       router.push(`/auctions/${id}/registration`);
     } else {
-      message.error("Please login to register the auction!");
+      message.error(t("auctionDetails.headin8"));
     }
   };
 
@@ -101,7 +101,7 @@ const AuctionDetailPage = () => {
     if (userData) {
       router.push(`/auctions/auction-join/${id}`);
     } else {
-      message.error("Please login to join the auction!");
+      message.error(t("auctionDetails.heading8"));
     }
   };
 
@@ -112,7 +112,7 @@ const AuctionDetailPage = () => {
   
   const button = {
     icon: <Plus className="w-4 h-4 md:w-5 md:h-5 text-white" />,
-    text: isRegister ? "Register Auction" : "Join Auction",
+    text: isRegister ? t("auctionDetails.heading10") : t("auctionDetails.heading11"),
     onClick: isRegister ? handleRegister : handleJoin,
 
     className:
@@ -228,7 +228,7 @@ const AuctionDetailPage = () => {
                 <Row className="justify-center my-2 mt-3">
                   <Col md="6">
                     <div className="poppins_medium text-base text-[#8B0000]">
-                      Category
+                    {t("order.heading6")}
                     </div>
                     <div className="poppins_regular text-sm inline-block mt-2 px-3 py-1 border border-black-300 rounded-full  text-black">
                       {item?.category?.name}
@@ -236,7 +236,7 @@ const AuctionDetailPage = () => {
                   </Col>
                   <Col md="6">
                     <div className="poppins_medium text-base text-[#8B0000]">
-                      Sub Category
+                    {t("auctionDetails.heading6")}
                     </div>
                     <div className="poppins_regular text-sm inline-block mt-2 px-3 py-1 border border-black-300 rounded-full  text-black">
                       {item?.subcategory?.title}
@@ -279,7 +279,7 @@ const AuctionDetailPage = () => {
                   </Col>
                   <Col md="6">
                     <div className="poppins_medium text-base text_primary">
-                      Status
+                      {t("auctionDetails.heading7")}
                     </div>
                     <div className="poppins_regular">{item?.status}</div>
                   </Col>

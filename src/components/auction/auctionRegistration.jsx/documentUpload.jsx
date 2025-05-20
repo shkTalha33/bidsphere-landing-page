@@ -45,11 +45,15 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
       .required("Proof of funds photos are required"),
   });
 
+
+  console.log(formData , "formData");
+  
   const {
     handleSubmit,
     setValue,
     trigger,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -57,6 +61,11 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
       funds_proof: [],
     },
   });
+
+  const id_proof = watch("id_proof");
+  const funds_proof = watch("funds_proof");
+  console.log(id_proof , "id_proof");
+  console.log(funds_proof , "funds_proof");
 
   useEffect(() => {
     if (
@@ -80,14 +89,14 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
   useEffect(() => {
     if (selectedData) {
       if (selectedData?.id_proof?.length > 0) {
-        setSelectedIdentityFiles(selectedData.id_proof);
-        setValue("id_proof", selectedData.id_proof, {
+        setSelectedIdentityFiles(selectedData?.id_proof);
+        setValue("id_proof", selectedData?.id_proof, {
           shouldValidate: true,
         });
       }
       if (selectedData?.funds_proof?.length > 0) {
-        setSelectedFundsFiles(selectedData.funds_proof);
-        setValue("funds_proof", selectedData.funds_proof, {
+        setSelectedFundsFiles(selectedData?.funds_proof);
+        setValue("funds_proof", selectedData?.funds_proof, {
           shouldValidate: true,
         });
       }
@@ -234,7 +243,7 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
         {files?.map((file, index) => (
           <div key={index} className="position-relative">
             <>
-              <Link href={file?.url} target="_blank">
+              <Link href={file?.url || "#"} target="_blank">
                 {file?.type === "pdf" ? (
                   <Image
                     src={pdfIcon}

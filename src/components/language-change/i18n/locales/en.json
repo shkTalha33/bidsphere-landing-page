@@ -97,7 +97,12 @@
     "heading": "All Auctions",
     "heading2": "Trending Auctions",
     "heading3": "Popular Auctions",
-    "heading4": "There are no auctions to display."
+    "heading4": "There are no auctions to display.",
+    "heading5": "Filter",
+    "heading6": "Select Category",
+    "heading7": "Select Sub Category",
+    "heading8": "Clear Filters",
+    "heading9": "Apply Filters"
   },
   "payment": {
     "heading": "Payment",
@@ -170,7 +175,13 @@
     "heading2": "Ending Time",
     "heading3": "Deposit Amount",
     "heading4": "Description",
-    "heading5": "All Lots"
+    "heading5": "All Lots",
+    "heading6": "Sub Category",
+    "heading7": "Status",
+    "heading8": "Please login to register the auction!",
+    "heading9": "Please login to join the auction!",
+    "heading10": "Register Auction",
+    "heading11": "Join Auction"
   },
   "profil": {
     "heading": "Personal information",
@@ -198,5 +209,25 @@
     "heading22": "Phone Number",
     "heading23": "Email",
     "heading24": "Wallet Balance"
+  },
+  "auctionRegistration": {
+    "heading": "Auction Registration",
+    "heading2": "Personal Information",
+    "heading3": "Enter required information here",
+    "heading4": "Your progress",
+    "heading5": "to complete",
+    "heading6": "Document Upload",
+    "heading7": "Security Deposit Payment",
+    "heading8": "Review & Submit",
+    "heading9": "Email is required",
+    "heading10": "Country is required",
+    "heading11": "Region is required",
+    "heading12": "First Name",
+    "heading13": "Last Name",
+    "heading14": "Email Address",
+    "heading15": "Phone Number",
+    "heading16": "Country",
+    "heading17": "Region",
+    "heading18": "Next"
   }
 }

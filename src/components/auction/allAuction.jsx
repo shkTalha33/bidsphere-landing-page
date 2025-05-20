@@ -358,19 +358,19 @@ export default function AllAuction() {
       <Modal centered backdrop="static" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-            Filter{" "}
+            {t("allAuction.heading5")}{" "}
             {activeTab === "trending"
-              ? "Trending Auctions"
+              ? t("allAuction.heading2")
               : activeTab === "popular"
-              ? "Popular Auctions"
-              : "All Auctions"}
+              ? t("allAuction.heading3")
+              : t("allAuction.heading")}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto">
             <div className="flex flex-col gap-2 mb-4">
               <label htmlFor="category" className="poppins_regular">
-                Select Category
+                {t("allAuction.heading6")}
               </label>
 
               <Controller
@@ -380,7 +380,7 @@ export default function AllAuction() {
                   <Select
                     {...field}
                     options={allCategory}
-                    placeholder="Select Category"
+                    placeholder={t("allAuction.heading6")}
                     onChange={(selectedOption) =>
                       field.onChange(selectedOption?.value)
                     }
@@ -398,7 +398,7 @@ export default function AllAuction() {
 
             <div className="flex flex-col gap-2 mb-4">
               <label htmlFor="subCategory" className="poppins_regular">
-                Select Sub Category
+                {t("allAuction.heading7")}
               </label>
 
               <Controller
@@ -408,7 +408,7 @@ export default function AllAuction() {
                   <Select
                     {...field}
                     options={subCategoryData}
-                    placeholder="Select Sub Category"
+                    placeholder={t("allAuction.heading7")}
                     onChange={(selectedOption) =>
                       field.onChange(selectedOption?.value)
                     }
@@ -434,7 +434,7 @@ export default function AllAuction() {
                   onClick={clearFilters}
                   className="flex-1 h-[3.5rem] !bg-gray-200 !hover:bg-gray-300 text-dark border-0"
                 >
-                  Clear Filters
+                  {t("allAuction.heading8")}
                 </Button>
               )}
               <Button
@@ -443,7 +443,7 @@ export default function AllAuction() {
                   isFiltered ? "flex-1" : "w-full"
                 } h-[3.5rem] bg_primary hover:bg-[#660000] border-0`}
               >
-                Apply Filters
+                {t("allAuction.heading9")}
               </Button>
             </div>
           </form>

@@ -26,6 +26,7 @@ import {
   setRegisterData,
   setsliceProgress,
 } from "@/components/redux/registrationSlice/resgiterSlice";
+import { useTranslation } from "react-i18next";
 
 const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -35,14 +36,14 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
   const formData = useSelector(selectRegisterData);
   const active = useSelector(selectActiveStep);
   const progress = useSelector(selectProgress);
-
+  const { t } = useTranslation();
   const schema = Yup.object().shape({
-    fname: Yup.string().required("First name is required"),
-    lname: Yup.string().required("Last name is required"),
-    email: Yup.string().required("Email is required"),
-    phone: Yup.string().required("Phone number is required"),
-    country: Yup.string().required("Country is required"),
-    region: Yup.string().required("Region is required"),
+    fname: Yup.string().required(t("profil.heading13")),
+    lname: Yup.string().required(t("profil.heading14")),
+    email: Yup.string().required(t("auctionRegistration.heading9")),
+    phone: Yup.string().required(t("auctionRegistration.heading10")),
+    country: Yup.string().required(t("auctionRegistration.heading11")),
+    region: Yup.string().required(t("auctionRegistration.heading12")),
   });
 
   const handleCountryChange = (e, field) => {
@@ -104,7 +105,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
         <Row className="g-4">
           <Col md="6">
             <Label className="poppins_medium" for="fname">
-              First Name
+              {t("auctionRegistration.heading12")}
             </Label>
             <Controller
               name="fname"
@@ -113,7 +114,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
                 <Input
                   {...field}
                   id="fname"
-                  placeholder="Enter Here"
+                  placeholder={t("auctionRegistration.heading12")}
                   invalid={!!errors.fname}
                 />
               )}
@@ -124,7 +125,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
           </Col>
           <Col md="6">
             <Label className="poppins_medium" for="lname">
-              Last Name
+              {t("auctionRegistration.heading13")}
             </Label>
             <Controller
               name="lname"
@@ -133,7 +134,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
                 <Input
                   {...field}
                   id="lname"
-                  placeholder="Enter Here"
+                  placeholder={t("auctionRegistration.heading13")}
                   invalid={!!errors.lname}
                 />
               )}
@@ -145,7 +146,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
 
           <Col md="6">
             <Label className="poppins_medium" for="email">
-              Email Address
+              {t("auctionRegistration.heading14")}
             </Label>
             <Controller
               name="email"
@@ -155,7 +156,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
                   {...field}
                   id="email"
                   type="email"
-                  placeholder="Enter Here"
+                  placeholder={t("auctionRegistration.heading14")}
                   invalid={!!errors.email}
                 />
               )}
@@ -166,7 +167,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
           </Col>
           <Col md="6">
             <Label className="poppins_medium" for="phone">
-              Phone Number
+              {t("auctionRegistration.heading15")}
             </Label>
             <Controller
               name="phone"
@@ -175,7 +176,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
                 <Input
                   {...field}
                   id="phone"
-                  placeholder="Enter Here"
+                  placeholder={t("auctionRegistration.heading15")}
                   invalid={!!errors.phone}
                 />
               )}
@@ -187,7 +188,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
 
           <Col md="6">
             <Label className="poppins_medium" for="country">
-              Country
+              {t("auctionRegistration.heading16")}
             </Label>
             <Controller
               name="country"
@@ -197,7 +198,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
                   {...field}
                   id="country"
                   type="select"
-                  placeholder="Select Country"
+                  placeholder={t("auctionRegistration.heading16")}
                   invalid={!!errors.country}
                   onChange={(e) => handleCountryChange(e, field)}
                 >
@@ -217,7 +218,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
 
           <Col md="6">
             <Label className="poppins_medium" for="region">
-              Region
+              {t("auctionRegistration.heading17")}
             </Label>
             <Controller
               name="region"
@@ -227,7 +228,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
                   {...field}
                   id="region"
                   type="select"
-                  placeholder="Select Region"
+                  placeholder={t("auctionRegistration.heading17")}
                   invalid={!!errors.region}
                   disabled={!selectedCountry}
                 >
@@ -251,7 +252,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
             type="submit"
             className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
           >
-            Next
+            {t("auctionRegistration.heading18")}
           </button>
         </Col>
       </Form>

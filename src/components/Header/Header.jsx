@@ -36,6 +36,7 @@ import {
   setNotifications,
 } from "../redux/notificationSlice/notificationSlice";
 import { NotificationToast } from "../NotificationToast/NotificationToast";
+import { clearRegisterData } from "../redux/registrationSlice/resgiterSlice";
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -53,6 +54,7 @@ export default function Header() {
   const { t } = useTranslation();
   const handleLogoutFun = async () => {
     dispatch(setLogout());
+    dispatch(clearRegisterData());
     message.success("Logout Successfully");
   };
 
