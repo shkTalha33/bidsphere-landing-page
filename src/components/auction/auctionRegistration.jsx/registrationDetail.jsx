@@ -30,6 +30,8 @@ const RegistrationDetail = () => {
   // const [progress, setProgress] = useState(0);
   const progress = useSelector(selectProgress); // This should give the updated progress
 
+  console.log(progress, "progress");
+
   const [data, setData] = useState({});
   // const [active, setActive] = useState("personal");
   const active = useSelector(selectActiveStep);
@@ -40,11 +42,14 @@ const RegistrationDetail = () => {
       .then((res) => {
         if (res?.success && res?.data) {
           dispatch(setRegisterData(res?.data));
+          console.log(res?.data, "res?.data");
 
           if (progress === 0 && progress !== 66) {
-            dispatch(setsliceProgress(66));
+            console.log("aya ay ");
+            
+            dispatch(setsliceProgress(33));
+            setIsCompleted((prev) => ({ ...prev, personal: true }));
           }
-          setIsCompleted((prev) => ({ ...prev, personal: true }));
         }
       })
       .catch((error) => {
