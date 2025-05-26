@@ -25,8 +25,10 @@ import "react-phone-input-2/lib/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { Form } from "reactstrap";
+import { useTranslation } from "react-i18next";
 
 const Page = () => {
+  const { t } = useTranslation();
   const {
     handleSubmit,
     formState: { errors },
@@ -76,7 +78,7 @@ const Page = () => {
           };
           dispatch(setForgotCode(data));
           setShowResendLink(false);
-          message.success("We have sent an verification code in your email");
+          message.success(t("otp.resendSuccess"));
         }
       } catch (error) {
         handleError(error);
@@ -98,7 +100,7 @@ const Page = () => {
             code: response.verificationCode,
           };
           dispatch(setTempData(newData));
-          message.success("We have sent an Code in your email.");
+          message.success(t("otp.codeSent"));
         }
       } catch (error) {
         handleError(error);
@@ -129,7 +131,7 @@ const Page = () => {
       try {
         const response = await post(verifyCodeForgotPassword, data);
         if (response.success) {
-          message.success("Code verified Successfully!");
+          message.success(t("otp.verifySuccess"));
           router.push("/auth/reset-password");
         }
       } catch (error) {
@@ -192,22 +194,20 @@ const Page = () => {
   return (
     <AuthLayout
       isCenter={true}
-      title="Exclusive & Diverse Listings"
-      description="Discover rare collectibles, vehicles, and premium assets."
+      title={t("auth.title")}
+      description={t("auth.description")}
     >
       <>
         <AuthHeading
-          heading={"Verify Your Email"}
-          subHeading={<>We have sent a verification code to this email.</>}
+          heading={t("otp.heading")}
+          subHeading={<>{t("otp.subHeading")}</>}
           email={tempData?.email || forgotCode?.email}
         />
-        <span className="text-red-500 text-xs">
-          If you don’t see the OTP in your inbox, please check your SPAM folder.
-        </span>
+        <span className="text-red-500 text-xs">{t("otp.spamWarning")}</span>
         <Form onSubmit={handleSubmit(onSubmit)} className="mt-8 gap-6">
           <div className="mt-5">
             <label className="text_secondary2 poppins_regular">
-              Enter Your OPT Code Here
+              {t("otp.enterCodeLabel")}
             </label>
             <div
               ref={fieldsRef}
@@ -228,14 +228,14 @@ const Page = () => {
             <div className="login_main py-3">
               {!showResendLink && (
                 <h6 className="resend_buton text_secondary2 poppins_medium">
-                  Resend Code in{" "}
+                  {t("otp.resendIn")}{" "}
                   <span className="text_dark poppins_semibold"> {timer}s</span>
                 </h6>
               )}
               <div className="mt-3">
                 {showResendLink ? (
                   <h6 className="counter_con poppins_regular flex-wrap">
-                    Didn&rsquo;t receive the Code?
+                    {t("otp.didntReceive")}
                     <span
                       className="text_primary underline ms-1 poppins_medium"
                       onClick={handleResendCode}
@@ -243,7 +243,7 @@ const Page = () => {
                         cursor: "pointer",
                       }}
                     >
-                      Resend Code
+                      {t("otp.resendCode")}
                     </span>
                   </h6>
                 ) : (
@@ -259,7 +259,11 @@ const Page = () => {
               disabled={loading}
               className="btn1 bg_primary text-white w-100"
             >
-              {loading ? <BeatLoader color="#fff" size={10} /> : "Verify"}
+              {loading ? (
+                <BeatLoader color="#fff" size={10} />
+              ) : (
+                t("otp.verify")
+              )}
             </button>
           </div>
         </Form>

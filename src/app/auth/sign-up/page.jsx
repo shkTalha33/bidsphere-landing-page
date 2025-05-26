@@ -25,8 +25,10 @@ import { BeatLoader } from "react-spinners";
 import { Input, Label } from "reactstrap";
 import * as Yup from "yup";
 import { handleError } from "@/components/api/errorHandler";
+import { useTranslation } from "next-i18next";
 
 const Page = () => {
+  const { t } = useTranslation();
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [loading, setloading] = useState(false);
   const { post } = ApiFunction();
@@ -48,26 +50,27 @@ const Page = () => {
 
   const schema = Yup.object().shape({
     fname: Yup.string()
-      .required("First name is required")
-      .min(2, "First name must be at least 2 characters"),
+      .required(t("validation.firstNameRequired"))
+      .min(2, t("validation.firstNameMinLength")),
     lname: Yup.string()
-      .required("Last name is required")
-      .min(2, "Last name must be at least 2 characters"),
+      .required(t("validation.lastNameRequired"))
+      .min(2, t("validation.lastNameMinLength")),
     phone: Yup.string()
-      .required("Phone number is required")
+      .required(t("validation.phoneRequired"))
       .test(
         "isValidPhone",
-        "Invalid phone number",
+        t("validation.invalidPhone"),
         (value) => value && value.length >= 10
       ),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-
+    email: Yup.string()
+      .email(t("validation.invalidEmail"))
+      .required(t("validation.emailRequired")),
     password: Yup.string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
+      .required(t("validation.passwordRequired"))
+      .min(8, t("validation.passwordMinLength")),
     confirmPassword: Yup.string()
-      .required("Confirm password is required")
-      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+      .required(t("validation.confirmPasswordRequired"))
+      .oneOf([Yup.ref("password"), null], t("validation.passwordsMustMatch")),
   });
 
   const {
@@ -89,6 +92,7 @@ const Page = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
   useEffect(() => {
     if (tempData) {
       setValue("fname", tempData?.fname);
@@ -111,15 +115,12 @@ const Page = () => {
       .catch((err) => {
         setError("phone", {
           type: "manual",
-          message:
-            err?.response?.data?.message || "Phone number already exists",
+          message: err?.response?.data?.message || t("validation.phoneExists"),
         });
         setloading(false);
         throw {
-          message:
-            err?.response?.data?.message || "Phone number already exists",
+          message: err?.response?.data?.message || t("validation.phoneExists"),
         };
-
         setValue("phone", "");
       });
   };
@@ -135,11 +136,11 @@ const Page = () => {
       .catch((err) => {
         setError("email", {
           type: "manual",
-          message: err?.response?.data?.message || "Email already exists",
+          message: err?.response?.data?.message || t("validation.emailExists"),
         });
         setloading(false);
         throw {
-          message: err?.response?.data?.message || "Email already exists",
+          message: err?.response?.data?.message || t("validation.emailExists"),
         };
         setValue("email", "");
       });
@@ -148,7 +149,7 @@ const Page = () => {
   const onSubmit = async (values) => {
     setloading(true);
     try {
-      // Pehle phone validate hoga
+      // First validate phone
       await handlePhoneOnBlur(values.phone);
       await handleEmailOnBlur(values.email);
       const data = {
@@ -161,7 +162,6 @@ const Page = () => {
         message.success(response?.message);
         const newData = {
           ...values,
-          // code: response.verificationCode,
         };
         const datane = {
           email: newData?.email,
@@ -175,8 +175,7 @@ const Page = () => {
         router.push("/auth/verify-code");
       }
     } catch (error) {
-      // Agar kisi bhi validation me error aya to yah handle karega
-      message.error(error?.message || "Signup failed");
+      message.error(error?.message || t("messages.signupFailed"));
       console.log("error", error);
     } finally {
       setloading(false);
@@ -186,13 +185,13 @@ const Page = () => {
   return (
     <AuthLayout
       src={"/assets/auth2.png"}
-      title="Secure & Transparent Transactions"
-      description="Bid confidently with encrypted payments and fraud protection."
+      title={t("auth.secureTransactions")}
+      description={t("auth.bidConfidently")}
     >
       <>
         <AuthHeading
-          heading="Sign up"
-          subHeading="Sign up to your account"
+          heading={t("auth.signUp")}
+          subHeading={t("auth.signUpToAccount")}
           path={"/"}
         />
         <Form
@@ -204,7 +203,7 @@ const Page = () => {
               for="fname"
               className="mb-2 text-sm poppins_regular text_secondary2"
             >
-              First Name
+              {t("form.firstName")}
             </Label>
             <Controller
               id="fname"
@@ -216,7 +215,7 @@ const Page = () => {
                   {...field}
                   type="text"
                   id="fname"
-                  placeholder="Your first name"
+                  placeholder={t("form.firstNamePlaceholder")}
                   className={`h-12 w-full poppins_regular sm:text-sm ${
                     errors.fname
                       ? "border-red-500 ring-red-500 focus:ring-red-500"
@@ -237,7 +236,7 @@ const Page = () => {
               for="lname"
               className="mb-2 text-sm poppins_regular text_secondary2"
             >
-              Last Name
+              {t("form.lastName")}
             </Label>
             <Controller
               id="lname"
@@ -249,7 +248,7 @@ const Page = () => {
                   {...field}
                   type="text"
                   id="lname"
-                  placeholder="Your last name"
+                  placeholder={t("form.lastNamePlaceholder")}
                   className={`h-12 w-full poppins_regular sm:text-sm ${
                     errors.lname
                       ? "border-red-500 ring-red-500 focus:ring-red-500"
@@ -266,6 +265,12 @@ const Page = () => {
           </div>
 
           <div className="col-span-6">
+            <Label
+              for="phone"
+              className="mb-2 text-sm poppins_regular text_secondary2"
+            >
+              {t("form.phoneNumber")}
+            </Label>
             <Controller
               name="phone"
               control={control}
@@ -280,10 +285,9 @@ const Page = () => {
                   }`}
                   onChange={(value) => {
                     field.onChange(value);
-                    setValue("phone", value); // React Hook Form state update karega
+                    setValue("phone", value);
                   }}
-                  // onBlur={() => handlePhoneOnBlur(field.value)} // API call karega
-                  placeholder="Enter phone number"
+                  placeholder={t("form.phonePlaceholder")}
                 />
               )}
             />
@@ -300,7 +304,7 @@ const Page = () => {
               for="email"
               className="mb-2 text-sm poppins_regular text_secondary2"
             >
-              Email Address
+              {t("form.emailAddress")}
             </Label>
             <Controller
               id="email"
@@ -312,11 +316,7 @@ const Page = () => {
                   {...field}
                   type="email"
                   id="email"
-                  // onBlur={(e) => {
-                  //   field.onChange(e);
-                  //   handleEmailOnBlur(e.target.value);
-                  // }}
-                  placeholder="Your Email address"
+                  placeholder={t("form.emailAddressPlaceholder")}
                   className={`h-12 w-full poppins_regular sm:text-sm ${
                     errors.email
                       ? "border-red-500 ring-red-500 focus:ring-red-500"
@@ -337,7 +337,7 @@ const Page = () => {
               for="password"
               className="mb-2 text-sm poppins_regular text_secondary2"
             >
-              Password
+              {t("form.password")}
             </Label>
             <div className="relative">
               <button
@@ -360,7 +360,7 @@ const Page = () => {
                     {...field}
                     type={isPasswordHidden ? "password" : "text"}
                     id="password"
-                    placeholder="Password"
+                    placeholder={t("form.passwordPlaceholder")}
                     className={`h-12 w-full poppins_regular sm:text-sm ${
                       errors.password
                         ? "border-red-500 ring-red-500 focus:ring-red-500"
@@ -376,12 +376,13 @@ const Page = () => {
               </p>
             )}
           </div>
+
           <div className="col-span-6">
             <Label
               for="confirmPassword"
               className="mb-2 text-sm poppins_regular text_secondary2"
             >
-              Confirm Password
+              {t("form.confirmPassword")}
             </Label>
             <div className="relative">
               <button
@@ -403,7 +404,7 @@ const Page = () => {
                     {...field}
                     type={isConfirmPasswordHidden ? "password" : "text"}
                     id="confirmPassword"
-                    placeholder="Confirm Password"
+                    placeholder={t("form.confirmPasswordPlaceholder")}
                     className={`h-12 w-full poppins_regular sm:text-sm ${
                       errors.confirmPassword
                         ? "border-red-500 ring-red-500 focus:ring-red-500"
@@ -426,17 +427,21 @@ const Page = () => {
               type="submit"
               className="btn1 bg_primary text-white w-100"
             >
-              {loading ? <BeatLoader color="#fff" size={10} /> : "Sign Up"}
+              {loading ? (
+                <BeatLoader color="#fff" size={10} />
+              ) : (
+                t("auth.signUp")
+              )}
             </button>
           </div>
         </Form>
         <p className="pt-3 poppins_regular">
-          Already have an Account?{" "}
+          {t("auth.alreadyHaveAccount")}{" "}
           <Link
             href="/auth/login"
             className="_link_underline poppins_medium text_primary"
           >
-            Sign in
+            {t("auth.signIn")}
           </Link>
         </p>
       </>

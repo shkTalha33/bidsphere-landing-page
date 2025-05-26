@@ -1,4 +1,76 @@
 {
+  "auth": {
+    "login": "Login",
+    "loginToAccount": "Login to your account",
+    "signIn": "Sign In",
+    "signUp": "Sign up",
+    "signUpToAccount": "Sign up to your account",
+    "forgotPassword": "Forgot Password?",
+    "createNewAccount": "Create a New Account?",
+    "alreadyHaveAccount": "Already have an Account?",
+    "secureTransactions": "Secure & Transparent Transactions",
+    "bidConfidently": "Bid confidently with encrypted payments and fraud protection."
+  },
+  "form": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "firstNamePlaceholder": "Your first name",
+    "lastNamePlaceholder": "Your last name",
+    "phonePlaceholder": "Enter phone number",
+    "emailPlaceholder": "Email",
+    "emailAddressPlaceholder": "Your Email address",
+    "passwordPlaceholder": "Password",
+    "confirmPasswordPlaceholder": "Confirm Password"
+  },
+  "validation": {
+    "firstNameRequired": "First name is required",
+    "firstNameMinLength": "First name must be at least 2 characters",
+    "lastNameRequired": "Last name is required",
+    "lastNameMinLength": "Last name must be at least 2 characters",
+    "phoneRequired": "Phone number is required",
+    "invalidPhone": "Invalid phone number",
+    "phoneExists": "Phone number already exists",
+    "invalidEmail": "Invalid email",
+    "emailRequired": "Email is required",
+    "emailExists": "Email already exists",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 8 characters",
+    "confirmPasswordRequired": "Confirm password is required",
+    "passwordsMustMatch": "Passwords must match"
+  },
+  "messages": {
+    "loginSuccess": "You have successfully logged in",
+    "signupFailed": "Signup failed"
+  },
+  "otp": {
+    "heading": "Verify Your Email",
+    "subHeading": "We have sent a verification code to this email.",
+    "spamWarning": "If you don’t see the OTP in your inbox, please check your SPAM folder.",
+    "enterCodeLabel": "Enter Your OPT Code Here",
+    "resendIn": "Resend Code in",
+    "didntReceive": "Didn&rsquo;t receive the Code?",
+    "resendCode": "Resend Code",
+    "verify": "Verify",
+    "codeSent": "We have sent an Code in your email.",
+    "resendSuccess": "We have sent an verification code in your email",
+    "verifySuccess": "Code verified Successfully!"
+  },
+  "location": {
+    "heading": "Choose your Location",
+    "subHeading": "Search or select your location on the map.",
+    "searchPlaceholder": "Search for a location...",
+    "currentLocation": "Current Location",
+    "continue": "Continue",
+    "unableToFetch": "Unable to fetch location",
+    "addressNotFound": "Address not found!",
+    "errorFetchingAddress": "Error fetching address!",
+    "errorLoadingMaps": "Error loading maps",
+    "loadingMaps": "Loading maps..."
+  },
   "nav": {
     "auction": "Auction",
     "payments": "Payments",
@@ -304,7 +376,7 @@
     "heading9": "Please login to join the auction!",
     "heading10": "Register Auction",
     "heading11": "Join Auction",
-    "heading12" : "Here are your auctions whom you can join."
+    "heading12": "Here are your auctions whom you can join."
   },
   "profil": {
     "heading": "Personal information",
