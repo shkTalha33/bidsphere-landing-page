@@ -37,8 +37,8 @@ const Page = () => {
 
   const schema = Yup.object().shape({
     email: Yup.string()
-      .email("Email is required")
-      .required("Please enter your email"),
+      .email(t("forgot.email_required"))
+      .required(t("forgot.email_required")),
   });
 
   const {
@@ -71,8 +71,7 @@ const Page = () => {
         router.push("/auth/verify-code");
       }
     } catch (error) {
-      message.error(error?.data?.message || "Login failed");
-      console.log("console", error);
+      message.error(error?.data?.message || t("forgot.login_failed"));
     } finally {
       setloading(false);
     }
@@ -82,8 +81,8 @@ const Page = () => {
     <AuthLayout isCenter={true}>
       <>
         <AuthHeading
-          heading={"Forgot Password!"}
-          subHeading={"Please enter the email address to reset your password"}
+          heading={t("forgot.heading")}
+          subHeading={t("forgot.sub_heading")}
         />
         <Form
           onSubmit={handleSubmit(onSubmit)}
@@ -105,8 +104,7 @@ const Page = () => {
                     type="email"
                     id="email"
                     name="email"
-                    placeholder={"Email address"}
-                    // invalid={!!errors.email}
+                    placeholder={t("forgot.email_placeholder")}
                     className={`peer h-8 w-full poppins_regular border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm ${
                       errors.email
                         ? "border-red-500 ring-red-500 focus:ring-red-500"
@@ -116,7 +114,7 @@ const Page = () => {
                 )}
               />
               <span className="absolute start-3 top-2 poppins_regular -translate-y-1/2 text-xs text_secondary2 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">
-                {"Email address"}
+                {t("forgot.email_placeholder")}
               </span>
             </Label>
             {errors.email && (
@@ -131,21 +129,26 @@ const Page = () => {
               type="submit"
               className="btn1 bg_primary text-white w-100"
             >
-              {loading ? <BeatLoader color="#fff" size={10} /> : "Send Code"}
+              {loading ? (
+                <BeatLoader color="#fff" size={10} />
+              ) : (
+                t("forgot.send_code")
+              )}
             </button>
           </div>
         </Form>
         <p className="pt-3 poppins_medium">
-          Remembered your password?{" "}
+          {t("forgot.remembered")}{" "}
           <Link
             href="/auth/login"
             className="poppins_regular _link_underline text_primary"
           >
-            Login
+            {t("forgot.login")}
           </Link>
         </p>
       </>
     </AuthLayout>
   );
 };
+
 export default Page;

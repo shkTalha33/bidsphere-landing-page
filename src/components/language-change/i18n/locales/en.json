@@ -71,6 +71,16 @@
     "errorLoadingMaps": "Error loading maps",
     "loadingMaps": "Loading maps..."
   },
+  "forgot": {
+    "heading": "Forgot Password!",
+    "sub_heading": "Please enter the email address to reset your password",
+    "email_placeholder": "Email address",
+    "email_required": "Please enter your email",
+    "send_code": "Send Code",
+    "remembered": "Remembered your password?",
+    "login": "Login",
+    "login_failed": "Login failed"
+  },
   "nav": {
     "auction": "Auction",
     "payments": "Payments",
