@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { HashLoader } from "react-spinners";
 import { Col, Container, Row } from "reactstrap";
+import { useTranslation } from "react-i18next";
 import { pdfIcon } from "../assets/icons/icon";
 import { formatPrice } from "../utils/formatPrice";
 import toast from "react-hot-toast";
@@ -24,15 +25,17 @@ export default function RegistrationReviewPage({
   progress,
   isLoading = false,
 }) {
+  const { t } = useTranslation();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const { post } = ApiFunction();
   const router = useRouter();
   const data = useSelector(selectRegisterData);
   const dispatch = useDispatch();
+
   const handleSubmit = async () => {
     if (parseInt(progress) < 100) {
-      toast.error("Please Fill All The Fields");
+      toast.error(t("registration.validation.fillAllFields"));
       return;
     }
     setLoading(true);
@@ -59,12 +62,16 @@ export default function RegistrationReviewPage({
         <Container className="bg-white rounded-lg p-2">
           <Row className="g-2">
             <Col md="6">
-              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+              <div className="bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
                 <div className="rounded-md px-3 py-2">
-                  <p className="text-base poppins_semibold">Name</p>
+                  <p className="text-base poppins_semibold">
+                    {t("registration.fields.name")}
+                  </p>
                   <p className="text-base poppins_regular text-[#818898]">
-                    {`${data?.fname || formData?.fname || "N/A"} ${
-                      data?.lname || formData?.lname || "N/A"
+                    {`${
+                      data?.fname || formData?.fname || t("common.notAvailable")
+                    } ${
+                      data?.lname || formData?.lname || t("common.notAvailable")
                     }`}
                   </p>
                 </div>
@@ -72,43 +79,51 @@ export default function RegistrationReviewPage({
             </Col>
 
             <Col md="6">
-              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+              <div className="bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
                 <div className="rounded-md px-3 py-2">
-                  <p className="text-base poppins_semibold">Phone Number</p>
+                  <p className="text-base poppins_semibold">
+                    {t("registration.fields.phoneNumber")}
+                  </p>
                   <p className="text-base poppins_regular text-[#818898]">
-                    {data?.phone || formData?.phone || "N/A"}
+                    {data?.phone || formData?.phone || t("common.notAvailable")}
                   </p>
                 </div>
               </div>
             </Col>
 
             <Col md="6">
-              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+              <div className="bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
                 <div className="rounded-md px-3 py-2">
-                  <p className="text-base poppins_semibold">Email</p>
+                  <p className="text-base poppins_semibold">
+                    {t("registration.fields.email")}
+                  </p>
                   <p className="text-base poppins_regular text-[#818898]">
-                    {data?.email || formData?.email || "N/A"}
+                    {data?.email || formData?.email || t("common.notAvailable")}
                   </p>
                 </div>
               </div>
             </Col>
 
             <Col md="6">
-              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+              <div className="bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
                 <div className="rounded-md px-3 py-2">
-                  <p className="text-base poppins_semibold">Country</p>
+                  <p className="text-base poppins_semibold">
+                    {t("registration.fields.country")}
+                  </p>
                   <p className="text-base poppins_regular text-[#818898]">
-                    {data?.country || formData?.country || "N/A"}
+                    {data?.country ||
+                      formData?.country ||
+                      t("common.notAvailable")}
                   </p>
                 </div>
               </div>
             </Col>
 
             <Col md="6">
-              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+              <div className="bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
                 <div className="rounded-md px-3 py-2">
                   <p className="text-base poppins_semibold mb-2">
-                    Identity Proof
+                    {t("registration.fields.identityProof")}
                   </p>
                   <div className="flex gap-3 items-start flex-wrap">
                     {(data?.id_proof || formData?.id_proof)?.map(
@@ -135,10 +150,10 @@ export default function RegistrationReviewPage({
             </Col>
 
             <Col md="6">
-              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+              <div className="bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
                 <div className="rounded-md px-3 py-2">
                   <p className="text-base poppins_semibold mb-2">
-                    Proof of Funds
+                    {t("registration.fields.proofOfFunds")}
                   </p>
                   <div className="flex gap-2 items-start flex-wrap">
                     {(data?.funds_proof || formData?.funds_proof)?.map(
@@ -165,26 +180,30 @@ export default function RegistrationReviewPage({
             </Col>
 
             <Col md="6">
-              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+              <div className="bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
                 <div className="rounded-md px-3 py-2">
-                  <p className="text-base poppins_semibold">Deposit Amount</p>
+                  <p className="text-base poppins_semibold">
+                    {t("registration.fields.depositAmount")}
+                  </p>
                   <p className="text-base poppins_regular text-[#818898]">
                     {data?.amount || formData?.amount
                       ? formatPrice(data?.amount || formData?.amount)
-                      : "N/A"}
+                      : t("common.notAvailable")}
                   </p>
                 </div>
               </div>
             </Col>
 
             <Col md="6">
-              <div className="bg-[#F9F9F9]  shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
+              <div className="bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
                 <div className="rounded-md px-3 py-2">
-                  <p className="text-base poppins_semibold">Payment Option</p>
+                  <p className="text-base poppins_semibold">
+                    {t("registration.fields.paymentOption")}
+                  </p>
                   <p className="text-base poppins_regular text-[#818898]">
                     {data?.walletBalance
-                      ? "Pay with Wallet"
-                      : "Pay with Stripe"}
+                      ? t("registration.payment.payWithWallet")
+                      : t("registration.payment.payWithStripe")}
                   </p>
                 </div>
               </div>
@@ -197,13 +216,13 @@ export default function RegistrationReviewPage({
                 <button
                   disabled={loading}
                   type="submit"
-                  className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg  poppins_medium text-base sm:text-lg"
+                  className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
                   onClick={handleSubmit}
                 >
                   {loading ? (
                     <HashLoader color="#fff" size={18} />
                   ) : (
-                    "Submit Application"
+                    t("registration.actions.submitApplication")
                   )}
                 </button>
               </Col>

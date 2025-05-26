@@ -173,7 +173,7 @@ const ProfilePage = () => {
               className="ml-4 py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-2 flex items-center justify-center"
               aria-label={"Edit profile"}
             >
-              {isEditing ? "Cancel" : "Edit"}
+              {isEditing ? t("profil.cancle") : t("profil.edit")}
             </button>
           </div>
           <div className="bg-white p-8 rounded-lg w-full shadow-sm">

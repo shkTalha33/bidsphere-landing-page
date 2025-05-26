@@ -132,7 +132,7 @@ const AuctionDetailPage = () => {
             title={`${getGreeting()}, ${userData?.fname || ""} ${
               userData?.lname || ""
             }`}
-            description={"Here are your auctions whom you can join."}
+            description={t("auctionDetails.heading12")}
             // button={button}
             // {...(item?.status === "start" && !isExpired && { button })}
             // {...(!isExpired && { button })}

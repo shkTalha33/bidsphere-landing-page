@@ -139,7 +139,18 @@
     "heading21": "Please choose one of the options below to proceed.",
     "heading22": "Loading...",
     "heading23": "Contact Admin for Refund",
-    "heading24": "Add Amount to Wallet"
+    "heading24": "Add Amount to Wallet",
+    "amount": "Amount",
+    "enterHere": "Enter Here",
+    "walletBalance": "Wallet Balance",
+    "paymentDoneWith": "Payment Done with",
+    "wallet": "Wallet",
+    "stripe": "Stripe",
+    "choosePaymentMethod": "Choose a Payment Method",
+    "payWithStripe": "Pay with Stripe",
+    "payWithWallet": "Pay with Wallet",
+    "insufficientWalletBalance": "Insufficient Wallet Balance. Please pay with Stripe.",
+    "payAmount": "Pay Amount"
   },
   "order": {
     "heading": "All Orders",
@@ -207,13 +218,79 @@
     "heading63": "Upload Proof Image",
     "heading64": "Select Payment Method",
     "heading65": "Enter Other Method",
-  
     "heading66": "Upload"
+  },
+  "wonLots": {
+    "title": "Won Lots",
+    "description": "See your Won lots here.",
+    "rowHeading": "won lots",
+    "columns": {
+      "auctionName": "Auction Name",
+      "category": "Category",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "status": "Status",
+      "action": "Action"
+    },
+    "actions": {
+      "viewDetails": "view details"
+    },
+    "status": {
+      "approved": "approved",
+      "pending": "pending",
+      "winner": "winner"
+    },
+    "navigation": {
+      "backToOrders": "Back to Orders"
+    },
+    "loading": {
+      "loadingData": "Loading...",
+      "loadingDetails": "Loading details..."
+    },
+    "noData": {
+      "noWonLots": "No won lots found",
+      "noResults": "No results to display"
+    }
+  },
+  "common": {
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "refresh": "Refresh",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "next": "Next",
+    "notAvailable": "N/A"
   },
   "categoryAuction": {
     "heading": "Category Auctions",
     "heading2": "No auction found in this category.",
     "heading3": "See More"
+  },
+  "registration": {
+    "fields": {
+      "name": "Name",
+      "phoneNumber": "Phone Number",
+      "email": "Email",
+      "country": "Country",
+      "identityProof": "Identity Proof",
+      "proofOfFunds": "Proof of Funds",
+      "depositAmount": "Deposit Amount",
+      "paymentOption": "Payment Option"
+    },
+    "payment": {
+      "payWithWallet": "Pay with Wallet",
+      "payWithStripe": "Pay with Stripe"
+    },
+    "actions": {
+      "submitApplication": "Submit Application"
+    },
+    "validation": {
+      "fillAllFields": "Please Fill All The Fields"
+    }
   },
   "auctionDetails": {
     "heading": "Starting Time",
@@ -226,7 +303,8 @@
     "heading8": "Please login to register the auction!",
     "heading9": "Please login to join the auction!",
     "heading10": "Register Auction",
-    "heading11": "Join Auction"
+    "heading11": "Join Auction",
+    "heading12" : "Here are your auctions whom you can join."
   },
   "profil": {
     "heading": "Personal information",
@@ -259,7 +337,48 @@
     "heading27": "Contact our customer service",
     "heading28": "No FAQs found",
     "heading29": "Help Centre",
-    "heading30": "Won Lots"
+    "heading30": "Won Lots",
+    "cancle": "Cancel",
+    "edit": "Edit"
+  },
+  "documentUpload": {
+    "identityProof": {
+      "title": "Upload Identity Proof",
+      "subtitle": "(Passport, Driver's License)",
+      "validation": {
+        "required": "Identity proof photos are required",
+        "minFiles": "At least one identity proof photo is required"
+      }
+    },
+    "fundsProof": {
+      "title": "Upload Proof of Funds",
+      "subtitle": "(Bank Statement, Income Proof)",
+      "validation": {
+        "required": "Proof of funds photos are required",
+        "minFiles": "At least one proof of funds photo is required"
+      }
+    },
+    "fileUpload": {
+      "selectFiles": "Select Files",
+      "dropFiles": "Drop files here or click",
+      "browse": "browse",
+      "throughMachine": "through your machine",
+      "removeAll": "Remove All"
+    },
+    "actions": {
+      "next": "Next"
+    },
+    "messages": {
+      "maxFilesError": "Cannot upload more than 5 files",
+      "uploadSuccess": "Files uploaded successfully",
+      "uploadError": "Error uploading files",
+      "removeSuccess": "File removed successfully"
+    },
+    "fileTypes": {
+      "acceptedFormats": "Accepted formats: Images and PDF files",
+      "maxSize": "Maximum file size: 10MB per file",
+      "maxFiles": "Maximum 5 files allowed"
+    }
   },
   "auctionRegistration": {
     "heading": "Auction Registration",
@@ -365,5 +484,4 @@
     "heading6": "Category",
     "heading7": "Lot Description"
   }
-
 }

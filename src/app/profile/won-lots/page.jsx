@@ -2,22 +2,20 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
 
+import OrderDetails from "@/app/orders/detail/orderDetail";
 import { GetOrders, orderGetbyid } from "@/components/api/ApiFile";
 import ApiFunction from "@/components/api/apiFuntions";
-import { car1 } from "@/components/assets/icons/icon";
 import ProductTable from "@/components/common/dataTables/productTable";
 import TopSection from "@/components/common/TopSection";
 import TabHeader from "@/components/tabHeader";
 import moment from "moment";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { IoMdCheckmark } from "react-icons/io";
-import { RxCross2 } from "react-icons/rx";
-import OrderDetails from "@/app/orders/detail/orderDetail";
+import { useTranslation } from "react-i18next";
 /* eslint-disable @next/next/no-img-element */
 
-const ProfilePage = () => {
+const WonLots = () => {
+  const { t } = useTranslation();
   const { get } = ApiFunction();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
@@ -31,8 +29,8 @@ const ProfilePage = () => {
   const urlId = urlParams.get("id");
   const [orderDetail, setOrderDetail] = useState("");
   const [detailLoading, setDetailLoading] = useState(false);
-  // handle get all order
 
+  // handle get all order
   const handleGetOrder = () => {
     setLoading(true);
     const api = `${GetOrders}/${lastId}?status=winner`;
@@ -56,14 +54,13 @@ const ProfilePage = () => {
   }, [lastId]);
 
   // handle detail
-
   const handleDetail = (item) => {
     router.replace(`/profile/won-lots?id=${item?._id}`);
   };
 
   const columns = [
     {
-      name: "Auction Name",
+      name: t("wonLots.columns.auctionName"),
       minWidth: "150px",
       maxWidth: "350px",
       cell: (row) => (
@@ -78,7 +75,7 @@ const ProfilePage = () => {
       ),
     },
     {
-      name: "Category",
+      name: t("wonLots.columns.category"),
       minWidth: "120px",
       maxWidth: "250px",
       cell: (row) => (
@@ -87,30 +84,34 @@ const ProfilePage = () => {
         </div>
       ),
     },
-
     {
-      name: "Start Date",
+      name: t("wonLots.columns.startDate"),
       minWidth: "200px",
       maxWidth: "400px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize">
-          {moment.utc(row?.auction?.start_date).local().format("DD MMMM, YYYY h:mm A")}
+          {moment
+            .utc(row?.auction?.start_date)
+            .local()
+            .format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
     },
     {
-      name: "End Date",
+      name: t("wonLots.columns.endDate"),
       minWidth: "200px",
       maxWidth: "400px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize">
-          {moment.utc(row?.auction?.end_date).local().format("DD MMMM, YYYY h:mm A")}
+          {moment
+            .utc(row?.auction?.end_date)
+            .local()
+            .format("DD MMMM, YYYY h:mm A")}
         </div>
       ),
     },
-
     {
-      name: "Status",
+      name: t("wonLots.columns.status"),
       minWidth: "180px",
       maxWidth: "200px",
       cell: (row) => (
@@ -123,33 +124,30 @@ const ProfilePage = () => {
               : " bg-[#EAF5F2] text-[#6DC1FE]"
           } capitalize`}
         >
-          {row?.status}
+          {t(`wonLots.status.${row?.status}`) || row?.status}
         </div>
       ),
     },
     {
-      name: "Action",
+      name: t("wonLots.columns.action"),
       minWidth: "100px",
       maxWidth: "120px",
       cell: (row) => (
         <>
-          {/* {currentActiveButton !== "Payement" && ( */}
           <div
             className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#660000] poppins_medium capitalize cursor-pointer"
             onClick={() => {
               handleDetail(row);
             }}
           >
-            view details
+            {t("wonLots.actions.viewDetails")}
           </div>
-          {/* )} */}
         </>
       ),
     },
   ];
 
   // order get by id
-
   const handlegetOrderById = () => {
     setDetailLoading(true);
     const api = `${orderGetbyid}/${urlId}`;
@@ -186,9 +184,9 @@ const ProfilePage = () => {
         </div>
         <div className="w-full flex flex-col items-start gap-3 lg:w-3/4">
           <TopSection
-            description="See your Won lots here."
+            description={t("wonLots.description")}
             mt={0}
-            title="Won Lots"
+            title={t("wonLots.title")}
           />
           {urlId ? (
             <>
@@ -202,7 +200,7 @@ const ProfilePage = () => {
             <>
               <div className="bg-white px-8 rounded-lg w-full shadow-sm">
                 <ProductTable
-                  rowHeading="won lots"
+                  rowHeading={t("wonLots.rowHeading")}
                   count={count}
                   loading={loading}
                   setCurrentPage={setPage}
@@ -223,4 +221,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default WonLots;

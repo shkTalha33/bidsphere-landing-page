@@ -10,8 +10,8 @@ const TabHeader = () => {
   const pathname = usePathname();
   const navItems = [
     { label: t("profil.heading"), path: "/profile/personal-information" },
-    { label: t("profil.heading29"), path: "/profile/won-lots" },
-    { label: t("profil.heading30"), path: "/profile/help-center" },
+    { label: t("profil.heading30"), path: "/profile/won-lots" },
+    { label: t("profil.heading29"), path: "/profile/help-center" },
     { label: t("privacy.heading"), path: "/profile/privacy-policy" },
     { label: t("termConditions.heading"), path: "/profile/terms-condition" },
     { label: t("changeCurrency.heading"), path: "/profile/change-currency" },
