@@ -41,6 +41,8 @@ const Language = () => {
   useEffect(() => {
     if (i18n.language !== userLanguage) {
       i18n.changeLanguage(userLanguage);
+      document.documentElement.lang = userLanguage;
+      document.documentElement.dir = userLanguage === "ar" ? "rtl" : "ltr";
     }
   }, [userLanguage]);
 
