@@ -38,6 +38,7 @@ const Language = () => {
         console.log(error, "error");
       });
   };
+
   useEffect(() => {
     if (i18n.language !== userLanguage) {
       i18n.changeLanguage(userLanguage);
