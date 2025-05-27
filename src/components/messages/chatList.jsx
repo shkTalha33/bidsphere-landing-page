@@ -70,7 +70,6 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
     //   // dispatch(userChat(notification));
     // });
     // newSocket.on("send_message_error", (error) => {
-    //   console.log("error", error);
     // });
     // return () => {
     //   newSocket.disconnect();
