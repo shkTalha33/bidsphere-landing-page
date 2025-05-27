@@ -13,10 +13,12 @@ import { StaticImage } from "../assets/icons/icon";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import SectionHeadings from "../common/sectionHeadings";
+import { useSelector } from "react-redux";
 export default function AuctionEvents() {
   const { formatPrice, convert } = useCurrency();
   const router = useRouter();
   const { t } = useTranslation();
+  const language = useSelector((state) => state.language?.language);
 
   const { data, isLoading, error } = useGetAuctionsQuery({
     endpoint: `${getCategory}`,
@@ -41,10 +43,18 @@ export default function AuctionEvents() {
             {/* Card 1 */}
             <Col xs={12} md={6} lg={4}>
               <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full hover:-translate-y-1 border border-gray-100">
-                <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
+                <h3
+                  className={`text-xl poppins_semibold mb-2 text-[#1a1a1a] ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("services.heading")}
                 </h3>
-                <p className="text-[#555] text-sm poppins_regular leading-relaxed">
+                <p
+                  className={`text-[#555] text-sm poppins_medium leading-relaxed  ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("services.heading1")}
                 </p>
               </div>
@@ -53,10 +63,18 @@ export default function AuctionEvents() {
             {/* Card 2 */}
             <Col xs={12} md={6} lg={4}>
               <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full hover:-translate-y-1 border border-gray-100">
-                <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
+                <h3
+                  className={`text-xl poppins_semibold mb-2 text-[#1a1a1a] ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("services.heading2")}
                 </h3>
-                <p className="text-[#555] text-sm poppins_medium leading-relaxed">
+                <p
+                  className={`text-[#555] text-sm poppins_medium leading-relaxed  ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("services.heading3")}
                 </p>
               </div>
@@ -65,10 +83,18 @@ export default function AuctionEvents() {
             {/* Card 3 */}
             <Col xs={12} md={6} lg={4}>
               <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 h-full hover:-translate-y-1 border border-gray-100">
-                <h3 className="text-xl poppins_semibold mb-2 text-[#1a1a1a]">
+                <h3
+                  className={`text-xl poppins_semibold mb-2 text-[#1a1a1a] ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("services.heading4")}
                 </h3>
-                <p className="text-[#555] text-sm poppins_medium leading-relaxed">
+                <p
+                  className={`text-[#555] text-sm poppins_medium leading-relaxed  ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("services.heading5")}
                 </p>
               </div>

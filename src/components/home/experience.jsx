@@ -9,6 +9,7 @@ import { FaCheck } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { bounce, slideIn, staggerContainer } from "../utils/motion";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 export default function Experience() {
   const { t } = useTranslation();
@@ -18,6 +19,8 @@ export default function Experience() {
     t("about.heading7"),
     // t("about.heading8"),
   ];
+
+  const language = useSelector((state) => state.language?.language);
 
   return (
     <>
@@ -31,10 +34,7 @@ export default function Experience() {
         <Container>
           <Row>
             <Col md="6">
-              <motion.div
-                
-                variants={slideIn("left", "tween", 0.3, 0.8)}
-              >
+              <motion.div variants={slideIn("left", "tween", 0.3, 0.8)}>
                 <Image src={experience} alt="experience" width={"90%"} />
               </motion.div>
             </Col>
@@ -43,19 +43,49 @@ export default function Experience() {
                 className="flex justify-center flex-col h-full"
                 variants={slideIn("right", "tween", 0.3, 0.8)}
               >
-                <div className="flex gap-3 justify-center md:justify-start items-center  mb-[10px]">
-                  <div className="w-8 h-2 bg_primary rounded-full"></div>
-                  <h6 className="text-[#202020] poppins_semibold text-xl capitalize">
+                <div
+                  className={`flex gap-3 items-center  mb-[10px] ${
+                    language === "ar"
+                      ? "justify-end"
+                      : "justify-center md:justify-start"
+                  }`}
+                >
+                  <div
+                    className={`w-8 h-2 bg_primary rounded-full ${
+                      language === "ar" ? "order-2" : "order-1"
+                    }`}
+                  ></div>
+                  <h6
+                    className={`text-[#202020] poppins_semibold text-xl capitalize ${
+                      language === "ar" ? "text-right" : "text-left"
+                    }`}
+                  >
                     {t("about.heading")}
                   </h6>
                 </div>
-                <h4 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center text-md-start text_primary poppins_medium capitalize mb-2 md:mb-8">
+                <h4
+                  className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl text_primary poppins_medium capitalize mb-2 md:mb-8 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("about.heading2")} <br />
-                  <span className="text-black poppins_medium">
+                  <span
+                    className={`text-black poppins_medium ${
+                      language === "ar"
+                        ? "text-right"
+                        : "text-center md:text-start"
+                    }`}
+                  >
                     {t("about.heading3")}
                   </span>
                 </h4>
-                <p className="poppins_regular text-start md:text-start text-base sm:text-lg md:text-xl text-[#8B8B8B] mb-3 md:mb-8">
+                <p
+                  className={`poppins_regular text-base sm:text-lg md:text-xl text-[#8B8B8B] mb-3 md:mb-8 ${
+                    language === "ar"
+                      ? "text-right"
+                      : "text-start md:text-start"
+                  }`}
+                >
                   {t("about.heading4")}
                 </p>
 
@@ -64,10 +94,23 @@ export default function Experience() {
                     return (
                       <div
                         key={index}
-                        className="flex items-center justify-start gap-3"
+                        className={`flex items-center justify-start gap-3 ${
+                          language === "ar" ? "justify-end" : "justify-start"
+                        }`}
                       >
-                        <FaCheck className="text_primary" size={20} />
-                        <p className="text_primary poppins_medium text-sm sm:text-base md:text-xl">
+                        <FaCheck
+                          className={`text_primary ${
+                            language === "ar" ? "order-2" : "order-1"
+                          }`}
+                          size={20}
+                        />
+                        <p
+                          className={`text_primary poppins_medium text-sm sm:text-base md:text-xl ${
+                            language === "ar"
+                              ? "text-right order-1"
+                              : "text-left order-2"
+                          }`}
+                        >
                           {feature}
                         </p>
                       </div>

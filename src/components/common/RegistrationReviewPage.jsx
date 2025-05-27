@@ -25,7 +25,8 @@ export default function RegistrationReviewPage({
   progress,
   isLoading = false,
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = useSelector((state) => state.language.language);
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const { post } = ApiFunction();
@@ -59,7 +60,12 @@ export default function RegistrationReviewPage({
       {isLoading ? (
         <SkeletonLayout3 />
       ) : (
-        <Container className="bg-white rounded-lg p-2">
+        <Container
+          dir={language === "ar" ? "rtl" : "ltr"}
+          className={`bg-white rounded-lg p-2 ${
+            language === "ar" ? "text-right" : ""
+          }`}
+        >
           <Row className="g-2">
             <Col md="6">
               <div className="bg-[#F9F9F9] shadow-[0_0_20px_rgba(255,255,255,0.8)] rounded-md">
@@ -125,7 +131,11 @@ export default function RegistrationReviewPage({
                   <p className="text-base poppins_semibold mb-2">
                     {t("registration.fields.identityProof")}
                   </p>
-                  <div className="flex gap-3 items-start flex-wrap">
+                  <div
+                    className={`flex ${
+                      language === "ar" ? "justify-start" : "justify-start"
+                    } gap-3 items-start flex-wrap`}
+                  >
                     {(data?.id_proof || formData?.id_proof)?.map(
                       (file, index) => (
                         <Link href={file?.url} target="_blank" key={index}>
@@ -155,7 +165,11 @@ export default function RegistrationReviewPage({
                   <p className="text-base poppins_semibold mb-2">
                     {t("registration.fields.proofOfFunds")}
                   </p>
-                  <div className="flex gap-2 items-start flex-wrap">
+                  <div
+                    className={`flex ${
+                      language === "ar" ? "justify-start" : "justify-start"
+                    } gap-2 items-start flex-wrap`}
+                  >
                     {(data?.funds_proof || formData?.funds_proof)?.map(
                       (file, index) => (
                         <Link href={file?.url} target="_blank" key={index}>
@@ -212,7 +226,7 @@ export default function RegistrationReviewPage({
 
           {pageType === "registration" && (
             <Row className="mt-4">
-              <Col lg="6" className="text-end ml-auto">
+              <Col lg="6" className={"text-end ml-auto"}>
                 <button
                   disabled={loading}
                   type="submit"

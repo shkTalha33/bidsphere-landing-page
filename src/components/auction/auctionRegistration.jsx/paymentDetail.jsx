@@ -51,7 +51,8 @@ const PaymentDetail = ({
   isCompleted,
   setActive,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === "ar";
   const [item, setItem] = useState([]);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
@@ -175,7 +176,11 @@ const PaymentDetail = ({
   };
   return (
     <>
-      <Container className="bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
+      <Container
+        className={`bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form ${
+          isRTL ? "text-right" : ""
+        }`}
+      >
         <Form
           // onSubmit={handleSubmit(onSubmit)}
           className="d-flex flex-column gap-2 w-100"
@@ -198,7 +203,11 @@ const PaymentDetail = ({
             </Col>
             <Col md="6" className="text-center">
               {/* Wallet Balance Display at Top */}
-              <div className="bg-gray-100 p-3 rounded-md mb-4 text-left">
+              <div
+                className={`bg-gray-100 p-3 rounded-md mb-4 ${
+                  isRTL ? "text-right" : "text-left"
+                }`}
+              >
                 <div className="text-sm text-gray-700">
                   {t("payment.walletBalance")}:{" "}
                   <span className="font-bold text-black">
@@ -255,7 +264,11 @@ const PaymentDetail = ({
               </div>
 
               {/* NEXT Button */}
-              <div className="flex justify-end mt-3">
+              <div
+                className={`flex ${
+                  isRTL ? "justify-start" : "justify-end"
+                } mt-3`}
+              >
                 {(urlStatus === "succeeded" || walletUsed) && (
                   <div
                     onClick={handlenavoiu}

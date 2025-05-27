@@ -10,12 +10,14 @@ import TabHeader from "@/components/tabHeader";
 import { Skeleton } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const PrivacyPolicyPage = () => {
   const [loading, setLoading] = useState(false);
   const [privacyData, setPrivacyData] = useState("");
   const { get } = ApiFunction();
   const { t } = useTranslation();
+  const language = useSelector((state) => state?.language?.language);
 
   const handlePrivacy = () => {
     setLoading(true);
@@ -49,21 +51,31 @@ const PrivacyPolicyPage = () => {
             mt={0}
             title={t("privacy.heading")}
           />
-          <div className="bg-white px-8 py-6 rounded-lg w-full shadow-sm">
+          <div className={`bg-white px-8 py-6 rounded-lg w-full shadow-sm`}>
             {loading ? (
               <Skeleton active />
             ) : privacyData?.description ? (
               <>
-                <h5 className="text-xl md:text-2xl poppins_medium mb-3">
+                <h5
+                  className={`text-xl md:text-2xl poppins_medium mb-3 ${
+                    language === "ar" ? "text-end" : "text-start"
+                  }`}
+                >
                   {t("privacy.heading")}
                 </h5>
                 <div
-                  className="ckData"
+                  className={`ckData ${
+                    language === "ar" ? "text-end" : "text-start"
+                  }`}
                   dangerouslySetInnerHTML={{ __html: privacyData?.description }}
                 />
               </>
             ) : (
-              <div className="text-center py-4 text-gray-500">
+              <div
+                className={`text-center py-4 text-gray-500 ${
+                  language === "ar" ? "text-end" : "text-start"
+                }`}
+              >
                 {t("privacy.heading2")}
               </div>
             )}

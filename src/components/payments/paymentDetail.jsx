@@ -28,12 +28,14 @@ import { useTranslation } from "react-i18next";
 import { Modal } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { useGetAuctionByIdQuery } from "../redux/apiSlice";
+import { useSelector } from "react-redux";
 
 export default function PaymentDetail() {
   const { get, post } = ApiFunction();
   const [paymentHistory, setPaymentHistory] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = useSelector((state) => state.language.language);
   const [rowData, setRowData] = useState(null);
   const [loadingType, setLoadingType] = useState(null);
   const [page, setPage] = useState(0);
@@ -177,7 +179,9 @@ export default function PaymentDetail() {
           return (
             <button
               onClick={() => handleShow(row)}
-              className="bg-gradient-to-r from-[#660000] via-[#800000] to-[#990000] whitespace-nowrap text-white text-sm font-medium py-1.5 px-3 rounded-md hover:opacity-90 transition"
+              className={`bg-gradient-to-r from-[#660000] via-[#800000] to-[#990000] whitespace-nowrap text-white text-sm font-medium py-1.5 px-3 rounded-md hover:opacity-90 transition ${
+                language === "ar" ? "ml-auto" : ""
+              }`}
             >
               {t("payment.heading10")}
             </button>
@@ -187,18 +191,26 @@ export default function PaymentDetail() {
         // Case: Refund already processed
         if (refundStatus === "refunded") {
           return (
-            <span className="text-green-600 text-sm poppins_medium">
+            <div
+              className={`text-green-600 text-sm poppins_medium ${
+                language === "ar" ? "ml-auto text-right" : "text-left"
+              }`}
+            >
               ✅{t("payment.heading11")}
-            </span>
+            </div>
           );
         }
 
         // Case: Refund request already sent
         if (refundStatus === "request") {
           return (
-            <span className="text-yellow-600 text-sm">
+            <div
+              className={`text-yellow-600 text-sm poppins_medium ${
+                language === "ar" ? "ml-auto text-right" : "text-left"
+              }`}
+            >
               ⏳{t("payment.heading12")}
-            </span>
+            </div>
           );
         }
 
@@ -289,7 +301,12 @@ export default function PaymentDetail() {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px] p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container
+        dir={language === "ar" ? "rtl" : "ltr"}
+        className={`bg_white rounded-[9px] p-4 shadow-[0px_4px_22.9px_0px_#0000000D] ${
+          language === "ar" ? "text-right" : ""
+        }`}
+      >
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={t("payment.heading")} />
@@ -299,8 +316,16 @@ export default function PaymentDetail() {
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white p-2 p-md-3 rounded-[9px] mt-4">
-        <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px] mt-3">
+      <Container
+        className={`bg_white p-2 p-md-3 rounded-[9px] mt-4 ${
+          language === "ar" ? "text-right" : ""
+        }`}
+      >
+        <div
+          className={`flex items-center ${
+            language === "ar" ? "justify-end" : "justify-start"
+          } gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px] mt-3`}
+        >
           <ProductTable
             rowHeading={t("payment.heading2")}
             count={count}
@@ -402,7 +427,7 @@ export default function PaymentDetail() {
           </Row>
         </Row>
         <Row>
-          <Col md="6" className="text-end ml-auto mt-4 px-3 px-md-0">
+          <Col md="6" className={`${language === "ar" ? 'text-start mr-auto' : 'text-end ml-auto'} mt-4 px-3 px-md-0`}>
             <button
               type="submit"
               className="bg_primary text-white px-6 py-2 py-sm-3 rounded-lg w-full sm:w-[50%] poppins_semibold text-base sm:text-[22px]"
@@ -414,32 +439,60 @@ export default function PaymentDetail() {
         </Row> */}
         <Modal show={show} centered backdrop="static" onHide={handleClose}>
           <Modal.Header closeButton className="bg-white">
-            <Modal.Title className="text-dark poppins_medium">
+            <Modal.Title
+              className={`text-dark poppins_medium  ${
+                language === "ar" ? "text-right" : "text-left"
+              }`}
+            >
               {t("payment.heading13")}
             </Modal.Title>
           </Modal.Header>
 
           <Modal.Body className="p-4 bg-white text-gray-800 rounded-b-xl">
-            <p className="text-base mb-4">
+            <p
+              className={`text-base mb-4 ${
+                language === "ar" ? "text-right" : "text-left"
+              }`}
+            >
               {t("payment.heading14")} <strong>{t("payment.heading15")}</strong>
               .{t("payment.heading16")}
             </p>
-            <ul className="list-disc list-inside text-sm poppins_regular mb-4">
-              <li>{t("payment.heading17")}</li>
+            <ul
+              className={`text-sm poppins_regular mb-4 ${
+                language === "ar"
+                  ? "pr-5 list-outside text-right"
+                  : "pl-5 list-inside text-left"
+              }`}
+              style={{
+                listStyleType: "disc",
+                direction: language === "ar" ? "rtl" : "ltr",
+              }}
+            >
+              <li className="mb-2">{t("payment.heading17")}</li>
               <li>
                 {t("payment.heading18")}{" "}
                 <strong>{t("payment.heading19")}</strong>{" "}
                 {t("payment.heading20")}
               </li>
             </ul>
-            <p className="text-sm text-gray-600 italic">
+            <p
+              className={`text-sm text-gray-600 italic ${
+                language === "ar" ? "text-right" : "text-left"
+              }`}
+            >
               {t("payment.heading21")}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 mt-5 justify-center">
+            <div
+              className={`flex flex-col sm:flex-row gap-3 mt-5 justify-center ${
+                language === "ar" ? "text-right" : "text-left"
+              }`}
+            >
               {/* Contact Admin Button */}
               <button
-                className="bg-gradient-to-r from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium py-2 px-4 rounded hover:opacity-90 transition flex items-center justify-center"
+                className={`bg-gradient-to-r from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium py-2 px-4 rounded hover:opacity-90 transition flex items-center justify-center ${
+                  language === "ar" ? "text-right" : "text-left"
+                }`}
                 onClick={handleContactAdmin}
                 disabled={loadingType === "wallet" || loadingType === "admin"}
               >

@@ -36,6 +36,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
   const formData = useSelector(selectRegisterData);
   const active = useSelector(selectActiveStep);
   const progress = useSelector(selectProgress);
+  const language = useSelector((state) => state.language.language);
   const { t } = useTranslation();
   const schema = Yup.object().shape({
     fname: Yup.string().required(t("profil.heading13")),
@@ -100,7 +101,11 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
   };
 
   return (
-    <Container className="bg_white rounded-[9px] md:mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
+    <Container
+      className={`bg_white rounded-[9px] md:mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form ${
+        language === "ar" ? "text-right" : ""
+      }`}
+    >
       <Form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Row className="g-4">
           <Col md="6">
@@ -247,7 +252,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
           </Col>
         </Row>
 
-        <Col md="6" className="text-end ml-auto">
+        <Col md="6" className={"text-end ml-auto"}>
           <button
             type="submit"
             className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"

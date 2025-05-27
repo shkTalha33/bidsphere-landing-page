@@ -37,6 +37,7 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
   const [selectedFundsFiles, setSelectedFundsFiles] = useState([]);
   const formData = useSelector(selectRegisterData);
   const progress = useSelector(selectProgress);
+  const language = useSelector((state) => state.language.language);
 
   const schema = Yup.object().shape({
     id_proof: Yup.array()
@@ -301,7 +302,12 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
   };
 
   return (
-    <Container className="bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
+    <Container
+      dir={language === "ar" ? "rtl" : "ltr"}
+      className={`bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form ${
+        language === "ar" ? "text-right" : ""
+      }`}
+    >
       <Form
         onSubmit={handleSubmit(onSubmit)}
         className="d-flex flex-column gap-2 w-100"
@@ -324,7 +330,7 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
             errors={errors}
           />
         </Row>
-        <Col md="6" className="text-end ml-auto">
+        <Col md="6" className={"text-end ml-auto"}>
           <button
             type="submit"
             disabled={fileLoadingFunds || fileLoadingIdentity}

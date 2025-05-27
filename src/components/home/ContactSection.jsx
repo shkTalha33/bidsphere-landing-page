@@ -12,11 +12,13 @@ import ApiFunction from "../api/apiFuntions";
 import { notificationemail } from "../api/ApiFile";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 export default function ContactSection() {
   const router = useRouter();
   const { post } = ApiFunction();
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
+  const language = useSelector((state) => state.language?.language);
 
   const schema = yup.object().shape({
     email: yup
@@ -99,7 +101,9 @@ export default function ContactSection() {
                           render={({ field }) => (
                             <Input
                               placeholder={t("emailSubscribe.heading3")}
-                              className="text_primary border-0 text-[0.8rem] sm:text-[1rem] flex-1"
+                              className={`text_primary border-0 text-[0.8rem] sm:text-[1rem] flex-1 ${
+                                language === "ar" ? "order-2" : "order-1"
+                              }`}
                               {...field}
                             />
                           )}

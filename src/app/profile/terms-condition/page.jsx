@@ -10,6 +10,7 @@ import TabHeader from "@/components/tabHeader";
 import { Skeleton } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 /* eslint-disable @next/next/no-img-element */
 
 const Page = () => {
@@ -17,6 +18,7 @@ const Page = () => {
   const [termData, setTermData] = useState("");
   const { get } = ApiFunction();
   const { t } = useTranslation();
+  const language = useSelector((state) => state?.language?.language);
 
   const handleTerms = () => {
     setLoading(true);
@@ -55,12 +57,18 @@ const Page = () => {
                 <Skeleton active />
               ) : (
                 <>
-                  <h5 className="text-xl md:text-2xl poppins_medium mb-3">
+                  <h5
+                    className={`text-xl md:text-2xl poppins_medium mb-3 ${
+                      language === "ar" ? "text-end" : "text-start"
+                    }`}
+                  >
                     {t("termConditions.heading")}
                   </h5>
 
                   <div
-                    className="ckData"
+                    className={`ckData ${
+                      language === "ar" ? "text-end" : "text-start"
+                    }`}
                     dangerouslySetInnerHTML={{ __html: termData?.description }}
                   />
                 </>
