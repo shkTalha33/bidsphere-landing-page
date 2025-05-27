@@ -62,6 +62,7 @@ import { useTranslation } from "react-i18next";
 
 export default function Page() {
   const { get, userData, put } = ApiFunction();
+  const language = useSelector((state) => state.language.language);
   const [activeButton, setActiveButton] = useState("custom");
   const [openBiddingConfirmationModal, setOpenBiddingConfirmationModal] =
     useState(false);
@@ -611,30 +612,49 @@ export default function Page() {
               <div className="bg_primary pt-4 py-16 px-3 sm:px-6 rounded-xl relative">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="poppins_medium text-xl sm:text-2xl text-white mb-0 capitalize">
+                    <p
+                      className={`poppins_medium text-xl sm:text-2xl text-white mb-0 capitalize ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {currentLot?.item?.name || userData?.lang === "en"
                         ? currentLot?.item?.name?.en
                         : currentLot?.item?.name?.ar}
                     </p>
-                    <p className="poppins_regular text-sm text-white mb-0 capitalize">
+                    <p
+                      className={`poppins_regular text-sm text-white mb-0 capitalize ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {t("nav.auction")}
                     </p>
                   </div>
                 </div>
               </div>
-
               {/* Price and Bidding Status Section */}
               <div className="w-[90%] mx-auto relative -mt-10 mb-6">
                 <Row className="py-4 bg-[#F3F2F2] rounded-[10px] mx-0">
                   <Col sm="6" className="border-r border-gray-300 px-4">
-                    <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
-                      {t("auctionJoin.heading19")}
-                    </p>
-                    <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
-                      {formatPrice(convert(currentLot?.minprice || 0, "LYD"))}
-                    </p>
+                    <div
+                      className={`flex flex-col gap-2 ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
+                      <p className="text-sm text-[#7C8493] poppins_regular mb-0">
+                        {t("auctionJoin.heading15")}
+                      </p>
+                      <p className="text-base md:text-lg poppins_medium text-[#1A1F2D] mb-0">
+                        {formatPrice(
+                          convert(currentLot?.current_bid || 0, "LYD")
+                        )}
+                      </p>
+                    </div>
 
-                    <div className="flex items-center justify-start mb-2 md:mb-0 mt-2 gap-1">
+                    <div
+                      className={`flex items-center justify-start mb-2 md:mb-0 mt-2 gap-1 ${
+                        language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
+                    >
                       {participants?.slice(0, 3).map((user, index) => {
                         const initial = user?.fname
                           .trim()
@@ -643,7 +663,9 @@ export default function Page() {
                         return (
                           <div
                             key={index}
-                            className="bg-gray-300 rounded-full w-[2rem] h-[2rem] flex items-center justify-center text-sm font-bold text-black"
+                            className={`bg-gray-300 rounded-full w-[2rem] h-[2rem] flex items-center justify-center text-sm font-bold text-black ${
+                              language === "ar" ? "ml-2" : "mr-2"
+                            }`}
                           >
                             {initial}
                           </div>
@@ -651,29 +673,53 @@ export default function Page() {
                       })}
 
                       {participants?.length > 3 && (
-                        <div className="bg-gray-300 rounded-full w-[2rem] h-[2rem] flex items-center justify-center text-sm font-bold text-black">
+                        <div
+                          className={`bg-gray-300 rounded-full w-[2rem] h-[2rem] flex items-center justify-center text-sm font-bold text-black ${
+                            language === "ar" ? "ml-2" : "mr-2"
+                          }`}
+                        >
                           +{participants?.length - 3}
                         </div>
                       )}
 
-                      <p className="poppins_regular text-[15px] text-[#1C201F] mb-0">
+                      <p
+                        className={`poppins_regular text-[15px] text-[#1C201F] mb-0 ${
+                          language === "ar" ? "text-right" : "text-left"
+                        }`}
+                      >
                         {t("auctionJoin.heading20")}
                       </p>
                     </div>
                   </Col>
 
                   <Col sm="6" className="px-4">
-                    <p className="text-[#1B212C] mb-0 text-base sm:text-lg poppins_semibold capitalize">
+                    <p
+                      className={`text-[#1B212C] mb-0 text-base sm:text-lg poppins_semibold capitalize ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {t("auctionJoin.heading21")}
                     </p>
-                    <p className="text-[#1B212C] mb-0 text-xs sm:text-sm poppins_regular capitalize">
+                    <p
+                      className={`text-[#1B212C] mb-0 text-xs sm:text-sm pop  pins_regular capitalize ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {formatPrice(convert(recentBids?.[0]?.price || 0, "LYD"))}
                     </p>
                     <div>
-                      <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
+                      <p
+                        className={`text-[#1B212C] mb-0 text-lg poppins_semibold capitalize ${
+                          language === "ar" ? "text-right" : "text-left"
+                        }`}
+                      >
                         {t("auctionJoin.heading22")}
                       </p>
-                      <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
+                      <p
+                        className={`text-[#1B212C] mb-0 text-sm poppins_regular capitalize ${
+                          language === "ar" ? "text-right" : "text-left"
+                        }`}
+                      >
                         {formatPrice(
                           convert(currentLot?.minincrement || 0, "LYD")
                         )}
@@ -681,10 +727,18 @@ export default function Page() {
                     </div>
                   </Col>
                   <Col sm="6" className="border-r border-gray-300 px-4">
-                    <p className="text-[#1B212C] mb-0 text-lg poppins_semibold capitalize">
+                    <p
+                      className={`text-[#1B212C] mb-0 text-lg poppins_semibold capitalize ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {t("auctionJoin.heading23")}
                     </p>
-                    <div className="poppins_regular text-sm">
+                    <div
+                      className={`poppins_regular text-sm ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {moment
                         .utc(auctionData?.start_date)
                         .local()
@@ -693,10 +747,18 @@ export default function Page() {
                   </Col>
 
                   <Col sm="6" className="px-4">
-                    <p className="text-[#1B212C] mb-0 text-base sm:text-lg poppins_semibold capitalize">
+                    <p
+                      className={`text-[#1B212C] mb-0 text-base sm:text-lg poppins_semibold capitalize ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {t("auctionJoin.heading24")}
                     </p>
-                    <div className="poppins_regular text-sm">
+                    <div
+                      className={`poppins_regular text-sm ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {moment
                         .utc(auctionData?.end_date)
                         .local()
@@ -712,9 +774,20 @@ export default function Page() {
                   userData?._id === winnerLot?.winner?._id ? (
                     <div className="flex flex-col items-center justify-center bg-green-50 border border-green-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
                       <CheckCircleOutlined className="text-green-500 text-5xl mb-4" />
-                      <h2 className="text-xl poppins_medium text-green-600 mb-2">
-                        {t("auctionJoin.heading25")}
-                      </h2>
+                      <div
+                        className={`flex items-center gap-2 ${
+                          language === "ar" ? "flex-row-reverse" : ""
+                        }`}
+                      >
+                        <h5
+                          className={`text-2xl md:text-3xl poppins_medium text-[#1A1F2D] mb-0 ${
+                            language === "ar" ? "text-right" : "text-left"
+                          }`}
+                        >
+                          {t("auctionJoin.heading10")}
+                        </h5>
+                        <div className="w-2 h-2 rounded-full bg-[#21CD9D] animate-ping"></div>
+                      </div>
                       <p className="text-gray-700">
                         🎉 {t("auctionJoin.heading26")}
                       </p>
@@ -723,9 +796,18 @@ export default function Page() {
                     <>
                       <div className="flex flex-col items-center justify-center bg-red-50 border border-red-200 p-6 rounded-2xl shadow-md text-center max-w-md mx-auto mt-6">
                         <CloseCircleOutlined className="text-red-500 text-5xl mb-4" />
-                        <h2 className="text-xl poppins_medium text-red-600 mb-2">
-                          {t("auctionJoin.heading27")}
-                        </h2>
+                        <div
+                          className={`flex flex-col gap-2 ${
+                            language === "ar" ? "text-right" : "text-left"
+                          }`}
+                        >
+                          <p className="text-base md:text-lg poppins_medium text-[#1A1F2D] mb-0">
+                            {getGreeting()}, {userData?.name}
+                          </p>
+                          <p className="text-sm text-[#7C8493] poppins_regular mb-0">
+                            {t("auctionJoin.heading11")}
+                          </p>
+                        </div>
                         <p className="text-gray-700">
                           {t("auctionJoin.heading28")}
                         </p>
@@ -736,9 +818,17 @@ export default function Page() {
               ) : (
                 <>
                   {/* Live Auction Header */}
-                  <Row className="px-6 items-center mx-0">
+                  <Row
+                    className={`px-6 items-center mx-0 ${
+                      language === "ar" ? "flex-row-reverse" : ""
+                    }`}
+                  >
                     <Col xs="8" sm="6" className="px-0">
-                      <div className="flex items-center justify-start gap-2">
+                      <div
+                        className={`flex items-center justify-start gap-2 ${
+                          language === "ar" ? "flex-row-reverse" : ""
+                        }`}
+                      >
                         <TbLivePhoto size={20} />
                         <p className="capitalize poppins_semibold text-lg mb-0">
                           {t("auctionJoin.heading29")}
@@ -746,7 +836,9 @@ export default function Page() {
                       </div>
                     </Col>
                     <Col xs="4" sm="6" className="px-0">
-                      <p className="capitalize poppins_regular text-[14px] text-end mb-0">
+                      <p
+                        className={`capitalize poppins_regular text-[14px] mb-0`}
+                      >
                         {recentBids?.length} {t("auctionJoin.heading30")}
                       </p>
                     </Col>
@@ -758,19 +850,33 @@ export default function Page() {
                     {recentBids?.map((bid) => (
                       <div
                         key={bid?._id}
-                        className="flex items-center justify-between gap-3"
+                        className={`flex items-center justify-between gap-3 ${
+                          language === "ar" ? "flex-row-reverse" : ""
+                        }`}
                       >
-                        <div className="flex items-center gap-3">
+                        <div
+                          className={`flex items-center gap-3 ${
+                            language === "ar" ? "flex-row-reverse" : ""
+                          }`}
+                        >
                           <div className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-300 text-dark poppins_medium text-lg">
                             {bid?.name?.charAt(0)?.toUpperCase()}
                           </div>
                           <div>
-                            <p className="poppins_regular text-base text_dark mb-0">
+                            <p
+                              className={`poppins_regular text-base text_dark mb-0 ${
+                                language === "ar" ? "text-start" : "text-end"
+                              }`}
+                            >
                               {bid?.name}
                             </p>
                           </div>
                         </div>
-                        <p className="capitalize poppins_regular text-[14px] text-end mb-0">
+                        <p
+                          className={`capitalize poppins_regular text-[14px] ${
+                            language === "ar" ? "text-start" : "text-end"
+                          } mb-0`}
+                        >
                           {formatPrice(convert(bid?.price || 0, "LYD"))}
                         </p>
                       </div>
@@ -811,7 +917,11 @@ export default function Page() {
 
                     {/* Custom Bid Input or Bid Button */}
                     {activeButton === "custom" ? (
-                      <div className="flex items-center justify-start gap-3 mt-3">
+                      <div
+                        className={`flex items-center justify-start gap-3 mt-3 ${
+                          language === "ar" ? "flex-row-reverse" : ""
+                        }`}
+                      >
                         <input
                           type="number"
                           placeholder={t("auctionJoin.heading32")}
@@ -848,7 +958,9 @@ export default function Page() {
                       </div>
                     ) : (
                       <button
-                        className="capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg"
+                        className={`capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg ${
+                          language === "ar" ? "text-start" : "text-end"
+                        }`}
                         onClick={() => handleCustomBid("manual")}
                       >
                         {t("auctionJoin.heading34")}{" "}

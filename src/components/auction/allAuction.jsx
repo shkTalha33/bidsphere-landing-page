@@ -16,7 +16,7 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ApiFunction from "../api/apiFuntions";
-
+import { useSelector } from "react-redux";
 export default function AllAuction() {
   const [activeTab, setActiveTab] = useState("all");
   const { t } = useTranslation();
@@ -26,6 +26,7 @@ export default function AllAuction() {
   const [allCategory, setAllCategory] = useState([]);
   const [subCategoryData, setSubCategoryData] = useState([]);
   const [filtering, setFiltering] = useState(false);
+  const language = useSelector((state) => state.language?.language);
 
   // Independent filter states for each tab
   const [filters, setFilters] = useState({
@@ -304,7 +305,7 @@ export default function AllAuction() {
       <Container className="bg_white rounded-[9px] p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
         <Row>
           <Col md="12">
-            <Breadcrumbs pageTitle="Auctions" />
+            <Breadcrumbs pageTitle={t("allAuction.pageTitle")} />
             <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
               {activeTab === "trending"
                 ? t("allAuction.heading2")
@@ -355,7 +356,13 @@ export default function AllAuction() {
         </Row>
       </Container>
 
-      <Modal centered backdrop="static" show={show} onHide={handleClose}>
+      <Modal
+        centered
+        backdrop="static"
+        show={show}
+        onHide={handleClose}
+        dir={language === "ar" ? "rtl" : "ltr"}
+      >
         <Modal.Header closeButton>
           <Modal.Title>
             {t("allAuction.heading5")}{" "}
@@ -369,7 +376,12 @@ export default function AllAuction() {
         <Modal.Body>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto">
             <div className="flex flex-col gap-2 mb-4">
-              <label htmlFor="category" className="poppins_regular">
+              <label
+                htmlFor="category"
+                className={`poppins_regular ${
+                  language === "ar" ? "text-right" : "text-left"
+                }`}
+              >
                 {t("allAuction.heading6")}
               </label>
 
@@ -397,7 +409,12 @@ export default function AllAuction() {
             </div>
 
             <div className="flex flex-col gap-2 mb-4">
-              <label htmlFor="subCategory" className="poppins_regular">
+              <label
+                htmlFor="subCategory"
+                className={`poppins_regular ${
+                  language === "ar" ? "text-right" : "text-left"
+                }`}
+              >
                 {t("allAuction.heading7")}
               </label>
 

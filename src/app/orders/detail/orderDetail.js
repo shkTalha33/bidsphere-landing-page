@@ -34,13 +34,12 @@ import DeliveryTime from "./deliveryTime";
 import { useTranslation } from "react-i18next";
 
 export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
+  const { t } = useTranslation();
   const [currentSelectedButton, setCurrentSelectedButton] =
-    useState("order summary");
+    useState(`${t("order.heading16")}`);
   const router = useRouter();
   const onChange = (key) => {};
   const { userData } = ApiFunction();
-
-  const { t } = useTranslation();
 
   const orderDetailButtons = [
     `${t("order.heading16")}`,
@@ -200,15 +199,15 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
 
                 <Row className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
                   <Col md="12">
-                    {currentSelectedButton === "order summary" && (
+                    {currentSelectedButton === `${t("order.heading16")}` && (
                       <OrderSummary orderDetail={orderDetail} />
                     )}
 
-                    {currentSelectedButton === "delivery information" && (
+                    {currentSelectedButton === `${t("order.heading17")}` && (
                       <DeliveryInfo orderDetail={orderDetail} />
                     )}
 
-                    {currentSelectedButton === "delivery timeline" && (
+                    {currentSelectedButton === `${t("order.heading18")}` && (
                       <DeliveryTime orderDetail={orderDetail} />
                     )}
                   </Col>

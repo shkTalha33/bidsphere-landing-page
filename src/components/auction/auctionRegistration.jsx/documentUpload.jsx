@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -6,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Col, Container, Form, Label, Row, Spinner } from "reactstrap";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 
 import { handleError } from "@/components/api/errorHandler";
 import { uploadFile } from "@/components/api/uploadFile";
@@ -26,6 +28,7 @@ import {
 } from "@/components/redux/registrationSlice/resgiterSlice";
 
 const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
+  const { t } = useTranslation();
   const [selectedData, setSelectedData] = useState(null);
   const dispatch = useDispatch();
   const [fileLoadingIdentity, setFileLoadingIdentity] = useState(false);
@@ -34,15 +37,15 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
   const [selectedFundsFiles, setSelectedFundsFiles] = useState([]);
   const formData = useSelector(selectRegisterData);
   const progress = useSelector(selectProgress);
-  // //
+  const language = useSelector((state) => state.language.language);
 
   const schema = Yup.object().shape({
     id_proof: Yup.array()
-      .min(1, "At least one identity proof photo is required")
-      .required("Identity proof photos are required"),
+      .min(1, t("documentUpload.identityProof.validation.minFiles"))
+      .required(t("documentUpload.identityProof.validation.required")),
     funds_proof: Yup.array()
-      .min(1, "At least one proof of funds photo is required")
-      .required("Proof of funds photos are required"),
+      .min(1, t("documentUpload.fundsProof.validation.minFiles"))
+      .required(t("documentUpload.fundsProof.validation.required")),
   });
 
   const {
@@ -72,10 +75,7 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
       });
       setSelectedIdentityFiles(formData?.id_proof || []);
       setSelectedFundsFiles(formData?.funds_proof || []);
-      // dispatch(setRegisterData(formData));
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   useEffect(() => {
@@ -109,13 +109,13 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
     if (type === "identity") {
       const totalFiles = selectedIdentityFiles?.length + files.length;
       if (totalFiles > 5) {
-        return toast.error("Cannot upload more than 5 files");
+        return toast.error(t("documentUpload.messages.maxFilesError"));
       }
     }
     if (type === "funds") {
       const totalFiles = selectedFundsFiles.length + files.length;
       if (totalFiles > 5) {
-        return toast.error("Cannot upload more than 5 files");
+        return toast.error(t("documentUpload.messages.maxFilesError"));
       }
     }
     if (files.length === 0) return;
@@ -217,11 +217,14 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
             className="mx-auto my-2 md:my-4 w-20 sm:w-24 md:w-32"
           />
           <p className="mb-2 text_darkprimary inter_bold text-base sm:text-lg md:text-xl">
-            Select Files
+            {t("documentUpload.fileUpload.selectFiles")}
           </p>
           <p className="mb-2 text-xs sm:text-sm md:text-base text-[#637381]">
-            Drop files here or click{" "}
-            <span className="text-[#24292E]">browse</span> through your machine
+            {t("documentUpload.fileUpload.dropFiles")}{" "}
+            <span className="text-[#24292E]">
+              {t("documentUpload.fileUpload.browse")}
+            </span>{" "}
+            {t("documentUpload.fileUpload.throughMachine")}
           </p>
         </label>
 
@@ -277,12 +280,10 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
         onClick={() => handleRemoveAll(type)}
         className="border border-gray-200 text_primary px-3 ml-auto py-[10px] text-[15px] rounded-xl flex gap-2 items-center inter_semibold mt-3"
       >
-        Remove All
+        {t("documentUpload.fileUpload.removeAll")}
       </button>
     </Col>
   );
-
-  // /////
 
   const onSubmit = (data) => {
     if (!isCompleted?.document) {
@@ -296,13 +297,17 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
       ...formData,
       ...data,
     };
-    // Encrypt and encode
     dispatch(setRegisterData(mergedData));
     dispatch(setActiveStep("security"));
   };
 
   return (
-    <Container className="bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
+    <Container
+      dir={language === "ar" ? "rtl" : "ltr"}
+      className={`bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form ${
+        language === "ar" ? "text-right" : ""
+      }`}
+    >
       <Form
         onSubmit={handleSubmit(onSubmit)}
         className="d-flex flex-column gap-2 w-100"
@@ -310,28 +315,28 @@ const DocumentUpload = ({ setIsCompleted, isCompleted }) => {
         <Row className="mb-[30px]">
           <FileUploadSection
             type="identity"
-            title="Upload Identity Proof"
-            subtitle="(Passport, Driver's License)"
+            title={t("documentUpload.identityProof.title")}
+            subtitle={t("documentUpload.identityProof.subtitle")}
             files={selectedIdentityFiles}
             loading={fileLoadingIdentity}
             errors={errors}
           />
           <FileUploadSection
             type="funds"
-            title="Upload Proof of Funds"
-            subtitle="(Bank Statement, Income Proof)"
+            title={t("documentUpload.fundsProof.title")}
+            subtitle={t("documentUpload.fundsProof.subtitle")}
             files={selectedFundsFiles}
             loading={fileLoadingFunds}
             errors={errors}
           />
         </Row>
-        <Col md="6" className="text-end ml-auto">
+        <Col md="6" className={"text-end ml-auto"}>
           <button
             type="submit"
             disabled={fileLoadingFunds || fileLoadingIdentity}
             className="bg_primary text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
           >
-            Next
+            {t("documentUpload.actions.next")}
           </button>
         </Col>
       </Form>

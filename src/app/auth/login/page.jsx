@@ -21,8 +21,10 @@ import { useDispatch } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { Input, Label } from "reactstrap";
 import * as Yup from "yup";
+import { useTranslation } from "next-i18next";
 
 const Page = () => {
+  const { t } = useTranslation();
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [loading, setloading] = useState(false);
   const router = useRouter();
@@ -35,10 +37,12 @@ const Page = () => {
   };
 
   const schema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    email: Yup.string()
+      .email(t("validation.invalidEmail"))
+      .required(t("validation.emailRequired")),
     password: Yup.string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
+      .required(t("validation.passwordRequired"))
+      .min(8, t("validation.passwordMinLength")),
   });
 
   const {
@@ -61,7 +65,7 @@ const Page = () => {
     try {
       const response = await post(login, data);
       if (response.success) {
-        message.success("You have successfully logged in");
+        message.success(t("messages.loginSuccess"));
         dispatch(setLogin(true));
         dispatch(setAccessToken(response?.token));
         dispatch(setUserData(response?.user));
@@ -79,8 +83,8 @@ const Page = () => {
     <AuthLayout isCenter={true} src={"/assets/auth1.png"}>
       <>
         <AuthHeading
-          heading="Login"
-          subHeading="Login to your account"
+          heading={t("auth.login")}
+          subHeading={t("auth.loginToAccount")}
           path={"/"}
         />
         <Form
@@ -92,7 +96,7 @@ const Page = () => {
               for="email"
               className="mb-2 text-sm poppins_regular text_secondary2"
             >
-              Email Address
+              {t("form.emailAddress")}
             </Label>
             <Controller
               id="email"
@@ -105,7 +109,7 @@ const Page = () => {
                   type="email"
                   id="email"
                   name="email"
-                  placeholder="Email"
+                  placeholder={t("form.emailPlaceholder")}
                   className={`h-12 w-full poppins_regular sm:text-sm ${
                     errors.email
                       ? "border-red-500 ring-red-500 focus:ring-red-500"
@@ -125,7 +129,7 @@ const Page = () => {
               for="password"
               className="mb-2 text-sm poppins_regular text_secondary2"
             >
-              Password
+              {t("form.password")}
             </Label>
             <div className="relative">
               <button
@@ -148,7 +152,7 @@ const Page = () => {
                     {...field}
                     type={isPasswordHidden ? "password" : "text"}
                     id="password"
-                    placeholder="Password"
+                    placeholder={t("form.passwordPlaceholder")}
                     name="password"
                     className={`h-12 w-full poppins_regular sm:text-sm ${
                       errors.password
@@ -170,7 +174,7 @@ const Page = () => {
               href={"/auth/forgot-password"}
               className="poppins_medium underline text_primary text-sm"
             >
-              Forgot Password?
+              {t("auth.forgotPassword")}
             </Link>
           </div>
           <div className="col-span-6 sm:flex sm:items-center sm:gap-4 w-full">
@@ -179,60 +183,21 @@ const Page = () => {
               type="submit"
               className="btn1 bg_primary text-white w-100"
             >
-              {loading ? <BeatLoader color="#fff" size={10} /> : "Sign In"}
+              {loading ? (
+                <BeatLoader color="#fff" size={10} />
+              ) : (
+                t("auth.signIn")
+              )}
             </button>
           </div>
-          {/* <div className="col-span-6 mt-3">
-            <p className="text-lg poppins_medium">
-              Sign in with another account
-            </p>
-            <div className="grid grid-cols-3 gap-x-3 mt-2">
-              <button
-                className="btn1 white"
-                type="button"
-                aria-label="Sign in with Google"
-              >
-                <Image
-                  src={googleicon}
-                  width={30}
-                  height={30}
-                  alt=""
-                />
-              </button>
-              <button
-                className="btn1 white"
-                type="button"
-                aria-label="Sign in with Facebook"
-              >
-                <Image
-                  src={facebookicon}
-                  width={30}
-                  height={30}
-                  alt=""
-                />
-              </button>
-              <button
-                className="btn1 white"
-                type="button"
-                aria-label="Sign in with Apple"
-              >
-                <Image
-                  src={appleicon}
-                  width={30}
-                  height={30}
-                  alt=""
-                />
-              </button>
-            </div>
-          </div> */}
         </Form>
         <p className="pt-3 poppins_regular">
-          Create a New Account?{" "}
+          {t("auth.createNewAccount")}{" "}
           <Link
             href="/auth/sign-up"
             className="_link_underline poppins_medium text_primary"
           >
-            Sign up
+            {t("auth.signUp")}
           </Link>
         </p>
       </>

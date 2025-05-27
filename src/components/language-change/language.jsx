@@ -28,6 +28,8 @@ const Language = () => {
       .then((res) => {
         if (res?.success) {
           dispatch(setUserData(res?.user));
+          dispatch(setLanguage(lan));
+          i18n.changeLanguage(lan);
           dispatch(setLogin(true));
           window.location.reload();
         }
@@ -36,9 +38,10 @@ const Language = () => {
         console.log(error, "error");
       });
   };
+
   useEffect(() => {
     if (i18n.language !== userLanguage) {
-      handleChangeLanguage(userLanguage);
+      i18n.changeLanguage(userLanguage);
     }
   }, [userLanguage]);
 

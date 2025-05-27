@@ -13,6 +13,7 @@ import { HashLoader } from "react-spinners";
 import { Input } from "reactstrap";
 import NoData from "../NoDataComponent";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 // const BootstrapCheckbox = forwardRef((props, ref) => (
 //     <div className='form-check'>
@@ -141,7 +142,9 @@ const ProductTable = ({
     <>
       <Fragment>
         <div className="w-full mt-2 mt-md-4 rounded-xl">
-          <h6 className="poppins_semibold mb-1 mb-md-3 text-[#16161D] text-sm sm:text-lg capitalize">
+          <h6
+            className={`poppins_semibold mb-1 mb-md-3 text-[#16161D] text-sm sm:text-lg capitalize`}
+          >
             {rowHeading}
           </h6>
           {showRow && (

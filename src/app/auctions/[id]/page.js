@@ -32,6 +32,7 @@ const AuctionDetailPage = () => {
   const { id } = useParams();
   const { formatPrice, convert } = useCurrency();
   const { t } = useTranslation();
+  const language = useSelector((state) => state.language.language);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -109,10 +110,11 @@ const AuctionDetailPage = () => {
   const [isExpired, setIsExpired] = useState(false);
   const isActive = item?.status === "active";
 
-  
   const button = {
     icon: <Plus className="w-4 h-4 md:w-5 md:h-5 text-white" />,
-    text: isRegister ? t("auctionDetails.heading10") : t("auctionDetails.heading11"),
+    text: isRegister
+      ? t("auctionDetails.heading10")
+      : t("auctionDetails.heading11"),
     onClick: isRegister ? handleRegister : handleJoin,
 
     className:
@@ -132,7 +134,7 @@ const AuctionDetailPage = () => {
             title={`${getGreeting()}, ${userData?.fname || ""} ${
               userData?.lname || ""
             }`}
-            description={"Here are your auctions whom you can join."}
+            description={t("auctionDetails.heading12")}
             // button={button}
             // {...(item?.status === "start" && !isExpired && { button })}
             // {...(!isExpired && { button })}
@@ -212,12 +214,24 @@ const AuctionDetailPage = () => {
                 <Row>
                   <Col md="12">
                     <div className="py-2 rounded-xl relative">
-                      <div className="flex items-start justify-between">
+                      <div
+                        className={`flex items-start justify-between ${
+                          language === "ar" ? "flex-row-reverse" : "flex-row"
+                        }`}
+                      >
                         <div>
-                          <p className="poppins_medium text-xl sm:text-2xl  mb-0 capitalize">
+                          <p
+                            className={`poppins_medium text-xl sm:text-2xl  mb-0 capitalize ${
+                              language === "ar" ? "text-right" : "text-left"
+                            }`}
+                          >
                             {item?.name}
                           </p>
-                          <p className="poppins_regular text-sm  mb-0 capitalize">
+                          <p
+                            className={`poppins_regular text-sm  mb-0 capitalize ${
+                              language === "ar" ? "text-right" : "text-left"
+                            }`}
+                          >
                             {item?.category?.name}
                           </p>
                         </div>
@@ -226,29 +240,57 @@ const AuctionDetailPage = () => {
                   </Col>
                 </Row>
                 <Row className="justify-center my-2 mt-3">
-                  <Col md="6">
-                    <div className="poppins_medium text-base text-[#8B0000]">
-                    {t("order.heading6")}
+                  <Col md="6" className="my-2">
+                    <div
+                      className={`poppins_medium text-base text-[#8B0000] ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
+                      {t("order.heading6")}
                     </div>
-                    <div className="poppins_regular text-sm inline-block mt-2 px-3 py-1 border border-black-300 rounded-full  text-black">
-                      {item?.category?.name}
+                    <div
+                      className={`poppins_regular text-sm mt-2 py-1  text-black ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
+                      <span className="px-3 mt-2 py-1 rounded-full border border-black-300">
+                        {item?.subcategory?.title}
+                      </span>
                     </div>
                   </Col>
-                  <Col md="6">
-                    <div className="poppins_medium text-base text-[#8B0000]">
-                    {t("auctionDetails.heading6")}
+                  <Col md="6" className="my-2">
+                    <div
+                      className={`poppins_medium text-base text-[#8B0000] ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
+                      {t("auctionDetails.heading6")}
                     </div>
-                    <div className="poppins_regular text-sm inline-block mt-2 px-3 py-1 border border-black-300 rounded-full  text-black">
-                      {item?.subcategory?.title}
+                    <div
+                      className={`poppins_regular text-sm mt-2 py-1  text-black ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
+                      <span className="px-3 mt-2 py-1 rounded-full border border-black-300">
+                        {item?.subcategory?.title}
+                      </span>
                     </div>
                   </Col>
                 </Row>
                 <Row className="justify-center my-2 mt-3">
                   <Col md="6">
-                    <div className="poppins_medium text-base text_primary">
+                    <div
+                      className={`poppins_medium text-base text_primary ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {t("auctionDetails.heading")}
                     </div>
-                    <div className="poppins_regular text-sm">
+                    <div
+                      className={`poppins_regular text-sm ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {moment
                         .utc(item?.start_date)
                         .local()
@@ -257,10 +299,18 @@ const AuctionDetailPage = () => {
                   </Col>
 
                   <Col md="6">
-                    <div className="poppins_medium text-base text_primary">
+                    <div
+                      className={`poppins_medium text-base text_primary ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {t("auctionDetails.heading2")}
                     </div>
-                    <div className="poppins_regular text-sm">
+                    <div
+                      className={`poppins_regular text-sm ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {moment
                         .utc(item?.end_date)
                         .local()
@@ -270,28 +320,54 @@ const AuctionDetailPage = () => {
                 </Row>
                 <Row className="justify-center my-2 ">
                   <Col md="6">
-                    <div className="poppins_medium text-base text_primary">
+                    <div
+                      className={`poppins_medium text-base text_primary ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {t("auctionDetails.heading3")}
                     </div>
-                    <div className="poppins_regular">
+                    <div
+                      className={`poppins_regular ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {formatPrice(convert(item?.depositamount, "LYD"))}
                     </div>
                   </Col>
                   <Col md="6">
-                    <div className="poppins_medium text-base text_primary">
+                    <div
+                      className={`poppins_medium text-base text_primary ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {t("auctionDetails.heading7")}
                     </div>
-                    <div className="poppins_regular">{item?.status}</div>
+                    <div
+                      className={`poppins_regular ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
+                      {item?.status}
+                    </div>
                   </Col>
                 </Row>
                 <Row className="justify-center my-2">
                   <Col md="12">
-                    <div className="poppins_medium text-[1.2rem] text-black">
+                    <div
+                      className={`poppins_medium text-[1.2rem] text-black ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       {t("auctionDetails.heading4")}
                     </div>
                   </Col>
                   <Col md="12">
-                    <div className="poppins_regular abDatadi text_dark">
+                    <div
+                      className={`poppins_regular abDatadi text_dark ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
                       <p
                         dangerouslySetInnerHTML={{
                           __html: item?.additionalinfo,
@@ -305,7 +381,7 @@ const AuctionDetailPage = () => {
           </Container>
           <Container>
             <div>
-              <p className="poppins_medium text-2xl mb-0 ">
+              <p className={`poppins_medium text-2xl mb-0 `}>
                 {t("auctionDetails.heading5")}({item?.lots?.length})
               </p>
             </div>

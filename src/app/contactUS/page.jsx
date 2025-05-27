@@ -11,11 +11,13 @@ import { message } from "antd";
 import { FiPhone, FiMail, FiSend } from "react-icons/fi";
 import { useFootersQuery } from "@/components/redux/footerSlice";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const Page = () => {
   const { post } = ApiFunction();
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
+  const language = useSelector((state) => state.language.language);
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup
@@ -83,7 +85,10 @@ const Page = () => {
           {/* Contact Info Cards */}
           <Col lg="4" md="6" className="mb-4 md:mb-0">
             <Row className="g-3">
-              <Col xs="12" className="bg-white p-3 rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D] h-full">
+              <Col
+                xs="12"
+                className="bg-white p-3 rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D] h-full"
+              >
                 {/* Call Us Card */}
                 <div
                   className="rounded-lg transition-all duration-300 cursor-pointer group"
@@ -107,7 +112,10 @@ const Page = () => {
                 </div>
               </Col>
 
-              <Col xs="12" className="bg-white p-3 rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D] h-full">
+              <Col
+                xs="12"
+                className="bg-white p-3 rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D] h-full"
+              >
                 {/* Email Us Card */}
                 <div
                   className="rounded-lg transition-all duration-300 cursor-pointer group"
@@ -136,16 +144,28 @@ const Page = () => {
           {/* Contact Form */}
           <Col lg="8" md="6">
             <div className="bg-white p-6 rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D]">
-              <h4 className="text-xl poppins_semibold text-gray-800 mb-6">
+              <h4
+                className={`text-xl poppins_semibold text-gray-800 mb-6 ${
+                  language === "ar" ? "text-right" : "text-left"
+                }`}
+              >
                 {t("contactUs.heading3")}
               </h4>
-              <p className="text-gray-600 mb-8">{t("contactUs.heading4")}</p>
+              <p
+                className={`text-gray-600 mb-8 ${
+                  language === "ar" ? "text-right" : "text-left"
+                }`}
+              >
+                {t("contactUs.heading4")}
+              </p>
 
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-2">
                   <label
                     htmlFor="name"
-                    className="block text-sm poppins_medium text-gray-700 mb-2"
+                    className={`block text-sm poppins_medium text-gray-700 mb-2 ${
+                      language === "ar" ? "text-right" : "text-left"
+                    }`}
                   >
                     {t("contactUs.heading5")}
                   </label>
@@ -156,7 +176,9 @@ const Page = () => {
                       <input
                         id="name"
                         placeholder={t("contactUs.heading5")}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300"
+                        className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300 ${
+                          language === "ar" ? "text-right" : "text-left"
+                        }`}
                         style={{ "--tw-ring-color": primaryColor }}
                         {...field}
                       />
@@ -173,7 +195,9 @@ const Page = () => {
                 <div className="mb-2">
                   <label
                     htmlFor="email"
-                    className="block text-sm poppins_medium text-gray-700 mb-2"
+                    className={`block text-sm poppins_medium text-gray-700 mb-2 ${
+                      language === "ar" ? "text-right" : "text-left"
+                    }`}
                   >
                     {t("emailSubscribe.heading3")}
                   </label>
@@ -184,7 +208,9 @@ const Page = () => {
                       <input
                         id="email"
                         placeholder={t("emailSubscribe.heading3")}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300"
+                        className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300 ${
+                          language === "ar" ? "text-right" : "text-left"
+                        }`}
                         style={{ "--tw-ring-color": primaryColor }}
                         {...field}
                       />
@@ -201,7 +227,9 @@ const Page = () => {
                 <div className="mb-2">
                   <label
                     htmlFor="message"
-                    className="block text-sm poppins_medium text-gray-700 mb-2"
+                    className={`block text-sm poppins_medium text-gray-700 mb-2 ${
+                      language === "ar" ? "text-right" : "text-left"
+                    }`}
                   >
                     {t("contactUs.heading6")}
                   </label>
@@ -213,7 +241,9 @@ const Page = () => {
                         id="message"
                         placeholder={t("contactUs.heading7")}
                         rows={5}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300 resize-none"
+                        className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300 resize-none ${
+                          language === "ar" ? "text-right" : "text-left"
+                        }`}
                         style={{ "--tw-ring-color": primaryColor }}
                         {...field}
                       />
@@ -230,7 +260,9 @@ const Page = () => {
                 <button
                   disabled={loading}
                   type="submit"
-                  className="flex items-center bg_primary justify-center w-full sm:w-auto px-3 whitespace-nowrap py-3 text-white poppins_medium rounded-lg transition-all duration-300 hover:opacity-90"
+                  className={`flex items-center bg_primary justify-center w-full sm:w-auto px-3 whitespace-nowrap py-3 text-white poppins_medium rounded-lg transition-all duration-300 hover:opacity-90 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
                 >
                   {loading ? (
                     <Spinner size="sm" className="mr-2" />

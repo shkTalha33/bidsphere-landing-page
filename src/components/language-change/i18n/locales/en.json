@@ -1,4 +1,86 @@
 {
+  "auth": {
+    "login": "Login",
+    "loginToAccount": "Login to your account",
+    "signIn": "Sign In",
+    "signUp": "Sign up",
+    "signUpToAccount": "Sign up to your account",
+    "forgotPassword": "Forgot Password?",
+    "createNewAccount": "Create a New Account?",
+    "alreadyHaveAccount": "Already have an Account?",
+    "secureTransactions": "Secure & Transparent Transactions",
+    "bidConfidently": "Bid confidently with encrypted payments and fraud protection."
+  },
+  "form": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "firstNamePlaceholder": "Your first name",
+    "lastNamePlaceholder": "Your last name",
+    "phonePlaceholder": "Enter phone number",
+    "emailPlaceholder": "Email",
+    "emailAddressPlaceholder": "Your Email address",
+    "passwordPlaceholder": "Password",
+    "confirmPasswordPlaceholder": "Confirm Password"
+  },
+  "validation": {
+    "firstNameRequired": "First name is required",
+    "firstNameMinLength": "First name must be at least 2 characters",
+    "lastNameRequired": "Last name is required",
+    "lastNameMinLength": "Last name must be at least 2 characters",
+    "phoneRequired": "Phone number is required",
+    "invalidPhone": "Invalid phone number",
+    "phoneExists": "Phone number already exists",
+    "invalidEmail": "Invalid email",
+    "emailRequired": "Email is required",
+    "emailExists": "Email already exists",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 8 characters",
+    "confirmPasswordRequired": "Confirm password is required",
+    "passwordsMustMatch": "Passwords must match"
+  },
+  "messages": {
+    "loginSuccess": "You have successfully logged in",
+    "signupFailed": "Signup failed"
+  },
+  "otp": {
+    "heading": "Verify Your Email",
+    "subHeading": "We have sent a verification code to this email.",
+    "spamWarning": "If you don’t see the OTP in your inbox, please check your SPAM folder.",
+    "enterCodeLabel": "Enter Your OPT Code Here",
+    "resendIn": "Resend Code in",
+    "didntReceive": "Didn&rsquo;t receive the Code?",
+    "resendCode": "Resend Code",
+    "verify": "Verify",
+    "codeSent": "We have sent an Code in your email.",
+    "resendSuccess": "We have sent an verification code in your email",
+    "verifySuccess": "Code verified Successfully!"
+  },
+  "location": {
+    "heading": "Choose your Location",
+    "subHeading": "Search or select your location on the map.",
+    "searchPlaceholder": "Search for a location...",
+    "currentLocation": "Current Location",
+    "continue": "Continue",
+    "unableToFetch": "Unable to fetch location",
+    "addressNotFound": "Address not found!",
+    "errorFetchingAddress": "Error fetching address!",
+    "errorLoadingMaps": "Error loading maps",
+    "loadingMaps": "Loading maps..."
+  },
+  "forgot": {
+    "heading": "Forgot Password!",
+    "sub_heading": "Please enter the email address to reset your password",
+    "email_placeholder": "Email address",
+    "email_required": "Please enter your email",
+    "send_code": "Send Code",
+    "remembered": "Remembered your password?",
+    "login": "Login",
+    "login_failed": "Login failed"
+  },
   "nav": {
     "auction": "Auction",
     "payments": "Payments",
@@ -105,6 +187,7 @@
     "heading8": "Send Message"
   },
   "allAuction": {
+    "pageTitle": "Auctions",
     "heading": "All Auctions",
     "heading2": "Trending Auctions",
     "heading3": "Popular Auctions",
@@ -139,7 +222,18 @@
     "heading21": "Please choose one of the options below to proceed.",
     "heading22": "Loading...",
     "heading23": "Contact Admin for Refund",
-    "heading24": "Add Amount to Wallet"
+    "heading24": "Add Amount to Wallet",
+    "amount": "Amount",
+    "enterHere": "Enter Here",
+    "walletBalance": "Wallet Balance",
+    "paymentDoneWith": "Payment Done with",
+    "wallet": "Wallet",
+    "stripe": "Stripe",
+    "choosePaymentMethod": "Choose a Payment Method",
+    "payWithStripe": "Pay with Stripe",
+    "payWithWallet": "Pay with Wallet",
+    "insufficientWalletBalance": "Insufficient Wallet Balance. Please pay with Stripe.",
+    "payAmount": "Pay Amount"
   },
   "order": {
     "heading": "All Orders",
@@ -207,13 +301,79 @@
     "heading63": "Upload Proof Image",
     "heading64": "Select Payment Method",
     "heading65": "Enter Other Method",
-  
     "heading66": "Upload"
+  },
+  "wonLots": {
+    "title": "Won Lots",
+    "description": "See your Won lots here.",
+    "rowHeading": "won lots",
+    "columns": {
+      "auctionName": "Auction Name",
+      "category": "Category",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "status": "Status",
+      "action": "Action"
+    },
+    "actions": {
+      "viewDetails": "view details"
+    },
+    "status": {
+      "approved": "approved",
+      "pending": "pending",
+      "winner": "winner"
+    },
+    "navigation": {
+      "backToOrders": "Back to Orders"
+    },
+    "loading": {
+      "loadingData": "Loading...",
+      "loadingDetails": "Loading details..."
+    },
+    "noData": {
+      "noWonLots": "No won lots found",
+      "noResults": "No results to display"
+    }
+  },
+  "common": {
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "refresh": "Refresh",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "next": "Next",
+    "notAvailable": "N/A"
   },
   "categoryAuction": {
     "heading": "Category Auctions",
     "heading2": "No auction found in this category.",
     "heading3": "See More"
+  },
+  "registration": {
+    "fields": {
+      "name": "Name",
+      "phoneNumber": "Phone Number",
+      "email": "Email",
+      "country": "Country",
+      "identityProof": "Identity Proof",
+      "proofOfFunds": "Proof of Funds",
+      "depositAmount": "Deposit Amount",
+      "paymentOption": "Payment Option"
+    },
+    "payment": {
+      "payWithWallet": "Pay with Wallet",
+      "payWithStripe": "Pay with Stripe"
+    },
+    "actions": {
+      "submitApplication": "Submit Application"
+    },
+    "validation": {
+      "fillAllFields": "Please Fill All The Fields"
+    }
   },
   "auctionDetails": {
     "heading": "Starting Time",
@@ -226,7 +386,8 @@
     "heading8": "Please login to register the auction!",
     "heading9": "Please login to join the auction!",
     "heading10": "Register Auction",
-    "heading11": "Join Auction"
+    "heading11": "Join Auction",
+    "heading12": "Here are your auctions whom you can join."
   },
   "profil": {
     "heading": "Personal information",
@@ -259,7 +420,48 @@
     "heading27": "Contact our customer service",
     "heading28": "No FAQs found",
     "heading29": "Help Centre",
-    "heading30": "Won Lots"
+    "heading30": "Won Lots",
+    "cancle": "Cancel",
+    "edit": "Edit"
+  },
+  "documentUpload": {
+    "identityProof": {
+      "title": "Upload Identity Proof",
+      "subtitle": "(Passport, Driver's License)",
+      "validation": {
+        "required": "Identity proof photos are required",
+        "minFiles": "At least one identity proof photo is required"
+      }
+    },
+    "fundsProof": {
+      "title": "Upload Proof of Funds",
+      "subtitle": "(Bank Statement, Income Proof)",
+      "validation": {
+        "required": "Proof of funds photos are required",
+        "minFiles": "At least one proof of funds photo is required"
+      }
+    },
+    "fileUpload": {
+      "selectFiles": "Select Files",
+      "dropFiles": "Drop files here or click",
+      "browse": "browse",
+      "throughMachine": "through your machine",
+      "removeAll": "Remove All"
+    },
+    "actions": {
+      "next": "Next"
+    },
+    "messages": {
+      "maxFilesError": "Cannot upload more than 5 files",
+      "uploadSuccess": "Files uploaded successfully",
+      "uploadError": "Error uploading files",
+      "removeSuccess": "File removed successfully"
+    },
+    "fileTypes": {
+      "acceptedFormats": "Accepted formats: Images and PDF files",
+      "maxSize": "Maximum file size: 10MB per file",
+      "maxFiles": "Maximum 5 files allowed"
+    }
   },
   "auctionRegistration": {
     "heading": "Auction Registration",
@@ -365,5 +567,4 @@
     "heading6": "Category",
     "heading7": "Lot Description"
   }
-
 }

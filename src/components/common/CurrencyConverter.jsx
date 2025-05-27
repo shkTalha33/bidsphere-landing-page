@@ -9,6 +9,7 @@ const CurrencyConverter = () => {
   const { currencies, selectedCurrency } = useSelector(
     (state) => state.currency
   );
+  const language = useSelector((state) => state.language.language);
   const [mounted, setMounted] = useState(false);
   const { t } = useTranslation();
   // Handle currency change
@@ -28,20 +29,30 @@ const CurrencyConverter = () => {
   }
 
   return (
-    <div className="currency-converter p-4 bg-gray-100 rounded-lg">
-      <h2 className="text-xl font-bold mb-4">{t("changeCurrency.heading3")}</h2>
-      <div className="flex items-center space-x-2">
-        <label htmlFor="currency-select" className="text-gray-700">
+    <div className={`currency-converter p-4 bg-gray-100 rounded-lg ${language === "ar" ? "text-right" : "text-left"}`} dir={language === "ar" ? "rtl" : "ltr"}>
+      <h2 className={`text-xl font-bold mb-4 ${language === "ar" ? "text-right" : "text-left"}`}>
+        {t("changeCurrency.heading3")}
+      </h2>
+      <div className={`flex items-center ${language === "ar" ? "space-x-reverse space-x-2" : "space-x-2"}`}>
+        <label 
+          htmlFor="currency-select" 
+          className={`text-gray-700 ${language === "ar" ? "mr-2" : "ml-2"}`}
+        >
           {t("changeCurrency.heading4")}:
         </label>
         <select
           id="currency-select"
           value={selectedCurrency.code}
           onChange={handleCurrencyChange}
-          className="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 ${language === "ar" ? "text-right" : "text-left"}`}
+          style={{ direction: language === "ar" ? "rtl" : "ltr" }}
         >
           {currencies?.map((currency) => (
-            <option key={currency.code} value={currency.code}>
+            <option 
+              key={currency.code} 
+              value={currency.code}
+              className={language === "ar" ? "text-right" : "text-left"}
+            >
               {currency.name} ({currency.symbol})
             </option>
           ))}

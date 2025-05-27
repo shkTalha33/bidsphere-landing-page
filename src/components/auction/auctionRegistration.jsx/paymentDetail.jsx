@@ -43,6 +43,7 @@ import {
   setRegisterData,
   setsliceProgress,
 } from "@/components/redux/registrationSlice/resgiterSlice";
+import { useTranslation } from "react-i18next";
 
 const PaymentDetail = ({
   setProgress,
@@ -50,6 +51,8 @@ const PaymentDetail = ({
   isCompleted,
   setActive,
 }) => {
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === "ar";
   const [item, setItem] = useState([]);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
@@ -173,7 +176,11 @@ const PaymentDetail = ({
   };
   return (
     <>
-      <Container className="bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form">
+      <Container
+        className={`bg_white rounded-[9px] mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form ${
+          isRTL ? "text-right" : ""
+        }`}
+      >
         <Form
           // onSubmit={handleSubmit(onSubmit)}
           className="d-flex flex-column gap-2 w-100"
@@ -182,7 +189,7 @@ const PaymentDetail = ({
             <Col md="6">
               <div className="mb-3">
                 <label className="poppins_medium" htmlFor="amount">
-                  Amount
+                  {t("payment.amount")}
                 </label>
                 <input
                   id="amount"
@@ -190,15 +197,19 @@ const PaymentDetail = ({
                   className="form-control"
                   value={item?.depositamount}
                   disabled
-                  placeholder="Enter Here"
+                  placeholder={t("payment.enterHere")}
                 />
               </div>
             </Col>
             <Col md="6" className="text-center">
               {/* Wallet Balance Display at Top */}
-              <div className="bg-gray-100 p-3 rounded-md mb-4 text-left">
+              <div
+                className={`bg-gray-100 p-3 rounded-md mb-4 ${
+                  isRTL ? "text-right" : "text-left"
+                }`}
+              >
                 <div className="text-sm text-gray-700">
-                  Wallet Balance:{" "}
+                  {t("payment.walletBalance")}:{" "}
                   <span className="font-bold text-black">
                     ${userData?.walletBalance || 0}
                   </span>
@@ -210,15 +221,15 @@ const PaymentDetail = ({
                 urlStatus === "succeeded" ||
                 walletUsed ? (
                   <div className="mb-3 text-lg poppins_semibold text-green-600">
-                    Payment Done with{" "}
+                    {t("payment.paymentDoneWith")}{" "}
                     <span className="font-bold">
-                      {walletUsed ? "Wallet" : "Stripe"}
+                      {walletUsed ? t("payment.wallet") : t("payment.stripe")}
                     </span>
                   </div>
                 ) : (
                   <>
                     <div className="mb-4 text-lg poppins_semibold text-gray-800">
-                      Choose a Payment Method
+                      {t("payment.choosePaymentMethod")}
                     </div>
 
                     <div className="flex max-[1286px]:flex-col items-center justify-center gap-3">
@@ -231,7 +242,7 @@ const PaymentDetail = ({
                         className="bg-blue-600 whitespace-nowrap hover:bg-blue-700 transition-all w-full sm:w-auto cursor-pointer text-white px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg flex items-center justify-center gap-2"
                       >
                         <FaCreditCard size={20} />
-                        Pay with Stripe
+                        {t("payment.payWithStripe")}
                       </div>
 
                       {/* Wallet Button */}
@@ -240,12 +251,11 @@ const PaymentDetail = ({
                           onClick={() => setWalletUsed(true)}
                           className="bg-green-600 whitespace-nowrap hover:bg-green-700 transition-all w-full sm:w-auto cursor-pointer text-white px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
                         >
-                          Pay with Wallet
+                          {t("payment.payWithWallet")}
                         </div>
                       ) : (
                         <div className="text-red-500 text-sm mt-2">
-                          Insufficient Wallet Balance. Please pay
-                          with Stripe.
+                          {t("payment.insufficientWalletBalance")}
                         </div>
                       )}
                     </div>
@@ -254,13 +264,17 @@ const PaymentDetail = ({
               </div>
 
               {/* NEXT Button */}
-              <div className="flex justify-end mt-3">
+              <div
+                className={`flex ${
+                  isRTL ? "justify-start" : "justify-end"
+                } mt-3`}
+              >
                 {(urlStatus === "succeeded" || walletUsed) && (
                   <div
                     onClick={handlenavoiu}
                     className="bg_primary hover:bg-indigo-700 transition-all w-fit cursor-pointer text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
                   >
-                    Next
+                    {t("common.next")}
                   </div>
                 )}
               </div>
@@ -301,7 +315,11 @@ const PaymentDetail = ({
             }}
             className="w-100 py-[12px] mt-3 w-full flex justify-center px-5 plusJakara_medium rounded-5 bg_primary text_white"
           >
-            {isLoading2 ? <Spinner size={18} color="#fff" /> : "Pay Amount"}
+            {isLoading2 ? (
+              <Spinner size={18} color="#fff" />
+            ) : (
+              t("payment.payAmount")
+            )}
           </button>
         </div>
       </Modal>

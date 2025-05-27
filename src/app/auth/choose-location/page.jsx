@@ -15,6 +15,7 @@ import ApiFunction from "@/components/api/apiFuntions";
 import { handleError } from "@/components/api/errorHandler";
 import { useDispatch } from "react-redux";
 import { setLogin, setUserData } from "@/components/redux/loginForm";
+import { useTranslation } from "react-i18next";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -23,7 +24,8 @@ const mapContainerStyle = {
 };
 
 const Page = () => {
-  const { put , GoogleApiKey} = ApiFunction();
+  const { t } = useTranslation();
+  const { put, GoogleApiKey } = ApiFunction();
   // const GoogleApiKey = "AIzaSyAF2ezYqZ_inMBvqDXYzHHi8cgDOEatnfA";
 
   const [sbLoading, setSbLoading] = useState(false);
@@ -38,7 +40,6 @@ const Page = () => {
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
 
-  
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -47,7 +48,7 @@ const Page = () => {
         setLocation({ lat, lng });
         await fetchAddressFromLatLng(lat, lng);
       },
-      () => message.error("Unable to fetch location"),
+      () => message.error(t("location.unableToFetch")),
       { enableHighAccuracy: true }
     );
   }, []);
@@ -61,10 +62,10 @@ const Page = () => {
       if (data.results.length > 0) {
         setAddress(data.results[0].formatted_address);
       } else {
-        message.error("Address not found!");
+        message.error(t("location.addressNotFound"));
       }
     } catch (error) {
-      message.error("Error fetching address!");
+      message.error(t("location.errorFetchingAddress"));
     }
   };
 
@@ -96,7 +97,7 @@ const Page = () => {
         setLoading(false);
       },
       () => {
-        message.error("Unable to fetch location");
+        message.error(t("location.unableToFetch"));
         setLoading(false);
       },
       { enableHighAccuracy: true }
@@ -128,19 +129,19 @@ const Page = () => {
       });
   };
 
-  if (loadError) return <p>Error loading maps</p>;
-  if (!isLoaded) return <p>Loading maps...</p>;
+  if (loadError) return <p>{t("location.errorLoadingMaps")}</p>;
+  if (!isLoaded) return <p>{t("location.loadingMaps")}</p>;
 
   return (
     <AuthLayout>
       <AuthHeading
-        heading="Choose your Location"
-        subHeading="Search or select your location on the map."
+        heading={t("location.heading")}
+        subHeading={t("location.subHeading")}
       />
       <section className="mt-4">
         <div className="relative">
           <Search
-            className="absolute top-[10px] left-2 text_se*condary2"
+            className="absolute top-[10px] left-2 text_secondary2"
             size={20}
           />
           <GooglePlacesAutocomplete
@@ -149,6 +150,7 @@ const Page = () => {
             defaultValue={address}
             options={{ types: ["address"] }}
             className="w-full p-2 border rounded !pl-[2.2rem]"
+            placeholder={t("location.searchPlaceholder")}
           />
         </div>
         <div className="mt-4">
@@ -173,7 +175,7 @@ const Page = () => {
             className="flex-1 flex items-center justify-center px-4 py-3 gap-2 border-[1px] border-[#660000] text_primary rounded-lg"
           >
             <TbCurrentLocation size={20} />
-            {loading ? <Spin size="small" /> : "Current Location"}
+            {loading ? <Spin size="small" /> : t("location.currentLocation")}
           </button>
           <button
             disabled={loading}
@@ -184,7 +186,7 @@ const Page = () => {
             {loading || sbLoading ? (
               <BeatLoader color="#fff" size={10} />
             ) : (
-              "Continue"
+              t("location.continue")
             )}
           </button>
         </div>

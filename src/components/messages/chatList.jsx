@@ -22,7 +22,9 @@ import { Spinner } from "react-bootstrap";
 import { Skeleton } from "antd";
 import { decrementMessageUnseen } from "../redux/notificationSlice/notificationSlice";
 import { useTranslation } from "react-i18next";
+
 const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
+  const { t } = useTranslation();
   const [badge, setBadge] = useState(false);
   const { activeChatId, setActiveChatId } = useActiveChat();
   const { chatListData, setChatListData } = useChatList();
@@ -30,7 +32,6 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
   const { setResponsiveChat } = useResponsiveChat();
   const userData = useSelector((state) => state.auth?.userData);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
   const toggleData = async (chatData) => {
     socket.emit("seen-msg", {
       lot: chatData?.lot?._id,
@@ -69,7 +70,6 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
     //   // dispatch(userChat(notification));
     // });
     // newSocket.on("send_message_error", (error) => {
-    //   console.log("error", error);
     // });
     // return () => {
     //   newSocket.disconnect();
@@ -164,6 +164,7 @@ const ChatUsers = ({ name, discrip, img, id, timestamp, status, data }) => {
 };
 
 const ChatList = () => {
+  const { t } = useTranslation();
   const { chatListData, setChatListData } = useChatList();
   const chatContainerRef = useRef(null);
   const [count, setCount] = useState(0);

@@ -24,6 +24,7 @@ import toast from "react-hot-toast";
 import DownloadInvoice from "./downloadInvoice";
 import { handleError } from "@/components/api/errorHandler";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 const Invoice = ({
   orderDetail,
   detailLoading,
@@ -37,6 +38,7 @@ const Invoice = ({
   const [isUploading, setIsUploading] = useState(false);
   const [loading, setLoading] = useState(false);
   const { put, get } = ApiFunction();
+  const language = useSelector((state) => state.language.language);
   // payment proof modal
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
@@ -162,7 +164,11 @@ const Invoice = ({
       ) : (
         <>
           <section>
-            <h4 className="poppins_semibold text-base md:text-xl text-[#202020] capitalize mb-4">
+            <h4
+              className={`poppins_semibold text-base md:text-xl text-[#202020] capitalize mb-4 ${
+                language === "ar" ? "text-right" : "text-left"
+              }`}
+            >
               {t("order.heading44")}
             </h4>
 
@@ -213,31 +219,59 @@ const Invoice = ({
                 </div>
               </Col>
             </Row>
-            <h3 className="text-[#25324B] mb-2 text-[1.2rem] poppins_medium">
+            <h3
+              className={`text-[#25324B] mb-2 text-[1.2rem] poppins_medium ${
+                language === "ar" ? "text-right" : "text-left"
+              }`}
+            >
               {t("order.heading46")}
             </h3>
             <div className="grid md:grid-cols-2 gap-4 mb-4 border-b pb-3">
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading47")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {accountDetail?.accountDetails?.bankname}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading48")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {accountDetail?.accountDetails?.acc_number}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading49")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {accountDetail?.accountDetails?.acc_name}
                 </p>
               </div>
@@ -246,54 +280,102 @@ const Invoice = ({
             {/* Invoice Details */}
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading50")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {orderDetail?.transaction?.invoice_num}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading51")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {moment(orderDetail?.transaction?.issue_date)
                     .local()
                     .format("LLL")}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading52")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {moment(orderDetail?.transaction?.expirey_date)
                     .local()
                     .format("LLL")}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading53")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {orderDetail?.transaction?.paymentMethodType}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading54")}
                 </p>
-                <p className="text-[#28a745] poppins_semibold capitalize">
+                <p
+                  className={`text-[#28a745] poppins_semibold capitalize ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {orderDetail?.transaction?.status}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading55")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {formatPrice(
                     convert(orderDetail?.transaction?.amount, "LYD")
                   )}
@@ -304,13 +386,19 @@ const Invoice = ({
             {/* Payment Proof Image */}
             {orderDetail?.transaction?.paymentImage && (
               <div className="mb-4">
-                <p className="text-[#7C8493] text-sm mb-2">
+                <p
+                  className={`text-[#7C8493] text-sm mb-2 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading56")}
                 </p>
                 <img
                   src={orderDetail.transaction.paymentImage}
                   alt="Payment Proof"
-                  className="w-full max-w-xs rounded shadow"
+                  className={`w-full max-w-xs rounded shadow ${
+                    language === "ar" ? "ml-auto" : "mr-auto"
+                  }`}
                 />
               </div>
             )}
@@ -318,7 +406,11 @@ const Invoice = ({
             {/* Shipping Info */}
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading57")}
                 </p>
                 <p className="text-[#25324B] poppins_medium">
@@ -326,42 +418,82 @@ const Invoice = ({
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading58")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {orderDetail?.user?.email}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading59")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {orderDetail?.address}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading60")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {moment(orderDetail?.deliveryDate).local().format("LLL")}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading61")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {moment(orderDetail?.shippedDate).local().format("LLL")}
                 </p>
               </div>
               <div>
-                <p className="text-[#7C8493] text-sm mb-1">
+                <p
+                  className={`text-[#7C8493] text-sm mb-1 ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {t("order.heading62")}
                 </p>
-                <p className="text-[#25324B] poppins_medium">
+                <p
+                  className={`text-[#25324B] poppins_medium ${
+                    language === "ar" ? "text-right" : "text-left"
+                  }`}
+                >
                   {orderDetail?.trackingnumber}
                 </p>
               </div>
