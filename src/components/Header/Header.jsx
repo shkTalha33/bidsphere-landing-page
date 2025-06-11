@@ -351,6 +351,8 @@ export default function Header() {
         </Link> */}
       </div>
       <div className="hidden d-md-flex items-center gap-[0.5rem] lg:gap-[0.8rem]">
+      {/* new */}
+        <Language />  
         <button
           onClick={() => router.push("/auth/login")}
           className="px-[2rem] py-2 border-[1px] transition-colors bg_white duration-300 ease-in-out rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline"
@@ -481,7 +483,6 @@ export default function Header() {
           <div className="flex gap-3 md:hidden">
             {userData?._id && (
               <>
-                <Language />
 
                 <div className="relative" ref={dropdownRef}>
                   <div
@@ -517,6 +518,11 @@ export default function Header() {
               </>
             )}
             <div className="flex md:hidden">
+              {/* new */}
+              <div className="mr-2">
+
+              <Language />
+              </div>
               <button onClick={toggleMenu} aria-label="Toggle menu">
                 <svg
                   className={`${
@@ -687,6 +693,7 @@ export default function Header() {
                 {t("nav.auction")}
               </Link>
               <div className="flex justify-center gap-3 w-full mt-3">
+              
                 <button
                   onClick={() => {
                     router.push("/auth/login");
