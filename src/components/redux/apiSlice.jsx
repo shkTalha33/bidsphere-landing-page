@@ -7,12 +7,16 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: baseURL,
-    prepareHeaders: (headers) => {
+    prepareHeaders: (headers, { getState }) => {
       headers.set("Content-Type", "application/json");
       const token = localStorage.getItem("auction_user_token");
       if (token) {
         headers.set("x-auth-token", token);
       }
+      // Set lang header from Redux (getLanguage selector value)
+      const state = getState();
+      const lang = state.language?.language || "ar";
+      headers.set("lang", lang);
       return headers;
     },
   }),

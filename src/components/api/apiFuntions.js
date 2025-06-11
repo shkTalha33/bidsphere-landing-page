@@ -7,14 +7,17 @@ import { setLogout } from "../redux/loginForm";
 import { imageUpload } from "./ApiFile";
 import toast from "react-hot-toast";
 import { useRef, useCallback } from "react"; // Add these imports
+import { getLanguage } from "../redux/language/languageSlice";
 // const GoogleApiKey = "AIzaSyAF2ezYqZ_inMBvqDXYzHHi8cgDOEatnfA";
+
 const GoogleApiKey = "AIzaSyB9hunGMedxDrhrCt6GAr08ZODatbS2xZU";
 const ApiFunction = () => {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const userData = useSelector((state) => state.auth?.userData);
   const token = useSelector((state) => state.auth?.accessToken);
-  
+  const userLanguage = useSelector(getLanguage);
+
   // Track active requests to prevent duplicates
   const activeRequestsRef = useRef(new Map());
 
@@ -27,10 +30,12 @@ const ApiFunction = () => {
   // Define headers
   const header1 = {
     "Content-Type": "application/json",
+    "lang": userLanguage,
   };
 
   const header2 = {
     "Content-Type": "multipart/form-data",
+    "lang": userLanguage,
   };
 
   // Helper to generate request key
@@ -241,7 +246,7 @@ const ApiFunction = () => {
     userData,
     GoogleApiKey,
     cancelAllRequests,
-    token
+    token,
   };
 };
 

@@ -20,23 +20,27 @@ const Language = () => {
   const { t } = useTranslation();
 
   const handleChangeLanguage = (lan) => {
-    const api = updateUser;
-    const apiData = {
-      lang: lan,
-    };
-    put(api, apiData)
-      .then((res) => {
-        if (res?.success) {
-          dispatch(setUserData(res?.user));
-          dispatch(setLanguage(lan));
-          i18n.changeLanguage(lan);
-          dispatch(setLogin(true));
-          window.location.reload();
-        }
-      })
-      .catch((error) => {
-        console.log(error, "error");
-      });
+    //   const api = updateUser;
+    //   const apiData = {
+    //     lang: lan,
+    //   };
+    //   put(api, apiData)
+    //     .then((res) => {
+    //       if (res?.success) {
+    //         dispatch(setUserData(res?.user));
+    //         dispatch(setLanguage(lan));
+    //         i18n.changeLanguage(lan);
+    //         dispatch(setLogin(true));
+    //         window.location.reload();
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.log(error, "error");
+    //     });
+
+    dispatch(setLanguage(lan));
+    i18n.changeLanguage(lan);
+    window.location.reload();
   };
 
   useEffect(() => {
