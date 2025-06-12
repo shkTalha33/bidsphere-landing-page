@@ -21,20 +21,14 @@ const Footer = () => {
       }`}
     >
       <div className="container mx-auto md:px-4 grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-12">
-        <div className="space-y-6">
+        <div className="space-y-6 flex flex-col items-start justify-start">
           <div>
             <Image
               src={Logo11}
               alt="Logo"
               className="mb-2 md:mb-6 h-[7rem] object-contain w-[7rem]"
             />
-            <p
-              className={`text-sm max-w-md ${
-                language === "ar" ? "text-right" : "text-left"
-              }`}
-            >
-              {data?.footer?.desc}
-            </p>
+            <p className={`text-sm max-w-md `}>{data?.footer?.desc}</p>
           </div>
           <Link href="/auctions" className="inline-block">
             <button className="bg-white text_dark px-8 text-sm md:text-base md:px-10 py-2 md:py-3 rounded-md poppins_medium capitalize">

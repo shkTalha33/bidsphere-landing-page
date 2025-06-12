@@ -2,41 +2,28 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaArrowRight } from "react-icons/fa6";
 import { TbMessage } from "react-icons/tb";
 import { Col, Container, Row } from "reactstrap";
-import {
-  allDark,
-  allLight,
-  car1,
-  deliveredDark,
-  deliveredLight,
-  shippedDark,
-  shippedLight,
-  transitDark,
-  transitLight,
-} from "../../../components/assets/icons/icon";
 
-import AlertSection from "@/components/common/alertSection";
-import Breadcrumbs from "@/components/common/Breadcrumbs";
-import { TbArrowBackUp } from "react-icons/tb";
+import ApiFunction from "@/components/api/apiFuntions";
+import { encryptData } from "@/components/api/encrypted";
 import { Skeleton } from "antd";
 import toast from "react-hot-toast";
-import { encryptData } from "@/components/api/encrypted";
-import ApiFunction from "@/components/api/apiFuntions";
-import moment from "moment";
-import OrderSummary from "./orderSummary";
+import { useTranslation } from "react-i18next";
+import { TbArrowBackUp } from "react-icons/tb";
 import DeliveryInfo from "./deliveryInfo";
 import DeliveryTime from "./deliveryTime";
-import { useTranslation } from "react-i18next";
+import OrderSummary from "./orderSummary";
+import { useSelector } from "react-redux";
 
 export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
   const { t } = useTranslation();
-  const [currentSelectedButton, setCurrentSelectedButton] =
-    useState(`${t("order.heading16")}`);
+  const [currentSelectedButton, setCurrentSelectedButton] = useState(
+    `${t("order.heading16")}`
+  );
+  const language = useSelector((state) => state.language.language);
   const router = useRouter();
   const onChange = (key) => {};
   const { userData } = ApiFunction();
@@ -109,12 +96,18 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                       </div>
                     </div>
                   </Col>
-                  <Col xs="2">
-                    <div
-                      onClick={handleBakcOr}
-                      className="bg_lightsecondary flex items-center justify-center w-9 h-9 rounded-full ml-auto cursor-pointer"
-                    >
-                      <TbArrowBackUp color="#660000" size={24} />
+                  <Col xs="2" className="">
+                    <div className="flex justify-end">
+                      <div
+                        onClick={handleBakcOr}
+                        className="bg_lightsecondary flex items-center justify-center w-9 h-9 rounded-full cursor-pointer"
+                      >
+                        {language === "ar" ? (
+                          <TbArrowBackUp color="#660000" size={24} />
+                        ) : (
+                          <TbArrowBackUp color="#660000" size={24} />
+                        )}
+                      </div>
                     </div>
                     {/* <div className="bg_lightsecondary flex items-center justify-center w-9 h-9 rounded-full ml-auto cursor-pointer">
                   <TbMessage color="#660000" size={24} />

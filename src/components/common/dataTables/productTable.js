@@ -46,6 +46,7 @@ const ProductTable = ({
   const [searchValue, setSearchValue] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const { t } = useTranslation();
+  const language = useSelector((state) => state.language.language);
 
   const handleModal = () => setModal(!modal);
 
@@ -108,7 +109,7 @@ const ProductTable = ({
   };
   // ** Custom Pagination
   const CustomPagination = () => (
-    <div className="flex justify-center items-center p-3">
+    <div className="flex justify-center items-center p-3 direction_ltr">
       <ReactPaginate
         previousLabel={<Previous size={15} />}
         nextLabel={<Next size={15} />}
@@ -141,7 +142,10 @@ const ProductTable = ({
   return (
     <>
       <Fragment>
-        <div className="w-full mt-2 mt-md-4 rounded-xl">
+        <div
+          className="w-full mt-2 mt-md-4 rounded-xl"
+          dir={language === "ar" ? "rtl" : "ltr"}
+        >
           <h6
             className={`poppins_semibold mb-1 mb-md-3 text-[#16161D] text-sm sm:text-lg capitalize`}
           >

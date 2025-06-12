@@ -841,3 +841,11 @@ body {
 .herobanner {
   background-image: url(../assets/png/image001.jpg);
 }
+
+.direction_ltr {
+  direction: ltr;
+}
+
+.direction_rtl {
+  direction: rtl;
+}

@@ -6,7 +6,7 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import { useState } from "react";
-import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { Col, Container, Row } from "reactstrap";
@@ -21,6 +21,7 @@ import OrderDetails from "./detail/orderDetail";
 import { MdPayments } from "react-icons/md";
 import Invoice from "./invoice/invoice";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const Page = () => {
   const { get } = ApiFunction();
@@ -41,6 +42,7 @@ const Page = () => {
   const { t } = useTranslation();
   const urlInvoice = urlParams.get("invoice");
   const [accountDetail, setAccountDetail] = useState(null);
+  const language = useSelector((state) => state.language.language);
 
   const sideButtons = [
     { title: t("order.heading"), status: "all", icon: <FaList /> },
@@ -249,7 +251,7 @@ const Page = () => {
 
   return (
     <>
-      <main>
+      <main dir={language === "ar" ? "rtl" : "ltr"}>
         <Container className="bg_white rounded-[9px] p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
           <Row>
             <Col md="12">
@@ -312,7 +314,11 @@ const Page = () => {
                               : "bg_primary text-white"
                           } flex items-center justify-center p-1 rounded-full`}
                         >
-                          <FaArrowRight size={15} />
+                          {language === "ar" ? (
+                            <FaArrowLeft size={15} />
+                          ) : (
+                            <FaArrowRight size={15} />
+                          )}
                         </div>
                       </div>
                     </button>
