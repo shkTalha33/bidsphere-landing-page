@@ -93,7 +93,8 @@
     "profile": "Profile",
     "currency": "Currency",
     "logout": "Logout",
-    "home": "Home"
+    "home": "Home",
+    "privacypolicy": "Privacy Policy"
   },
   "homeSlider": {
     "title": "Welcome to The Castle Auction",

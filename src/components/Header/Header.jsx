@@ -349,10 +349,36 @@ export default function Header() {
         >
           Orders
         </Link> */}
+        <Link
+          href="/contactUS"
+          className={`${
+            pathname === "/contactUS"
+              ? "text_primary poppins_medium"
+              : isHomeOrHashRoute && !isScrolled
+              ? "text_white"
+              : "text_dark"
+          }
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+        >
+          {t("nav.contactus")}
+        </Link>
+        <Link
+          href="/privacy-policy"
+          className={`${
+            pathname === "/privacy-policy"
+              ? "text_primary poppins_medium"
+              : isHomeOrHashRoute && !isScrolled
+              ? "text_white"
+              : "text_dark"
+          }
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+        >
+          {t("nav.privacypolicy")}
+        </Link>
       </div>
       <div className="hidden d-md-flex items-center gap-[0.5rem] lg:gap-[0.8rem]">
-      {/* new */}
-        <Language />  
+        {/* new */}
+        <Language />
         <button
           onClick={() => router.push("/auth/login")}
           className="px-[2rem] py-2 border-[1px] transition-colors bg_white duration-300 ease-in-out rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline"
@@ -483,7 +509,6 @@ export default function Header() {
           <div className="flex gap-3 md:hidden">
             {userData?._id && (
               <>
-
                 <div className="relative" ref={dropdownRef}>
                   <div
                     className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
@@ -520,8 +545,7 @@ export default function Header() {
             <div className="flex md:hidden">
               {/* new */}
               <div className="mr-2">
-
-              <Language />
+                <Language />
               </div>
               <button onClick={toggleMenu} aria-label="Toggle menu">
                 <svg
@@ -693,7 +717,6 @@ export default function Header() {
                 {t("nav.auction")}
               </Link>
               <div className="flex justify-center gap-3 w-full mt-3">
-              
                 <button
                   onClick={() => {
                     router.push("/auth/login");
