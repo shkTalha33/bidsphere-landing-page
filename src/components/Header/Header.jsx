@@ -363,9 +363,9 @@ export default function Header() {
           {t("nav.contactus")}
         </Link>
         <Link
-          href="/privacy-policy"
+          href="/privacyPolicy"
           className={`${
-            pathname === "/privacy-policy"
+            pathname === "/privacyPolicy"
               ? "text_primary poppins_medium"
               : isHomeOrHashRoute && !isScrolled
               ? "text_white"
