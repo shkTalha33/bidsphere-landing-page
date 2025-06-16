@@ -101,7 +101,7 @@ export default function AuctionEvents() {
             </Col>
           </Row>
         </Col>
-        <Col md="12" className="mt-[3rem]">
+        <Col md="12" className="mt-20">
           <div className="flex justify-center items-center flex-col mb-[18px]">
             <div className="w-8 h-2 bg_primary rounded-full mb-2"></div>
             <p className="text-[#202020] poppins_semibold text-2xl text-center capitalize">

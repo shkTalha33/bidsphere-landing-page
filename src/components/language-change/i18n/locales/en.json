@@ -9,7 +9,7 @@
     "createNewAccount": "Create a New Account?",
     "alreadyHaveAccount": "Already have an Account?",
     "secureTransactions": "Secure & Transparent Transactions",
-    "bidConfidently": "Bid confidently with encrypted payments and fraud protection."
+    "bidConfidently": "Bid with complete confidence, thanks to encrypted payment systems and advanced fraud protection, which guarantee you a safe and reliable experience with every transaction."
   },
   "form": {
     "firstName": "First Name",
@@ -98,34 +98,35 @@
   },
   "homeSlider": {
     "title": "Welcome to The Castle Auction",
-    "subTitle": "The Castle Auction is the first specialized auction house in Libya, redefining the concept of buying and selling unique items. Driven through transparency, it combines innovation and modern technology through a smooth auction platform that connects sellers with buyers in-site and online.",
+    "subTitle": "The Castle Auction is the first specialized auction house in Libya, redefining the experience of buying and selling unique items. Committed to transparency, we rely on creativity and the latest talents to provide a unique platform for everyone and buyers with the highest level of will and confidence.",
     "button": "Bid Now"
   },
   "category": {
     "heading": "What We Offer",
     "heading2": "Filter Auctions with",
     "categories": "Categories",
-    "heading3": "At Castle-Auction, explore a diverse range of auction categories tailored for every collector and bidder. From exclusive lots to unique finds, we bring the best under one platform.",
+    "heading3": "Explore an exceptional range of auction categories, tailored to suit every bidder's interests. From rare and exclusive pieces to unique items you won't find anywhere else, we bring together the best and most distinctive in one platform.",
     "categoryNotFound": "No category Found"
   },
   "ongoing": {
     "foryou": "for you",
     "ongoing": "Ongoing",
-    "heading": "Discover all the exciting ongoing auctions at Castle-Auction. Bid in real-time and secure exclusive lots before time runs out.",
+    "heading": "Participate in real-time bids and seize the opportunity to acquire exclusive pieces before the auction ends.",
     "heading2": "No Auction Events Available",
     "heading3": "Please check back later.",
-    "heading4": "Deposite Amount"
+    "heading4": "Deposite Amount",
+    "heading5": "Ongoing Auctions"
   },
   "services": {
     "services": "Our Services",
     "heading": " Comprehensive Auction Display",
-    "heading1": "A large physical site that allows the display of hundreds of heavy equipment, vehicles, horses and livestock, in addition to real estate, office and home furniture, antiques, and agricultural products.",
+    "heading1": "A vast physical platform that allows hundreds of diverse items to be displayed in one place, including heavy equipment, vehicles, horses, livestock, real estate, home and office furniture, antiques, and agricultural products, for a comprehensive auction experience that meets all needs.",
     "heading2": "Digital Bidding & Accurate Valuation",
-    "heading3": "Live online auctions for remote bidding through our digital platform. Accurate valuation services for sellers to determine the true value of their items.",
+    "heading3": "Enjoy a seamless remote live auction experience through our digital platform. We also provide professional appraisal services for sellers to determine the true and accurate value of their property before it is auctioned.",
     "heading4": "Expert Consulting & Support",
-    "heading5": "Consulting: Personalized support and guidance throughout the process. We assist you in every step of the auction lifecycle.",
+    "heading5": "Dedicated support and guidance throughout the auction journey, from start to completion, to ensure a smooth and reliable experience.",
     "heading6": "Vision & Mission",
-    "heading7": "To become a leading auction house in Libya and the region, driven by transparency, trust, and technology. To provide a fair and accessible platform for everyone to showcase goods and participate in auctions with confidence."
+    "heading7": "To be the leading auction house in Libya and the region, founded on the values ​​of transparency, trust, and technological innovation. We also aim to provide a fair and accessible platform that enables everyone to display their items and participate in auctions with confidence and transparency."
   },
   "about": {
     "heading": "about Castle Auction",
@@ -511,7 +512,7 @@
     "heading15": "Lot information is missing.",
     "heading16": "Your bid must be at least",
     "heading17": "Please enter a valid bid amount.",
-    "heading18": "Here are your auctions whom you can join.",
+    "heading18": "Here is your auction details.",
     "heading19": "Bid price",
     "heading20": "are live",
     "heading21": "Current Bid Price",

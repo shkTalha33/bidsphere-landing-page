@@ -35,6 +35,7 @@ const Page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const tempData = useSelector((state) => state.auth.tempData);
+  const language = useSelector((state) => state.language?.language);
 
   const togglePassword = (e) => {
     e.preventDefault();
@@ -268,29 +269,32 @@ const Page = () => {
             <Label
               for="phone"
               className="mb-2 text-sm poppins_regular text_secondary2"
+              dir={language === "ar" ? "rtl" : "ltr"}
             >
               {t("form.phoneNumber")}
             </Label>
-            <Controller
-              name="phone"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <PhoneInput
-                  country={"ae"}
-                  enableSearch={true}
-                  value={field.value}
-                  className={`phon_inp poppins_regular ${
-                    errors.phone ? "border-red-500" : ""
-                  }`}
-                  onChange={(value) => {
-                    field.onChange(value);
-                    setValue("phone", value);
-                  }}
-                  placeholder={t("form.phonePlaceholder")}
-                />
-              )}
-            />
+            <div dir="ltr">
+              <Controller
+                name="phone"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <PhoneInput
+                    country={"ae"}
+                    enableSearch={true}
+                    value={field.value}
+                    className={`phon_inp poppins_regular ${
+                      errors.phone ? "border-red-500" : ""
+                    }`}
+                    onChange={(value) => {
+                      field.onChange(value);
+                      setValue("phone", value);
+                    }}
+                    placeholder={t("form.phonePlaceholder")}
+                  />
+                )}
+              />
+            </div>
 
             {errors.phone && (
               <span className="text-red-500 text-xs poppins_regular ms-1">
@@ -341,7 +345,9 @@ const Page = () => {
             </Label>
             <div className="relative">
               <button
-                className="absolute right-5 inset-y-0 my-auto"
+                className={`absolute inset-y-0 my-auto ${
+                  language === "ar" ? "left-5" : "right-5"
+                }`}
                 onClick={togglePassword}
               >
                 {!isPasswordHidden ? (
@@ -386,7 +392,9 @@ const Page = () => {
             </Label>
             <div className="relative">
               <button
-                className="absolute right-5 inset-y-0 my-auto"
+                className={`absolute inset-y-0 my-auto ${
+                  language === "ar" ? "left-5" : "right-5"
+                }`}
                 onClick={toggleConfirmPassword}
               >
                 {!isConfirmPasswordHidden ? (

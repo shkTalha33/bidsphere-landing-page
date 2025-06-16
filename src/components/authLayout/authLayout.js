@@ -1,8 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+
+import { useSelector } from "react-redux";
+
 const AuthLayout = ({ children, src, isCenter, description, title }) => {
+  const language = useSelector((state) => state.language?.language);
   return (
-    <section className="bg-white relative max-w-[1800px] w-100 h-screen mx-auto min-[3057px]:h-[70rem]">
+    <section
+      className="bg-white relative max-w-[1800px] w-100 h-screen mx-auto min-[3057px]:h-[70rem]"
+      dir={language === "ar" ? "rtl" : "ltr"}
+    >
       <div className="flex h-100">
         <section
           className={`relative bg-black w-100 min-[1440px]:max-w-[55%] d-md-block d-none`}

@@ -67,7 +67,6 @@ export default function ContactSection() {
 
   return (
     <>
-      {/* <div className="w-full h-[3rem] md:h-[4.75rem] bg_white "></div> */}
       <motion.section
         variants={staggerContainer}
         initial="hidden"
@@ -75,13 +74,13 @@ export default function ContactSection() {
         viewport={{ once: true, amount: 0.25 }}
         className="md:px-3 pt-[2rem] md:pt-[4.875rem] pb-[2rem] md:pb-[4.175rem] bg-[#F3F3F9] plusJakara_regular text_white flex items-center justify-center text-center bg_mainsecondary overflow-hidden"
       >
-        {" "}
         {/* Ensures content is above the overlay */}
         <Container>
           <div className="px-[1rem] bg_primary py-[2rem] md:py-[4rem] md:px-[4rem] w-full plusJakara_medium rounded-2xl">
             <motion.div
               className="flex items-center justify-center"
               variants={fadeIn("down", "tween", 0.3, 0.8)}
+              dir={language === "ar" ? "rtl" : "ltr"}
             >
               <div className="max-w-[50rem]">
                 <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl poppins_semibold capitalize text-center m-auto mb-2 md:mb-4">
@@ -101,9 +100,7 @@ export default function ContactSection() {
                           render={({ field }) => (
                             <Input
                               placeholder={t("emailSubscribe.heading3")}
-                              className={`text_primary border-0 text-[0.8rem] sm:text-[1rem] flex-1 ${
-                                language === "ar" ? "order-2" : "order-1"
-                              }`}
+                              className={`text_primary border-0 text-[0.8rem] sm:text-[1rem] flex-1`}
                               {...field}
                             />
                           )}

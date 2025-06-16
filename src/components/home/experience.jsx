@@ -23,7 +23,7 @@ export default function Experience() {
   const language = useSelector((state) => state.language?.language);
 
   return (
-    <>
+    <section className="">
       <motion.main
         variants={staggerContainer}
         initial="hidden"
@@ -125,6 +125,6 @@ export default function Experience() {
           </Row>
         </Container>
       </motion.main>
-    </>
+    </section>
   );
 }

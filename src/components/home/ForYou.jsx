@@ -18,12 +18,11 @@ export default function ForYou() {
     endpoint: `${getAuctions}/1`,
   });
   const { t } = useTranslation();
+  const language = useSelector((state) => state?.language?.language);
 
   if (error) {
     return handleError(error);
   }
-
-
 
   return (
     <>
@@ -32,10 +31,12 @@ export default function ForYou() {
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
         className="pb-4 md:pb-[4rem] bg_white overflow-hidden"
+        dir={language === "ar" ? "rtl" : "ltr"}
       >
         <Container>
           <Row>
             <SectionHeadings
+              heading={language === "ar" && t("ongoing.heading5")}
               title={t("ongoing.foryou")}
               heading1={t("ongoing.ongoing")}
               heading2={t("nav.auction")}
