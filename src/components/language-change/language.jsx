@@ -37,6 +37,7 @@ const Language = () => {
     //     .catch((error) => {
     //       console.log(error, "error");
     //     });
+    // s
 
     dispatch(setLanguage(lan));
     i18n.changeLanguage(lan);
