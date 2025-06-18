@@ -50,18 +50,21 @@ const Language = () => {
     <div className="relative">
       {/* Language Icon */}
       <div
-        className=" bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+        className="bg-white border px-3 py-2 rounded-md flex items-center justify-center cursor-pointer  gap-2"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         onMouseEnter={() => setIsDropdownOpen(true)}
         onMouseLeave={() => setIsDropdownOpen(false)}
       >
-        <GrLanguage className="w-[1.2rem] h-[1.2rem] text-white" />
+        <span>
+          {userLanguage === "ar" ? t("nav.arabic") : t("nav.english")}
+        </span>
+        <GrLanguage className="w-[1.2rem] h-[1.2rem] text_primary" />
       </div>
 
       {/* Dropdown Menu */}
       {isDropdownOpen && (
         <div
-          className="absolute right-0 w-24 bg-white border border-gray-200 rounded shadow-[0px_4px_22.9px_0px_#0000000D] z-10"
+          className="absolute right-0 w-full bg-white border border-gray-200 rounded shadow-[0px_4px_22.9px_0px_#0000000D] z-10"
           onMouseEnter={() => setIsDropdownOpen(true)}
           onMouseLeave={() => setIsDropdownOpen(false)}
         >
