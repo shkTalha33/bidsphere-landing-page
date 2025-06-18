@@ -38,7 +38,7 @@ const Page = () => {
 
   useEffect(() => {
     handleTerms();
-  }, []);
+  }, [language]);
   return (
     <main className="bg-gray-100 flex flex-col items-start">
       <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-6">

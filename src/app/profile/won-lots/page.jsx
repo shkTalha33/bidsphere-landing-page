@@ -7,11 +7,13 @@ import { GetOrders, orderGetbyid } from "@/components/api/ApiFile";
 import ApiFunction from "@/components/api/apiFuntions";
 import ProductTable from "@/components/common/dataTables/productTable";
 import TopSection from "@/components/common/TopSection";
+import { getLanguage } from "@/components/redux/language/languageSlice";
 import TabHeader from "@/components/tabHeader";
 import moment from "moment";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 /* eslint-disable @next/next/no-img-element */
 
 const WonLots = () => {
@@ -29,6 +31,7 @@ const WonLots = () => {
   const urlId = urlParams.get("id");
   const [orderDetail, setOrderDetail] = useState("");
   const [detailLoading, setDetailLoading] = useState(false);
+  const language = useSelector(getLanguage);
 
   // handle get all order
   const handleGetOrder = () => {
@@ -51,7 +54,7 @@ const WonLots = () => {
 
   useEffect(() => {
     handleGetOrder();
-  }, [lastId]);
+  }, [lastId, language]);
 
   // handle detail
   const handleDetail = (item) => {
@@ -168,7 +171,7 @@ const WonLots = () => {
     if (urlId) {
       handlegetOrderById();
     }
-  }, [urlId]);
+  }, [urlId, language]);
 
   // back to order list
   const backetoOrderList = () => {

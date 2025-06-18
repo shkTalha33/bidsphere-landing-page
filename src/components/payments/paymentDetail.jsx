@@ -1,47 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
+import { format } from "date-fns";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaArrowRight } from "react-icons/fa6";
+import { Modal } from "react-bootstrap";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { Col, Container, Row } from "reactstrap";
-import {
-  payment,
-  payment1,
-  payment2,
-  payment3,
-  topupWallet,
-} from "../assets/icons/icon";
-import Breadcrumbs from "../common/Breadcrumbs";
-import useCurrency from "../hooks/useCurrency";
 import {
   refundAdmin,
   refundWallet,
   registrationTracking,
 } from "../api/ApiFile";
 import ApiFunction from "../api/apiFuntions";
-import { IoMdCheckmark } from "react-icons/io";
-import { RxCross2 } from "react-icons/rx";
+import Breadcrumbs from "../common/Breadcrumbs";
 import ProductTable from "../common/dataTables/productTable";
-import { format } from "date-fns";
-import { useTranslation } from "react-i18next";
-import { Modal } from "react-bootstrap";
-import toast from "react-hot-toast";
-import { useGetAuctionByIdQuery } from "../redux/apiSlice";
-import { useSelector } from "react-redux";
+import useCurrency from "../hooks/useCurrency";
+import { getLanguage } from "../redux/language/languageSlice";
 
 export default function PaymentDetail() {
   const { get, post } = ApiFunction();
   const [paymentHistory, setPaymentHistory] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { t, i18n } = useTranslation();
-  const language = useSelector((state) => state.language.language);
+  const { t } = useTranslation();
+
   const [rowData, setRowData] = useState(null);
   const [loadingType, setLoadingType] = useState(null);
   const [page, setPage] = useState(0);
   const [lastId, setLastId] = useState(1);
   const [count, setCount] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const language = useSelector(getLanguage);
 
   const { formatPrice, convert } = useCurrency();
 
@@ -239,7 +229,7 @@ export default function PaymentDetail() {
 
   useEffect(() => {
     handlePaymentHistory();
-  }, [lastId]);
+  }, [lastId, language]);
 
   const handleContactAdmin = () => {
     const api = refundAdmin;

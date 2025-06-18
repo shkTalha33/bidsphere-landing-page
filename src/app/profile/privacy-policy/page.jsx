@@ -37,7 +37,7 @@ const PrivacyPolicyPage = () => {
 
   useEffect(() => {
     handlePrivacy();
-  }, []);
+  }, [language]);
 
   return (
     <main className="bg-gray-100 flex flex-col items-start">

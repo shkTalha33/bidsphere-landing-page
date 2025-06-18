@@ -20,8 +20,6 @@ export default function DownloadSection() {
   const { t } = useTranslation();
   const language = useSelector((state) => state.language?.language);
 
-  console.log(language, "language");
-
   return (
     <motion.main
       variants={staggerContainer}

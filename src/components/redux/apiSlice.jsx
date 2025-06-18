@@ -20,7 +20,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Products", "Auction", "User", "Bid", "Favorites"],
+  tagTypes: ["Auction", "User", "Bid", "Favorites"],
   endpoints: (builder) => ({
     // Get auctions with pagination - using your original endpoint structure
     getAuctions: builder.query({

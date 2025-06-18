@@ -3,16 +3,19 @@
 import { getPrivacy } from "@/components/api/ApiFile";
 import ApiFunction from "@/components/api/apiFuntions";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
+import { getLanguage } from "@/components/redux/language/languageSlice";
 import { Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
   const [privacyData, setPrivacyData] = useState("");
   const { get } = ApiFunction();
   const { t } = useTranslation();
+  const language = useSelector(getLanguage);
 
   const handlePrivacy = () => {
     setLoading(true);
@@ -32,7 +35,7 @@ const Page = () => {
 
   useEffect(() => {
     handlePrivacy();
-  }, []);
+  }, [language]);
 
   return (
     <>

@@ -7,12 +7,14 @@ import { handleError } from "@/components/api/errorHandler";
 import { StaticImage } from "@/components/assets/icons/icon";
 import AuctionCard from "@/components/common/AuctionCard";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
+import { getLanguage } from "@/components/redux/language/languageSlice";
 import { Skeleton } from "antd";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
 
 const Page = () => {
@@ -24,6 +26,7 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [pagiLoading, setPagiLoading] = useState(false);
   const { t } = useTranslation();
+  const language = useSelector(getLanguage);
 
   // handle data by cat id
   const handleAuctionData = () => {
@@ -55,8 +58,10 @@ const Page = () => {
   };
 
   useEffect(() => {
-    handleAuctionData();
-  }, []);
+    if (id) {
+      handleAuctionData();
+    }
+  }, [id ,language]);
 
   return (
     <>

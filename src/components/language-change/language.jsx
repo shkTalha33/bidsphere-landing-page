@@ -6,37 +6,32 @@ import { GrLanguage } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import ApiFunction from "../api/apiFuntions";
 import { getLanguage, setLanguage } from "../redux/language/languageSlice";
+import { apiSlice } from "../redux/apiSlice";
+import { apiSlice2 } from "../redux/apiSlice2";
 
 const Language = () => {
   const { i18n } = useTranslation();
   const dispatch = useDispatch();
-  const { put, userData } = ApiFunction();
+  const { userData } = ApiFunction();
   const userLanguage = useSelector(getLanguage);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { t } = useTranslation();
 
   const handleChangeLanguage = (lan) => {
-    //   const api = updateUser;
-    //   const apiData = {
-    //     lang: lan,
-    //   };
-    //   put(api, apiData)
-    //     .then((res) => {
-    //       if (res?.success) {
-    //         dispatch(setUserData(res?.user));
-    //         dispatch(setLanguage(lan));
-    //         i18n.changeLanguage(lan);
-    //         dispatch(setLogin(true));
-    //         window.location.reload();
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log(error, "error");
-    //     });
-    // s
-
     dispatch(setLanguage(lan));
-    window.location.reload();
+    // dispatch(
+    //   apiSlice.util.invalidateTags([
+    //     "Auction",
+    //     "Products",
+    //     "User",
+    //     "Bid",
+    //     "Favorites",
+    //   ])
+    // );
+    // dispatch(apiSlice2.util.invalidateTags(["Payments"]));
+    dispatch(apiSlice.util.resetApiState());
+    dispatch(apiSlice2.util.resetApiState());
+    // window.location.reload();
     i18n.changeLanguage(lan);
   };
 
