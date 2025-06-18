@@ -1,14 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { getLanguage, setLanguage } from "../redux/language/languageSlice";
 import { GrLanguage } from "react-icons/gr";
-import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 import ApiFunction from "../api/apiFuntions";
-import { updateUser } from "../api/ApiFile";
-import { setLogin, setUserData } from "../redux/loginForm";
+import { getLanguage, setLanguage } from "../redux/language/languageSlice";
 
 const Language = () => {
   const { i18n } = useTranslation();
@@ -16,7 +13,6 @@ const Language = () => {
   const { put, userData } = ApiFunction();
   const userLanguage = useSelector(getLanguage);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const router = useRouter();
   const { t } = useTranslation();
 
   const handleChangeLanguage = (lan) => {
@@ -40,8 +36,8 @@ const Language = () => {
     // s
 
     dispatch(setLanguage(lan));
-    i18n.changeLanguage(lan);
     window.location.reload();
+    i18n.changeLanguage(lan);
   };
 
   useEffect(() => {

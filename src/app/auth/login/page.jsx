@@ -22,6 +22,7 @@ import { BeatLoader } from "react-spinners";
 import { Input, Label } from "reactstrap";
 import * as Yup from "yup";
 import { useTranslation } from "next-i18next";
+import { useSelector } from "react-redux";
 
 const Page = () => {
   const { t } = useTranslation();
@@ -30,6 +31,7 @@ const Page = () => {
   const router = useRouter();
   const { post } = ApiFunction();
   const dispatch = useDispatch();
+  const language = useSelector((state) => state.language?.language);
 
   const togglePassword = (e) => {
     e.preventDefault();
@@ -133,7 +135,9 @@ const Page = () => {
             </Label>
             <div className="relative">
               <button
-                className="absolute right-5 inset-y-0 my-auto"
+                className={`absolute inset-y-0 my-auto ${
+                  language === "ar" ? "left-5" : "right-5"
+                }`}
                 onClick={togglePassword}
               >
                 {!isPasswordHidden ? (
@@ -142,6 +146,7 @@ const Page = () => {
                   <BsEyeSlashFill size={20} className="text_black" />
                 )}
               </button>
+
               <Controller
                 id="password"
                 name="password"

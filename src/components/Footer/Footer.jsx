@@ -16,7 +16,7 @@ const Footer = () => {
 
   return (
     <footer
-      className={`bg_primary text-white py-5 mt-3 sm:py-12 md:py-16 ${
+      className={`bg_primary text-white py-4 sm:py-12 md:py-16 ${
         language === "ar" ? "text-right" : "text-left"
       }`}
     >
@@ -39,22 +39,16 @@ const Footer = () => {
 
         {/* Middle Section - Contacts */}
         <div
-          className={`lg:px-12 ${
-            language === "ar" ? "lg:pr-12 lg:pl-0" : "lg:pl-12"
+          className={`lg:px-12 flex flex-col ${
+            language === "ar"
+              ? "justify-end text-right"
+              : "justify-start text-left"
           }`}
         >
-          <h3
-            className={`text-lg md:text-2xl poppins_semibold mb-2 md:mb-8 ${
-              language === "ar" ? "text-right" : "text-left"
-            }`}
-          >
+          <h3 className={`text-lg md:text-2xl poppins_semibold mb-2 md:mb-8`}>
             {t("footer.heading")}
           </h3>
-          <div
-            className={`space-y-4 ${
-              language === "ar" ? "text-right" : "text-left"
-            }`}
-          >
+          <div className={`space-y-4`}>
             <div>
               <a
                 href={`tel:${data?.footer?.phone1}`}
@@ -116,10 +110,8 @@ const Footer = () => {
           </div> */}
 
           <div
-            className={`flex ${
-              language === "ar"
-                ? "justify-end"
-                : "justify-center md:justify-start"
+            className={`flex flex-col md:flex-row ${
+              language === "ar" ? "justify-end" : "justify-start"
             } max-[440px]:flex-col max-[440px]:items-center gap-[1.145rem] mb-4 mb-md-0`}
           >
             <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
