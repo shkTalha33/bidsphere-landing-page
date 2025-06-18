@@ -28,7 +28,9 @@ const Footer = () => {
               alt="Logo"
               className="mb-2 md:mb-6 h-[7rem] object-contain w-[7rem]"
             />
-            <p className={`text-sm max-w-md `}>{data?.footer?.desc}</p>
+            <p className={`text-sm max-w-md `}>
+              {data?.footer?.desc[language]}
+            </p>
           </div>
           <Link href="/auctions" className="inline-block">
             <button className="bg-white text_dark px-8 text-sm md:text-base md:px-10 py-2 md:py-3 rounded-md poppins_medium capitalize">
@@ -78,7 +80,7 @@ const Footer = () => {
               </a>
             </div>
             <div>
-              <p className="text-sm">{data?.footer?.address}</p>
+              <p className="text-sm">{data?.footer?.address[language]}</p>
             </div>
           </div>
         </div>
