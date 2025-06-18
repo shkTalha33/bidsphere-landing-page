@@ -168,12 +168,14 @@ const Footer = () => {
             <Link href="/privacyPolicy" className="hover:underline">
               {t("footer.heading2")}
             </Link>
-
             <Link href="/termCondition" className="hover:underline">
               {t("footer.heading3")}
             </Link>
             <Link href="/contactUS" className="hover:underline">
               {t("nav.contactus")}
+            </Link>
+            <Link href="/help-center" className="hover:underline">
+            {t("profil.heading29")}
             </Link>
           </div>
         </div>

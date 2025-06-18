@@ -18,6 +18,7 @@ import { HashLoader } from "react-spinners";
 /* eslint-disable @next/next/no-img-element */
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import HelpCenterContent from "@/components/common/HelpCenterContent";
 
 const ProfilePage = () => {
   const { get } = ApiFunction();
@@ -118,143 +119,7 @@ const ProfilePage = () => {
             mt={0}
             title={t("profil.heading29")}
           />
-          <div className="bg-white px-8 rounded-lg w-full shadow-sm">
-            <div className="p-3 p-md-4 rounded-4 bg_white">
-              <h6
-                className={`text-lg md:text-xl  mb-4 xl:text-2xl poppins_medium ${
-                  language === "ar" ? "text-end" : "text-center text-md-start"
-                }`}
-              >
-                {t("profil.heading25")}
-              </h6>
-              <div className="flex max-[900px]:flex-wrap gap-2">
-                <div className="w-100 max-[900px]:w-100 min-[900px]:max-w-[300px]">
-                  <div className="h-auto  max-h-[20rem] overflow-auto shadow-sm  p-2 bg_white">
-                    {faqLoading ? (
-                      <div className="m-2 text-center">
-                        <HashLoader size={18} />
-                      </div>
-                    ) : faqCategory?.length > 0 ? (
-                      faqCategory?.map((category, index) => (
-                        <Fragment key={index}>
-                          <div>
-                            <h6
-                              onClick={() => handlecatActive(category)}
-                              className={`mb-0 text-[1.2rem] capitalize cursor-pointer py-2 ${
-                                language === "ar" ? "text-end" : "text-start"
-                              } ${
-                                activeCategory === category?._id
-                                  ? "text_primary poppins_medium"
-                                  : "text_secondary poppins_regular"
-                              }`}
-                            >
-                              {category?.title}
-                            </h6>
-                            {faqCategory?.length > 1 && (
-                              <Divider className="my-2" />
-                            )}
-                          </div>
-                        </Fragment>
-                      ))
-                    ) : (
-                      <>
-                        <div className="flex flex-col justify-center items-center p-3 gap-2">
-                          <Image
-                            src={StaticImage}
-                            className="w-[4rem] h-[4rem]"
-                            alt="No Data"
-                          />
-                          <h5 className="text-center text-gray-500">
-                            {t("category.categoryNotFound")}
-                          </h5>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                  <div className="hidden lg:block contact-help-center rounded-2 bg-blue-700 mt-6">
-                    <div className="p-4">
-                      <p
-                        className={`mb-2 sm:text-[12px] md:text-[15px] lg:text-[18px] poppins_medium text_white ${
-                          language === "ar" ? "text-end" : "text-start"
-                        }`}
-                      >
-                        {t("profil.heading26")}
-                      </p>
-                      <p
-                        className={`md:text-[10px] lg:text-[14px] poppins_normal text_white ${
-                          language === "ar" ? "text-end" : "text-start"
-                        }`}
-                      >
-                        {t("profil.heading27")}
-                      </p>
-                      <button
-                        onClick={() => navigate("/contactUS")}
-                        className={`rounded-none bg-white text-blue-700 px-4 py-2 mt-2 poppins_medium hover:bg-gray-100 transition-colors ${
-                          language === "ar" ? "ml-auto" : "mr-auto"
-                        }`}
-                      >
-                        {t("nav.contactus")}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full h-auto max-h-[30rem] overflow-auto">
-                  {loading ? (
-                    <div className="flex justify-center items-center pt-5">
-                      <div className="flex justify-center items-center py-12">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-700"></div>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      {FaqData?.length > 0 ? (
-                        <>
-                          {FaqData?.map((items, index) => (
-                            <Fragment key={index}>
-                              <OptionsHelpCenter
-                                items={items}
-                                language={language}
-                              />
-                            </Fragment>
-                          ))}
-                          {faqLastId !== count && (
-                            <div className="flex justify-center items-center pt-5">
-                              <button
-                                disabled={pagiLoading}
-                                onClick={() => handleFaqById(faqLastId + 1)}
-                                className="bg_primary text-white font-bold py-2 px-4 rounded"
-                              >
-                                {pagiLoading ? (
-                                  <Spinner size="sm" color="#0066CC" />
-                                ) : (
-                                  "Load More"
-                                )}
-                              </button>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <>
-                          <div>
-                            <div className="flex flex-col justify-center items-center pt-5">
-                              <Image
-                                src={StaticImage}
-                                className="w-[4rem] h-[4rem]"
-                                alt="No Data"
-                              />
-                              <h1 className="text-center text-[1rem]">
-                                {t("profil.heading28")}
-                              </h1>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
+          <HelpCenterContent />
         </div>
       </div>
     </main>
