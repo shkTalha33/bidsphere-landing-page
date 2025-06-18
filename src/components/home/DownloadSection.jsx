@@ -19,6 +19,9 @@ import { useSelector } from "react-redux";
 export default function DownloadSection() {
   const { t } = useTranslation();
   const language = useSelector((state) => state.language?.language);
+
+  console.log(language, "language");
+
   return (
     <motion.main
       variants={staggerContainer}
@@ -78,12 +81,13 @@ export default function DownloadSection() {
                   </p>
 
                   <div
-                    className={`flex justify-start gap-3 mb-4 flex-wrap items-center
+                    className={`flex gap-3 mb-4 flex-wrap items-center
               ${
                 language === "ar"
                   ? "justify-end text-right"
                   : "justify-start text-left"
-              }`}
+              }
+              `}
                   >
                     <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
                       <Image
