@@ -3,25 +3,20 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
-import React, { useEffect } from "react";
-import Image from "next/image";
-import { useState } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import { IoMdCheckmark } from "react-icons/io";
-import { RxCross2 } from "react-icons/rx";
-import { Col, Container, Row } from "reactstrap";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { FaList, FaTruck, FaShippingFast, FaBox } from "react-icons/fa";
 import { getInvoice, GetOrders, orderGetbyid } from "@/components/api/ApiFile";
-import moment from "moment";
 import ApiFunction from "@/components/api/apiFuntions";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import ProductTable from "@/components/common/dataTables/productTable";
-import OrderDetails from "./detail/orderDetail";
-import { MdPayments } from "react-icons/md";
-import Invoice from "./invoice/invoice";
+import moment from "moment";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { FaBox, FaList, FaShippingFast, FaTruck } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { useSelector } from "react-redux";
+import { Col, Container, Row } from "reactstrap";
+import OrderDetails from "./detail/orderDetail";
+import Invoice from "./invoice/invoice";
 
 const Page = () => {
   const { get } = ApiFunction();
@@ -42,7 +37,7 @@ const Page = () => {
   const { t } = useTranslation();
   const urlInvoice = urlParams.get("invoice");
   const [accountDetail, setAccountDetail] = useState(null);
-  const language = useSelector((state) => state.language.language);
+  const language = useSelector((state) => state?.language?.language);
 
   const sideButtons = [
     { title: t("order.heading"), status: "all", icon: <FaList /> },
@@ -77,7 +72,7 @@ const Page = () => {
     if (lastId) {
       handleGetOrder(currentActiveButton);
     }
-  }, [lastId]);
+  }, [lastId, language]);
 
   const handleDetail = (item) => {
     router.replace(`/orders?id=${item?._id}`);
@@ -267,10 +262,10 @@ const Page = () => {
             <Col md="3">
               <div className="flex flex-col gap-3  items-center justify-center">
                 {sideButtons?.map((button) => {
-                  const isActive = currentActiveButton === button.status;
+                  const isActive = currentActiveButton === button?.status;
                   return (
                     <button
-                      key={button.title}
+                      key={button?.title}
                       className={`${
                         isActive
                           ? "bg_primary text-white"
@@ -278,8 +273,8 @@ const Page = () => {
                       } rounded-[10px] w-full flex items-center justify-start gap-2 p-3 capitalize`}
                       onClick={() => {
                         handlePageChange();
-                        handleGetOrder(button.status);
-                        setCurrentActiveButton(button.status);
+                        handleGetOrder(button?.status);
+                        setCurrentActiveButton(button?.status);
                         // Check if the status is "payement"
                         // if (button?.status === "payement") {
                         //   handleInvoicePayement();

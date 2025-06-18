@@ -30,12 +30,12 @@ const ApiFunction = () => {
   // Define headers
   const header1 = {
     "Content-Type": "application/json",
-    "lang": userLanguage,
+    lang: userLanguage,
   };
 
   const header2 = {
     "Content-Type": "multipart/form-data",
-    "lang": userLanguage,
+    lang: userLanguage,
   };
 
   // Helper to generate request key
