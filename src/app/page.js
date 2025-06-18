@@ -12,7 +12,6 @@ import Services from "@/components/home/Services";
 /* eslint-disable @next/next/no-img-element */
 
 export default function Home() {
-
   return (
     <>
       <HeroSection />
@@ -20,7 +19,7 @@ export default function Home() {
       <ForYou />
       <AuctionEvents />
       {/* <Services /> */}
-      <Experience />
+      {/* <Experience /> */}
       <DownloadSection />
       <ContactSection />
     </>

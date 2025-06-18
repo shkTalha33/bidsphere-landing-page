@@ -105,7 +105,13 @@ import noData from "../png/noData.webp";
 import PlayStoreIcon from "../png/playstoreicon.png";
 import AppStoreIcon from "../png/appleicon.png";
 import AppStoreIconw from "../png/apple-logow.png";
-import bannerImage from "../png/image001.jpg"
+import bannerImage from "../png/image001.jpg";
+
+import offer1 from "../png/offer1.png";
+import offer2 from "../png/offer2.png";
+import offer3 from "../png/offer3.png";
+import promise1 from "../png/promise1.png";
+import promise2 from "../png/promise2.png";
 
 export {
   avataruser,
@@ -213,5 +219,10 @@ export {
   PlayStoreIcon,
   AppStoreIcon,
   AppStoreIconw,
-  bannerImage
+  bannerImage,
+  offer1,
+  offer2,
+  offer3,
+  promise1,
+  promise2,
 };

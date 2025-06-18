@@ -94,7 +94,8 @@
     "currency": "Currency",
     "logout": "Logout",
     "home": "Home",
-    "privacypolicy": "Privacy Policy"
+    "privacypolicy": "Privacy Policy",
+    "about": "About"
   },
   "homeSlider": {
     "title": "Welcome to The Castle Auction",
@@ -349,6 +350,42 @@
     "view": "View",
     "next": "Next",
     "notAvailable": "N/A"
+  },
+  "offers": {
+    "heading": "services to prefer choosing",
+    "subHeading": "our platform",
+    "readMore": "Read More",
+    "readLess": "Read Less",
+    "auction1": {
+      "date": "December 26, 2025",
+      "title": "Real-Time Bidding with Auto-Bid Feature",
+      "description": "Experience seamless auctions with our real-time bidding system. Our intelligent auto-bid feature ensures you never miss a winning opportunity—set your max bid and let the system do the rest. Fast, fair, and fully transparent bidding designed to give you the edge.",
+      "readTime": "5 min read"
+    },
+    "auction2": {
+      "date": "March 05, 2025",
+      "title": "Instant Alerts & Notifications",
+      "description": "Stay in the loop with instant alerts on bids, counter-offers, auction endings, and more. Whether you're a buyer or seller, our real-time notification system keeps you informed every step of the way—never miss a deal again.",
+      "readTime": "7 min read"
+    },
+    "auction3": {
+      "date": "March 05, 2025",
+      "title": "Buyer Protection & Dispute Resolution",
+      "description": "Your trust matters. Our buyer protection program ensures secure transactions with transparent terms. If a dispute arises, our dedicated resolution team steps in to mediate and protect your interests—buy and sell with confidence.",
+      "readTime": "7 min read"
+    }
+  },
+  "promise": {
+    "ourDifferences": "Our differences",
+    "ourValue": "Our Value ",
+    "promises": "Promises",
+    "description": "With years of experience powering seamless online auctions, we've built a reputation rooted in trust, transparency, and results. From first-time bidders to seasoned sellers, our platform is designed to deliver a smooth, secure, and reliable auction experience every time. We are committed to providing innovative tools, fair bidding practices, and round-the-clock support—because your success is our promise.",
+    "ourMission": "Our Mission",
+    "missionDescription": "Our mission is to provide unparalleled security solutions, ensuring peace of mind and assurance of protection to our clients, their customers, and the public. We deliver a higher standard of security services by deploying the latest innovations.",
+    "ourVision": "Our Vision",
+    "visionDescription": "Our vision is to cultivate thriving habitats where residents, businesses, and organizations grow confidently, knowing they are protected by technology that adapts naturally to their evolving needs while preserving the harmony between innovation and human wellbeing.",
+    "clientsHappy": "Clients Happy From Us",
+    "successRate": "Success Rate"
   },
   "categoryAuction": {
     "heading": "Category Auctions",

@@ -160,6 +160,19 @@ export default function Header() {
             {t("nav.auction")}
           </Link>
           <Link
+            href="/about"
+            className={`${
+              pathname === "/about"
+                ? "text_primary poppins_medium"
+                : isHomeOrHashRoute && !isScrolled
+                ? "text_white"
+                : "text_dark"
+            }
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+          >
+            {t("nav.about")}
+          </Link>
+          <Link
             href="/payments"
             className={`${
               pathname === "/payments"
@@ -323,6 +336,19 @@ export default function Header() {
         >
           {t("nav.auction")}
         </Link>
+        <Link
+          href="/about"
+          className={`${
+            pathname === "/about"
+              ? "text_primary poppins_medium"
+              : isHomeOrHashRoute && !isScrolled
+              ? "text_white"
+              : "text_dark"
+          }
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+        >
+          {t("nav.about")}
+        </Link>
         {/* <Link
           href="/payments"
           className={`${
@@ -363,9 +389,9 @@ export default function Header() {
           {t("nav.contactus")}
         </Link>
         <Link
-          href="/privacyPolicy"
+          href="/help-center"
           className={`${
-            pathname === "/privacyPolicy"
+            pathname === "/help-center"
               ? "text_primary poppins_medium"
               : isHomeOrHashRoute && !isScrolled
               ? "text_white"
@@ -373,7 +399,7 @@ export default function Header() {
           }
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
         >
-          {t("nav.privacypolicy")}
+          {t("profil.heading29")}
         </Link>
       </div>
       <div className="hidden d-md-flex items-center gap-[0.5rem] lg:gap-[0.8rem]">
@@ -493,7 +519,7 @@ export default function Header() {
       style={{ zIndex: 999 }}
       id="navbar"
     >
-      <Container>
+      <Container fluid="xl">
         <nav className="flex justify-between items-center w-full">
           <div
             className="flex items-center gap-3 cursor-pointer"

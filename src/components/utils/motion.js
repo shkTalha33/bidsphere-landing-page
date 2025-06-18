@@ -14,6 +14,29 @@ export const headerVarient = {
   },
 };
 
+export const flipCard = (delay = 0) => ({
+  hidden: {
+    opacity: 0,
+    rotateY: -180,
+    scale: 0.8,
+    z: -100,
+  },
+  show: {
+    opacity: 1,
+    rotateY: 0,
+    scale: 1,
+    z: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      mass: 1,
+      delay,
+      bounce: 0.3,
+    },
+  },
+});
+
 export const slideIn = (direction, type, delay, duration) => ({
   hidden: {
     x: direction === "left" ? -150 : direction === "right" ? 150 : 0,

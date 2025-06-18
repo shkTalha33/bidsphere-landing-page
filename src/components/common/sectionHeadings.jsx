@@ -2,7 +2,6 @@ import React from "react";
 import { Col } from "reactstrap";
 
 export default function SectionHeadings({
-  title,
   heading1,
   heading2,
   heading,
@@ -10,14 +9,6 @@ export default function SectionHeadings({
 }) {
   return (
     <>
-      {/* <Col md="12">
-        <div className="flex justify-center items-center gap-1 mb-[18px]">
-          <div className="w-8 h-2 bg_primary rounded-full"></div>
-          <p className="text-[#202020] poppins_semibold text-2xl text-center capitalize">
-            {title}
-          </p>
-        </div>
-      </Col> */}
       <Col md="12">
         <h4 className="text_darkprimary poppins_medium text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center capitalize">
           {heading ? heading : heading1}

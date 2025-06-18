@@ -20,9 +20,6 @@ import { formatPrice } from "../utils/formatPrice";
 
 export default function PaymentStatics() {
   const [currentActiveButton, setCurrentActiveButton] = useState("deposit");
-  const onChange = (key) => {
-    console.log(key);
-  };
 
   const sideButtons = [
     {

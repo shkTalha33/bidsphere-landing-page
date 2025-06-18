@@ -4,10 +4,9 @@ import Image from "next/image";
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
 import { experience } from "../assets/icons/icon";
-import { Check } from "react-feather";
 import { FaCheck } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { bounce, slideIn, staggerContainer } from "../utils/motion";
+import { slideIn, staggerContainer } from "../utils/motion";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -15,9 +14,9 @@ export default function Experience() {
   const { t } = useTranslation();
   const features = [
     t("about.heading5"),
-    // t("about.heading6"),
+    t("about.heading6"),
     t("about.heading7"),
-    // t("about.heading8"),
+    t("about.heading8"),
   ];
 
   const language = useSelector((state) => state.language?.language);
@@ -29,7 +28,7 @@ export default function Experience() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
-        className="pb-4 md:pb-[4rem] bg_white overflow-hidden"
+        className="pb-4 md:pb-[4rem] bg_mainsecondary overflow-hidden"
       >
         <Container>
           <Row>
@@ -99,7 +98,7 @@ export default function Experience() {
                         }`}
                       >
                         <FaCheck
-                          className={`text_primary ${
+                          className={`text-[#909495] ${
                             language === "ar" ? "order-2" : "order-1"
                           }`}
                           size={20}
@@ -117,9 +116,9 @@ export default function Experience() {
                     );
                   })}
                 </div>
-                {/* <motion.button className="poppins_semibold text-sm md:text-lg text_white w-1/2 py-3 mx-auto bg_primary rounded-lg">
+                <motion.button className="poppins_semibold my-3 text-sm md:text-lg text_white w-1/2 py-3 mx-auto bg_primary rounded-lg">
                   Read More
-                </motion.button> */}
+                </motion.button>
               </motion.div>
             </Col>
           </Row>
