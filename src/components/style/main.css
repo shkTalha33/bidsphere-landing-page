@@ -588,6 +588,7 @@
 }
 
 /* custom tabs css override starts here*/
+
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: var(--primary) !important;
 }
@@ -614,6 +615,14 @@
 }
 .ant-tabs-top > .ant-tabs-nav .ant-tabs-nav-wrap::before {
   box-shadow: none !important;
+}
+
+.ant-tabs-tab {
+  color: var(--primary) !important;
+}
+
+.ant-tabs-tab-btn:hover {
+  color: var(--primary) !important;
 }
 
 /* removing scrollbar */
