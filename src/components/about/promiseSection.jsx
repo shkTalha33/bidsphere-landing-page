@@ -8,6 +8,7 @@ import { flipCard, slideIn, staggerContainer } from "../utils/motion";
 import { promise1, promise2 } from "../assets/icons/icon";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { Container } from "reactstrap";
 
 const PromiseSection = () => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ const PromiseSection = () => {
       viewport={{ once: true, amount: 0.25 }}
       dir={language === "ar" ? "rtl" : "ltr"}
     >
-      <div className="max-w-7xl mx-auto">
+      <Container fluid="xxl">
         {/* Header */}
         <div className="grid lg:grid-cols-2 gap-4 md:gap-12 items-start">
           {/* Left Column */}
@@ -169,7 +170,7 @@ const PromiseSection = () => {
             </motion.div>
           </div>
         </div>
-      </div>
+      </Container>
     </motion.div>
   );
 };

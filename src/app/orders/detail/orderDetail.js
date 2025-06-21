@@ -27,6 +27,8 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
   const router = useRouter();
   const onChange = (key) => {};
   const { userData } = ApiFunction();
+  console.log(t("order.heading16"));
+  console.log("currentSelectedButton", currentSelectedButton);
 
   const orderDetailButtons = [
     `${t("order.heading16")}`,
@@ -55,7 +57,7 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px]">
+      <Container fluid="xxl" className="bg_white rounded-[9px]">
         {detailLoading ? (
           <>
             <div className="flex flex-col gap-4 p-3">
@@ -65,16 +67,16 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
         ) : (
           <>
             <section>
-              <div className="bg-[#FAFAFA] p-4 rounded-[11px] flex flex-col">
+              <div className="bg-[#FAFAFA] p-3 rounded-[11px] flex flex-col">
                 <h4 className="poppins_semibold text-base md:text-xl text-[#202020] capitalize">
                   {t("order.heading14")}
                 </h4>
 
-                <Row className="bg_white rounded-[7px] border-1 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3 mt-4">
+                <Row className="bg_white rounded-[7px] border-1 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-2 p-md-3 mt-4">
                   <Col xs="10">
                     <div className="flex items-start gap-4">
                       <div>
-                        <div className="h-[4rem] w-[4rem]">
+                        <div className="h-[3rem] w-[3rem]">
                           <img
                             src={orderDetail?.auction?.images[0]}
                             alt=""
@@ -96,8 +98,8 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                       </div>
                     </div>
                   </Col>
-                  <Col xs="2" className="">
-                    <div className="flex justify-end">
+                  <Col xs="2" className="hidden md:block">
+                    <div className=" flex justify-end">
                       <div
                         onClick={handleBakcOr}
                         className="bg_lightsecondary flex items-center justify-center w-9 h-9 rounded-full cursor-pointer"
@@ -114,12 +116,12 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                 </div> */}
                   </Col>
                 </Row>
-                <section className="mt-3">
-                  <h4 className="poppins_medium text-[1.5rem]">
-                    {" "}
-                    {t("order.heading15")}
-                  </h4>
-                  <div className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
+                <h4 className="poppins_medium text-[1.5rem] mt-3">
+                  {" "}
+                  {t("order.heading15")}
+                </h4>
+                <Row className=" bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
+                  <Col className="">
                     <div className="flex item-center gap-2">
                       <div>
                         <div className="w-[3rem] h-[3rem]">
@@ -132,7 +134,7 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                       </div>
 
                       <div className="flex justify-between w-[100%]">
-                        <div className="flex flex-col w-[100%]">
+                        <div className="flex flex-col w-[100%] capitalize">
                           <h5>{orderDetail?.lot?.name}</h5>
                           <div
                             className="text-[#7C8493] poppins_medium line-clamp-2 text-[10px] capitalize mb-0 abDatadi"
@@ -152,9 +154,9 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Col>
                   {/* {orderDetail?.lot?} */}
-                </section>
+                </Row>
                 {/* <Row className="mt-2">
                   <AlertSection
                     type="info"
@@ -190,8 +192,8 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                   </Col>
                 </Row>
 
-                <Row className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-3">
-                  <Col md="12">
+                <Row className="bg_white rounded-[7px] border-1 my-2 border-[#F8F9FA] shadow-[0px_1.4px_7.01px_0px_#EEEEEE80] items-center p-2 p-md-3">
+                  <div>
                     {currentSelectedButton === `${t("order.heading16")}` && (
                       <OrderSummary orderDetail={orderDetail} />
                     )}
@@ -203,7 +205,7 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                     {currentSelectedButton === `${t("order.heading18")}` && (
                       <DeliveryTime orderDetail={orderDetail} />
                     )}
-                  </Col>
+                  </div>
                 </Row>
                 {/* <Row>
                   <Col md="6" className="text-end ml-auto mt-4 px-0">

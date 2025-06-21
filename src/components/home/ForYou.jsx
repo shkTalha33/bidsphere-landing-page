@@ -33,7 +33,7 @@ export default function ForYou() {
         className="pb-4 md:pb-[4rem] bg_white overflow-hidden"
         dir={language === "ar" ? "rtl" : "ltr"}
       >
-        <Container>
+        <Container fluid="xxl">
           <Row>
             <SectionHeadings
               heading={language === "ar" && t("ongoing.heading5")}

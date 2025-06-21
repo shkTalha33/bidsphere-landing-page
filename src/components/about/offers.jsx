@@ -53,7 +53,7 @@ export default function OurOffer() {
         viewport={{ once: true, amount: 0.25 }}
         dir={language === "ar" ? "rtl" : "ltr"}
       >
-        <Container fluid="xl">
+        <Container fluid="xxl">
           <h4 className="text_darkprimary poppins_medium text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center capitalize mb-5">
             {t("offers.heading")} <br /> {t("offers.subHeading")}
           </h4>

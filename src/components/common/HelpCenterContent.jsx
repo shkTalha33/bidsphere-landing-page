@@ -91,7 +91,6 @@ const HelpCenterContent = () => {
 
   return (
     <div className="flex flex-col items-start w-full">
-     
       <div className="bg-white px-8 rounded-lg w-full shadow-sm mt-4">
         <div className="p-3 p-md-4 rounded-4 bg_white">
           <h6
@@ -106,7 +105,7 @@ const HelpCenterContent = () => {
               <div className="h-auto  max-h-[20rem] overflow-auto shadow-sm  p-2 bg_white">
                 {faqLoading ? (
                   <div className="m-2 text-center">
-                    <HashLoader size={18} />
+                    <HashLoader size={18} className="mx-auto" />
                   </div>
                 ) : faqCategory?.length > 0 ? (
                   faqCategory?.map((category, index) => (
@@ -124,7 +123,9 @@ const HelpCenterContent = () => {
                         >
                           {category?.title}
                         </h6>
-                        {faqCategory?.length > 1 && <Divider className="my-2" />}
+                        {faqCategory?.length > 1 && (
+                          <Divider className="my-2" />
+                        )}
                       </div>
                     </Fragment>
                   ))
@@ -157,7 +158,10 @@ const HelpCenterContent = () => {
                     <>
                       {FaqData?.map((items, index) => (
                         <Fragment key={index}>
-                          <OptionsHelpCenter items={items} language={language} />
+                          <OptionsHelpCenter
+                            items={items}
+                            language={language}
+                          />
                         </Fragment>
                       ))}
                       {faqLastId !== count && (
@@ -202,4 +206,4 @@ const HelpCenterContent = () => {
   );
 };
 
-export default HelpCenterContent; 
+export default HelpCenterContent;

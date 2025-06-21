@@ -1,10 +1,11 @@
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
 
-export default function TopSection({ title, description, button, mt = 20 }) {
+export default function TopSection({ title, description, button }) {
   return (
     <Container
-      className={`bg_white rounded-[9px] mt-${mt} p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]`}
+      fluid="xxl"
+      className={`bg_white rounded-[9px] mt-4 md:mt-20 p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]`}
     >
       <Row>
         <Col md="12">

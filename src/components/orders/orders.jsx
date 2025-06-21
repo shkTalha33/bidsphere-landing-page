@@ -179,7 +179,10 @@ export default function Orders() {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px]  p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container
+        fluid="xxl"
+        className="bg_white rounded-[9px]  p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
+      >
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={"Orders"} />
@@ -189,7 +192,10 @@ export default function Orders() {
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white p-2 p-md-2 rounded-[9px] mt-2 md:mt-4">
+      <Container
+        fluid="xxl"
+        className="bg_white p-2 p-md-2 rounded-[9px] mt-2 md:mt-4"
+      >
         <Row className="rounded-[9px] g-3">
           <Col md="3">
             <div className="flex flex-col gap-3 items-center justify-center">

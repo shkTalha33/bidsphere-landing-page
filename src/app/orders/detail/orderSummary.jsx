@@ -9,7 +9,7 @@ const OrderSummary = ({ orderDetail }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="rounded-lg p-4">
+    <div className="rounded-lg">
       <h2 className="text-lg capitalize poppins_semibold text-gray-800 mb-4">
         {t("order.heading16")}
       </h2>

@@ -23,24 +23,26 @@ export default function Experience() {
 
   return (
     <section className="">
-      <motion.main
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.25 }}
-        className="pb-4 md:pb-[4rem] bg_mainsecondary overflow-hidden"
-      >
-        <Container>
+      <main className="pb-4 md:pb-[4rem] bg_mainsecondary overflow-hidden">
+        <Container fluid="xxl">
           <Row>
             <Col md="6">
-              <motion.div variants={slideIn("left", "tween", 0.3, 0.8)}>
+              <motion.div
+                variants={slideIn("left", "tween", 0.1, 0.8)}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.1 }}
+              >
                 <Image src={experience} alt="experience" width={"90%"} />
               </motion.div>
             </Col>
             <Col md="6">
               <motion.div
                 className="flex justify-center flex-col h-full"
-                variants={slideIn("right", "tween", 0.3, 0.8)}
+                variants={slideIn("right", "tween", 0.1, 0.8)}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.1 }}
               >
                 <div
                   className={`flex gap-3 items-center  mb-[10px] ${
@@ -123,7 +125,7 @@ export default function Experience() {
             </Col>
           </Row>
         </Container>
-      </motion.main>
+      </main>
     </section>
   );
 }

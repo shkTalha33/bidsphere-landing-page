@@ -591,7 +591,8 @@
   "message": {
     "heading1": "All Conversation",
     "heading2": "Choose from your existing conversations, start a new one, or just keep swimming.",
-    "heading3": "No Chats Found"
+    "heading3": "No Chats Found",
+    "heading4": "Select a message"
   },
   "favorite": {
     "heading1": "Favourite Auctions",

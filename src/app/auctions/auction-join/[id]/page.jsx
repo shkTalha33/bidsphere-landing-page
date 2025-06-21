@@ -538,7 +538,10 @@ export default function Page() {
           button={topButton}
         />
 
-        <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
+        <Container
+          fluid="xxl"
+          className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0"
+        >
           <Row className="g-3 h-full">
             <Col md="4" lg="2" className="flex md:flex-column ">
               <div className="flex md:flex-col gap-3 h-100 max-h-[700px] w-full overflow-y-auto">
@@ -641,12 +644,10 @@ export default function Page() {
                       }`}
                     >
                       <p className="text-sm text-[#7C8493] poppins_regular mb-0">
-                        {t("auctionJoin.heading15")}
+                        {t("auctionJoin.heading45")}
                       </p>
                       <p className="text-base md:text-lg poppins_medium text-[#1A1F2D] mb-0">
-                        {formatPrice(
-                          convert(currentLot?.current_bid || 0, "LYD")
-                        )}
+                        {formatPrice(convert(currentLot?.minprice || 0, "LYD"))}
                       </p>
                     </div>
 
@@ -958,9 +959,7 @@ export default function Page() {
                       </div>
                     ) : (
                       <button
-                        className={`capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg ${
-                          language === "ar" ? "text-start" : "text-end"
-                        }`}
+                        className={`capitalize py-2 md:py-3 mt-3 poppins_medium bg_primary w-full text-white rounded-lg text-center`}
                         onClick={() => handleCustomBid("manual")}
                       >
                         {t("auctionJoin.heading34")}{" "}

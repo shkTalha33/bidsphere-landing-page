@@ -66,7 +66,7 @@ const AuctionDetailPage = () => {
     if (id) {
       fetchAuctionDetail();
     }
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     if (item?.images?.length > 0) {
@@ -94,7 +94,7 @@ const AuctionDetailPage = () => {
     if (userData) {
       router.push(`/auctions/${id}/registration`);
     } else {
-      message.error(t("auctionDetails.headin8"));
+      message.error(t("auctionDetails.heading8"));
     }
   };
 
@@ -122,7 +122,10 @@ const AuctionDetailPage = () => {
   };
 
   return (
-    <main className="bg_mainsecondary p-2 md:py-4">
+    <main
+      className="bg_mainsecondary p-2 md:py-4"
+      dir={language === "ar" ? "rtl" : "ltr"}
+    >
       {loading ? (
         <div className="min-h-[100vh] flex items-center justify-center">
           {" "}
@@ -141,7 +144,10 @@ const AuctionDetailPage = () => {
             {...{ button }}
           />
 
-          <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
+          <Container
+            fluid="xxl"
+            className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0"
+          >
             <Row className="g-3 h-full">
               <Col md="4" lg="2" className="flex md:flex-column ">
                 <div className="flex md:flex-col gap-3 h-100 max-h-[700px] w-full overflow-y-auto">
@@ -214,11 +220,7 @@ const AuctionDetailPage = () => {
                 <Row>
                   <Col md="12">
                     <div className="py-2 rounded-xl relative">
-                      <div
-                        className={`flex items-start justify-between ${
-                          language === "ar" ? "flex-row-reverse" : "flex-row"
-                        }`}
-                      >
+                      <div className={`flex items-start justify-between`}>
                         <div>
                           <p
                             className={`poppins_medium text-xl sm:text-2xl  mb-0 capitalize ${
@@ -379,7 +381,7 @@ const AuctionDetailPage = () => {
               </Col>
             </Row>
           </Container>
-          <Container>
+          <Container fluid="xxl">
             <div>
               <p className={`poppins_medium text-2xl mb-0 `}>
                 {t("auctionDetails.heading5")}({item?.lots?.length})

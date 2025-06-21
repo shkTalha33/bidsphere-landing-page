@@ -13,7 +13,13 @@ import { TbLogout } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { Container } from "reactstrap";
 import ApiFunction from "../api/apiFuntions";
-import { avataruser, Logo1, Logo11 } from "../assets/icons/icon";
+import {
+  authLogo,
+  authLogo2,
+  avataruser,
+  Logo1,
+  Logo11,
+} from "../assets/icons/icon";
 import { setLogout, setUserData } from "../redux/loginForm";
 import useCurrency from "../hooks/useCurrency";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -160,9 +166,9 @@ export default function Header() {
             {t("nav.auction")}
           </Link>
           <Link
-            href="/about"
+            href="/about-us"
             className={`${
-              pathname === "/about"
+              pathname === "/about-us"
                 ? "text_primary poppins_medium"
                 : isHomeOrHashRoute && !isScrolled
                 ? "text_white"
@@ -337,9 +343,9 @@ export default function Header() {
           {t("nav.auction")}
         </Link>
         <Link
-          href="/about"
+          href="/about-us"
           className={`${
-            pathname === "/about"
+            pathname === "/about-us"
               ? "text_primary poppins_medium"
               : isHomeOrHashRoute && !isScrolled
               ? "text_white"
@@ -527,7 +533,7 @@ export default function Header() {
           >
             <Image
               className="w-[3.5rem] h-[3.5rem] object-cover"
-              src={isHomeOrHashRoute && !isScrolled ? Logo11 : Logo1}
+              src={authLogo2}
               alt=""
             />
           </div>

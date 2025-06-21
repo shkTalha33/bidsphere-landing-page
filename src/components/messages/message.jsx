@@ -114,7 +114,9 @@ const ChatMessage = () => {
                 ) : (
                   <div className="display_flex2 flex-column h-100 w-100">
                     <BiSolidMessageRounded style={{ fontSize: "30px" }} />
-                    <h4 className="ms-2 my-0 msg_s00">Select a message</h4>
+                    <h4 className="ms-2 my-0 msg_s00">
+                      {t("message.heading4")}
+                    </h4>
                     <h6
                       style={{ color: "#2D3D38" }}
                       className="text-center regular_font mt-2"

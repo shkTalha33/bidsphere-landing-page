@@ -115,8 +115,6 @@ export default function AllAuction() {
     }
   };
 
-  const { data, isFetching } = getActiveTabResults();
-
   const handleLoadMore = () => {
     setLastId((prev) => ({
       ...prev,
@@ -302,7 +300,11 @@ export default function AllAuction() {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px] p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container
+        dir={language === "ar" ? "rtl" : "ltr"}
+        fluid="xxl"
+        className="bg_white rounded-[9px] p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
+      >
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={t("allAuction.pageTitle")} />
@@ -317,13 +319,17 @@ export default function AllAuction() {
         </Row>
       </Container>
 
-      <Container className="bg_mainsecondary rounded-[9px] mt-4">
+      <Container
+        dir={language === "ar" ? "rtl" : "ltr"}
+        fluid="xxl"
+        className="bg_mainsecondary rounded-[9px] mt-4"
+      >
         <Row>
           <Col md="12">
             <div className="w-full text-end">
               <div
                 onClick={handleOpenFilter}
-                className={`ml-auto mb-4 ${
+                className={`${language === "ar" ? "ml-auto" : "mr-auto"} mb-4 ${
                   isFiltered ? "bg_primary" : "bg-1"
                 } w-[2.5rem] h-[2.5rem] rounded-full items-center justify-center flex sm:hidden cursor-pointer`}
               >
@@ -341,7 +347,11 @@ export default function AllAuction() {
               />
               <div
                 onClick={handleOpenFilter}
-                className="absolute right-[15px] top-[1.6rem]"
+                className={`${
+                  language === "ar"
+                    ? "absolute left-[15px]"
+                    : "absolute right-[15px]"
+                } top-[1.6rem]`}
               >
                 <div
                   className={`${

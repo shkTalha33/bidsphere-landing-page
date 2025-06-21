@@ -28,7 +28,7 @@ export default function DownloadSection() {
       viewport={{ once: true, amount: 0.25 }}
       className="pt-[1.81rem] pb-4 md:pb-[3.81rem] bg-[#F3F3F9] overflow-hidden"
     >
-      <Container>
+      <Container fluid="xxl">
         <Row>
           <Col md="6">
             <motion.div variants={slideIn("up", "tween", 0.3, 0.8)}>

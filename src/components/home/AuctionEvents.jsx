@@ -29,7 +29,7 @@ export default function AuctionEvents() {
   };
   return (
     <>
-      <Container>
+      <Container fluid="xxl">
         <Col md="12">
           <div className="flex justify-center items-center flex-col gap-1 mb-[18px]">
             <div className="w-8 h-2 bg_primary rounded-full"></div>

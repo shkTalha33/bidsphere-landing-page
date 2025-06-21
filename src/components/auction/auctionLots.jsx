@@ -16,7 +16,10 @@ export default function AuctionLots({ items, loading }) {
 
   return (
     <>
-      <Container className="bg_mainsecondary rounded-[9px] mt-4 !px-0">
+      <Container
+        fluid="xxl"
+        className="bg_mainsecondary rounded-[9px] mt-4 !px-0"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-5">
           {loading ? (
             Array.from({ length: 8 }).map((_, index) => (

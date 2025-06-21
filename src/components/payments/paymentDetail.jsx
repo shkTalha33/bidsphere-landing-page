@@ -292,6 +292,7 @@ export default function PaymentDetail() {
   return (
     <>
       <Container
+        fluid="xxl"
         dir={language === "ar" ? "rtl" : "ltr"}
         className={`bg_white rounded-[9px] p-4 shadow-[0px_4px_22.9px_0px_#0000000D] ${
           language === "ar" ? "text-right" : ""
@@ -307,6 +308,7 @@ export default function PaymentDetail() {
         </Row>
       </Container>
       <Container
+        fluid="xxl"
         className={`bg_white p-2 p-md-3 rounded-[9px] mt-4 ${
           language === "ar" ? "text-right" : ""
         }`}

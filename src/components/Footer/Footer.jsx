@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { GetFooter } from "../api/ApiFile";
 import { AppStoreIconw, Logo11, PlayStoreIcon } from "../assets/icons/icon";
 import { useFootersQuery } from "../redux/footerSlice";
+import { Container } from "react-bootstrap";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -16,11 +17,14 @@ const Footer = () => {
 
   return (
     <footer
-      className={`bg_primary text-white py-4 sm:py-12 md:py-16 ${
+      className={`bg_primary text-white py-4 sm:py-12 md:py-16  ${
         language === "ar" ? "text-right" : "text-left"
       }`}
     >
-      <div className="container mx-auto md:px-4 grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-12">
+      <Container
+        fluid="xxl"
+        className="mx-auto md:px-4 grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-12"
+      >
         <div className="space-y-6 flex flex-col items-start justify-start">
           <div>
             <Image
@@ -56,13 +60,13 @@ const Footer = () => {
                 href={`tel:${data?.footer?.phone1}`}
                 className="mb-1 text-sm block text-white hover:underline"
               >
-                {data?.footer?.phone1}
+                +{data?.footer?.phone1}
               </a>
               <a
                 href={`tel:${data?.footer?.phone2}`}
                 className="text-sm block text-white hover:underline"
               >
-                {data?.footer?.phone2}
+                +{data?.footer?.phone2}
               </a>
             </div>
             <div>
@@ -175,11 +179,11 @@ const Footer = () => {
               {t("nav.contactus")}
             </Link>
             <Link href="/help-center" className="hover:underline">
-            {t("profil.heading29")}
+              {t("profil.heading29")}
             </Link>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };

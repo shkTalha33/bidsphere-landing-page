@@ -75,7 +75,7 @@ export default function ContactSection() {
         className="md:px-3 pt-[2rem] md:pt-[4.875rem] pb-[2rem] md:pb-[4.175rem] bg-[#F3F3F9] plusJakara_regular text_white flex items-center justify-center text-center bg_mainsecondary overflow-hidden"
       >
         {/* Ensures content is above the overlay */}
-        <Container>
+        <Container fluid="xxl">
           <div className="px-[1rem] bg_primary py-[2rem] md:py-[4rem] md:px-[4rem] w-full plusJakara_medium rounded-2xl">
             <motion.div
               className="flex items-center justify-center"
