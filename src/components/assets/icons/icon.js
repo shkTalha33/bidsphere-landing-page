@@ -3,6 +3,7 @@ import Logo11 from "../logo/logo11.png";
 import Logo2 from "../logo/logo2.png";
 import Logo3 from "../logo/logo3.png";
 import Logo4 from "../logo/logo4.png";
+import Logo5 from "../logo/logo5.jpg";
 import avataruser from "../png/avataruser.png";
 import coveravatar from "../png/coveravatar.png";
 import facebookicon from "../png/facebookicon.png";
@@ -229,4 +230,5 @@ export {
   promise2,
   authLogo,
   authLogo2,
+  Logo5
 };
