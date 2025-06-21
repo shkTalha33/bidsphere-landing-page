@@ -53,7 +53,7 @@ const CurrencyConverter = () => {
               value={currency.code}
               className={language === "ar" ? "text-right" : "text-left"}
             >
-              {currency.name} ({currency.symbol})
+              {t(currency.translationKey)} ({currency.symbol})
             </option>
           ))}
         </select>
@@ -62,7 +62,7 @@ const CurrencyConverter = () => {
         <p className="text-sm text-gray-600">
           {t("changeCurrency.heading5")}:{" "}
           <span className="poppins_medium">
-            {selectedCurrency.name} ({selectedCurrency.symbol})
+            {t(selectedCurrency.translationKey)} ({selectedCurrency.symbol})
           </span>
         </p>
         <p className="text-xs text-gray-500 mt-1">

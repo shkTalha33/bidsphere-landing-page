@@ -134,7 +134,7 @@ export default function ContactSection() {
                   {t("emailSubscribe.heading5")}
                   <span
                     onClick={hanlePushr}
-                    className="text_white ms-1 cursor-pointer"
+                    className="text_white ms-1 underline cursor-pointer"
                   >
                     {t("emailSubscribe.heading6")}
                   </span>
