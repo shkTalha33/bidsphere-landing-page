@@ -114,7 +114,7 @@ import offer3 from "../png/offer3.png";
 import promise1 from "../png/promise1.png";
 import promise2 from "../png/promise2.png";
 import authLogo from "../png/authLogo.png";
-import authLogo2 from "../png/authLogo2.png";
+import authLogo2 from "../logo/logo5.jpg";
 
 export {
   avataruser,
