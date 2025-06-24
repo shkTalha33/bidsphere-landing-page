@@ -19,7 +19,9 @@ import {
   avataruser,
   Logo1,
   Logo11,
+  Logo5,
 } from "../assets/icons/icon";
+
 import { setLogout, setUserData } from "../redux/loginForm";
 import useCurrency from "../hooks/useCurrency";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -532,8 +534,13 @@ export default function Header() {
             onClick={() => router.push("/")}
           >
             <Image
+<<<<<<< HEAD
               className="w-[2.5rem] h-[2.5rem] object-cover"
               src={authLogo2}
+=======
+              className="w-[3.5rem] h-[3.5rem] object-cover"
+              src={Logo5}
+>>>>>>> 7738c385481268378930d1bcc9cc200ad113c216
               alt=""
             />
           </div>

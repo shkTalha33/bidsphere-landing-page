@@ -1,6 +1,6 @@
 export const worldCurrencies = [
-  { code: "LYD", name: "Libyan Dinar", symbol: "ل.د", rate: 0.00014 },
-  { code: "USD", name: "US Dollar", symbol: "$", rate: 0.000066 },
+  { code: "LYD", name: "Dinar Libyan", symbol: "د.ل", rate: 0.00014, translationKey: "currencies.dinar_libyan" },
+  // { code: "USD", name: "US Dollar", symbol: "$", rate: 0.000066, translationKey: "currencies.us_dollar" },
   // { code: "LBP", name: "Lebanese Pound", symbol: "ل.ل", rate: 1 },
   // { code: "EUR", name: "Euro", symbol: "€", rate: 0.000061 },
   // { code: "GBP", name: "British Pound", symbol: "£", rate: 0.000052 },

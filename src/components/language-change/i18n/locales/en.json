@@ -49,10 +49,10 @@
   "otp": {
     "heading": "Verify Your Email",
     "subHeading": "We have sent a verification code to this email.",
-    "spamWarning": "If you don’t see the OTP in your inbox, please check your SPAM folder.",
+    "spamWarning": "If you don't see the OTP in your inbox, please check your SPAM folder.",
     "enterCodeLabel": "Enter Your OPT Code Here",
     "resendIn": "Resend Code in",
-    "didntReceive": "Didn&rsquo;t receive the Code?",
+    "didntReceive": "Didn't receive the Code?",
     "resendCode": "Resend Code",
     "verify": "Verify",
     "codeSent": "We have sent an Code in your email.",
@@ -127,7 +127,7 @@
     "heading4": "Expert Consulting & Support",
     "heading5": "Dedicated support and guidance throughout the auction journey, from start to completion, to ensure a smooth and reliable experience.",
     "heading6": "Vision & Mission",
-    "heading7": "To be the leading auction house in Libya and the region, founded on the values ​​of transparency, trust, and technological innovation. We also aim to provide a fair and accessible platform that enables everyone to display their items and participate in auctions with confidence and transparency."
+    "heading7": "To be the leading auction house in Libya and the region, founded on the values  of transparency, trust, and technological innovation. We also aim to provide a fair and accessible platform that enables everyone to display their items and participate in auctions with confidence and transparency."
   },
   "about": {
     "heading": "about Castle Auction",
@@ -188,6 +188,10 @@
     "heading6": "Your Message",
     "heading7": "Write Your Message",
     "heading8": "Send Message"
+  },
+  "currencies": {
+    "dinar_libyan": "Dinar Libyan",
+    "us_dollar": "US Dollar"
   },
   "allAuction": {
     "pageTitle": "Auctions",
