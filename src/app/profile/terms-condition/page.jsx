@@ -11,6 +11,7 @@ import { Skeleton } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { Container } from "reactstrap";
 /* eslint-disable @next/next/no-img-element */
 
 const Page = () => {
@@ -40,15 +41,21 @@ const Page = () => {
     handleTerms();
   }, [language]);
   return (
-    <main className="bg-gray-100 flex flex-col items-start">
-      <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-6">
+    <main
+      className="bg-gray-100 flex flex-col items-start"
+      dir={language === "ar" ? "rtl" : "ltr"}
+    >
+      <Container
+        fluid="xxl"
+        className="mx-auto p-4 flex flex-col lg:flex-row gap-6"
+      >
         <div className="w-full lg:w-1/4">
           <TabHeader />
         </div>
         <div className="w-full flex flex-col items-start gap-3 lg:w-3/4">
           <TopSection
             description={t("termConditions.heading2")}
-            mt={0}
+            mt={"mt-0 md:mt-0"}
             title={t("termConditions.heading")}
           />
           <div className="bg-white px-8 py-6 rounded-lg w-full shadow-sm">
@@ -76,7 +83,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </main>
   );
 };

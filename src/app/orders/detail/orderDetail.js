@@ -67,7 +67,7 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
         ) : (
           <>
             <section>
-              <div className="bg-[#FAFAFA] p-3 rounded-[11px] flex flex-col">
+              <div className="bg-[#FAFAFA] p-4 rounded-[11px] flex flex-col">
                 <h4 className="poppins_semibold text-base md:text-xl text-[#202020] capitalize">
                   {t("order.heading14")}
                 </h4>

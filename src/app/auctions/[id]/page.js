@@ -3,25 +3,71 @@
 import { auctionDetail } from "@/components/api/ApiFile";
 import ApiFunction from "@/components/api/apiFuntions";
 import { handleError } from "@/components/api/errorHandler";
-import { avataruser } from "@/components/assets/icons/icon";
 import AuctionLots from "@/components/auction/auctionLots";
 import TopSection from "@/components/common/TopSection";
 import useCurrency from "@/components/hooks/useCurrency";
-import { useSocket } from "@/components/socketProvider/socketProvider";
 import { message } from "antd";
-import { format } from "date-fns";
-import debounce from "debounce";
 import moment from "moment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Heart, Maximize2, Plus, X } from "react-feather";
+import { Maximize2, Plus, X } from "react-feather";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
 import CountdownTimer from "../../../components/CountdownTimer/CountdownTimer";
-import { useTranslation } from "react-i18next";
-import toast from "react-hot-toast";
+import {
+  FaCar,
+  FaCogs,
+  FaCubes,
+  FaCalendarAlt,
+  FaRoad,
+  FaCarSide,
+  FaChair,
+  FaExchangeAlt,
+  FaPalette,
+  FaFileAlt,
+  FaInfoCircle,
+  FaGlobe,
+  FaLeaf,
+  FaFlag,
+  FaWarehouse,
+  FaCouch,
+  FaRulerHorizontal,
+  FaWindowMaximize,
+  FaLock,
+  FaSnowflake,
+  FaCompactDisc,
+  FaLightbulb,
+  FaSun,
+  FaCamera,
+  FaKey,
+  FaApple,
+  FaAndroid,
+  FaBluetooth,
+  FaRoute,
+  FaTv,
+  FaWeight,
+  FaUsers,
+  FaHeartbeat,
+  FaTransgender,
+  FaAward,
+  FaHorse,
+} from "react-icons/fa";
+import { BsFillFuelPumpFill } from "react-icons/bs";
+import {
+  GiBoatEngine,
+  GiSteeringWheel,
+  GiSuspensionBridge,
+} from "react-icons/gi";
+import {
+  MdOutlineSecurity,
+  MdSensorDoor,
+  MdOutlineTouchApp,
+} from "react-icons/md";
+import { GrDashboard } from "react-icons/gr";
+
 const AuctionDetailPage = () => {
   const router = useRouter();
   const [item, setItem] = useState([]);
@@ -34,12 +80,115 @@ const AuctionDetailPage = () => {
   const { t } = useTranslation();
   const language = useSelector((state) => state.language.language);
 
+  const categoryIcons = [
+    { key: "type", icon: FaCar },
+    { key: "the_model", icon: FaCogs },
+    { key: "category", icon: FaCubes },
+    { key: "year_of_manufacture", icon: FaCalendarAlt },
+    { key: "km", icon: FaRoad },
+    { key: "body_type", icon: FaCarSide },
+    { key: "number_of_seats", icon: FaChair },
+    { key: "fuel_type", icon: BsFillFuelPumpFill },
+    { key: "transmission", icon: FaExchangeAlt },
+    { key: "engine_capacity", icon: GiBoatEngine },
+    { key: "exterior_colour", icon: FaPalette },
+    { key: "interior_colour", icon: FaPalette },
+    { key: "the_color", icon: FaPalette },
+    { key: "description", icon: FaFileAlt },
+    { key: "car_condition", icon: FaInfoCircle },
+    { key: "the_age", icon: FaCalendarAlt },
+    { key: "country_of_manufacture", icon: FaGlobe },
+    { key: "the_name", icon: FaLeaf },
+    { key: "item_type", icon: FaCubes },
+    { key: "imported", icon: FaFlag },
+    { key: "local", icon: FaWarehouse },
+    { key: "material", icon: FaCouch },
+    { key: "product_age", icon: FaCalendarAlt },
+    { key: "archaeological", icon: FaGlobe },
+    { key: "modern", icon: FaPalette },
+    { key: "engine_power", icon: GiBoatEngine },
+    { key: "length", icon: FaRulerHorizontal },
+    { key: "width", icon: FaRulerHorizontal },
+    { key: "the_cars", icon: FaCar },
+    { key: "information", icon: FaInfoCircle },
+    { key: "transmission_type", icon: FaExchangeAlt },
+    { key: "seat_memory", icon: FaChair },
+    { key: "electric_rear_seat", icon: FaChair },
+    { key: "electric_windows", icon: FaWindowMaximize },
+    { key: "heated_steering_wheel", icon: GiSteeringWheel },
+    { key: "central_lock", icon: FaLock },
+    { key: "conditioning", icon: FaSnowflake },
+    { key: "heated_seats", icon: FaChair },
+    { key: "record_player", icon: FaCompactDisc },
+    { key: "air_bags", icon: FaCogs },
+    { key: "leather_seats", icon: FaCouch },
+    { key: "electric_seat_control", icon: FaCogs },
+    { key: "sports_seats", icon: FaCouch },
+    { key: "steering_wheel_control", icon: GiSteeringWheel },
+    { key: "cooled_seats", icon: FaSnowflake },
+    { key: "sunroof", icon: FaSun },
+    { key: "folding_mirrors", icon: FaCarSide },
+    { key: "led_lamps", icon: FaLightbulb },
+    { key: "daytime_running_light", icon: FaLightbulb },
+    { key: "sports_version", icon: FaCarSide },
+    { key: "spare_tire", icon: FaCarSide },
+    { key: "front_sensors", icon: FaCamera },
+    { key: "rear_sensors", icon: FaCamera },
+    { key: "keyless_entry", icon: FaKey },
+    { key: "abs", icon: MdOutlineSecurity },
+    { key: "camera_360", icon: FaCamera },
+    { key: "apple_carplay", icon: FaApple },
+    { key: "rear_camera", icon: FaCamera },
+    { key: "android_auto", icon: FaAndroid },
+    { key: "e_s_c", icon: MdSensorDoor },
+    { key: "bluetooth", icon: FaBluetooth },
+    { key: "cruise_control", icon: FaRoute },
+    { key: "air_pressure_sensor", icon: GrDashboard },
+    { key: "sports_suspension", icon: GiSuspensionBridge },
+    { key: "touch_screen", icon: MdOutlineTouchApp },
+    { key: "navigation_system", icon: FaRoute },
+    { key: "media_screen", icon: FaTv },
+    { key: "the_condition", icon: FaInfoCircle },
+    { key: "payload", icon: FaWeight },
+    { key: "engine_type", icon: GiBoatEngine },
+    { key: "gearbox", icon: FaCogs },
+    { key: "number_of_working_hours", icon: GrDashboard },
+    { key: "date_of_manufacture", icon: FaCalendarAlt },
+    { key: "father", icon: FaUsers },
+    { key: "mother", icon: FaUsers },
+    { key: "grand_mother", icon: FaUsers },
+    { key: "blood", icon: FaHeartbeat },
+    { key: "sex", icon: FaTransgender },
+    { key: "awards", icon: FaAward },
+    { key: "type_of_cattle", icon: FaHorse },
+    { key: "cattle_age", icon: FaCalendarAlt },
+    { key: "health_condition", icon: FaHeartbeat },
+    { key: "the_faction", icon: FaUsers },
+  ];
+
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) return t("auctionJoin.heading1");
     if (hour >= 12 && hour < 17) return t("auctionJoin.heading2");
     if (hour >= 17 && hour < 21) return t("auctionJoin.heading3");
     return t("auctionJoin.heading4");
+  };
+
+  const formatKey = (key) => {
+    return key
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  const getValueBadge = (value) => {
+    const lowerValue = value.toLowerCase();
+    if (lowerValue === "yes" || lowerValue === "good" || lowerValue === "new") {
+      return "success";
+    } else if (lowerValue === "no" || lowerValue === "bad") {
+      return "danger";
+    }
+    return "info";
   };
 
   const handleImagePreview = (image) => {
@@ -146,7 +295,7 @@ const AuctionDetailPage = () => {
 
           <Container
             fluid="xxl"
-            className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0"
+            className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0 overflow-hidden"
           >
             <Row className="g-3 h-full">
               <Col md="4" lg="2" className="flex md:flex-column ">
@@ -215,11 +364,11 @@ const AuctionDetailPage = () => {
               <Col
                 md="12"
                 lg="5"
-                className="bg_white p-3 rounded-lg d-flex flex-column max-h-[700px] overflow-y-auto"
+                className="bg_white p-2 p-md-3 rounded-[9px] d-flex flex-column max-h-[700px] overflow-y-auto"
               >
                 <Row>
                   <Col md="12">
-                    <div className="py-2 rounded-xl relative">
+                    <div className="p-2 rounded-[9px] relative">
                       <div className={`flex items-start justify-between`}>
                         <div>
                           <p
@@ -241,7 +390,7 @@ const AuctionDetailPage = () => {
                     </div>
                   </Col>
                 </Row>
-                <Row className="justify-center my-2 mt-3">
+                <Row className="justify-center my-2 mt-3 p-2">
                   <Col md="6" className="my-2">
                     <div
                       className={`poppins_medium text-base text-[#8B0000] ${
@@ -279,7 +428,7 @@ const AuctionDetailPage = () => {
                     </div>
                   </Col>
                 </Row>
-                <Row className="justify-center my-2 mt-3">
+                <Row className="justify-center my-2 mt-3 p-2">
                   <Col md="6">
                     <div
                       className={`poppins_medium text-base text_primary ${
@@ -320,7 +469,7 @@ const AuctionDetailPage = () => {
                     </div>
                   </Col>
                 </Row>
-                <Row className="justify-center my-2 ">
+                <Row className="justify-center my-2 p-2">
                   <Col md="6">
                     <div
                       className={`poppins_medium text-base text_primary ${
@@ -354,7 +503,7 @@ const AuctionDetailPage = () => {
                     </div>
                   </Col>
                 </Row>
-                <Row className="justify-center my-2">
+                <Row className="justify-center my-2 p-2">
                   <Col md="12">
                     <div
                       className={`poppins_medium text-[1.2rem] text-black ${
@@ -381,6 +530,55 @@ const AuctionDetailPage = () => {
               </Col>
             </Row>
           </Container>
+
+          <Container
+            fluid="xxl"
+            className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0 overflow-hidden"
+          >
+            <div className="bg-white rounded-[9px] shadow-xl overflow-hidden p-2 md:p-3">
+              <h2 className="text-base sm:text-lg md:text-xl poppins_semibold text_primary px-[8px] sm:px-8  pt-2 md:pt-3">
+                {t("auctionDetails.heading13")}
+              </h2>
+
+              {/* Content Section */}
+              <div className="px-[12px] sm:px-8 py-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] md:gap-[24px]">
+                  {Object.entries(item?.categoryInfo).map(([key, value]) => {
+                    const matchedIcon = categoryIcons.find(
+                      (icon) => icon.key === key
+                    );
+                    const Icon = matchedIcon?.icon || FaInfoCircle;
+                    return (
+                      <div
+                        key={key}
+                        className="group bg-gray-50 hover:bg-white rounded-xl p-2 p-md-3 transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-sm"
+                      >
+                        <div className="flex items-start gap-2">
+                          {/* Icon */}
+                          <div className="bg_primary rounded-full p-2 group-hover:scale-105 transition-transform duration-300 shadow-lg">
+                            <Icon className="text-white text-lg" />
+                          </div>
+
+                          {/* Content */}
+                          <div className="flex-1 min-w-0">
+                            <h3 className="poppins_medium text-base sm:text-lg mb-0">
+                              {formatKey(key)}
+                            </h3>
+                            <div
+                              className={`inline-flex items-center py-1 text-xs rounded-full sm:text-sm poppins_regular`}
+                            >
+                              {value}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </Container>
+
           <Container fluid="xxl">
             <div>
               <p className={`poppins_medium text-2xl mb-0 `}>

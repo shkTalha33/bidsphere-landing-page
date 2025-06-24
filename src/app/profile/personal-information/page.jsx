@@ -16,11 +16,13 @@ import toast from "react-hot-toast";
 import { uploadFile } from "@/components/api/uploadFile";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import { Input } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Autocomplete from "react-google-autocomplete";
 import { updateProfile } from "@/components/api/ApiFile";
 import { setUserData } from "@/components/redux/loginForm";
 import { useTranslation } from "react-i18next";
+import { Container } from "reactstrap";
+import { getLanguage } from "@/components/redux/language/languageSlice";
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { userData, GoogleApiKey, put } = ApiFunction();
@@ -30,6 +32,7 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const [locationDetails, setLocationDetails] = useState({});
   const { t } = useTranslation();
+  const language = useSelector(getLanguage);
   // ////
 
   const schema = yup.object().shape({
@@ -155,8 +158,14 @@ const ProfilePage = () => {
   };
 
   return (
-    <main className="bg-gray-100 flex flex-col items-start">
-      <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-6">
+    <main
+      className="bg-gray-100 flex flex-col items-start"
+      dir={language === "ar" ? "rtl" : "ltr"}
+    >
+      <Container
+        fluid="xxl"
+        className="mx-auto p-4 flex flex-col lg:flex-row gap-6"
+      >
         <div className="w-full lg:w-1/4">
           <TabHeader />
         </div>
@@ -481,9 +490,7 @@ const ProfilePage = () => {
             )}
           </div>
         </div>
-      </div>
-
-      <section></section>
+      </Container>
     </main>
   );
 };

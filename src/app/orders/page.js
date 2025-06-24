@@ -262,7 +262,7 @@ const Page = () => {
         </Container>
         <Container
           fluid="xxl"
-          className="bg_white p-2 p-md-2 rounded-[9px] mt-2 md:mt-4"
+          className="bg_white p-2 p-md-3 rounded-[9px] mt-2 md:mt-4"
         >
           <Row className="rounded-[9px] g-3 min-h-screen ">
             <Col md="3">

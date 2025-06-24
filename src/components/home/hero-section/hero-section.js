@@ -1,11 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import {
-  bounce,
-  fadeIn,
-  slideIn,
-  staggerContainer,
-  zoomIn,
-} from "@/components/utils/motion";
+import { fadeIn, staggerContainer } from "@/components/utils/motion";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Container } from "react-bootstrap";

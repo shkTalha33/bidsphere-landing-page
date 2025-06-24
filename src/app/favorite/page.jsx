@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import FavoriteAuctionItems from "./FavoriteAuctionItems"; // We'll create this next
 import { useTranslation } from "react-i18next";
+import { Container } from "reactstrap";
 
 export default function FavoritesPage() {
   const [lastId, setLastId] = useState(1);
@@ -33,7 +34,7 @@ export default function FavoritesPage() {
 
   return (
     <>
-      <div className="container ">
+      <Container fluid="xxl">
         <div className="bg_white rounded-[9px] mb-4 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
           <Row>
             <Col md="12">
@@ -52,7 +53,7 @@ export default function FavoritesPage() {
           handleLoadMore={handleLoadMore}
           toggleFavorite={toggleFavorite}
         />
-      </div>
+      </Container>
     </>
   );
 }

@@ -1,11 +1,13 @@
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
 
-export default function TopSection({ title, description, button }) {
+export default function TopSection({ title, description, button, mt }) {
   return (
     <Container
       fluid="xxl"
-      className={`bg_white rounded-[9px] mt-4 md:mt-20 p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]`}
+      className={`bg_white rounded-[9px] ${
+        mt ? mt : "mt-4 md:mt-20"
+      } p-3 sm:p-4 mt-0 shadow-[0px_4px_22.9px_0px_#0000000D]`}
     >
       <Row>
         <Col md="12">
@@ -19,8 +21,11 @@ export default function TopSection({ title, description, button }) {
               </p>
             </div>
             {button && (
-              <button className={button.className} onClick={button.onClick}>
-                {button.icon}
+              <button
+                className={`${button.className} poppins_regular text-sm sm:text-[1rem]`}
+                onClick={button.onClick}
+              >
+                <span className="hidden md:block">{button.icon}</span>
                 {button.text}
               </button>
             )}

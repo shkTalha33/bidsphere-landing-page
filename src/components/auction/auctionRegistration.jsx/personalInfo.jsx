@@ -1,8 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { setAuctionRegistrationData } from "@/components/redux/auctionRegistration";
+import {
+  selectProgress,
+  selectRegisterData,
+  setActiveStep,
+  setRegisterData,
+  setsliceProgress,
+} from "@/components/redux/registrationSlice/resgiterSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { allCountries } from "country-region-data";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Col,
@@ -14,29 +23,13 @@ import {
   Row,
 } from "reactstrap";
 import * as Yup from "yup";
-import { allCountries } from "country-region-data";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import {
-  clearRegisterData,
-  selectActiveStep,
-  selectProgress,
-  selectRegisterData,
-  setActiveStep,
-  setRegisterData,
-  setsliceProgress,
-} from "@/components/redux/registrationSlice/resgiterSlice";
-import { useTranslation } from "react-i18next";
 
 const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [regions, setRegions] = useState([]);
   const dispatch = useDispatch();
-  const pathname = usePathname();
   const formData = useSelector(selectRegisterData);
-  const active = useSelector(selectActiveStep);
   const progress = useSelector(selectProgress);
-  const language = useSelector((state) => state.language.language);
   const { t } = useTranslation();
   const schema = Yup.object().shape({
     fname: Yup.string().required(t("profil.heading13")),
@@ -102,9 +95,7 @@ const PersonalInfo = ({ setIsCompleted, isCompleted }) => {
 
   return (
     <Container
-      className={`bg_white rounded-[9px] md:mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form ${
-        language === "ar" ? "text-right" : ""
-      }`}
+      className={`bg_white rounded-[9px] md:mt-2 p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] custom_form`}
     >
       <Form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Row className="g-4">

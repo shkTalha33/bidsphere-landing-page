@@ -69,7 +69,10 @@ const Page = () => {
 
   return (
     <>
-      <Container className="bg-white rounded-lg p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container
+        fluid="xxl"
+        className="bg-white rounded-lg p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
+      >
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={t("nav.contactus")} />
@@ -80,7 +83,7 @@ const Page = () => {
         </Row>
       </Container>
 
-      <Container className="mt-6 mb-4">
+      <Container fluid="xxl" className="mt-6 mb-4">
         <Row className="g-4">
           {/* Contact Info Cards */}
           <Col lg="4" md="6" className="mb-4 md:mb-0">

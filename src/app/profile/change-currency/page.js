@@ -6,20 +6,30 @@ import CurrencyConverter from "@/components/common/CurrencyConverter";
 import TabHeader from "@/components/tabHeader";
 import TopSection from "@/components/common/TopSection";
 import { useTranslation } from "react-i18next";
+import { Container } from "reactstrap";
+import { getLanguage } from "@/components/redux/language/languageSlice";
+import { useSelector } from "react-redux";
 
 export default function Home() {
   const { loading } = useCurrency();
   const { t } = useTranslation();
+  const language = useSelector(getLanguage);
   return (
-    <main className="bg-gray-100 flex flex-col items-start">
-      <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-6">
+    <main
+      className="bg-gray-100 flex flex-col items-start"
+      dir={language === "ar" ? "rtl" : "ltr"}
+    >
+      <Container
+        fluid="xxl"
+        className="mx-auto p-4 flex flex-col lg:flex-row gap-6"
+      >
         <div className="w-full lg:w-1/4">
           <TabHeader />
         </div>
         <div className="w-full flex flex-col items-start gap-3 lg:w-3/4">
           <TopSection
             description={t("changeCurrency.heading2")}
-            mt={0}
+            mt={"mt-0 md:mt-0"}
             title={t("changeCurrency.heading")}
           />
 
@@ -70,7 +80,7 @@ export default function Home() {
             </>
           )}
         </div>
-      </div>
+      </Container>
     </main>
   );
 }

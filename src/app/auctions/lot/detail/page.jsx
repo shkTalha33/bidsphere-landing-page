@@ -76,7 +76,10 @@ const Page = () => {
               description={t("lotDetail.heading1")}
               button={""}
             />
-            <Container className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0">
+            <Container
+              fluid="xxl"
+              className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0"
+            >
               <Row className="g-3 h-full">
                 <Col md="4" lg="2" className="flex md:flex-column ">
                   <div className="flex md:flex-col gap-3 h-100 max-h-[700px] w-full overflow-y-auto">

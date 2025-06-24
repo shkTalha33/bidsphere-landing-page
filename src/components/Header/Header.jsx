@@ -277,7 +277,7 @@ export default function Header() {
             <div className="flex cursor-pointer gap-2 items-center w-fit">
               {userData?.profile ? (
                 <>
-                  <div className="w-[3rem] h-[3rem]">
+                  <div className="w-[2rem] h-[2rem]">
                     <img
                       src={userData?.profile}
                       alt=""
@@ -525,14 +525,14 @@ export default function Header() {
       style={{ zIndex: 999 }}
       id="navbar"
     >
-      <Container fluid="xl">
-        <nav className="flex justify-between items-center w-full">
+      <Container fluid="xxl">
+        <nav className="flex justify-between items-center w-full px-2 sm:px-4">
           <div
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => router.push("/")}
           >
             <Image
-              className="w-[3.5rem] h-[3.5rem] object-cover"
+              className="w-[2.5rem] h-[2.5rem] object-cover"
               src={authLogo2}
               alt=""
             />
@@ -681,7 +681,7 @@ export default function Header() {
                   <div className="flex cursor-pointer gap-2 items-center w-fit">
                     {userData?.profile ? (
                       <>
-                        <div className="w-[3rem] h-[3rem]">
+                        <div className="w-[2rem] h-[2rem]">
                           <img
                             src={userData?.profile}
                             alt=""
@@ -694,8 +694,8 @@ export default function Header() {
                         <div>
                           <Image
                             src={avataruser}
-                            width={40}
-                            height={40}
+                            width={30}
+                            height={30}
                             style={{ borderRadius: "50%", objectFit: "cover" }}
                             alt=""
                           />

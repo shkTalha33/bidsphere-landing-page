@@ -5,20 +5,16 @@
 
 import { getFaqById, getFaqCategory } from "@/components/api/ApiFile";
 import ApiFunction from "@/components/api/apiFuntions";
-import { StaticImage } from "@/components/assets/icons/icon";
 import TopSection from "@/components/common/TopSection";
-import OptionsHelpCenter from "@/components/optionsHelpCenter";
 import TabHeader from "@/components/tabHeader";
-import { Divider } from "antd";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Fragment, useState, useEffect } from "react";
-import { Spinner } from "react-bootstrap";
-import { HashLoader } from "react-spinners";
+import { useEffect, useState } from "react";
 /* eslint-disable @next/next/no-img-element */
+import HelpCenterContent from "@/components/common/HelpCenterContent";
+import { getLanguage } from "@/components/redux/language/languageSlice";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import HelpCenterContent from "@/components/common/HelpCenterContent";
+import { Container } from "reactstrap";
 
 const ProfilePage = () => {
   const { get } = ApiFunction();
@@ -31,7 +27,7 @@ const ProfilePage = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [pagiLoading, setPagiLoading] = useState(false);
   const [count, setCount] = useState(0);
-  const language = useSelector((state) => state.language.language);
+  const language = useSelector(getLanguage);
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -108,20 +104,26 @@ const ProfilePage = () => {
   }, [activeCategory]);
 
   return (
-    <main className="bg-gray-100 flex flex-col items-start">
-      <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-6">
+    <main
+      className="bg-gray-100 flex flex-col items-start"
+      dir={language === "ar" ? "rtl" : "ltr"}
+    >
+      <Container
+        fluid="xxl"
+        className="mx-auto p-4 flex flex-col lg:flex-row gap-6"
+      >
         <div className="w-full lg:w-1/4">
           <TabHeader />
         </div>
         <div className="w-full flex flex-col items-start gap-3 lg:w-3/4">
           <TopSection
             description="See your FAQs here.."
-            mt={0}
+            mt={"mt-0 md:mt-0"}
             title={t("profil.heading29")}
           />
           <HelpCenterContent />
         </div>
-      </div>
+      </Container>
     </main>
   );
 };

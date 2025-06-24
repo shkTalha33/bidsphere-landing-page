@@ -135,7 +135,10 @@ const RegistrationDetail = () => {
 
   return (
     <>
-      <Container className="bg_white rounded-[9px] p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container
+        fluid="xxl"
+        className="bg_white rounded-[9px] p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
+      >
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={"Registration"} />
@@ -145,7 +148,10 @@ const RegistrationDetail = () => {
           </Col>
         </Row>
       </Container>
-      <Container className="bg_white rounded-[9px] mt-2 md:mt-4 p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+      <Container
+        fluid="xxl"
+        className="bg_white rounded-[9px] mt-2 md:mt-4 p-3 md:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
+      >
         <Row>
           <Col md="12">
             <h3 className="capitalize poppins_semibold text-lg sm:text-xl md:text-2xl text_dark mb-1 md:mb-[10px]">
@@ -173,7 +179,10 @@ const RegistrationDetail = () => {
           </Col>
         </Row>
       </Container>
-      <Container className="bg_mainsecondary rounded-[9px] mt-2 md:mt-4">
+      <Container
+        fluid="xxl"
+        className="bg_mainsecondary rounded-[9px] mt-2 md:mt-4"
+      >
         <Row>
           <Col md="12" className="!px-0">
             <Tabs
