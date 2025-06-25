@@ -506,14 +506,15 @@
   top: 0;
   transform: perspective(1200px);
   opacity: 1;
-  z-index: 999px;
+  z-index: 900px;
+  box-shadow: 0px 4px 22.9px 0px #0000000d;
   transition: background-color 0.3s ease, border-bottom 0.3s ease,
     transform 0.3s ease;
 }
 
 .main_nav.scrolled {
   background-color: var(--light);
-  z-index: 999px;
+  z-index: 900px;
   /* border-bottom: 1px solid var(--dark); */
   transform: perspective(1200px) translateX(0px) translateY(-82px) scale(1)
     rotate(0deg) rotateX(0deg) rotateY(0deg) translateZ(0px);

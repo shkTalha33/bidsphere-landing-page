@@ -12,7 +12,7 @@ const HelpCenterPage = () => {
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={t("profil.heading29")} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+            <h3 className="text-xl sm:text-2xl poppins_medium text_dark">
               {t("profil.heading29")}
             </h3>
           </Col>

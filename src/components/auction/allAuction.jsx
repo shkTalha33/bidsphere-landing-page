@@ -308,7 +308,7 @@ export default function AllAuction() {
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={t("allAuction.pageTitle")} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+            <h3 className="text-xl sm:text-2xl poppins_medium text_dark">
               {activeTab === "trending"
                 ? t("allAuction.heading2")
                 : activeTab === "popular"
@@ -329,7 +329,7 @@ export default function AllAuction() {
             <div className="w-full text-end">
               <div
                 onClick={handleOpenFilter}
-                className={`${language === "ar" ? "ml-auto" : "mr-auto"} mb-4 ${
+                className={`${language === "ar" ? "mr-auto" : "ml-auto"} mb-4 ${
                   isFiltered ? "bg_primary" : "bg-1"
                 } w-[2.5rem] h-[2.5rem] rounded-full items-center justify-center flex sm:hidden cursor-pointer`}
               >

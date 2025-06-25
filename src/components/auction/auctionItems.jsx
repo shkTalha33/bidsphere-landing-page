@@ -80,27 +80,27 @@ export default function AuctionItems({
   return (
     <>
       {(loading && items?.length === 0) || (filtering && loading) ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-3">
           {Array.from({ length: 8 }).map((_, index) => (
             <SkeletonLayout key={index} />
           ))}
         </div>
       ) : items?.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mb-5">
           {items?.map((item) => (
             <div
               key={item._id}
-              className="space-y-3 p-3 bg_white shadow-sm rounded-lg border border-[#ECEFF3] transition-all hover:shadow-md cursor-pointer"
+              className="bg_white rounded-lg transition-all cursor-pointer hover:scale-105 overflow-hidden"
               style={{ boxShadow: "0px 8px 24px rgba(149, 157, 165, 0.2)" }}
               onClick={() => handleAuctionDetail(item)}
             >
-              <div className="relative">
+              <div className="relative w-full">
                 <Image
                   src={item?.images[0]}
                   alt={item?.title || item?.name}
-                  width={300}
+                  width={200}
                   height={200}
-                  className="w-full h-[200px] object-cover rounded-xl"
+                  className="w-full h-[200px] object-cover"
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg_primary text-white px-2 py-1 rounded-[4px] text-sm poppins_regular">
@@ -121,7 +121,7 @@ export default function AuctionItems({
                   />
                 </button>
               </div>
-              <div className="flex flex-col justify-between mt-2">
+              <div className="flex flex-col justify-between p-3">
                 <div className="poppins_regular text_darkprimary text-[10px] mt-2">
                   <CountdownTimer
                     startDate={item?.start_date}

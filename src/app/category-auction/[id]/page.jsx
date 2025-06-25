@@ -61,16 +61,19 @@ const Page = () => {
     if (id) {
       handleAuctionData();
     }
-  }, [id ,language]);
+  }, [id, language]);
 
   return (
     <>
       <main className="mb-4">
-        <Container className="bg_white rounded-[9px] p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
+        <Container
+          fluid="xxl"
+          className="bg_white rounded-[9px] p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
+        >
           <Row>
             <Col md="12">
               <Breadcrumbs pageTitle="Auctions" />
-              <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+              <h3 className="text-xl sm:text-2xl poppins_medium text_dark">
                 {t("categoryAuction.heading")}
               </h3>
             </Col>
@@ -79,13 +82,13 @@ const Page = () => {
 
         {loading ? (
           <>
-            <div className="mt-4">
+            <Container fluid="xxl" className="mt-4">
               <Skeleton active />
-            </div>
+            </Container>
           </>
         ) : (
           <>
-            <Container className="bg-white rounded-[9px] mt-4">
+            <Container fluid="xxl" className="rounded-[9px] mt-4">
               {auctions?.length > 0 ? (
                 <>
                   <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">

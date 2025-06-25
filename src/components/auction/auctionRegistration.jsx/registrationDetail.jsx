@@ -142,7 +142,7 @@ const RegistrationDetail = () => {
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={"Registration"} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+            <h3 className="text-xl sm:text-2xl poppins_medium text_dark">
               {t("auctionRegistration.heading")}
             </h3>
           </Col>

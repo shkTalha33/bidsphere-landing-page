@@ -6,7 +6,7 @@ export default function TopSection({ title, description, button, mt }) {
     <Container
       fluid="xxl"
       className={`bg_white rounded-[9px] ${
-        mt ? mt : "mt-4 md:mt-20"
+        mt ? mt : "mt-4 md:mt-12"
       } p-3 sm:p-4 mt-0 shadow-[0px_4px_22.9px_0px_#0000000D]`}
     >
       <Row>

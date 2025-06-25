@@ -76,7 +76,7 @@ const Page = () => {
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={t("nav.contactus")} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text-gray-800">
+            <h3 className="text-xl sm:text-2xl poppins_medium text-gray-800">
               {t("nav.contactus")}
             </h3>
           </Col>

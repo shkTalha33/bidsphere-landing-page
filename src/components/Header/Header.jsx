@@ -523,8 +523,8 @@ export default function Header() {
     <header
       className={`fixed w-full transition-all duration-300 ease-in-out
         ${isHomeOrHashRoute && !isScrolled ? "bg-[#4d45450a]" : "bg-gray-50"} 
-        py-[1rem] poppins_regular z-50 main_nav`}
-      style={{ zIndex: 999 }}
+        py-[1rem] poppins_regular main_nav`}
+      style={{ zIndex: 998 }}
       id="navbar"
     >
       <Container fluid="xxl">

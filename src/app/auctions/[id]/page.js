@@ -15,7 +15,15 @@ import { Maximize2, Plus, X } from "react-feather";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { HashLoader } from "react-spinners";
-import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
+import {
+  Col,
+  Container,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Row,
+} from "reactstrap";
 import CountdownTimer from "../../../components/CountdownTimer/CountdownTimer";
 import {
   FaCar,
@@ -54,6 +62,9 @@ import {
   FaTransgender,
   FaAward,
   FaHorse,
+  FaEye,
+  FaHome,
+  FaWrench,
 } from "react-icons/fa";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import {
@@ -74,6 +85,7 @@ const AuctionDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewModal, setPreviewModal] = useState(false);
+  const [activeTab, setActiveTab] = useState("overview");
   const { get, userData } = ApiFunction();
   const { id } = useParams();
   const { formatPrice, convert } = useCurrency();
@@ -166,6 +178,88 @@ const AuctionDetailPage = () => {
     { key: "the_faction", icon: FaUsers },
   ];
 
+  const [showModal, setShowModal] = useState(false);
+  const [selectedField, setSelectedField] = useState({ key: "", value: "" });
+
+  // Define tab categories for vehicles/cars
+  const vehicleTabCategories = {
+    overview: {
+      icon: FaEye,
+      label: "Overview",
+      keys: [
+        "the_cars",
+        "information",
+        "car_condition",
+        "type",
+        "the_model",
+        "category",
+        "year_of_manufacture",
+        "km",
+        "body_type",
+        "fuel_type",
+        "transmission_type",
+        "engine_capacity",
+      ],
+    },
+    exterior: {
+      icon: FaCarSide,
+      label: "Exterior",
+      keys: [
+        "exterior_colour",
+        "sunroof",
+        "folding_mirrors",
+        "led_lamps",
+        "daytime_running_light",
+        "sports_version",
+        "spare_tire",
+        "front_sensors",
+        "rear_sensors",
+      ],
+    },
+    interior: {
+      icon: FaHome,
+      label: "Interior",
+      keys: [
+        "interior_colour",
+        "number_of_seats",
+        "seat_memory",
+        "electric_rear_seat",
+        "electric_windows",
+        "heated_steering_wheel",
+        "central_lock",
+        "conditioning",
+        "heated_seats",
+        "record_player",
+        "leather_seats",
+        "electric_seat_control",
+        "sports_seats",
+        "steering_wheel_control",
+        "cooled_seats",
+      ],
+    },
+    technology: {
+      icon: FaWrench,
+      label: "Technology & Safety",
+      keys: [
+        "keyless_entry",
+        "abs",
+        "camera_360",
+        "apple_carplay",
+        "rear_camera",
+        "android_auto",
+        "e_s_c",
+        "bluetooth",
+        "cruise_control",
+        "air_pressure_sensor",
+        "sports_suspension",
+        "touch_screen",
+        "navigation_system",
+        "media_screen",
+        "air_bags",
+      ],
+    },
+  };
+
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) return t("auctionJoin.heading1");
@@ -179,16 +273,6 @@ const AuctionDetailPage = () => {
       .split("_")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
-  };
-
-  const getValueBadge = (value) => {
-    const lowerValue = value.toLowerCase();
-    if (lowerValue === "yes" || lowerValue === "good" || lowerValue === "new") {
-      return "success";
-    } else if (lowerValue === "no" || lowerValue === "bad") {
-      return "danger";
-    }
-    return "info";
   };
 
   const handleImagePreview = (image) => {
@@ -211,6 +295,11 @@ const AuctionDetailPage = () => {
       });
   };
 
+  const handleSeeMore = (key, value) => {
+    setSelectedField({ key, value });
+    setShowModal(true);
+  };
+
   useEffect(() => {
     if (id) {
       fetchAuctionDetail();
@@ -226,19 +315,6 @@ const AuctionDetailPage = () => {
   const handleRegister = () => {
     const now = moment.utc();
     const startTime = moment.utc(item?.start_date);
-
-    // if (item?.status === "active") {
-    //   if (startTime.isBefore(now)) {
-    //     toast.error("You can register once the admin starts the auction.");
-    //   } else {
-    //     toast.error(
-    //       `You can register for this auction starting from ${startTime
-    //         .local()
-    //         .format("DD MMMM, YYYY h:mm A")}`
-    //     );
-    //   }
-    //   return;
-    // }
 
     if (userData) {
       router.push(`/auctions/${id}/registration`);
@@ -265,9 +341,230 @@ const AuctionDetailPage = () => {
       ? t("auctionDetails.heading10")
       : t("auctionDetails.heading11"),
     onClick: isRegister ? handleRegister : handleJoin,
-
     className:
       "h-8 shadow md:h-10 bg_primary text-white rounded-[10px] px-[1rem] w-fit flex items-center justify-center",
+  };
+
+  // Check if category is vehicle/car related
+  const isVehicleCategory =
+    item?.category?.name?.toLowerCase().includes("car") ||
+    item?.category?.name?.toLowerCase().includes("vehicle") ||
+    item?.category?.name?.toLowerCase().includes("bmw") ||
+    item?.category?.name?.toLowerCase().includes("auto");
+
+  // Filter category info based on active tab
+  const getFilteredCategoryInfo = () => {
+    if (!isVehicleCategory) {
+      return item?.categoryInfo || {};
+    }
+
+    const tabData = vehicleTabCategories[activeTab];
+    if (!tabData) return {};
+
+    const filtered = {};
+    tabData.keys.forEach((key) => {
+      if (item?.categoryInfo?.[key]) {
+        filtered[key] = item.categoryInfo[key];
+      }
+    });
+    return filtered;
+  };
+
+  const renderCategoryInfoSection = () => {
+    const filteredInfo = getFilteredCategoryInfo();
+
+    if (isVehicleCategory) {
+      return (
+        <Container
+          fluid="xxl"
+          className="bg-white rounded-[12px] overflow-hidden my-4"
+        >
+          {/* Enhanced Tab Navigation */}
+          <div className="p-3">
+            <div className="flex overflow-x-auto scrollbar-hide">
+              {Object.entries(vehicleTabCategories).map(([key, tab]) => {
+                const Icon = tab.icon;
+                const isActive = activeTab === key;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setActiveTab(key)}
+                    className={`
+                      flex items-center gap-3 px-6 py-4 whitespace-nowrap poppins_medium text-sm md:text-base
+                      transition-all duration-300 border-b-3 relative overflow-hidden group
+                      ${
+                        isActive
+                          ? "text-[#8B0000] border-[#8B0000] bg-white"
+                          : "text-gray-600 border-transparent hover:text-[#8B0000] hover:bg-white/50"
+                      }
+                    `}
+                  >
+                    <div
+                      className={`
+                      p-2 rounded-full transition-all duration-300
+                      ${
+                        isActive
+                          ? "bg-[#8B0000] text-white shadow-lg"
+                          : "bg-gray-200 text-gray-600 group-hover:bg-[#8B0000] group-hover:text-white"
+                      }
+                    `}
+                    >
+                      <Icon className="text-sm" />
+                    </div>
+                    <span className="poppins_medium">{tab.label}</span>
+                    {isActive && (
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8B0000] to-red-600"></div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Enhanced Tab Content */}
+          <div className="p-3">
+            {Object.keys(filteredInfo).length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {Object.entries(filteredInfo).map(([key, value]) => {
+                  const matchedIcon = categoryIcons?.find(
+                    (icon) => icon?.key === key
+                  );
+                  const Icon = matchedIcon?.icon || FaInfoCircle;
+                  const isLongText = value && value.length > 80; // Adjust limit as needed
+
+                  return (
+                    <div
+                      key={key}
+                      className="group shadow-[0_4px_16px_rgba(0,0,0,0.08)] rounded-xl p-3 transition-all duration-500 hover:shadow-xl relative overflow-hidden"
+                    >
+                      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#8B0000]/5 to-transparent rounded-full -translate-y-10 translate-x-10"></div>
+
+                      <div className="flex items-start gap-2 relative z-10">
+                        <div className="bg-gradient-to-br from-[#8B0000] to-red-700 rounded-xl p-2 group-hover:scale-105 transition-all duration-300 shadow-lg group-hover:shadow-[#8B0000]/25">
+                          <Icon className="text-white text-base" />
+                        </div>
+
+                        <div className="flex-1 min-w-0">
+                          <h4 className="poppins_semibold text-gray-800 text-sm md:text-base mb-1 group-hover:text-[#8B0000] transition-colors duration-300">
+                            {formatKey(key)}
+                          </h4>
+
+                          <div className="rounded-lg mb-0">
+                            <span className="text-gray-700 text-sm poppins_regular group-hover:text-gray-900 mb-0 line-clamp-1">
+                              {value || "N/A"}
+                            </span>
+                            {isLongText && (
+                              <div className="mr-auto">
+                                <button
+                                  className={`text-xs text_primary poppins_medium mt-1 hover:underline`}
+                                  onClick={() => handleSeeMore(key, value)}
+                                >
+                                  See More
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-[#8B0000] to-red-600 group-hover:w-full transition-all duration-500"></div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="bg-gray-100 rounded-full p-6 w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                  <FaInfoCircle className="text-gray-400 text-2xl" />
+                </div>
+                <p className="text-gray-500 poppins_medium">
+                  No information available for this section
+                </p>
+              </div>
+            )}
+          </div>
+        </Container>
+      );
+    }
+
+    // Non-vehicle category - show all info in overview tab
+    return (
+      <Container
+        fluid="xxl"
+        className="bg-white rounded-[12px] overflow-hidden my-4"
+      >
+        <div className="p-3">
+          <h3 className="text-xl md:text-2xl poppins_semibold text-gray-800 flex items-center gap-3">
+            <div className="p-2 bg-gradient-to-r from-[#8B0000] to-red-600 rounded-full">
+              <FaEye className="text-white text-lg" />
+            </div>
+            Overview Details
+          </h3>
+          <div className="h-1 w-20 bg-gradient-to-r from-[#8B0000] to-red-600 rounded-full mt-2"></div>
+        </div>
+
+        <div className="p-3">
+          {Object.keys(item?.categoryInfo || {}).length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {Object.entries(item?.categoryInfo || {}).map(([key, value]) => {
+                const matchedIcon = categoryIcons?.find(
+                  (icon) => icon?.key === key
+                );
+                const isLongText = value && value.length > 20;
+                const Icon = matchedIcon?.icon || FaInfoCircle;
+                return (
+                  <div
+                    key={key}
+                    className="group shadow-[0_4px_16px_rgba(0,0,0,0.08)] rounded-xl p-3 transition-all duration-500 hover:shadow-xl relative overflow-hidden"
+                  >
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#8B0000]/5 to-transparent rounded-full -translate-y-10 translate-x-10"></div>
+
+                    <div className="flex items-start gap-2 relative z-10">
+                      <div className="bg-gradient-to-br from-[#8B0000] to-red-700 rounded-xl p-2 group-hover:scale-105 transition-all duration-300 shadow-lg group-hover:shadow-[#8B0000]/25">
+                        <Icon className="text-white text-base" />
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <h4 className="poppins_semibold text-gray-800 text-sm md:text-base mb-1 group-hover:text-[#8B0000] transition-colors duration-300">
+                          {formatKey(key)}
+                        </h4>
+
+                        <div className="rounded-lg mb-0">
+                          <span className="text-gray-700 text-sm poppins_regular group-hover:text-gray-900 mb-0 line-clamp-1">
+                            {value || "N/A"}
+                          </span>
+                          {isLongText && (
+                            <div className="mr-auto">
+                              <button
+                                className={`text-xs text_primary poppins_medium mt-1 hover:underline`}
+                                onClick={() => handleSeeMore(key, value)}
+                              >
+                                See More
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-[#8B0000] to-red-600 group-hover:w-full transition-all duration-500"></div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="bg-gray-100 rounded-full p-6 w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                <FaInfoCircle className="text-gray-400 text-2xl" />
+              </div>
+              <p className="text-gray-500 poppins_medium">
+                No category information available
+              </p>
+            </div>
+          )}
+        </div>
+      </Container>
+    );
   };
 
   return (
@@ -295,7 +592,7 @@ const AuctionDetailPage = () => {
 
           <Container
             fluid="xxl"
-            className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0 overflow-hidden"
+            className="bg_mainsecondary rounded-[9px] my-4 px-0 overflow-hidden"
           >
             <Row className="g-3 h-full">
               <Col md="4" lg="2" className="flex md:flex-column ">
@@ -372,16 +669,12 @@ const AuctionDetailPage = () => {
                       <div className={`flex items-start justify-between`}>
                         <div>
                           <p
-                            className={`poppins_medium text-xl sm:text-2xl  mb-0 capitalize ${
-                              language === "ar" ? "text-right" : "text-left"
-                            }`}
+                            className={`poppins_medium text-xl sm:text-2xl  mb-0 capitalize`}
                           >
                             {item?.name}
                           </p>
                           <p
-                            className={`poppins_regular text-sm  mb-0 capitalize ${
-                              language === "ar" ? "text-right" : "text-left"
-                            }`}
+                            className={`poppins_regular text-sm  mb-0 capitalize`}
                           >
                             {item?.category?.name}
                           </p>
@@ -430,18 +723,10 @@ const AuctionDetailPage = () => {
                 </Row>
                 <Row className="justify-center my-2 mt-3 p-2">
                   <Col md="6">
-                    <div
-                      className={`poppins_medium text-base text_primary ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
-                    >
+                    <div className={`poppins_medium text-base text_primary`}>
                       {t("auctionDetails.heading")}
                     </div>
-                    <div
-                      className={`poppins_regular text-sm ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
-                    >
+                    <div className={`poppins_regular text-sm`}>
                       {moment
                         .utc(item?.start_date)
                         .local()
@@ -450,18 +735,10 @@ const AuctionDetailPage = () => {
                   </Col>
 
                   <Col md="6">
-                    <div
-                      className={`poppins_medium text-base text_primary ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
-                    >
+                    <div className={`poppins_medium text-base text_primary`}>
                       {t("auctionDetails.heading2")}
                     </div>
-                    <div
-                      className={`poppins_regular text-sm ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
-                    >
+                    <div className={`poppins_regular text-sm`}>
                       {moment
                         .utc(item?.end_date)
                         .local()
@@ -471,54 +748,28 @@ const AuctionDetailPage = () => {
                 </Row>
                 <Row className="justify-center my-2 p-2">
                   <Col md="6">
-                    <div
-                      className={`poppins_medium text-base text_primary ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
-                    >
+                    <div className={`poppins_medium text-base text_primary`}>
                       {t("auctionDetails.heading3")}
                     </div>
-                    <div
-                      className={`poppins_regular ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
-                    >
+                    <div className={`poppins_regular`}>
                       {formatPrice(convert(item?.depositamount, "LYD"))}
                     </div>
                   </Col>
                   <Col md="6">
-                    <div
-                      className={`poppins_medium text-base text_primary ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
-                    >
+                    <div className={`poppins_medium text-base text_primary`}>
                       {t("auctionDetails.heading7")}
                     </div>
-                    <div
-                      className={`poppins_regular ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
-                    >
-                      {item?.status}
-                    </div>
+                    <div className={`poppins_regular`}>{item?.status}</div>
                   </Col>
                 </Row>
                 <Row className="justify-center my-2 p-2">
                   <Col md="12">
-                    <div
-                      className={`poppins_medium text-[1.2rem] text-black ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
-                    >
+                    <div className={`poppins_medium text-[1.2rem] text-black`}>
                       {t("auctionDetails.heading4")}
                     </div>
                   </Col>
                   <Col md="12">
-                    <div
-                      className={`poppins_regular abDatadi text_dark ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
-                    >
+                    <div className={`poppins_regular abDatadi text_dark`}>
                       <p
                         dangerouslySetInnerHTML={{
                           __html: item?.additionalinfo,
@@ -531,54 +782,7 @@ const AuctionDetailPage = () => {
             </Row>
           </Container>
 
-          <Container
-            fluid="xxl"
-            className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0 overflow-hidden"
-          >
-            <div className="bg-white rounded-[9px] shadow-xl overflow-hidden p-2 md:p-3">
-              <h2 className="text-base sm:text-lg md:text-xl poppins_semibold text_primary px-[8px] sm:px-8  pt-2 md:pt-3">
-                {t("auctionDetails.heading13")}
-              </h2>
-
-              {/* Content Section */}
-              <div className="px-[12px] sm:px-8 py-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] md:gap-[24px]">
-                  {Object.entries(item?.categoryInfo).map(([key, value]) => {
-                    const matchedIcon = categoryIcons.find(
-                      (icon) => icon.key === key
-                    );
-                    const Icon = matchedIcon?.icon || FaInfoCircle;
-                    return (
-                      <div
-                        key={key}
-                        className="group bg-gray-50 hover:bg-white rounded-xl p-2 p-md-3 transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-sm"
-                      >
-                        <div className="flex items-start gap-2">
-                          {/* Icon */}
-                          <div className="bg_primary rounded-full p-2 group-hover:scale-105 transition-transform duration-300 shadow-lg">
-                            <Icon className="text-white text-lg" />
-                          </div>
-
-                          {/* Content */}
-                          <div className="flex-1 min-w-0">
-                            <h3 className="poppins_medium text-base sm:text-lg mb-0">
-                              {formatKey(key)}
-                            </h3>
-                            <div
-                              className={`inline-flex items-center py-1 text-xs rounded-full sm:text-sm poppins_regular`}
-                            >
-                              {value}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </Container>
-
+          {renderCategoryInfoSection()}
           <Container fluid="xxl">
             <div>
               <p className={`poppins_medium text-2xl mb-0 `}>
@@ -597,13 +801,6 @@ const AuctionDetailPage = () => {
         </>
       )}
 
-      {/* Modals */}
-      {/* <AuctionConfirmationModal
-      openModal={openBiddingConfirmationModal}
-      setOpenModal={setOpenBiddingConfirmationModal}
-      item={confirmationItem}
-    /> */}
-
       {/* Image Preview Modal */}
       <Modal
         isOpen={previewModal}
@@ -611,6 +808,7 @@ const AuctionDetailPage = () => {
         size="lg"
         centered
         contentClassName="bg-transparent border-0"
+        style={{ zIndex: 999 }}
       >
         <ModalBody className="p-0 flex items-center justify-center">
           <div className="relative !max-w-[90vw] !max-h-[90vh]">
@@ -632,6 +830,31 @@ const AuctionDetailPage = () => {
           </div>
         </ModalBody>
       </Modal>
+
+      {/* Modal */}
+      {showModal && (
+        <div
+          className="fixed inset-0 bg-black/40 flex items-center justify-center"
+          style={{ zIndex: 999 }}
+        >
+          <div className="bg-white rounded-xl p-4 w-[90%] max-w-md shadow-lg relative">
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-lg text-gray-800 mb-0 poppins_semibold">
+                {formatKey(selectedField.key)}
+              </h2>
+              <button
+                onClick={() => setShowModal(false)}
+                className="text-gray-500 hover:text-red-600 text-lg"
+              >
+                ✕
+              </button>
+            </div>
+            <p className="text-sm text-gray-700 whitespace-pre-wrap poppins_regular">
+              {selectedField.value}
+            </p>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

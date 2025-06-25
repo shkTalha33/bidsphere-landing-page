@@ -186,7 +186,7 @@ export default function Orders() {
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={"Orders"} />
-            <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+            <h3 className="text-xl sm:text-2xl poppins_medium text_dark">
               Orders
             </h3>
           </Col>

@@ -2,35 +2,31 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { fadeIn } from "../utils/motion";
 // import { format, differenceInDays, differenceInHours } from "date-fns";
-import {
-  differenceInDays,
-  differenceInHours,
-  differenceInMinutes,
-  format,
-} from "date-fns";
-import { useDispatch } from "react-redux";
-import { setAuctionProduct } from "../redux/auctionProduct";
 import { useRouter } from "next/navigation";
-import useCurrency from "../hooks/useCurrency";
-import moment from "moment";
-import CountdownTimer from "../CountdownTimer/CountdownTimer";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import CountdownTimer from "../CountdownTimer/CountdownTimer";
+import useCurrency from "../hooks/useCurrency";
+import { setAuctionProduct } from "../redux/auctionProduct";
+
 export default function AuctionCard({ item, index }) {
   const { formatPrice, convert } = useCurrency();
   const router = useRouter();
   const dispatch = useDispatch();
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const handleAuctionDetail = (item) => {
     dispatch(setAuctionProduct(item));
     router.push(`/auctions/${item?._id}`);
   };
+
   return (
     <motion.div
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.25 }}
-      className="bg-[#F3F3F3F2] rounded-xl overflow-hidden cursor-pointer"
+      className="bg-[#F3F3F3F2] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 scale-100 hover:scale-105"
+      style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}
       variants={fadeIn("down", "tween", (index + 1) * 0.1, 1)}
       onClick={() => {
         handleAuctionDetail(item);
@@ -41,7 +37,7 @@ export default function AuctionCard({ item, index }) {
         alt={item?.name}
         width={300}
         height={200}
-        className="w-full !h-[200px] max-h-[200px] object-cover cursor-pointer"
+        className="w-full !h-[200px] max-h-[200px] object-cover cursor-pointer group-hover:scale-105 transition-all duration-300 ease-in-out"
       />
       <div className="p-2">
         <p className="poppins_regular text_darkprimary text-[10px] mt-2">
@@ -57,7 +53,9 @@ export default function AuctionCard({ item, index }) {
           {item?.name}
         </p>
         <div className="flex items-center justify-start gap-2 mt-[5px]">
-          <span className="text-gray text-[0.8rem]">{t("ongoing.heading4")}</span>
+          <span className="text-gray text-[0.8rem]">
+            {t("ongoing.heading4")}
+          </span>
           <h5 className="mb-0 text_darkprimary text-lg">
             {" "}
             {formatPrice(convert(item?.depositamount, "LYD"))}
