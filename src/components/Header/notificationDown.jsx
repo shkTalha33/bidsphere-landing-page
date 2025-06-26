@@ -2,19 +2,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { getNotification } from "../api/ApiFile";
-import ApiFunction from "../api/apiFuntions";
+import { useSocket } from "@/components/socketProvider/socketProvider";
 import { Skeleton } from "antd";
 import Image from "next/image";
-import { avataruser } from "../assets/icons/icon";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { Spinner } from "react-bootstrap";
-import { useSocket } from "@/components/socketProvider/socketProvider";
-import { useSelector } from "react-redux";
-import { encryptData } from "../api/encrypted";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getNotification } from "../api/ApiFile";
+import ApiFunction from "../api/apiFuntions";
+import { encryptData } from "../api/encrypted";
+import { avataruser } from "../assets/icons/icon";
 const NotificationDown = ({ firstTime, setShowNotification }) => {
   const { get, token } = ApiFunction();
   const [notifications, setNotifications] = useState([]);
@@ -62,7 +59,6 @@ const NotificationDown = ({ firstTime, setShowNotification }) => {
       //   router.push("/");
     }
   };
-  
 
   // handle get notification by api
   const lastId = notifications?.[notifications?.length - 1]?._id;

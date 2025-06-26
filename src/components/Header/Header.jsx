@@ -13,27 +13,18 @@ import { TbLogout } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { Container } from "reactstrap";
 import ApiFunction from "../api/apiFuntions";
-import {
-  authLogo,
-  authLogo2,
-  avataruser,
-  Logo1,
-  Logo11,
-  Logo5,
-} from "../assets/icons/icon";
+import { authLogo2, avataruser } from "../assets/icons/icon";
 
-import { setLogout, setUserData } from "../redux/loginForm";
-import useCurrency from "../hooks/useCurrency";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+import { FaRegHeart } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiChatSmile2Line } from "react-icons/ri";
-import { FaRegHeart } from "react-icons/fa";
 import { getUserProfile } from "../api/ApiFile";
-import NotificationDown from "./notificationDown";
-import { useSocket } from "../socketProvider/socketProvider";
-import toast from "react-hot-toast";
-import { BellOutlined } from "@ant-design/icons";
+import useCurrency from "../hooks/useCurrency";
 import Language from "../language-change/language";
-import { useTranslation } from "react-i18next";
+import { NotificationToast } from "../NotificationToast/NotificationToast";
+import { setLogout, setUserData } from "../redux/loginForm";
 import {
   getMessageUnseen,
   getNotifications,
@@ -43,8 +34,9 @@ import {
   setMessageUnseen,
   setNotifications,
 } from "../redux/notificationSlice/notificationSlice";
-import { NotificationToast } from "../NotificationToast/NotificationToast";
 import { clearRegisterData } from "../redux/registrationSlice/resgiterSlice";
+import { useSocket } from "../socketProvider/socketProvider";
+import NotificationDown from "./notificationDown";
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -228,7 +220,7 @@ export default function Header() {
             onClick={handleToggleNotification}
             className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
           >
-            <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
+            <IoMdNotificationsOutline className="text-white w-[1rem] h-[1rem] md:w-[1.2rem] md:h-[1.2rem]" />
           </div>
 
           {showNotification && (
@@ -259,7 +251,7 @@ export default function Header() {
             onClick={handleChatnaoo}
             className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
           >
-            <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
+            <RiChatSmile2Line className="text-white w-[1rem] h-[1rem] md:w-[1.2rem] md:h-[1.2rem]" />
           </div>
           {unseenMessageCount > 0 && (
             <div className="absolute text-[0.6rem] top-[-11px] min-w-[1.2rem] h-[1.2rem] flex items-center justify-center right-[-11px] bg-danger p-1 text-white  border rounded-full shadow-[0px_4px_22.9px_0px_#0000000D] z-50">
@@ -534,7 +526,7 @@ export default function Header() {
             onClick={() => router.push("/")}
           >
             <Image
-              className="w-[2.5rem] h-[2.5rem] object-cover"
+              className="w-[2rem] h-[2rem] md:w-[2.5rem] md:h-[2.5rem] object-cover"
               src={authLogo2}
               alt=""
             />

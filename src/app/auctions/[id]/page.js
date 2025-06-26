@@ -185,7 +185,7 @@ const AuctionDetailPage = () => {
   const vehicleTabCategories = {
     overview: {
       icon: FaEye,
-      label: "Overview",
+      label: t("common.overview"),
       keys: [
         "the_cars",
         "information",
@@ -203,7 +203,7 @@ const AuctionDetailPage = () => {
     },
     exterior: {
       icon: FaCarSide,
-      label: "Exterior",
+      label: t("common.exterior"),
       keys: [
         "exterior_colour",
         "sunroof",
@@ -218,7 +218,7 @@ const AuctionDetailPage = () => {
     },
     interior: {
       icon: FaHome,
-      label: "Interior",
+      label: t("common.interior"),
       keys: [
         "interior_colour",
         "number_of_seats",
@@ -239,7 +239,7 @@ const AuctionDetailPage = () => {
     },
     technology: {
       icon: FaWrench,
-      label: "Technology & Safety",
+      label: t("common.technology"),
       keys: [
         "keyless_entry",
         "abs",
@@ -269,6 +269,13 @@ const AuctionDetailPage = () => {
   };
 
   const formatKey = (key) => {
+    const translationKey = `auction.categoryInfo.${key}`;
+    const translatedKey = t(translationKey);
+
+    if (translatedKey && translatedKey !== translationKey) {
+      return translatedKey;
+    }
+
     return key
       .split("_")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -347,10 +354,9 @@ const AuctionDetailPage = () => {
 
   // Check if category is vehicle/car related
   const isVehicleCategory =
-    item?.category?.name?.toLowerCase().includes("car") ||
-    item?.category?.name?.toLowerCase().includes("vehicle") ||
-    item?.category?.name?.toLowerCase().includes("bmw") ||
-    item?.category?.name?.toLowerCase().includes("auto");
+    language === "ar"
+      ? item?.category?.name?.toLowerCase() === "سيارة مركبة"
+      : item?.category?.name?.toLowerCase() === "vehicle car";
 
   // Filter category info based on active tab
   const getFilteredCategoryInfo = () => {
@@ -378,9 +384,10 @@ const AuctionDetailPage = () => {
         <Container
           fluid="xxl"
           className="bg-white rounded-[12px] overflow-hidden my-4"
+          dir={language === "ar" ? "rtl" : "ltr"}
         >
           {/* Enhanced Tab Navigation */}
-          <div className="p-3">
+          <div className="p-2 p-sm-3">
             <div className="flex overflow-x-auto scrollbar-hide">
               {Object.entries(vehicleTabCategories).map(([key, tab]) => {
                 const Icon = tab.icon;
@@ -390,7 +397,7 @@ const AuctionDetailPage = () => {
                     key={key}
                     onClick={() => setActiveTab(key)}
                     className={`
-                      flex items-center gap-3 px-6 py-4 whitespace-nowrap poppins_medium text-sm md:text-base
+                      flex items-center justify-center gap-3 p-3 whitespace-nowrap poppins_medium text-sm md:text-base
                       transition-all duration-300 border-b-3 relative overflow-hidden group
                       ${
                         isActive
@@ -411,7 +418,9 @@ const AuctionDetailPage = () => {
                     >
                       <Icon className="text-sm" />
                     </div>
-                    <span className="poppins_medium">{tab.label}</span>
+                    <span className="poppins_medium hidden md:block">
+                      {tab.label}
+                    </span>
                     {isActive && (
                       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8B0000] to-red-600"></div>
                     )}
@@ -422,7 +431,7 @@ const AuctionDetailPage = () => {
           </div>
 
           {/* Enhanced Tab Content */}
-          <div className="p-3">
+          <div className="p-2 p-sm-3">
             {Object.keys(filteredInfo).length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {Object.entries(filteredInfo).map(([key, value]) => {
@@ -430,7 +439,7 @@ const AuctionDetailPage = () => {
                     (icon) => icon?.key === key
                   );
                   const Icon = matchedIcon?.icon || FaInfoCircle;
-                  const isLongText = value && value.length > 80; // Adjust limit as needed
+                  const isLongText = value && value.length > 40; // Adjust limit as needed
 
                   return (
                     <div
@@ -451,17 +460,19 @@ const AuctionDetailPage = () => {
 
                           <div className="rounded-lg mb-0">
                             <span className="text-gray-700 text-sm poppins_regular group-hover:text-gray-900 mb-0 line-clamp-1">
-                              {value || "N/A"}
+                              {value?.length > 40
+                                ? value?.slice(0, 40) + "..."
+                                : value}
                             </span>
                             {isLongText && (
-                              <div className="mr-auto">
+                              <span className="">
                                 <button
                                   className={`text-xs text_primary poppins_medium mt-1 hover:underline`}
                                   onClick={() => handleSeeMore(key, value)}
                                 >
                                   See More
                                 </button>
-                              </div>
+                              </span>
                             )}
                           </div>
                         </div>
@@ -492,25 +503,26 @@ const AuctionDetailPage = () => {
       <Container
         fluid="xxl"
         className="bg-white rounded-[12px] overflow-hidden my-4"
+        dir={language === "ar" ? "rtl" : "ltr"}
       >
-        <div className="p-3">
-          <h3 className="text-xl md:text-2xl poppins_semibold text-gray-800 flex items-center gap-3">
+        <div className="p-2 p-sm-3">
+          <h3 className="text-lg md:text-xl poppins_semibold text-gray-800 flex items-center gap-3">
             <div className="p-2 bg-gradient-to-r from-[#8B0000] to-red-600 rounded-full">
               <FaEye className="text-white text-lg" />
             </div>
-            Overview Details
+            {t("common.overview")}
           </h3>
           <div className="h-1 w-20 bg-gradient-to-r from-[#8B0000] to-red-600 rounded-full mt-2"></div>
         </div>
 
-        <div className="p-3">
+        <div className="p-2 p-sm-3">
           {Object.keys(item?.categoryInfo || {}).length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {Object.entries(item?.categoryInfo || {}).map(([key, value]) => {
                 const matchedIcon = categoryIcons?.find(
                   (icon) => icon?.key === key
                 );
-                const isLongText = value && value.length > 20;
+                const isLongText = value && value.length > 40;
                 const Icon = matchedIcon?.icon || FaInfoCircle;
                 return (
                   <div
@@ -531,7 +543,9 @@ const AuctionDetailPage = () => {
 
                         <div className="rounded-lg mb-0">
                           <span className="text-gray-700 text-sm poppins_regular group-hover:text-gray-900 mb-0 line-clamp-1">
-                            {value || "N/A"}
+                            {value?.length > 40
+                              ? value?.slice(0, 40) + "..."
+                              : value || "N/A"}
                           </span>
                           {isLongText && (
                             <div className="mr-auto">
@@ -554,11 +568,11 @@ const AuctionDetailPage = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <div className="bg-gray-100 rounded-full p-6 w-24 h-24 mx-auto mb-4 flex items-center justify-center">
-                <FaInfoCircle className="text-gray-400 text-2xl" />
+              <div className="bg-gray-100 rounded-full p-2 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
+                <FaInfoCircle className="text-gray-400 text-xl" />
               </div>
               <p className="text-gray-500 poppins_medium">
-                No category information available
+                {t("auction.categoryInfo.noInfo")}
               </p>
             </div>
           )}
@@ -600,7 +614,7 @@ const AuctionDetailPage = () => {
                   {item?.images?.map((image, index) => (
                     <div
                       key={index}
-                      className="w-full md:w-full md:flex-grow-0 flex-shrink-0 h-[120px] mb-2"
+                      className="flex-grow-0 flex-shrink-0 h-[120px] mb-2"
                     >
                       <div
                         className="relative w-full h-full cursor-pointer group"
@@ -624,7 +638,7 @@ const AuctionDetailPage = () => {
 
               <Col md="8" lg="5" className="d-flex">
                 <div
-                  className="relative bg_white rounded-[10px] w-100 h-100 flex items-center justify-center cursor-pointer group overflow-hidden !h-[500px]"
+                  className="relative bg_white rounded-[10px] w-100 h-100 flex items-center justify-center cursor-pointer group overflow-hidden md:!h-[500px] p-0 p-md-2"
                   onClick={() => handleImagePreview(selectedImage)}
                 >
                   {/* <div
@@ -683,8 +697,8 @@ const AuctionDetailPage = () => {
                     </div>
                   </Col>
                 </Row>
-                <Row className="justify-center my-2 mt-3 p-2">
-                  <Col md="6" className="my-2">
+                <Row className="justify-center p-2">
+                  <Col md="6" className="">
                     <div
                       className={`poppins_medium text-base text-[#8B0000] ${
                         language === "ar" ? "text-right" : "text-left"
@@ -702,7 +716,7 @@ const AuctionDetailPage = () => {
                       </span>
                     </div>
                   </Col>
-                  <Col md="6" className="my-2">
+                  <Col md="6" className="">
                     <div
                       className={`poppins_medium text-base text-[#8B0000] ${
                         language === "ar" ? "text-right" : "text-left"
@@ -721,7 +735,7 @@ const AuctionDetailPage = () => {
                     </div>
                   </Col>
                 </Row>
-                <Row className="justify-center my-2 mt-3 p-2">
+                <Row className="justify-center p-2">
                   <Col md="6">
                     <div className={`poppins_medium text-base text_primary`}>
                       {t("auctionDetails.heading")}
@@ -746,7 +760,7 @@ const AuctionDetailPage = () => {
                     </div>
                   </Col>
                 </Row>
-                <Row className="justify-center my-2 p-2">
+                <Row className="justify-center p-2">
                   <Col md="6">
                     <div className={`poppins_medium text-base text_primary`}>
                       {t("auctionDetails.heading3")}
@@ -762,7 +776,7 @@ const AuctionDetailPage = () => {
                     <div className={`poppins_regular`}>{item?.status}</div>
                   </Col>
                 </Row>
-                <Row className="justify-center my-2 p-2">
+                <Row className="justify-center p-2">
                   <Col md="12">
                     <div className={`poppins_medium text-[1.2rem] text-black`}>
                       {t("auctionDetails.heading4")}
@@ -785,7 +799,7 @@ const AuctionDetailPage = () => {
           {renderCategoryInfoSection()}
           <Container fluid="xxl">
             <div>
-              <p className={`poppins_medium text-2xl mb-0 `}>
+              <p className={`poppins_medium text-lg sm:text-2xl mb-0 `}>
                 {t("auctionDetails.heading5")}({item?.lots?.length})
               </p>
             </div>
