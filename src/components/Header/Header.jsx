@@ -520,7 +520,7 @@ export default function Header() {
       id="navbar"
     >
       <Container fluid="xxl">
-        <nav className="flex justify-between items-center w-full px-2 sm:px-4">
+        <nav className="flex justify-between items-center w-full px-2 px-md-0">
           <div
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => router.push("/")}

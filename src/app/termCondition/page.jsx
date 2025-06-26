@@ -40,6 +40,7 @@ const Page = () => {
   return (
     <>
       <Container
+        fluid="xxl"
         className="bg_white rounded-[9px] p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
         dir={language === "ar" ? "rtl" : "ltr"}
       >

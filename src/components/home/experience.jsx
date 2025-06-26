@@ -65,7 +65,7 @@ export default function Experience() {
                   </h6>
                 </div>
                 <h4
-                  className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl text_primary poppins_medium capitalize mb-2 md:mb-8 ${
+                  className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl text_primary poppins_medium capitalize mb-2 mb-md-4 ${
                     language === "ar" ? "text-right" : "text-left"
                   }`}
                 >
@@ -81,7 +81,7 @@ export default function Experience() {
                   </span>
                 </h4>
                 <p
-                  className={`poppins_regular text-base sm:text-lg md:text-xl text-[#8B8B8B] mb-3 md:mb-8 ${
+                  className={`poppins_regular text-sm md:text-base text-[#8B8B8B] mb-3 md:mb-8 ${
                     language === "ar"
                       ? "text-right"
                       : "text-start md:text-start"
@@ -90,7 +90,7 @@ export default function Experience() {
                   {t("about.heading4")}
                 </p>
 
-                <div className="grid grid-cols-2 gap-3 mb-4 md:mb-5">
+                <div className="grid grid-cols-2 gap-3 mb-4 mb-md-4">
                   {features.map((feature, index) => {
                     return (
                       <div

@@ -71,7 +71,7 @@ export default function DownloadSection() {
                     </h3>
                   </div>
                   <p
-                    className={`poppins_regular text-xs text-[#767E94] mb-3 md:mb-7 capitalize ${
+                    className={`poppins_regular text-xs sm:text-sm text-[#767E94] mb-3 md:mb-7 capitalize ${
                       language === "ar" ? "text-right" : "text-left"
                     }`}
                   >
