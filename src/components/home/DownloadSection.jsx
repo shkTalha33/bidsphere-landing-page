@@ -27,29 +27,20 @@ export default function DownloadSection() {
       whileInView="show"
       viewport={{ once: true, amount: 0.25 }}
       className="pt-[1.81rem] pb-4 md:pb-[3.81rem] bg-[#F3F3F9] overflow-hidden"
+      dir={language === "ar" ? "rtl" : "ltr"}
     >
       <Container fluid="xxl">
-        <Row>
+        <Row className="items-center">
           <Col md="6">
             <motion.div variants={slideIn("up", "tween", 0.3, 0.8)}>
               <Row className="items-center justify-center h-full">
                 <Col md="9">
                   <div
-                    className={`flex gap-3 items-center mb-[10px] ${
-                      language === "ar"
-                        ? "justify-end"
-                        : "justify-center md:justify-start"
-                    }`}
+                    className={`flex gap-3 items-center justify-start mb-[10px]`}
                   >
-                    <div
-                      className={`w-8 h-2 bg_primary rounded-full ${
-                        language === "ar" ? "order-2" : "order-1"
-                      }`}
-                    ></div>
+                    <div className={`w-8 h-2 bg_primary rounded-full`} />
                     <h6
-                      className={`text-[#202020] poppins_semibold text-xl capitalize ${
-                        language === "ar" ? "text-right" : "text-left"
-                      }`}
+                      className={`text-[#202020] poppins_semibold text-xl capitalize `}
                     >
                       {t("mobileSection.heading")}
                     </h6>
@@ -61,11 +52,7 @@ export default function DownloadSection() {
                       }`}
                     >
                       {t("mobileSection.heading2")}{" "}
-                      <span
-                        className={`text-black poppins_medium capitalize ${
-                          language === "ar" ? "text-right" : "text-left"
-                        }`}
-                      >
+                      <span className={`text-black poppins_medium capitalize `}>
                         {t("mobileSection.heading3")}
                       </span>
                     </h3>
@@ -79,13 +66,7 @@ export default function DownloadSection() {
                   </p>
 
                   <div
-                    className={`flex gap-3 mb-4 flex-wrap items-center
-              ${
-                language === "ar"
-                  ? "justify-end text-right"
-                  : "justify-start text-left"
-              }
-              `}
+                    className={`flex gap-3 mb-4 flex-wrap items-center justify-start `}
                   >
                     <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
                       <Image

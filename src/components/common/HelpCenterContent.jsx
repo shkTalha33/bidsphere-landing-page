@@ -46,7 +46,7 @@ const HelpCenterContent = () => {
   useEffect(() => {
     handlegetFaqCategory();
     // eslint-disable-next-line
-  }, []);
+  }, [language]);
 
   const handlecatActive = (item) => {
     setFaqLastId(1);
@@ -87,11 +87,11 @@ const HelpCenterContent = () => {
       handleFaqById();
     }
     // eslint-disable-next-line
-  }, [activeCategory]);
+  }, [activeCategory, language]);
 
   return (
     <div className="flex flex-col items-start w-full">
-      <div className="bg-white px-8 rounded-lg w-full shadow-sm mt-4">
+      <div className="bg-white rounded-lg w-full shadow-sm mt-4">
         <div className="p-3 p-md-4 rounded-4 bg_white">
           <h6
             className={`text-lg md:text-xl  mb-4 xl:text-2xl poppins_medium ${

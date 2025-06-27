@@ -23,7 +23,10 @@ export default function Experience() {
 
   return (
     <section className="">
-      <main className="pb-4 md:pb-[4rem] bg_mainsecondary overflow-hidden">
+      <main
+        className="pb-4 md:pb-[4rem] bg_mainsecondary overflow-hidden"
+        dir={language === "ar" ? "rtl" : "ltr"}
+      >
         <Container fluid="xxl">
           <Row>
             <Col md="6">
@@ -44,73 +47,38 @@ export default function Experience() {
                 whileInView="show"
                 viewport={{ once: true, amount: 0.1 }}
               >
-                <div
-                  className={`flex gap-3 items-center  mb-[10px] ${
-                    language === "ar"
-                      ? "justify-end"
-                      : "justify-center md:justify-start"
-                  }`}
-                >
-                  <div
-                    className={`w-8 h-2 bg_primary rounded-full ${
-                      language === "ar" ? "order-2" : "order-1"
-                    }`}
-                  ></div>
+                <div className={`flex gap-3 items-center  mb-[10px]`}>
+                  <div className={`w-8 h-2 bg_primary rounded-full`}></div>
                   <h6
-                    className={`text-[#202020] poppins_semibold text-xl capitalize ${
-                      language === "ar" ? "text-right" : "text-left"
-                    }`}
+                    className={`text-[#202020] poppins_semibold text-xl capitalize`}
                   >
                     {t("about.heading")}
                   </h6>
                 </div>
                 <h4
-                  className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl text_primary poppins_medium capitalize mb-2 mb-md-4 ${
-                    language === "ar" ? "text-right" : "text-left"
-                  }`}
+                  className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl text_primary poppins_medium capitalize mb-2 mb-md-4`}
                 >
                   {t("about.heading2")} <br />
-                  <span
-                    className={`text-black poppins_medium ${
-                      language === "ar"
-                        ? "text-right"
-                        : "text-center md:text-start"
-                    }`}
-                  >
+                  <span className={`text-black poppins_medium`}>
                     {t("about.heading3")}
                   </span>
                 </h4>
-                <p
-                  className={`poppins_regular text-sm md:text-base text-[#8B8B8B] mb-3 md:mb-8 ${
-                    language === "ar"
-                      ? "text-right"
-                      : "text-start md:text-start"
-                  }`}
+                <h4
+                  className={`poppins_regular text-sm md:text-base text-[#8B8B8B] mb-3 md:mb-8`}
                 >
                   {t("about.heading4")}
-                </p>
+                </h4>
 
                 <div className="grid grid-cols-2 gap-3 mb-4 mb-md-4">
                   {features.map((feature, index) => {
                     return (
                       <div
                         key={index}
-                        className={`flex items-center justify-start gap-3 ${
-                          language === "ar" ? "justify-end" : "justify-start"
-                        }`}
+                        className={`flex items-center justify-start gap-3`}
                       >
-                        <FaCheck
-                          className={`text-[#909495] ${
-                            language === "ar" ? "order-2" : "order-1"
-                          }`}
-                          size={20}
-                        />
+                        <FaCheck className={`text-[#909495]`} size={20} />
                         <p
-                          className={`text_primary poppins_medium text-sm sm:text-base md:text-xl ${
-                            language === "ar"
-                              ? "text-right order-1"
-                              : "text-left order-2"
-                          }`}
+                          className={`text_primary poppins_medium text-sm sm:text-base md:text-xl`}
                         >
                           {feature}
                         </p>
@@ -119,7 +87,7 @@ export default function Experience() {
                   })}
                 </div>
                 <motion.button className="poppins_semibold my-3 text-sm md:text-lg text_white w-1/2 py-3 mx-auto bg_primary rounded-lg">
-                  Read More
+                  {t("common.readMore")}
                 </motion.button>
               </motion.div>
             </Col>

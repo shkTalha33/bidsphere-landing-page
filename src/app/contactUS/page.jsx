@@ -72,6 +72,7 @@ const Page = () => {
       <Container
         fluid="xxl"
         className="bg-white rounded-lg p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
+        dir={language === "ar" ? "rtl" : "ltr"}
       >
         <Row>
           <Col md="12">
@@ -83,7 +84,11 @@ const Page = () => {
         </Row>
       </Container>
 
-      <Container fluid="xxl" className="mt-6 mb-4">
+      <Container
+        fluid="xxl"
+        className="mt-6 mb-4"
+        dir={language === "ar" ? "rtl" : "ltr"}
+      >
         <Row className="g-4">
           {/* Contact Info Cards */}
           <Col lg="4" md="6" className="mb-4 md:mb-0">
@@ -100,9 +105,9 @@ const Page = () => {
                     "--tw-ring-color": primaryColor,
                   }}
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-2">
                     <div
-                      className="text-white p-2 rounded-full transition-all duration-300 group-hover:shadow-md mr-4"
+                      className="text-white p-2 rounded-full transition-all duration-300 group-hover:shadow-md"
                       style={{ backgroundColor: primaryColor }}
                     >
                       <FiPhone size={18} />
@@ -111,7 +116,13 @@ const Page = () => {
                       {t("contactUs.heading")}
                     </h4>
                   </div>
-                  <p className="text-gray-600 pl-12">{data?.footer?.phone1}</p>
+                  <p
+                    className={`text-gray-600 ${
+                      language === "ar" ? "pr-10" : "pl-10"
+                    }`}
+                  >
+                    {data?.footer?.phone1}
+                  </p>
                 </div>
               </Col>
 
@@ -127,9 +138,9 @@ const Page = () => {
                     "--tw-ring-color": primaryColor,
                   }}
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-2">
                     <div
-                      className="text-white p-2 rounded-full transition-all duration-300 group-hover:shadow-md mr-4"
+                      className="text-white p-2 rounded-full transition-all duration-300 group-hover:shadow-md"
                       style={{ backgroundColor: primaryColor }}
                     >
                       <FiMail size={18} />
@@ -138,7 +149,13 @@ const Page = () => {
                       {t("contactUs.heading2")}
                     </h4>
                   </div>
-                  <p className="text-gray-600 pl-12">{data?.footer?.email1}</p>
+                  <p
+                    className={`text-gray-600 ${
+                      language === "ar" ? "pr-10" : "pl-10"
+                    }`}
+                  >
+                    {data?.footer?.email1}
+                  </p>
                 </div>
               </Col>
             </Row>
