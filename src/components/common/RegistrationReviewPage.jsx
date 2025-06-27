@@ -61,6 +61,7 @@ export default function RegistrationReviewPage({
         <SkeletonLayout3 />
       ) : (
         <Container
+          fluid="xxl"
           dir={language === "ar" ? "rtl" : "ltr"}
           className={`bg-white rounded-lg p-2 ${
             language === "ar" ? "text-right" : ""
