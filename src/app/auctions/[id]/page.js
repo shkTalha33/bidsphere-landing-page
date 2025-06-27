@@ -796,7 +796,7 @@ const AuctionDetailPage = () => {
             </Row>
           </Container>
 
-          {renderCategoryInfoSection()}
+          {item?.categoryinfo && renderCategoryInfoSection()}
           <Container fluid="xxl">
             <div>
               <p className={`poppins_medium text-lg sm:text-2xl mb-0 `}>
