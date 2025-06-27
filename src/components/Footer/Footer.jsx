@@ -30,7 +30,7 @@ const Footer = () => {
             <Image
               src={Logo11}
               alt="Logo"
-              className="mb-2 md:mb-6 h-[7rem] object-contain w-[7rem]"
+              className="mb-2 md:mb-6 h-[4rem] sm:h-[5rem] md:h-[6rem] object-contain w-[4rem] sm:w-[5rem] md:w-[6rem]"
             />
             <p className={`text-sm max-w-md `}>
               {data?.footer?.desc[language]}
@@ -116,15 +116,23 @@ const Footer = () => {
           </div> */}
 
           <div
-            className={`flex flex-col md:flex-row ${
-              language === "ar" ? "justify-end" : "justify-start"
-            } max-[440px]:flex-col max-[440px]:items-center gap-[1.145rem] mb-4 mb-md-0`}
+            className={`
+    flex flex-col
+    md:flex-row
+    ${
+      language === "ar"
+        ? "items-start justify-end md:items-center"
+        : "items-start justify-start md:items-center"
+    }
+  gap-2 gap-md-4
+    mb-4 md:mb-0
+  `}
           >
             <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
               <Image
                 alt="Play Store"
                 src={PlayStoreIcon}
-                className={`h-[35px] w-[35px] object-contain ${
+                className={`h-[25px] w-[25px] sm:h-[35px] sm:w-[35px] object-contain ${
                   language === "ar" ? "order-2" : "order-1"
                 }`}
               />
@@ -133,19 +141,19 @@ const Footer = () => {
                   language === "ar" ? "order-1" : "order-2"
                 }`}
               >
-                <h5 className="color-0 poppins_regular whitespace-nowrap text-[0.8rem]">
+                <h5 className="color-0 poppins_regular whitespace-nowrap text-[0.6rem] sm:text-[0.8rem]">
                   {t("mobileSection.heading5")}{" "}
                 </h5>
-                <h4 className="poppins_medium whitespace-nowrap text-[1.2rem] color-0">
+                <h4 className="poppins_medium whitespace-nowrap text-[1rem] sm:text-[1.2rem] color-0">
                   {t("mobileSection.heading6")}
                 </h4>
               </div>
             </div>
-            <div className="border cursor-pointer flex w-fit items-center px-[13px] py-[7px] gap-2 rounded-[10px]">
+            <div className="border cursor-pointer flex w-fit items-center px-[10px] py-[5px] md:px-[13px] md:py-[7px] gap-2 rounded-[10px]">
               <Image
                 alt="Play Store"
                 src={AppStoreIconw}
-                className={`h-[35px] w-[35px] object-contain ${
+                className={`h-[25px] w-[25px] sm:h-[35px] sm:w-[35px] object-contain ${
                   language === "ar" ? "order-2" : "order-1"
                 }`}
               />
@@ -154,10 +162,10 @@ const Footer = () => {
                   language === "ar" ? "order-1" : "order-2"
                 }`}
               >
-                <h5 className="color-0 poppins_regular text-[0.8rem]">
+                <h5 className="color-0 poppins_regular text-[0.6rem] sm:text-[0.8rem]">
                   {t("mobileSection.heading7")}
                 </h5>
-                <h4 className="poppins_medium whitespace-nowrap text-[1.2rem] color-0">
+                <h4 className="poppins_medium whitespace-nowrap text-[1rem] sm:text-[1.2rem] color-0">
                   {t("mobileSection.heading8")}
                 </h4>
               </div>

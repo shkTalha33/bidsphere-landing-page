@@ -129,7 +129,7 @@ export default function AuctionItems({
                   />
                 </div>
                 <div>
-                  <p className="poppins_semibold mt-[7px] leading-[1.2] text_darkprimary text-[1.25rem]">
+                  <p className="poppins_semibold mt-[7px] leading-[1.2] text_darkprimary text-[1.25rem] capitalize">
                     {item?.name}
                   </p>
                 </div>

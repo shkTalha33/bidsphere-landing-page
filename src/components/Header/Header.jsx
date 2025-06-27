@@ -144,7 +144,7 @@ export default function Header() {
   // Authenticated navigation items
   const AuthenticatedNav = () => (
     <>
-      <div className="hidden d-md-flex items-center gap-[2rem] lg:gap-[8.18rem]">
+      <div className="d-none d-lg-flex items-center gap-[2rem] lg:gap-[8.18rem]">
         <div className="gap-[1rem] lg:gap-[1.87rem] flex items-center">
           <Link
             href="/auctions"
@@ -213,7 +213,7 @@ export default function Header() {
           </Link>
         </div>
       </div>
-      <div className="hidden d-md-flex items-center gap-[0.5rem]">
+      <div className="hidden d-lg-flex items-center gap-[0.5rem]">
         <Language />
         <div className="relative" ref={dropdownRef}>
           <div
@@ -322,7 +322,7 @@ export default function Header() {
   // Non-authenticated navigation items
   const NonAuthenticatedNav = () => (
     <>
-      <div className="gap-[1rem] lg:gap-[1.87rem] flex items-center">
+      <div className="d-none d-lg-flex gap-[1rem] lg:gap-[1.87rem] items-center">
         <Link
           href="/auctions"
           className={`${
@@ -402,18 +402,18 @@ export default function Header() {
           {t("profil.heading29")}
         </Link>
       </div>
-      <div className="hidden d-md-flex items-center gap-[0.5rem] lg:gap-[0.8rem]">
+      <div className="hidden d-lg-flex items-center gap-[0.5rem] lg:gap-[0.8rem]">
         {/* new */}
         <Language />
         <button
           onClick={() => router.push("/auth/login")}
-          className="px-[2rem] py-2 border-[1px] transition-colors bg_white duration-300 ease-in-out rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline"
+          className="px-2 px-md-3 py-1 py-md-2  border-[1px] transition-colors bg_white duration-300 ease-in-out rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline"
         >
           {t("nav.login")}
         </button>
         <button
           onClick={() => router.push("/auth/sign-up")}
-          className="px-[2rem] py-2 bg_primary text_white rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline primary_hover"
+          className="px-2 px-md-3 py-1 py-md-2  bg_primary text_white rounded-3 text-[0.95rem] cursor-pointer poppins_medium no-underline primary_hover"
         >
           {t("nav.signup")}
         </button>
@@ -532,8 +532,8 @@ export default function Header() {
             />
           </div>
           {isLogin ? <AuthenticatedNav /> : <NonAuthenticatedNav />}
-          <div className="flex gap-3 md:hidden">
-            {userData?._id && (
+          <div className="flex gap-3 items-center d-lg-none">
+            {userData ? (
               <>
                 <div className="relative" ref={dropdownRef}>
                   <div
@@ -567,8 +567,22 @@ export default function Header() {
                   )}
                 </div>
               </>
+            ) : (
+              <button
+                onClick={() => {
+                  router.push("/auth/login");
+                  handleNavClose();
+                }}
+                className={`px-3 py-1 py-md-2 border-[1px] rounded-3 text-[0.85rem] cursor-pointer poppins_medium no-underline ${
+                  isHomeOrHashRoute && !isScrolled
+                    ? "border-white text_white"
+                    : "border-gray-300"
+                }`}
+              >
+                {t("nav.login")}
+              </button>
             )}
-            <div className="flex md:hidden">
+            <div className="flex d-lg-none">
               {/* new */}
               <div className="mr-2">
                 <Language />
@@ -599,7 +613,7 @@ export default function Header() {
 
         {/* Improved Mobile Menu - Centered and Full-Featured with consistent text coloring */}
         <div
-          className={`flex flex-col items-center justify-center w-full mt-0 space-y-4 overflow-hidden transition-all duration-300 ease-in-out md:hidden 
+          className={`flex flex-col items-center justify-center w-full mt-0 gap-2 gap-sm-3 overflow-hidden transition-all duration-300 ease-in-out d-lg-none 
             ${
               isMenuOpen
                 ? "max-h-[400px] opacity-100 py-4"
@@ -610,7 +624,7 @@ export default function Header() {
             <>
               <Link
                 href="/auctions"
-                className={`no-underline text-center w-full py-2 ${
+                className={`no-underline text-center w-full py-1 ${
                   pathname === "/auctions"
                     ? "text_primary poppins_medium"
                     : isHomeOrHashRoute && !isScrolled
@@ -622,8 +636,21 @@ export default function Header() {
                 {t("nav.auction")}
               </Link>
               <Link
+                href="/about-us"
+                className={`no-underline text-center w-full py-1 ${
+                  pathname === "/about-us"
+                    ? "text_primary poppins_medium"
+                    : isHomeOrHashRoute && !isScrolled
+                    ? "text_white"
+                    : "text_dark"
+                } cursor-pointer poppins_regular`}
+                onClick={handleNavClose}
+              >
+                {t("nav.about")}
+              </Link>
+              <Link
                 href="/payments"
-                className={`no-underline text-center w-full py-2 ${
+                className={`no-underline text-center w-full py-1 ${
                   pathname === "/payments"
                     ? "text_primary poppins_medium"
                     : isHomeOrHashRoute && !isScrolled
@@ -636,7 +663,7 @@ export default function Header() {
               </Link>
               <Link
                 href="/orders"
-                className={`no-underline text-center w-full py-2 ${
+                className={`no-underline text-center w-full py-1 ${
                   pathname === "/orders"
                     ? "text_primary poppins_medium"
                     : isHomeOrHashRoute && !isScrolled
@@ -646,6 +673,19 @@ export default function Header() {
                 onClick={handleNavClose}
               >
                 {t("nav.orders")}
+              </Link>
+              <Link
+                href="/contactUS"
+                className={`no-underline text-center w-full py-1 ${
+                  pathname === "/contactUS"
+                    ? "text_primary poppins_medium"
+                    : isHomeOrHashRoute && !isScrolled
+                    ? "text_white"
+                    : "text_dark"
+                } cursor-pointer poppins_regular`}
+                onClick={handleNavClose}
+              >
+                {t("nav.contactus")}
               </Link>
 
               {/* Mobile Action Icons */}
@@ -708,15 +748,6 @@ export default function Header() {
                           " " +
                           (userData?.lname || "")}
                       </h6>
-                      <span
-                        className={`${
-                          isHomeOrHashRoute && !isScrolled
-                            ? "text_light"
-                            : "text_dark"
-                        } line-clamp-1 max-w-32 text-xs poppins_regular`}
-                      >
-                        {userData?.address}
-                      </span>
                     </div>
                   </div>
                 </Space>
@@ -734,6 +765,19 @@ export default function Header() {
                 {t("nav.home")}
               </Link>
               <Link
+                href="/about-us"
+                className={`${
+                  pathname === "/about-us"
+                    ? "text_primary poppins_medium"
+                    : isHomeOrHashRoute && !isScrolled
+                    ? "text_white"
+                    : "text_dark"
+                }
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+              >
+                {t("nav.about")}
+              </Link>
+              <Link
                 href="/auctions"
                 className={`no-underline text-center w-full py-2 ${
                   isHomeOrHashRoute && !isScrolled ? "text_white" : "text_dark"
@@ -742,30 +786,32 @@ export default function Header() {
               >
                 {t("nav.auction")}
               </Link>
-              <div className="flex justify-center gap-3 w-full mt-3">
-                <button
-                  onClick={() => {
-                    router.push("/auth/login");
-                    handleNavClose();
-                  }}
-                  className={`px-[1.5rem] py-[0.5rem] border-[1px] rounded-3 text-[0.85rem] cursor-pointer poppins_medium no-underline ${
-                    isHomeOrHashRoute && !isScrolled
-                      ? "border-white text_white"
-                      : "border-gray-300"
-                  }`}
-                >
-                  {t("nav.login")}
-                </button>
-                <button
-                  onClick={() => {
-                    router.push("/auth/sign-up");
-                    handleNavClose();
-                  }}
-                  className="px-[1.5rem] py-[0.5rem] rounded-3 text-[0.85rem] text_white cursor-pointer poppins_medium bg_primary no-underline primary_hover"
-                >
-                  {t("nav.signup")}
-                </button>
-              </div>
+              <Link
+                href="/contactUS"
+                className={`${
+                  pathname === "/contactUS"
+                    ? "text_primary poppins_medium"
+                    : isHomeOrHashRoute && !isScrolled
+                    ? "text_white"
+                    : "text_dark"
+                }
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+              >
+                {t("nav.contactus")}
+              </Link>
+              <Link
+                href="/help-center"
+                className={`${
+                  pathname === "/help-center"
+                    ? "text_primary poppins_medium"
+                    : isHomeOrHashRoute && !isScrolled
+                    ? "text_white"
+                    : "text_dark"
+                }
+              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+              >
+                {t("profil.heading29")}
+              </Link>
             </div>
           )}
         </div>
