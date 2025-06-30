@@ -303,7 +303,7 @@ export default function AllAuction() {
       <Container
         dir={language === "ar" ? "rtl" : "ltr"}
         fluid="xxl"
-        className="bg_white rounded-[9px] p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D] mt-[80px] sm:mt-[92px]"
+        className="bg_white rounded-[9px] p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
       >
         <Row>
           <Col md="12">

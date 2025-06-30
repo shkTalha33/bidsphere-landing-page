@@ -76,7 +76,7 @@ const ChatMessage = () => {
   return (
     <div className="bg-light" dir={language === "ar" ? "rtl" : "ltr"}>
       <Container fluid="xxl" className="min-h-[80vh] mx-auto pt-1 pb-5">
-        <div className="pt-[100px]">
+        
           <div>
             <div className="chat_grid">
               <div
@@ -132,7 +132,7 @@ const ChatMessage = () => {
               </div>
             </div>
           </div>
-        </div>
+        
       </Container>
     </div>
   );

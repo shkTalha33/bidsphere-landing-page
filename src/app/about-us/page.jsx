@@ -14,7 +14,7 @@ export default function About() {
   const { t } = useTranslation();
   const language = useSelector(getLanguage);
   return (
-    <main className="pb-4 md:pb-[4rem] bg_mainsecondary overflow-hidden mt-[80px] sm:mt-[92px]">
+    <main className="pb-4 md:pb-[4rem] bg_mainsecondary overflow-hidden">
       <Container
         fluid="xxl"
         className="bg-white rounded-lg p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
