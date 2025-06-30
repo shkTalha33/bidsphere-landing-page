@@ -72,7 +72,7 @@ export default function ContactSection() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
-        className="md:px-3 pt-[2rem] md:pt-[4.875rem] pb-[2rem] md:pb-[4.175rem] bg-[#F3F3F9] plusJakara_regular text_white flex items-center justify-center text-center bg_mainsecondary overflow-hidden"
+        className="md:px-3 bg-[#F3F3F9] plusJakara_regular text_white flex items-center justify-center text-center bg_mainsecondary overflow-hidden pb-4"
       >
         {/* Ensures content is above the overlay */}
         <Container fluid="xxl">
@@ -83,7 +83,7 @@ export default function ContactSection() {
               dir={language === "ar" ? "rtl" : "ltr"}
             >
               <div className="md:max-w-[50rem]">
-                <h2 className="text-[20px] sm:text-2xl md:text-3xl poppins_medium capitalize text-center m-auto mb-2 md:mb-4">
+                <h2 className="text-[17px] sm:text-2xl md:text-3xl poppins_medium capitalize text-center m-auto mb-2 md:mb-4">
                   {t("emailSubscribe.heading")}
                 </h2>
                 <p className="max-w-xl mx-auto poppins_regular text-center text-xs sm:text-sm md:text-base capitalize mb-3 md:mb-4">

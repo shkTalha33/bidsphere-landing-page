@@ -11,16 +11,16 @@ const HelpCenterPage = () => {
   const language = useSelector(getLanguage);
   return (
     <main
-      className="bg-gray-100 min-h-screen flex flex-col items-center"
+      className="min-h-screen flex flex-col items-center"
       dir={language === "ar" ? "rtl" : "ltr"}
     >
       <Container
         fluid="xxl"
-        className="bg_white rounded-[9px] p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
+        className="bg_white rounded-[9px] p-3 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
         dir={language === "ar" ? "rtl" : "ltr"}
       >
         <Row>
-          <Col md="12">
+          <Col md="12" className="">
             <Breadcrumbs pageTitle={t("profil.heading29")} />
             <h3 className="text-xl sm:text-2xl poppins_medium text_dark">
               {t("profil.heading29")}
@@ -30,7 +30,7 @@ const HelpCenterPage = () => {
       </Container>
       <Container
         fluid="xxl"
-        className="p-2 p-md-2 rounded-[9px] mt-2 md:mt-4"
+        className="p-3 p-md-4 bg_white rounded-[9px] mt-3 mt-md-4"
         dir={language === "ar" ? "rtl" : "ltr"}
       >
         <HelpCenterContent />

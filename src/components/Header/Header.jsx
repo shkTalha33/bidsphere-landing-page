@@ -37,6 +37,7 @@ import {
 import { clearRegisterData } from "../redux/registrationSlice/resgiterSlice";
 import { useSocket } from "../socketProvider/socketProvider";
 import NotificationDown from "./notificationDown";
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -52,10 +53,15 @@ export default function Header() {
   const notificationsCount = useSelector(getNotifications);
   const unseenMessageCount = useSelector(getMessageUnseen);
   const { t } = useTranslation();
+
+  // Navbar ref for outside click detection
+  const navbarRef = useRef(null);
+
   const handleLogoutFun = async () => {
     dispatch(setLogout());
     dispatch(clearRegisterData());
     message.success("Logout Successfully");
+    setIsMenuOpen(false); // Close menu on logout
   };
 
   useEffect(() => {
@@ -65,6 +71,11 @@ export default function Header() {
     }
   }, [isLogin, pathname, router]);
 
+  // Close navbar when pathname changes (user navigates to different page)
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -73,16 +84,40 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
+  // Handle outside click to close navbar
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    // Add event listener when menu is open
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
       setIsScrolled(currentScrollPos > 0);
       setPrevScrollPos(currentScrollPos);
+
+      // Close mobile menu on scroll
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isMenuOpen]);
 
   // notfication handle
   const dropdownRef = useRef(null);
@@ -302,15 +337,6 @@ export default function Header() {
                 >
                   {userData?.fname + " " + userData?.lname}
                 </h6>
-                {/* <span
-                  className={`${
-                    isHomeOrHashRoute && !isScrolled
-                      ? "text_light"
-                      : "text_dark"
-                  } line-clamp-1 max-w-32 text-xs poppins_regular`}
-                >
-                  {userData?.address}
-                </span> */}
               </div>
             </div>
           </Space>
@@ -349,32 +375,6 @@ export default function Header() {
         >
           {t("nav.about")}
         </Link>
-        {/* <Link
-          href="/payments"
-          className={`${
-            pathname === "/payments"
-              ? "text_primary poppins_medium"
-              : isHomeOrHashRoute && !isScrolled
-              ? "text_white"
-              : "text_dark"
-          }
-              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
-        >
-          Payments
-        </Link>
-        <Link
-          href="/orders"
-          className={`${
-            pathname === "/orders"
-              ? "text_primary poppins_medium"
-              : isHomeOrHashRoute && !isScrolled
-              ? "text_white"
-              : "text_dark"
-          }
-              cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
-        >
-          Orders
-        </Link> */}
         <Link
           href="/contactUS"
           className={`${
@@ -403,7 +403,6 @@ export default function Header() {
         </Link>
       </div>
       <div className="hidden d-lg-flex items-center gap-[0.5rem] lg:gap-[0.8rem]">
-        {/* new */}
         <Language />
         <button
           onClick={() => router.push("/auth/login")}
@@ -459,7 +458,6 @@ export default function Header() {
   };
 
   // get user proffile
-
   const handleUserProfile = () => {
     const api = getUserProfile;
     get(api)
@@ -480,7 +478,6 @@ export default function Header() {
   }, [pathname]);
 
   // notification socket
-
   useEffect(() => {
     if (socket) {
       socket.on("notification", (data) => {
@@ -518,6 +515,7 @@ export default function Header() {
         py-[1rem] poppins_regular main_nav`}
       style={{ zIndex: 998 }}
       id="navbar"
+      ref={navbarRef}
     >
       <Container fluid="xxl">
         <nav className="flex justify-between items-center w-full px-2 px-md-0">
@@ -583,7 +581,6 @@ export default function Header() {
               </button>
             )}
             <div className="flex d-lg-none">
-              {/* new */}
               <div className="mr-2">
                 <Language />
               </div>
@@ -611,7 +608,7 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Improved Mobile Menu - Centered and Full-Featured with consistent text coloring */}
+        {/* Mobile Menu with auto-close functionality */}
         <div
           className={`flex flex-col items-center justify-center w-full mt-0 gap-2 gap-sm-3 overflow-hidden transition-all duration-300 ease-in-out d-lg-none 
             ${
@@ -692,7 +689,10 @@ export default function Header() {
               <div className="flex justify-center gap-6 w-full mt-2">
                 <div className="relative">
                   <div
-                    onClick={handleChatnaoo}
+                    onClick={() => {
+                      handleChatnaoo();
+                      handleNavClose();
+                    }}
                     className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
                   >
                     <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
@@ -706,6 +706,7 @@ export default function Header() {
                 <Link
                   href={"/favorite"}
                   className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+                  onClick={handleNavClose}
                 >
                   <FaRegHeart className="text-white w-[1.2rem] h-[1.2rem]" />
                 </Link>

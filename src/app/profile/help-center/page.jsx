@@ -105,12 +105,12 @@ const ProfilePage = () => {
 
   return (
     <main
-      className="bg-gray-100 flex flex-col items-start"
+      className="flex flex-col items-start"
       dir={language === "ar" ? "rtl" : "ltr"}
     >
       <Container
         fluid="xxl"
-        className="mx-auto p-4 flex flex-col lg:flex-row gap-6"
+        className="mx-auto p-2 p-md-4 flex flex-col lg:flex-row gap-3"
       >
         <div className="w-full lg:w-1/4">
           <TabHeader />

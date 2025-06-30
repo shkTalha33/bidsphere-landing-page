@@ -42,12 +42,12 @@ const Page = () => {
   }, [language]);
   return (
     <main
-      className="bg-gray-100 flex flex-col items-start"
+      className="flex flex-col items-start"
       dir={language === "ar" ? "rtl" : "ltr"}
     >
       <Container
         fluid="xxl"
-        className="mx-auto p-4 flex flex-col lg:flex-row gap-6"
+        className="mx-auto flex flex-col lg:flex-row gap-3"
       >
         <div className="w-full lg:w-1/4">
           <TabHeader />
@@ -58,8 +58,8 @@ const Page = () => {
             mt={"mt-0 md:mt-0"}
             title={t("termConditions.heading")}
           />
-          <div className="bg-white px-8 py-6 rounded-lg w-full shadow-sm">
-            <div className="p-3 p-md-4 rounded-4 bg_white">
+          <div className="bg-white rounded-lg w-full shadow-sm">
+            <div className=" rounded-4 bg_white">
               {loading ? (
                 <Skeleton active />
               ) : (

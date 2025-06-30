@@ -158,7 +158,7 @@ const Invoice = ({
   };
 
   return (
-    <Container className="bg_white rounded-[9px] p-4">
+    <Container className="bg_white rounded-[9px] p-2 p-md-4">
       {detailLoading ? (
         <Skeleton active />
       ) : (
@@ -173,11 +173,11 @@ const Invoice = ({
             </h4>
 
             {/* Auction Info */}
-            <Row className="bg_white rounded-[7px] border border-[#F8F9FA] shadow-sm items-center p-3 mb-4">
-              <Col xs="8">
-                <div className="flex items-start gap-4">
+            <Row className="bg_white rounded-[7px] border border-[#F8F9FA] shadow-sm items-start p-2 p-md-4 mb-4">
+              <Col xs="10">
+                <div className="flex items-start gap-2 gap-md-4">
                   <div>
-                    <div className="h-[4rem] w-[4rem]">
+                    <div className="md:h-[3rem] md:w-[3rem] h-[2rem] w-[2rem]">
                       <img
                         src={orderDetail?.auction?.images?.[0]}
                         alt="Auction"
@@ -185,8 +185,8 @@ const Invoice = ({
                       />
                     </div>
                   </div>
-                  <div className="flex flex-col justify-center">
-                    <p className="text-[#25324B] poppins_semibold text-sm sm:text-base md:text-[22px] capitalize mb-1">
+                  <div className="flex flex-col flex-1 w-full justify-center">
+                    <p className="text-[#25324B] poppins_semibold text-base sm:text-lg capitalize mb-1">
                       {orderDetail?.auction?.name}
                     </p>
                     <div
@@ -198,13 +198,16 @@ const Invoice = ({
                   </div>
                 </div>
               </Col>
-              <Col xs="4">
+              <Col xs="2">
                 <div className="flex items-center gap-2">
                   <div
                     onClick={handleBakcOr}
-                    className="bg_lightsecondary flex items-center justify-center w-9 h-9 rounded-full ml-auto cursor-pointer"
+                    className="bg_lightsecondary md:w-9 md:h-9 w-8 h-8 rounded-full cursor-pointer flex items-center justify-center"
                   >
-                    <TbArrowBackUp color="#660000" size={24} />
+                    <TbArrowBackUp
+                      color="#660000"
+                      className="text-xl md:text-2xl"
+                    />
                   </div>
                   {(orderDetail?.transaction?.status === "pending" ||
                     orderDetail?.transaction?.status === "rejected") && (
@@ -220,13 +223,13 @@ const Invoice = ({
               </Col>
             </Row>
             <h3
-              className={`text-[#25324B] mb-2 text-[1.2rem] poppins_medium ${
+              className={`text-[#25324B] mb-2 text-base md:text-[1.2rem] poppins_semibold ${
                 language === "ar" ? "text-right" : "text-left"
               }`}
             >
               {t("order.heading46")}
             </h3>
-            <div className="grid md:grid-cols-2 gap-4 mb-4 border-b pb-3">
+            <div className="grid md:grid-cols-2 gap-2 gap-md-4 mb-3 border-b pb-2">
               <div>
                 <p
                   className={`text-[#7C8493] text-sm mb-1 ${
@@ -278,7 +281,7 @@ const Invoice = ({
             </div>
 
             {/* Invoice Details */}
-            <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <div className="grid md:grid-cols-2 gap-2 gap-md-4 mb-4">
               <div>
                 <p
                   className={`text-[#7C8493] text-sm mb-1 ${
@@ -404,7 +407,7 @@ const Invoice = ({
             )}
 
             {/* Shipping Info */}
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-2 gap-md-4">
               <div>
                 <p
                   className={`text-[#7C8493] text-sm mb-1 ${

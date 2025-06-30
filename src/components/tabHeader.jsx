@@ -17,7 +17,7 @@ const TabHeader = () => {
     { label: t("changeCurrency.heading"), path: "/profile/change-currency" },
   ];
   return (
-    <div className="rounded flex h-100 flex-col gap-2 p-3 bg-white">
+    <div className="rounded flex h-100 flex-col gap-2 p-2 p-md-3 bg-white">
       {navItems.map((item, index) => (
         <Link
           key={index}

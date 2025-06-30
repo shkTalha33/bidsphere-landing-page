@@ -617,7 +617,8 @@
     "heading4": "Lot minimum Price",
     "heading5": "Bid increment price",
     "heading6": "Category",
-    "heading7": "Lot Description"
+    "heading7": "Lot Description",
+    "heading8": "Sub Category"
   },
   "auction": {
     "categoryInfo": {

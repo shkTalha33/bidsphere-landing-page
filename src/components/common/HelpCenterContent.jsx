@@ -91,8 +91,8 @@ const HelpCenterContent = () => {
 
   return (
     <div className="flex flex-col items-start w-full">
-      <div className="bg-white rounded-lg w-full shadow-sm mt-4">
-        <div className="p-3 p-md-4 rounded-4 bg_white">
+      <div className="bg-white rounded-lg w-full shadow-sm">
+        <div className="p-2 p-md-4 rounded-4 bg_white">
           <h6
             className={`text-lg md:text-xl  mb-4 xl:text-2xl poppins_medium ${
               language === "ar" ? "text-end" : "text-center text-md-start"
@@ -102,7 +102,7 @@ const HelpCenterContent = () => {
           </h6>
           <div className="flex max-[900px]:flex-wrap gap-2">
             <div className="w-100 max-[900px]:w-100 min-[900px]:max-w-[300px]">
-              <div className="h-auto  max-h-[20rem] overflow-auto shadow-sm  p-2 bg_white">
+              <div className="h-auto  max-h-[20rem] overflow-auto shadow-sm p-2 bg_white">
                 {faqLoading ? (
                   <div className="m-2 text-center">
                     <HashLoader size={18} className="mx-auto" />
@@ -113,7 +113,7 @@ const HelpCenterContent = () => {
                       <div>
                         <h6
                           onClick={() => handlecatActive(category)}
-                          className={`mb-0 text-[1.2rem] capitalize cursor-pointer py-2 ${
+                          className={`mb-0 text-base md:text-[1.2rem] capitalize cursor-pointer py-2 ${
                             language === "ar" ? "text-end" : "text-start"
                           } ${
                             activeCategory === category?._id

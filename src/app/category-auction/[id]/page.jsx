@@ -89,8 +89,8 @@ const Page = () => {
           <Row>
             <Col md="12">
               <Breadcrumbs pageTitle={t("allAuction.pageTitle")} />
-              <h3 className="text-xl sm:text-2xl poppins_medium text_dark">
-                {t("categoryAuction.heading")}
+              <h3 className="text-lg sm:text-xl md:text-2xl poppins_medium text_dark">
+                {auctions?.[0]?.category?.name}
               </h3>
             </Col>
           </Row>

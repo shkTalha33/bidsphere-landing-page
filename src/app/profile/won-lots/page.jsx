@@ -182,12 +182,12 @@ const WonLots = () => {
 
   return (
     <main
-      className="bg-gray-100 flex flex-col items-start"
+      className="flex flex-col items-start"
       dir={language === "ar" ? "rtl" : "ltr"}
     >
       <Container
         fluid="xxl"
-        className="mx-auto p-4 flex flex-col lg:flex-row gap-6"
+        className="mx-auto p-2 p-md-4 flex flex-col lg:flex-row gap-3"
       >
         <div className="w-full lg:w-1/4">
           <TabHeader />
@@ -208,7 +208,7 @@ const WonLots = () => {
             </>
           ) : (
             <>
-              <div className="bg-white px-8 rounded-lg w-full shadow-sm">
+              <div className="bg-white px-2 px-md-4 rounded-lg w-full shadow-sm">
                 <ProductTable
                   rowHeading={t("wonLots.rowHeading")}
                   count={count}

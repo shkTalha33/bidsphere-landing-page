@@ -38,7 +38,7 @@ const Page = () => {
   }, [language]);
 
   return (
-    <>
+    <main className="">
       <Container
         fluid="xxl"
         className="bg_white rounded-[9px] p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
@@ -55,7 +55,7 @@ const Page = () => {
       </Container>
       <Container
         fluid="xxl"
-        className="mt-[2rem] mb-[4rem]"
+        className="mt-3 mb-4 p-2 p-md-4 bg_white rounded-[9px] shadow-[0px_4px_22.9px_0px_#0000000D]"
         dir={language === "ar" ? "rtl" : "ltr"}
       >
         {loading ? (
@@ -67,7 +67,7 @@ const Page = () => {
           />
         )}
       </Container>
-    </>
+    </main>
   );
 };
 

@@ -14,16 +14,16 @@ export default function About() {
   const { t } = useTranslation();
   const language = useSelector(getLanguage);
   return (
-    <main className="pb-4 md:pb-[4rem] bg_mainsecondary overflow-hidden">
+    <main className="bg_mainsecondary overflow-hidden">
       <Container
         fluid="xxl"
-        className="bg-white rounded-lg p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
+        className="bg-white rounded-lg p-3 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
         dir={language === "ar" ? "rtl" : "ltr"}
       >
         <Row>
           <Col md="12">
             <Breadcrumbs pageTitle={t("nav.about")} />
-            <h3 className="text-xl sm:text-2xl poppins_medium text-gray-800">
+            <h3 className="text-xl sm:text-2xl poppins_medium text-gray-800 mb-0">
               {t("nav.about")}
             </h3>
           </Col>
