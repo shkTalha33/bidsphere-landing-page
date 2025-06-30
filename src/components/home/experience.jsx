@@ -50,13 +50,13 @@ export default function Experience() {
                 <div className={`flex gap-3 items-center  mb-[10px]`}>
                   <div className={`w-8 h-2 bg_primary rounded-full`}></div>
                   <h6
-                    className={`text-[#202020] poppins_semibold text-xl capitalize`}
+                    className={`text-[#202020] poppins_semibold text-xl capitalize mb-0`}
                   >
                     {t("about.heading")}
                   </h6>
                 </div>
                 <h4
-                  className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl text_primary poppins_medium capitalize mb-2 mb-md-4`}
+                  className={`text-2xl md:text-4xl text_primary poppins_medium capitalize mb-2 mb-md-4`}
                 >
                   {t("about.heading2")} <br />
                   <span className={`text-black poppins_medium`}>
@@ -78,7 +78,7 @@ export default function Experience() {
                       >
                         <FaCheck className={`text-[#909495]`} size={20} />
                         <p
-                          className={`text_primary poppins_medium text-sm sm:text-base md:text-xl`}
+                          className={`text_primary poppins_medium text-sm md:text-xl`}
                         >
                           {feature}
                         </p>
@@ -86,7 +86,7 @@ export default function Experience() {
                     );
                   })}
                 </div>
-                <motion.button className="poppins_semibold my-3 text-sm md:text-lg text_white w-1/2 py-3 mx-auto bg_primary rounded-lg">
+                <motion.button className="poppins_medium my-3 text-sm md:text-lg text_white px-5 py-[10px] mx-auto bg_primary rounded-lg">
                   {t("common.readMore")}
                 </motion.button>
               </motion.div>

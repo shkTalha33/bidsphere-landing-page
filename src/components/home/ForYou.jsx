@@ -43,7 +43,7 @@ export default function ForYou() {
               description={t("ongoing.heading")}
             />
             {isLoading ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
                 {Array.from({ length: 10 }).map((_, index) => (
                   <SkeletonLayout2 key={index} index={index} />
                 ))}
@@ -67,7 +67,7 @@ export default function ForYou() {
               </Col>
             ) : (
               <Col md="12">
-                <motion.div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
+                <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
                   {data?.auctions?.map((item, index) => (
                     <AuctionCard key={index} item={item} index={index} />
                   ))}

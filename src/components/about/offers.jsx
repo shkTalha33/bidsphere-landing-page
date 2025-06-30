@@ -54,7 +54,7 @@ export default function OurOffer() {
         dir={language === "ar" ? "rtl" : "ltr"}
       >
         <Container fluid="xxl">
-          <h4 className="text_darkprimary poppins_medium text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center capitalize mb-5">
+          <h4 className="text_darkprimary poppins_medium text-2xl md:text-4xl text-center capitalize mb-5">
             {t("offers.heading")} <br /> {t("offers.subHeading")}
           </h4>
           <motion.div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -10,10 +10,13 @@ import { Col, Row } from "react-bootstrap";
 import FavoriteAuctionItems from "./FavoriteAuctionItems"; // We'll create this next
 import { useTranslation } from "react-i18next";
 import { Container } from "reactstrap";
+import { useSelector } from "react-redux";
+import { getLanguage } from "@/components/redux/language/languageSlice";
 
 export default function FavoritesPage() {
   const [lastId, setLastId] = useState(1);
   const { t } = useTranslation();
+  const language = useSelector(getLanguage);
   // Use the new favorites query
   const { data, isFetching, isError, error } =
     useGetFavoriteAuctionsQuery(lastId);
@@ -34,12 +37,12 @@ export default function FavoritesPage() {
 
   return (
     <>
-      <Container fluid="xxl">
+      <Container fluid="xxl" dir={language === "ar" ? "rtl" : "ltr"}>
         <div className="bg_white rounded-[9px] mb-4 p-4 shadow-[0px_4px_22.9px_0px_#0000000D]">
           <Row>
             <Col md="12">
-              <Breadcrumbs pageTitle={"Favourite"} />
-              <h3 className="text-xl sm:text-2xl md:text-3xl poppins_medium text_dark">
+              <Breadcrumbs pageTitle={t("favorite.pageTitle")} />
+              <h3 className="text-xl sm:text-2xl poppins_medium text_dark">
                 {t("favorite.heading1")}
               </h3>
             </Col>

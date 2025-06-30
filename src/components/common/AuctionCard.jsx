@@ -49,14 +49,14 @@ export default function AuctionCard({ item, index }) {
           </div>
         </p>
 
-        <p className="poppins_semibold mt-[7px] leading-[1.2] text_darkprimary text-[1.25rem]">
+        <p className="poppins_semibold mt-[7px] leading-[1.2] text_darkprimary text-[1rem] md:text-[1.25rem]">
           {item?.name}
         </p>
         <div className="flex items-center justify-start gap-2 mt-[5px]">
           <span className="text-gray text-[0.8rem]">
             {t("ongoing.heading4")}
           </span>
-          <h5 className="mb-0 text_darkprimary text-lg">
+          <h5 className="mb-0 text_darkprimary text-[0.8rem] md:text-lg">
             {" "}
             {formatPrice(convert(item?.depositamount, "LYD"))}
           </h5>

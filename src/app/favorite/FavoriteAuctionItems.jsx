@@ -150,7 +150,7 @@ export default function FavoriteAuctionItems({
           ))}
         </div>
       ) : (
-        <NoData description="You haven't favorited any auctions yet" />
+        <NoData description={t("favorite.noData")} />
       )}
 
       {/* Loading indicator when fetching more data */}

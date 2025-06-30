@@ -28,6 +28,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSocket } from "../socketProvider/socketProvider";
 import { decryptData } from "../api/encrypted";
 import ApiFunction from "../api/apiFuntions";
+import { Container } from "reactstrap";
+import { getLanguage } from "../redux/language/languageSlice";
+import { useSelector } from "react-redux";
 
 const ChatMessage = () => {
   const { userData, baseURL } = ApiFunction();
@@ -41,6 +44,7 @@ const ChatMessage = () => {
   const params = new URLSearchParams(searchParams);
   const urlDataEnq = params.get("query");
   const { t } = useTranslation();
+  const language = useSelector(getLanguage);
 
   useEffect(() => {
     const urlData = urlDataEnq ? decryptData(urlDataEnq) : "";
@@ -70,9 +74,9 @@ const ChatMessage = () => {
     // You might want to set an error state or handle it appropriately
   };
   return (
-    <div className="bg-light">
-      <div className="min-h-[80vh] container-lg px-0 px-lg-2 mx-auto pt-1 pb-5 mt-[2rem]">
-        <div className="pt-3">
+    <div className="bg-light" dir={language === "ar" ? "rtl" : "ltr"}>
+      <Container fluid="xxl" className="min-h-[80vh] mx-auto pt-1 pb-5">
+        <div className="pt-[100px]">
           <div>
             <div className="chat_grid">
               <div
@@ -129,7 +133,7 @@ const ChatMessage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };

@@ -18,7 +18,7 @@ export default function PlansCard({ plan, index }) {
       viewport={{ once: true, amount: 0.25 }}
       variants={fadeIn("up", "tween", (index + 1) * 0.1, 1)}
       onClick={() => handleCatAuction(plan)}
-      className="relative h-[300px] w-full rounded-xl overflow-hidden cursor-pointer group"
+      className="relative h-[225px] sm:h-[300px] w-full rounded-xl overflow-hidden cursor-pointer group"
     >
       {/* Background Image */}
       <img

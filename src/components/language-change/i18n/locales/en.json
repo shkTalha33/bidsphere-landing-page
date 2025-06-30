@@ -605,8 +605,10 @@
     "heading4": "Select a message"
   },
   "favorite": {
+    "pageTitle": "Favourite",
     "heading1": "Favourite Auctions",
-    "heading2": "Load More"
+    "heading2": "Load More",
+    "noData": "You haven't favorited any auctions yet"
   },
   "lotDetail": {
     "heading1": "Here are your auctions whom you can join.",

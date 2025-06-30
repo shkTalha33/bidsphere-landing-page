@@ -7,7 +7,10 @@ export default function Breadcrumbs({ pageTitle }) {
   return (
     <>
       <p className="poppins_regular text-lg sm:text-xl text_primary mb-1 sm:mb-3">
-        <Link href={"/"}>{t("nav.home")} </Link> / {pageTitle}{" "}
+        <Link className="text_dark" href={"/"}>
+          {t("nav.home")}{" "}
+        </Link>{" "}
+        / {pageTitle}{" "}
       </p>
     </>
   );

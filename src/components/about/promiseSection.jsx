@@ -28,21 +28,15 @@ const PromiseSection = () => {
           {/* Left Column */}
           <div>
             <div className={`flex gap-3 items-center  mb-[10px] `}>
-              <div
-                className={`w-8 h-2 bg_primary rounded-full ${
-                  language === "ar" ? "order-1" : "order-2"
-                }`}
-              ></div>
+              <div className={`w-8 h-2 bg_primary rounded-full`}></div>
               <h6
-                className={`text-[#202020] poppins_semibold text-xl capitalize ${
-                  language === "ar" ? "order-2" : "order-1"
-                }`}
+                className={`text-[#202020] poppins_semibold text-xl capitalize mb-0`}
               >
                 {t("promise.ourDifferences")}
               </h6>
             </div>
             <h4
-              className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl text_primary poppins_medium capitalize mb-2 mb-md-4 ${
+              className={`text-2xl md:text-4xl text_primary poppins_medium capitalize mb-2 mb-md-4 ${
                 language === "ar" ? "text-right" : "text-left"
               }`}
             >
@@ -56,7 +50,7 @@ const PromiseSection = () => {
               </span>
             </h4>
             <p
-              className={`poppins_regular text-sm sm:text-base text-[#8B8B8B] mb-3 mb-md-4 ${
+              className={`poppins_regular text-sm md:text-base text-[#8B8B8B] mb-3 mb-md-4 ${
                 language === "ar" ? "text-right" : "text-start md:text-start"
               }`}
             >
@@ -64,7 +58,7 @@ const PromiseSection = () => {
             </p>
 
             {/* Service Cards */}
-            <div className="grid sm:grid-cols-2 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
               {/* Security Solutions Card */}
               <motion.div
                 className="bg-[#ECE0E0] shadow-medium p-6 rounded-lg"
@@ -72,7 +66,7 @@ const PromiseSection = () => {
               >
                 <div className="flex gap-2 items-center mb-3">
                   <IoShieldCheckmarkSharp className="text_primary text-2xl" />
-                  <h3 className="text_primary poppins_medium">
+                  <h3 className="text_primary poppins_medium text-xl md:text-2xl mb-0">
                     {t("promise.ourMission")}
                   </h3>
                 </div>
@@ -87,7 +81,7 @@ const PromiseSection = () => {
               >
                 <div className="flex gap-2 items-center mb-3">
                   <FaServicestack className="text_primary text-2xl" />
-                  <h3 className="text_primary poppins_medium">
+                  <h3 className="text_primary poppins_medium text-xl md:text-2xl mb-0">
                     {t("promise.ourVision")}
                   </h3>
                 </div>

@@ -177,16 +177,16 @@ const Footer = () => {
               language === "ar" ? "flex-row-reverse" : "flex-row"
             } gap-6 text-sm`}
           >
-            <Link href="/privacyPolicy" className="hover:underline">
+            <Link href="/privacyPolicy" className="hover:underline text-white">
               {t("footer.heading2")}
             </Link>
-            <Link href="/termCondition" className="hover:underline">
+            <Link href="/termCondition" className="hover:underline text-white">
               {t("footer.heading3")}
             </Link>
-            <Link href="/contactUS" className="hover:underline">
+            <Link href="/contactUS" className="hover:underline text-white">
               {t("nav.contactus")}
             </Link>
-            <Link href="/help-center" className="hover:underline">
+            <Link href="/help-center" className="hover:underline text-white">
               {t("profil.heading29")}
             </Link>
           </div>

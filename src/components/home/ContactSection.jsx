@@ -76,22 +76,22 @@ export default function ContactSection() {
       >
         {/* Ensures content is above the overlay */}
         <Container fluid="xxl">
-          <div className="px-[1rem] bg_primary py-[2rem] md:py-[4rem] md:px-[4rem] w-full plusJakara_medium rounded-2xl">
+          <div className="px-2 px-md-4 bg_primary py-[1.5rem] md:py-[4rem] w-full plusJakara_medium rounded-2xl">
             <motion.div
               className="flex items-center justify-center"
               variants={fadeIn("down", "tween", 0.3, 0.8)}
               dir={language === "ar" ? "rtl" : "ltr"}
             >
-              <div className="max-w-[50rem]">
-                <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl poppins_semibold capitalize text-center m-auto mb-2 md:mb-4">
+              <div className="md:max-w-[50rem]">
+                <h2 className="text-[20px] sm:text-2xl md:text-3xl poppins_medium capitalize text-center m-auto mb-2 md:mb-4">
                   {t("emailSubscribe.heading")}
                 </h2>
-                <p className="m-auto poppins_regular text-center text-sm md:text-lg capitalize mb-3 md:mb-4">
+                <p className="max-w-xl mx-auto poppins_regular text-center text-xs sm:text-sm md:text-base capitalize mb-3 md:mb-4">
                   {t("emailSubscribe.heading2")}
                 </p>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="bg_white p-[0.3rem] md:p-[0.5rem] max-w-[33rem] m-auto rounded-[6px] mb-2 md:mb-4">
+                  <div className="bg_white p-[0.3rem] md:p-[0.4rem] max-w-[33rem] m-auto rounded-[6px] mb-2 md:mb-4">
                     <div className="flex flex-col gap-2">
                       <div className="flex">
                         <Controller
@@ -108,7 +108,7 @@ export default function ContactSection() {
                         <button
                           type="submit"
                           disabled={loading}
-                          className="bg_primary md:py-4 px-5 rounded-[6px] whitespace-nowrap text-base poppins_semibold"
+                          className="bg_primary py-2 py-md-3 px-4 px-sm-5 rounded-[6px] whitespace-nowrap text-sm md:text-base poppins_medium"
                         >
                           {loading ? (
                             <>
@@ -130,7 +130,7 @@ export default function ContactSection() {
                   </div>
                 </form>
 
-                <p className="text-xs poppins_regular mt-4">
+                <p className="text-xs poppins_regular mt-4 mb-0">
                   {t("emailSubscribe.heading5")}
                   <span
                     onClick={hanlePushr}
