@@ -5,7 +5,7 @@ import TopSection from "@/components/common/TopSection";
 import useCurrency from "@/components/hooks/useCurrency";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Check, ChevronRight, Heart, Maximize2, X } from "react-feather";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,8 @@ import { HashLoader } from "react-spinners";
 import { Col, Container, Modal, ModalBody, Row } from "reactstrap";
 import { getLanguage } from "@/components/redux/language/languageSlice";
 import { useTranslation } from "react-i18next";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 const Page = () => {
   const { get, userData } = ApiFunction();
@@ -24,6 +26,13 @@ const Page = () => {
   const itemParam = searchParams.get("item");
   const userLanguage = useSelector(getLanguage);
   const { t } = useTranslation();
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const thumbnailContainerRef = useRef(null);
+  const thumbnailRefs = useRef([]);
+
   useEffect(() => {
     if (itemParam) {
       try {
@@ -46,11 +55,12 @@ const Page = () => {
     return t("auctionJoin.heading4");
   };
 
-  const [selectedImage, setSelectedImage] = useState(null);
-
   const handleImagePreview = (image) => {
-    setSelectedImage(image);
-    setPreviewModal(true);
+    const imageIndex = currentLot?.item?.images?.findIndex(
+      (img) => img === image
+    );
+    setActiveImageIndex(imageIndex >= 0 ? imageIndex : 0);
+    setLightboxOpen(true);
   };
 
   useEffect(() => {
@@ -58,6 +68,34 @@ const Page = () => {
       setSelectedImage(currentLot?.item?.images[0]);
     }
   }, [currentLot]);
+
+  useEffect(() => {
+    if (currentLot?.item?.images?.length > 1 && !isPaused) {
+      const timer = setInterval(() => {
+        setSelectedImage((prevImage) => {
+          if (!prevImage) return currentLot?.item?.images[1];
+          const currentIndex = currentLot.item.images.indexOf(prevImage);
+          const nextIndex = (currentIndex + 1) % currentLot.item.images.length;
+          return currentLot.item.images[nextIndex];
+        });
+      }, 3000); // 3-second interval
+
+      return () => clearInterval(timer);
+    }
+  }, [currentLot?.item?.images, isPaused]);
+
+  useEffect(() => {
+    if (selectedImage && thumbnailRefs.current) {
+      const index = currentLot.item.images.indexOf(selectedImage);
+      const thumbnailEl = thumbnailRefs.current[index];
+      if (thumbnailEl) {
+        thumbnailEl.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+    }
+  }, [selectedImage, currentLot?.item?.images]);
 
   return (
     <>
@@ -81,12 +119,26 @@ const Page = () => {
               className="bg_mainsecondary rounded-[9px] mt-4 mb-10 px-0"
             >
               <Row className="g-3 h-full">
-                <Col md="4" lg="2" className="flex md:flex-column ">
-                  <div className="flex md:flex-col gap-3 h-100 max-h-[700px] w-full overflow-y-auto">
+                <Col
+                  md="4"
+                  lg="2"
+                  className="flex md:flex-column "
+                  onMouseEnter={() => setIsPaused(true)}
+                  onMouseLeave={() => setIsPaused(false)}
+                >
+                  <div
+                    ref={thumbnailContainerRef}
+                    className="flex md:flex-col gap-3 h-100 max-h-[700px] w-full overflow-y-auto"
+                  >
                     {currentLot?.item?.images?.map((image, index) => (
                       <div
                         key={index}
-                        className="w-full md:w-full md:flex-grow-0 flex-shrink-0 h-[120px] mb-2"
+                        ref={(el) => (thumbnailRefs.current[index] = el)}
+                        className={`w-full md:w-full md:flex-grow-0 flex-shrink-0 h-[120px] mb-2 p-1 rounded-[12px] border-2 ${
+                          selectedImage === image
+                            ? "border-[#8B0000]"
+                            : "border-transparent"
+                        } transition-all duration-300`}
                       >
                         <div
                           className="relative w-full h-full cursor-pointer group"
@@ -108,33 +160,35 @@ const Page = () => {
                   </div>
                 </Col>
 
-                <Col md="8" lg="5" className="d-flex">
+                <Col
+                  md="8"
+                  lg="5"
+                  className="d-flex"
+                  onMouseEnter={() => setIsPaused(true)}
+                  onMouseLeave={() => setIsPaused(false)}
+                >
                   <div
                     className="relative bg_white rounded-[10px] w-100 h-100 flex items-center justify-center cursor-pointer group overflow-hidden max-h-[700px]"
                     onClick={() => handleImagePreview(selectedImage)}
                   >
-                    {/* <div
-                    className="absolute inset-0 w-full h-full"
-                    style={{
-                      backgroundImage: `url(${selectedImage})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      filter: "blur(10px)", // Blur effect only on background
-                    }}
-                  ></div> */}
-
-                    {/* Sharp Image */}
-                    <div className="relative z-10 p-3">
-                      {selectedImage && (
+                    {/* Preloaded Images */}
+                    <div className="relative z-10 w-full h-full">
+                      {currentLot?.item?.images?.map((image, index) => (
                         <Image
-                          src={selectedImage}
-                          width={600}
-                          height={400}
+                          key={index}
+                          src={image}
+                          fill
                           quality={100}
-                          className="rounded-[10px] object-contain"
+                          priority={index === 0}
+                          className={`object-contain transition-opacity duration-300 rounded-[10px] ${
+                            selectedImage === image
+                              ? "opacity-100"
+                              : "opacity-0 pointer-events-none"
+                          }`}
                           alt="auction item preview"
+                          sizes="(max-width: 768px) 100vw, (max-width: 992px) 66vw, 42vw"
                         />
-                      )}
+                      ))}
                     </div>
 
                     {/* Hover Overlay */}
@@ -238,36 +292,16 @@ const Page = () => {
           </>
         )}
 
-        {/* Modals */}
-
-        {/* Image Preview Modal */}
-        <Modal
-          isOpen={previewModal}
-          toggle={() => setPreviewModal(!previewModal)}
-          size="lg"
-          centered
-          contentClassName="bg-transparent border-0"
-        >
-          <ModalBody className="p-0">
-            <div className="relative">
-              <button
-                className="absolute top-4 right-4 bg-black/70 hover:bg-black rounded-full p-2 z-10 transition-colors duration-300"
-                onClick={() => setPreviewModal(false)}
-              >
-                <X className="text-white" />
-              </button>
-              <div className="w-full h-full flex items-center justify-center">
-                <Image
-                  src={selectedImage}
-                  width={1200}
-                  height={800}
-                  className="w-full h-full !object-contain"
-                  alt="Preview"
-                />
-              </div>
-            </div>
-          </ModalBody>
-        </Modal>
+        {/* Image Lightbox */}
+        <Lightbox
+          open={lightboxOpen}
+          close={() => setLightboxOpen(false)}
+          slides={currentLot?.item?.images?.map((image) => ({ src: image }))}
+          index={activeImageIndex}
+          on={{
+            view: ({ index }) => setActiveImageIndex(index),
+          }}
+        />
       </main>
     </>
   );

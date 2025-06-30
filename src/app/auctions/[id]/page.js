@@ -10,7 +10,7 @@ import { message } from "antd";
 import moment from "moment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Maximize2, Plus, X } from "react-feather";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -78,6 +78,8 @@ import {
   MdOutlineTouchApp,
 } from "react-icons/md";
 import { GrDashboard } from "react-icons/gr";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 const AuctionDetailPage = () => {
   const router = useRouter();
@@ -85,7 +87,12 @@ const AuctionDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewModal, setPreviewModal] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("overview");
+  const [isPaused, setIsPaused] = useState(false);
+  const thumbnailContainerRef = useRef(null);
+  const thumbnailRefs = useRef([]);
   const { get, userData } = ApiFunction();
   const { id } = useParams();
   const { formatPrice, convert } = useCurrency();
@@ -268,6 +275,39 @@ const AuctionDetailPage = () => {
     return t("auctionJoin.heading4");
   };
 
+  const formatDateValue = (key, value) => {
+    const dateKeys = [
+      "year_of_manufacture",
+      "product_age",
+      "the_age",
+      "date_of_manufacture",
+      "cattle_age",
+    ];
+
+    if (dateKeys.includes(key) && value) {
+      const date = moment(value, [moment.ISO_8601, "YYYY"], true);
+      if (date.isValid()) {
+        const now = moment();
+        const duration = moment.duration(now.diff(date));
+        const years = duration.years();
+        const months = duration.months();
+        const days = duration.days();
+
+        if (years > 0) {
+          return `${years} ${years > 1 ? "years" : "year"} old`;
+        }
+        if (months > 0) {
+          return `${months} ${months > 1 ? "months" : "month"} old`;
+        }
+        if (days > 0) {
+          return `${days} ${days > 1 ? "days" : "day"} old`;
+        }
+        return "Less than a day old";
+      }
+    }
+    return value;
+  };
+
   const formatKey = (key) => {
     const translationKey = `auction.categoryInfo.${key}`;
     const translatedKey = t(translationKey);
@@ -283,8 +323,9 @@ const AuctionDetailPage = () => {
   };
 
   const handleImagePreview = (image) => {
-    setSelectedImage(image);
-    setPreviewModal(true);
+    const imageIndex = item.images.findIndex((img) => img === image);
+    setActiveImageIndex(imageIndex >= 0 ? imageIndex : 0);
+    setLightboxOpen(true);
   };
 
   const fetchAuctionDetail = () => {
@@ -318,6 +359,34 @@ const AuctionDetailPage = () => {
       setSelectedImage(item.images[0]);
     }
   }, [item]);
+
+  useEffect(() => {
+    if (item?.images?.length > 1 && !isPaused) {
+      const timer = setInterval(() => {
+        setSelectedImage((prevImage) => {
+          if (!prevImage) return item.images[1];
+          const currentIndex = item.images.indexOf(prevImage);
+          const nextIndex = (currentIndex + 1) % item.images.length;
+          return item.images[nextIndex];
+        });
+      }, 3000); // 3-second interval
+
+      return () => clearInterval(timer);
+    }
+  }, [item?.images, isPaused]);
+
+  useEffect(() => {
+    if (selectedImage && thumbnailRefs.current) {
+      const index = item.images.indexOf(selectedImage);
+      const thumbnailEl = thumbnailRefs.current[index];
+      if (thumbnailEl) {
+        thumbnailEl.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+    }
+  }, [selectedImage, item?.images]);
 
   const handleRegister = () => {
     const now = moment.utc();
@@ -439,6 +508,7 @@ const AuctionDetailPage = () => {
                     (icon) => icon?.key === key
                   );
                   const Icon = matchedIcon?.icon || FaInfoCircle;
+                  const displayValue = formatDateValue(key, value);
                   const isLongText = value && value.length > 40; // Adjust limit as needed
 
                   return (
@@ -460,14 +530,14 @@ const AuctionDetailPage = () => {
 
                           <div className="rounded-lg mb-0">
                             <span className="text-gray-700 text-sm poppins_regular group-hover:text-gray-900 mb-0 line-clamp-1">
-                              {value?.length > 40
+                              {isLongText
                                 ? value?.slice(0, 40) + "..."
-                                : value}
+                                : displayValue}
                             </span>
                             {isLongText && (
                               <span className="">
                                 <button
-                                  className={`text-xs text_primary poppins_medium mt-1 hover:underline`}
+                                  className={`text-xs underline text_primary poppins_medium mt-1 hover:underline`}
                                   onClick={() => handleSeeMore(key, value)}
                                 >
                                   See More
@@ -522,6 +592,7 @@ const AuctionDetailPage = () => {
                 const matchedIcon = categoryIcons?.find(
                   (icon) => icon?.key === key
                 );
+                const displayValue = formatDateValue(key, value);
                 const isLongText = value && value.length > 40;
                 const Icon = matchedIcon?.icon || FaInfoCircle;
                 return (
@@ -543,14 +614,14 @@ const AuctionDetailPage = () => {
 
                         <div className="rounded-lg mb-0">
                           <span className="text-gray-700 text-sm poppins_regular group-hover:text-gray-900 mb-0 line-clamp-1">
-                            {value?.length > 40
+                            {isLongText
                               ? value?.slice(0, 40) + "..."
-                              : value || "N/A"}
+                              : displayValue || "N/A"}
                           </span>
                           {isLongText && (
                             <div className="mr-auto">
                               <button
-                                className={`text-xs text_primary poppins_medium mt-1 hover:underline`}
+                                className={`text-xs underline text_primary poppins_medium mt-1 hover:underline`}
                                 onClick={() => handleSeeMore(key, value)}
                               >
                                 See More
@@ -609,12 +680,27 @@ const AuctionDetailPage = () => {
             className="bg_mainsecondary rounded-[9px] my-4 px-0 overflow-hidden"
           >
             <Row className="g-3 h-full">
-              <Col md="4" lg="2" className="flex md:flex-column ">
-                <div className="flex md:flex-col gap-3 h-100 max-h-[700px] w-full overflow-y-auto">
+              <Col
+                md="4"
+                lg="2"
+                className="flex md:flex-column "
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+              >
+                <div
+                  ref={thumbnailContainerRef}
+                  className="flex md:flex-col gap-3 h-100 max-h-[700px] w-full overflow-y-auto"
+                >
                   {item?.images?.map((image, index) => (
                     <div
                       key={index}
-                      className="flex-grow-0 flex-shrink-0 h-[120px] mb-2"
+                      ref={(el) => (thumbnailRefs.current[index] = el)}
+                      className={`flex-grow-0 flex-shrink-0 h-[120px] mb-2 p-1 rounded-[12px]
+                        border-2 ${
+                          selectedImage === image
+                            ? "border-[#8B0000]"
+                            : "border-transparent"
+                        } transition-all duration-300`}
                     >
                       <div
                         className="relative w-full h-full cursor-pointer group"
@@ -636,33 +722,35 @@ const AuctionDetailPage = () => {
                 </div>
               </Col>
 
-              <Col md="8" lg="5" className="d-flex">
+              <Col
+                md="8"
+                lg="5"
+                className="d-flex"
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+              >
                 <div
                   className="relative bg_white rounded-[10px] w-100 h-100 flex items-center justify-center cursor-pointer group overflow-hidden md:!h-[500px] p-0 p-md-2"
                   onClick={() => handleImagePreview(selectedImage)}
                 >
-                  {/* <div
-                    className="absolute inset-0 w-full h-full"
-                    style={{
-                      backgroundImage: `url(${selectedImage})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      filter: "blur(10px)", // Blur effect only on background
-                    }}
-                  ></div> */}
-
-                  {/* Sharp Image */}
-                  <div className="relative z-10">
-                    {selectedImage && (
+                  {/* Preloaded Images */}
+                  <div className="relative z-10 w-full h-full">
+                    {item?.images?.map((image, index) => (
                       <Image
-                        src={selectedImage}
-                        width={600}
-                        height={600}
+                        key={index}
+                        src={image}
+                        fill
                         quality={100}
-                        className="rounded-[10px] object-contain"
+                        priority={index === 0}
+                        className={`object-contain transition-opacity duration-300 rounded-[10px] ${
+                          selectedImage === image
+                            ? "opacity-100"
+                            : "opacity-0 pointer-events-none"
+                        }`}
                         alt="auction item preview"
+                        sizes="(max-width: 768px) 100vw, (max-width: 992px) 66vw, 42vw"
                       />
-                    )}
+                    ))}
                   </div>
 
                   {/* Hover Overlay */}
@@ -765,7 +853,7 @@ const AuctionDetailPage = () => {
                     <div className={`poppins_medium text-base text_primary`}>
                       {t("auctionDetails.heading3")}
                     </div>
-                    <div className={`poppins_regular`}>
+                    <div className={`poppins_regular text-sm`}>
                       {formatPrice(convert(item?.depositamount, "LYD"))}
                     </div>
                   </Col>
@@ -815,35 +903,16 @@ const AuctionDetailPage = () => {
         </>
       )}
 
-      {/* Image Preview Modal */}
-      <Modal
-        isOpen={previewModal}
-        toggle={() => setPreviewModal(!previewModal)}
-        size="lg"
-        centered
-        contentClassName="bg-transparent border-0"
-        style={{ zIndex: 999 }}
-      >
-        <ModalBody className="p-0 flex items-center justify-center">
-          <div className="relative !max-w-[90vw] !max-h-[90vh]">
-            <button
-              className="absolute top-4 right-5 bg-black/70 hover:bg-black rounded-full p-2 z-10 transition-colors duration-300"
-              onClick={() => setPreviewModal(false)}
-            >
-              <X className="text-white" />
-            </button>
-            <div className="flex items-center justify-center">
-              <Image
-                src={selectedImage}
-                width={1200}
-                height={600}
-                className="w-full h-full !object-contain"
-                alt="Preview"
-              />
-            </div>
-          </div>
-        </ModalBody>
-      </Modal>
+      {/* Image Lightbox */}
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        slides={item?.images?.map((image) => ({ src: image }))}
+        index={activeImageIndex}
+        on={{
+          view: ({ index }) => setActiveImageIndex(index),
+        }}
+      />
 
       {/* Modal */}
       {showModal && (

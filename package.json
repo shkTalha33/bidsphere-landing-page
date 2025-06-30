@@ -66,6 +66,7 @@
     "sharp": "^0.33.5",
     "socket.io-client": "^4.8.1",
     "swiper": "^11.1.15",
+    "yet-another-react-lightbox": "^3.23.4",
     "yup": "^1.6.1"
   },
   "devDependencies": {
