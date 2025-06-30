@@ -59,7 +59,7 @@ const MainLayout = ({ children }) => {
       <main
         className={`min-h-screen ${
           !excludeRoutes.includes(pathname) &&
-          "bg_mainsecondary p-2  md:py-4 !pt-[100px]"
+          "bg_mainsecondary md:py-4 !pt-[100px]"
         }`}
       >
         {children}
