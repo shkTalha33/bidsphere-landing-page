@@ -774,6 +774,7 @@ export default function Header() {
                     : "text_dark"
                 }
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+                onClick={handleNavClose}
               >
                 {t("nav.about")}
               </Link>
@@ -796,6 +797,7 @@ export default function Header() {
                     : "text_dark"
                 }
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+                onClick={handleNavClose}
               >
                 {t("nav.contactus")}
               </Link>
@@ -809,6 +811,7 @@ export default function Header() {
                     : "text_dark"
                 }
               cursor-pointer text-[0.9rem] lg:text-[1rem] no-underline poppins_regular`}
+                onClick={handleNavClose}
               >
                 {t("profil.heading29")}
               </Link>
