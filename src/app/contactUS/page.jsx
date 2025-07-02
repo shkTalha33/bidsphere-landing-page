@@ -121,7 +121,9 @@ const Page = () => {
                       language === "ar" ? "pr-10" : "pl-10"
                     }`}
                   >
-                    {data?.footer?.phone1}
+                    {language === "ar"
+                      ? `\u202B${data?.footer?.phone1}\u202C+`
+                      : `+${data?.footer?.phone1}`}
                   </p>
                 </div>
               </Col>
@@ -171,13 +173,6 @@ const Page = () => {
               >
                 {t("contactUs.heading3")}
               </h4>
-              <p
-                className={`text-gray-600 mb-2 mb-md-4 ${
-                  language === "ar" ? "text-right" : "text-left"
-                }`}
-              >
-                {t("contactUs.heading4")}
-              </p>
 
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-2 mb-md-4">
@@ -187,7 +182,7 @@ const Page = () => {
                       language === "ar" ? "text-right" : "text-left"
                     }`}
                   >
-                    {t("contactUs.heading5")}
+                    {t("contactUs.heading9")}
                   </label>
                   <Controller
                     name="name"
@@ -219,7 +214,7 @@ const Page = () => {
                       language === "ar" ? "text-right" : "text-left"
                     }`}
                   >
-                    {t("emailSubscribe.heading3")}
+                    {t("contactUs.heading10")}
                   </label>
                   <Controller
                     name="email"

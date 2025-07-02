@@ -99,7 +99,7 @@
   },
   "homeSlider": {
     "title": "Welcome to The Castle Auction",
-    "subTitle": "The Castle Auction is the first specialized auction house in Libya, redefining the experience of buying and selling unique items. Committed to transparency, we rely on creativity and the latest talents to provide a unique platform for everyone and buyers with the highest level of will and confidence.",
+    "subTitle": "The Castle Auction is Libya’s first specialized auction house, offering a transparent and creative platform for confidently buying and selling unique items",
     "button": "Bid Now"
   },
   "category": {
@@ -187,7 +187,9 @@
     "heading5": "Enter Your Name",
     "heading6": "Your Message",
     "heading7": "Write Your Message",
-    "heading8": "Send Message"
+    "heading8": "Send Message",
+    "heading9": "Name",
+    "heading10": "Email"
   },
   "currencies": {
     "dinar_libyan": "Dinar Libyan",
@@ -386,14 +388,14 @@
   },
   "promise": {
     "ourDifferences": "Our Culture",
-    "ourValue": "Our Value ",
+    "ourValue": "Our Value",
     "promises": "Promises",
     "description": "With years of experience powering seamless online auctions, we've built a reputation rooted in trust, transparency, and results. From first-time bidders to seasoned sellers, our platform is designed to deliver a smooth, secure, and reliable auction experience every time. We are committed to providing innovative tools, fair bidding practices, and round-the-clock support—because your success is our promise.",
     "ourMission": "Our Mission",
     "missionDescription": "Our mission is to provide unparalleled security solutions, ensuring peace of mind and assurance of protection to our clients, their customers, and the public. We deliver a higher standard of security services by deploying the latest innovations.",
     "ourVision": "Our Vision",
     "visionDescription": "Our vision is to cultivate thriving habitats where residents, businesses, and organizations grow confidently, knowing they are protected by technology that adapts naturally to their evolving needs while preserving the harmony between innovation and human wellbeing.",
-    "clientsHappy": "Clients Happy From Us",
+    "clientsHappy": "Happy Clients",
     "successRate": "Success Rate"
   },
   "categoryAuction": {
