@@ -11,7 +11,7 @@ import { Container } from "react-bootstrap";
 const Footer = () => {
   const { t } = useTranslation();
   const language = useSelector((state) => state.language?.language);
-  const { data, isFetching, error } = useFootersQuery({
+  const { data } = useFootersQuery({
     endpoint: GetFooter,
   });
 
@@ -30,11 +30,13 @@ const Footer = () => {
             <Image
               src={Logo11}
               alt="Logo"
-              className="mb-2 md:mb-6 h-[4rem] sm:h-[5rem] md:h-[6rem] object-contain w-[4rem] sm:w-[5rem] md:w-[6rem]"
+              className="mb-2 md:mb-6 h-[4rem] sm:h-[5rem] md:h-[6rem] object-contain w-[4rem] sm:w-[5rem] md:w-[6rem] mx-auto"
             />
-            <p className={`text-sm max-w-md `}>{data?.footer?.desc}</p>
+            <p className={`text-sm max-w-md `}>
+              {data?.footer?.desc[language]}
+            </p>
           </div>
-          <Link href="/auctions" className="inline-block">
+          <Link href="/auctions" className="inline-block mx-auto">
             <button className="bg-white text_dark px-8 text-sm md:text-base md:px-10 py-2 md:py-3 rounded-md poppins_medium capitalize">
               {t("homeSlider.button")}
             </button>
@@ -43,10 +45,8 @@ const Footer = () => {
 
         {/* Middle Section - Contacts */}
         <div
-          className={`lg:px-12 flex flex-col ${
-            language === "ar"
-              ? "justify-end text-right"
-              : "justify-start text-left"
+          className={`lg:px-12 flex justify-start flex-col ${
+            language === "ar" ? "items-end text-right" : "items-start text-left"
           }`}
         >
           <h3 className={`text-lg md:text-2xl poppins_semibold mb-2 md:mb-8`}>
@@ -82,7 +82,7 @@ const Footer = () => {
               </a>
             </div>
             <div>
-              <p className="text-sm">{data?.footer?.address}</p>
+              <p className="text-sm">{data?.footer?.address[language]}</p>
             </div>
           </div>
         </div>
