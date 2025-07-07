@@ -68,7 +68,7 @@ const Page = () => {
   });
 
   return (
-    <>
+    <main className="px-2 px-md-4">
       <Container
         fluid="xxl"
         className="bg-white rounded-lg p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
@@ -89,7 +89,7 @@ const Page = () => {
         className="mt-6 mb-4"
         dir={language === "ar" ? "rtl" : "ltr"}
       >
-        <Row className="g-4">
+        <Row className="g-2 g-md-4">
           {/* Contact Info Cards */}
           <Col lg="4" md="6" className="mb-4 md:mb-0">
             <Row className="g-3">
@@ -117,11 +117,13 @@ const Page = () => {
                     </h4>
                   </div>
                   <p
-                    className={`text-gray-600 ${
+                    className={`text-gray-600 mb-0 ${
                       language === "ar" ? "pr-10" : "pl-10"
                     }`}
                   >
-                    {data?.footer?.phone1}
+                    {language === "ar"
+                      ? `\u202B${data?.footer?.phone1}\u202C+`
+                      : `+${data?.footer?.phone1}`}
                   </p>
                 </div>
               </Col>
@@ -150,7 +152,7 @@ const Page = () => {
                     </h4>
                   </div>
                   <p
-                    className={`text-gray-600 ${
+                    className={`text-gray-600 mb-0 ${
                       language === "ar" ? "pr-10" : "pl-10"
                     }`}
                   >
@@ -163,31 +165,24 @@ const Page = () => {
 
           {/* Contact Form */}
           <Col lg="8" md="6">
-            <div className="bg-white p-6 rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D]">
+            <div className="bg-white px-2 py-3 p-md-4 rounded-lg shadow-[0px_4px_22.9px_0px_#0000000D]">
               <h4
-                className={`text-xl poppins_semibold text-gray-800 mb-6 ${
+                className={`text-xl poppins_semibold text-gray-800 mb-2 mb-md-4 ${
                   language === "ar" ? "text-right" : "text-left"
                 }`}
               >
                 {t("contactUs.heading3")}
               </h4>
-              <p
-                className={`text-gray-600 mb-8 ${
-                  language === "ar" ? "text-right" : "text-left"
-                }`}
-              >
-                {t("contactUs.heading4")}
-              </p>
 
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-2">
+                <div className="mb-2 mb-md-4">
                   <label
                     htmlFor="name"
                     className={`block text-sm poppins_medium text-gray-700 mb-2 ${
                       language === "ar" ? "text-right" : "text-left"
                     }`}
                   >
-                    {t("contactUs.heading5")}
+                    {t("contactUs.heading9")}
                   </label>
                   <Controller
                     name="name"
@@ -219,7 +214,7 @@ const Page = () => {
                       language === "ar" ? "text-right" : "text-left"
                     }`}
                   >
-                    {t("emailSubscribe.heading3")}
+                    {t("contactUs.heading10")}
                   </label>
                   <Controller
                     name="email"
@@ -280,7 +275,7 @@ const Page = () => {
                 <button
                   disabled={loading}
                   type="submit"
-                  className={`flex items-center bg_primary justify-center w-full sm:w-auto px-3 whitespace-nowrap py-3 text-white poppins_medium rounded-lg transition-all duration-300 hover:opacity-90 ${
+                  className={`flex items-center bg_primary justify-center w-full sm:w-auto px-3 whitespace-nowrap py-2 text-white poppins_medium rounded-lg transition-all duration-300 hover:opacity-90 ${
                     language === "ar" ? "text-right" : "text-left"
                   }`}
                 >
@@ -298,7 +293,7 @@ const Page = () => {
           </Col>
         </Row>
       </Container>
-    </>
+    </main>
   );
 };
 

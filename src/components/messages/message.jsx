@@ -75,22 +75,19 @@ const ChatMessage = () => {
   };
   return (
     <div className="bg-light" dir={language === "ar" ? "rtl" : "ltr"}>
-      <Container fluid="xxl" className="min-h-[80vh] mx-auto pt-1 pb-5">
-        
-          <div>
-            <div className="chat_grid">
-              <div
-                className={`chat_screen ${
-                  !responsiveChat ? "" : "d_chat_none"
-                }`}
-              >
-                <div className="pb-1">
-                  <div className="d-flex align-items-center justify-content-between px-3"></div>
-                  <hr style={{ color: "#EDEEF0" }} className="mb-1" />
-                  <h5 className="semibold_font px-[10px] py-[1rem]">
-                    {t("message.heading1")}
-                  </h5>
-                  {/* <div className="position-relative mx-3 my-[12px]">
+      <Container fluid="xxl" className="min-h-[80vh] mx-auto !pt-[100px] pb-5">
+        <div>
+          <div className="chat_grid">
+            <div
+              className={`chat_screen ${!responsiveChat ? "" : "d_chat_none"}`}
+            >
+              <div className="pb-1">
+                <div className="d-flex align-items-center justify-content-between px-3"></div>
+                <hr style={{ color: "#EDEEF0" }} className="mb-1" />
+                <h5 className="semibold_font px-[10px] py-[1rem]">
+                  {t("message.heading1")}
+                </h5>
+                {/* <div className="position-relative mx-3 my-[12px]">
                     <span className="position-absolute mt-2 ms-3">
                       {" "}
                       <Search />{" "}
@@ -103,36 +100,31 @@ const ChatMessage = () => {
                       id=""
                     />
                   </div> */}
-                  <hr style={{ color: "#EDEEF0" }} className="my-1" />
-                  <ChatList />
-                </div>
-              </div>
-              <div
-                className={`chat_screen ${
-                  responsiveChat ? "" : "d_chat_none"
-                } `}
-                id="chatScreen"
-              >
-                {activeChatId ? (
-                  <ChatMessageList />
-                ) : (
-                  <div className="display_flex2 flex-column h-100 w-100">
-                    <BiSolidMessageRounded style={{ fontSize: "30px" }} />
-                    <h4 className="ms-2 my-0 msg_s00">
-                      {t("message.heading4")}
-                    </h4>
-                    <h6
-                      style={{ color: "#2D3D38" }}
-                      className="text-center regular_font mt-2"
-                    >
-                      {t("message.heading2")}
-                    </h6>
-                  </div>
-                )}
+                <hr style={{ color: "#EDEEF0" }} className="my-1" />
+                <ChatList />
               </div>
             </div>
+            <div
+              className={`chat_screen ${responsiveChat ? "" : "d_chat_none"} `}
+              id="chatScreen"
+            >
+              {activeChatId ? (
+                <ChatMessageList />
+              ) : (
+                <div className="display_flex2 flex-column h-100 w-100">
+                  <BiSolidMessageRounded style={{ fontSize: "30px" }} />
+                  <h4 className="ms-2 my-0 msg_s00">{t("message.heading4")}</h4>
+                  <h6
+                    style={{ color: "#2D3D38" }}
+                    className="text-center regular_font mt-2"
+                  >
+                    {t("message.heading2")}
+                  </h6>
+                </div>
+              )}
+            </div>
           </div>
-        
+        </div>
       </Container>
     </div>
   );

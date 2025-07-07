@@ -9,9 +9,7 @@ export default function AuctionLots({ items, loading }) {
   const { formatPrice, convert } = useCurrency();
   const router = useRouter();
   const handleAuctionDetail = (item) => {
-    router.push(
-      `/auctions/lot/detail/?item=${encodeURIComponent(JSON.stringify(item))}`
-    );
+    router.push(`/auctions/lot/detail/?item=${item?.item?._id}`);
   };
 
   return (

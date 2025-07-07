@@ -54,10 +54,10 @@ export default function OurOffer() {
         dir={language === "ar" ? "rtl" : "ltr"}
       >
         <Container fluid="xxl">
-          <h4 className="text_darkprimary poppins_medium text-2xl md:text-4xl text-center capitalize mb-5">
+          <h4 className="text_darkprimary poppins_medium text-2xl md:text-4xl text-center capitalize mb-4 mb-md-5">
             {t("offers.heading")} <br /> {t("offers.subHeading")}
           </h4>
-          <motion.div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3">
             {auctionData.map((article, index) => (
               <motion.div
                 key={article.id}
@@ -80,11 +80,11 @@ export default function OurOffer() {
                   </div>
                 </div>
 
-                <div className="p-3 lg:p-6  h-full">
+                <div className="p-3">
                   <div className="text-black transition-all duration-300 text-lg mb-3 poppins_medium">
                     {article.title}
                   </div>
-                  <p className="text-black text-base poppins_regular mb-4 leading-snug transition-colors duration-300">
+                  <p className="text-black text-base poppins_regular mb-0 leading-snug transition-colors duration-300">
                     {article.description}
                   </p>
                   <div className="flex items-center justify-between">

@@ -109,7 +109,7 @@ const ProductTable = ({
   };
   // ** Custom Pagination
   const CustomPagination = () => (
-    <div className="flex justify-center items-center p-3 direction_ltr">
+    <div className="flex justify-center items-center p-2 direction_ltr">
       <ReactPaginate
         previousLabel={<Previous size={15} />}
         nextLabel={<Next size={15} />}
@@ -128,7 +128,7 @@ const ProductTable = ({
         previousLinkClassName="page-link"
         nextClassName="page-item next-item"
         previousClassName="page-item prev-item"
-        containerClassName="pagination react-paginate separated-pagination pagination-sm pe-4 justify-end mt-4"
+        containerClassName="pagination react-paginate separated-pagination pagination-sm pe-4 justify-end"
       />
       {/* <div className="text-xs sm:text-base poppins_medium mt-4">
         {`Showing ${currentPage * 10 + 1} to ${Math.min(
@@ -143,7 +143,7 @@ const ProductTable = ({
     <>
       <Fragment>
         <div
-          className="w-full mt-2 mt-md-4 rounded-xl"
+          className="w-full rounded-xl p-2"
           dir={language === "ar" ? "rtl" : "ltr"}
         >
           <h6

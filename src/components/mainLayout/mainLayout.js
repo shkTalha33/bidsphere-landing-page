@@ -58,8 +58,7 @@ const MainLayout = ({ children }) => {
       {!isPublicRoute && <Header />}
       <main
         className={`min-h-screen ${
-          !excludeRoutes.includes(pathname) &&
-          "bg_mainsecondary md:py-4 !pt-[100px]"
+          !excludeRoutes.includes(pathname) && "bg_mainsecondary p-2 !pt-[95px]"
         }`}
       >
         {children}

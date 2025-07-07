@@ -7,33 +7,30 @@ import { avataruser } from "@/components/assets/icons/icon";
 import TabHeader from "@/components/tabHeader";
 import Image from "next/image";
 /* eslint-disable @next/next/no-img-element */
-import { useState, useRef, useEffect } from "react";
-import { Check, Edit2, X } from "react-feather";
-import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import toast from "react-hot-toast";
-import { uploadFile } from "@/components/api/uploadFile";
-import { Button, Modal, Spinner } from "react-bootstrap";
-import { Input } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import Autocomplete from "react-google-autocomplete";
 import { updateProfile } from "@/components/api/ApiFile";
-import { setUserData } from "@/components/redux/loginForm";
-import { useTranslation } from "react-i18next";
-import { Container } from "reactstrap";
+import { uploadFile } from "@/components/api/uploadFile";
 import { getLanguage } from "@/components/redux/language/languageSlice";
+import { setUserData } from "@/components/redux/loginForm";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Input } from "antd";
+import { useEffect, useState } from "react";
+import { Button, Spinner } from "react-bootstrap";
+import Autocomplete from "react-google-autocomplete";
+import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { Container } from "reactstrap";
+import * as yup from "yup";
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { userData, GoogleApiKey, put } = ApiFunction();
-  const [show, setShow] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [locationDetails, setLocationDetails] = useState({});
   const { t } = useTranslation();
   const language = useSelector(getLanguage);
-  // ////
 
   const schema = yup.object().shape({
     fname: yup
@@ -159,33 +156,35 @@ const ProfilePage = () => {
 
   return (
     <main
-      className="bg-gray-100 flex flex-col items-start"
+      className="flex flex-col items-start"
       dir={language === "ar" ? "rtl" : "ltr"}
     >
       <Container
         fluid="xxl"
-        className="mx-auto p-4 flex flex-col lg:flex-row gap-6"
+        className="mx-auto p-2 p-md-4 flex flex-col lg:flex-row gap-3"
       >
         <div className="w-full lg:w-1/4">
           <TabHeader />
         </div>
         <div className="w-full flex flex-col items-start gap-3 lg:w-3/4">
-          <div className="w-full bg-white p-4 flex justify-between items-center rounded-lg shadow-sm">
+          <div className="w-full bg-white p-3 p-md-4 flex justify-between items-center rounded-lg shadow-sm">
             <div className="flex flex-col w-full">
-              <h1 className="text-2xl poppins_semibold">
+              <h1 className="text-lg md:text-2xl poppins_medium">
                 {t("profil.heading")}
               </h1>
-              <p className="text-gray-600">{t("profil.heading1")}</p>
+              <p className="text-gray-600 text-sm md:text-base">
+                {t("profil.heading1")}
+              </p>
             </div>
             <button
               onClick={() => setIsEditing((prev) => !prev)}
-              className="ml-4 py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-2 flex items-center justify-center"
+              className="ml-4 py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-2 flex items-center justify-center text-sm md:text-base"
               aria-label={"Edit profile"}
             >
               {isEditing ? t("profil.cancle") : t("profil.edit")}
             </button>
           </div>
-          <div className="bg-white p-8 rounded-lg w-full shadow-sm">
+          <div className="bg-white p-3 p-md-4 rounded-lg w-full shadow-sm">
             {isEditing ? (
               <>
                 <form
@@ -352,16 +351,16 @@ const ProfilePage = () => {
                 <div className="flex justify-between items-start mb-8">
                   <div className="flex flex-col md:flex-row items-start w-full">
                     <div className="w-full md:w-1/2">
-                      <h2 className="text-2xl poppins_semibold mb-2">
+                      <h2 className="text-lg md:text-2xl poppins_medium mb-2">
                         {t("profil.heading18")}
                       </h2>
-                      <p className="text-gray-700 poppins_medium">
+                      <p className="text-gray-700 poppins_medium text-sm md:text-base">
                         {t("profil.heading19")}
                       </p>
                     </div>
-                    <div className="w-full md:w-1/2 flex items-center gap-6 mt-6 md:mt-0">
+                    <div className="w-full md:w-1/2 flex items-center gap-6 mt-4 md:mt-0">
                       <div className="min-w-24">
-                        <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-300">
+                        <div className="w-[4rem] h-[4rem] md:w-[6rem] md:h-[6rem] rounded-full overflow-hidden bg-gray-300">
                           {userData?.profile ? (
                             <>
                               <img
@@ -369,7 +368,7 @@ const ProfilePage = () => {
                                 width={96}
                                 height={96}
                                 alt="Profile"
-                                className="w-full h-full object-cover"
+                                className="w-[4rem] h-[4rem] md:w-[6rem] md:h-[6rem] object-cover"
                               />
                             </>
                           ) : (
@@ -379,7 +378,7 @@ const ProfilePage = () => {
                                 width={96}
                                 height={96}
                                 alt="Profile"
-                                className="w-full h-full object-cover"
+                                className="w-[4rem] h-[4rem] md:w-[6rem] md:h-[6rem] object-cover"
                               />
                             </>
                           )}
@@ -431,52 +430,52 @@ const ProfilePage = () => {
                   </div>
                 </div>
 
-                <div className="border-t pt-8 w-full mt-8">
+                <div className="border-t pt-4 w-full">
                   <div className="flex flex-col md:flex-row">
-                    <div className="w-full md:w-1/2 mb-6 md:mb-0">
-                      <h2 className="text-2xl poppins_semibold mb-2">
+                    <div className="w-full md:w-1/2 mb-4 md:mb-0">
+                      <h2 className="text-lg md:text-2xl poppins_semibold mb-2">
                         {t("profil.heading")}
                       </h2>
-                      <p className="text-gray-700 poppins_medium">
+                      <p className="text-gray-700 text-sm md:text-base poppins_medium">
                         {t("profil.heading20")}
                       </p>
                     </div>
                     <div className="w-full md:w-1/2 space-y-6">
                       <div>
-                        <h3 className="poppins_medium text-gray-700 poppins_medium">
+                        <h3 className="poppins_medium text-base md:text-lg text-gray-700 poppins_medium">
                           {t("profil.heading21")}
                         </h3>
-                        <p className="text-gray-900 poppins_regular">
+                        <p className="text-gray-900 text-sm md:text-base poppins_regular">
                           {`${userData?.fname} ${userData?.lname}`}
                         </p>
                       </div>
 
                       <div>
-                        <h3 className="poppins_medium text-gray-700 poppins_medium">
+                        <h3 className="poppins_medium text-base md:text-lg text-gray-700 poppins_medium">
                           {t("profil.heading7")}
                         </h3>
-                        <p className="text-gray-900 poppins_regular">
+                        <p className="text-gray-900 text-sm md:text-base poppins_regular">
                           {userData?.address}
                         </p>
                       </div>
                       <div>
-                        <h3 className="poppins_medium text-gray-700 poppins_medium">
+                        <h3 className="poppins_medium text-base md:text-lg text-gray-700 poppins_medium">
                           {t("profil.heading22")}
                         </h3>
-                        <p className="text-gray-900 poppins_regular">
+                        <p className="text-gray-900 text-sm md:text-base poppins_regular">
                           {userData?.phone}
                         </p>
                       </div>
                       <div>
-                        <h3 className="poppins_medium text-gray-700 poppins_medium">
+                        <h3 className="poppins_medium text-base md:text-lg text-gray-700 poppins_medium">
                           {t("profil.heading23")}
                         </h3>
-                        <p className="text-gray-900 poppins_regular">
+                        <p className="text-gray-900 text-sm md:text-base poppins_regular">
                           {userData?.email}
                         </p>
                       </div>
                       <div className="border-t pt-6 mt-6">
-                        <h3 className="poppins_medium text-gray-700">
+                        <h3 className="poppins_medium text-base md:text-lg text-gray-700">
                           {t("profil.heading24")}
                         </h3>
                         <p className="text-[#16A34A] text-lg poppins_semibold">

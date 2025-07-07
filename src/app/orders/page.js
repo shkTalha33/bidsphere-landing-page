@@ -143,12 +143,12 @@ const Page = () => {
           {row?.transaction?._id ? (
             <div
               onClick={() => handleinvoice(row)}
-              className="h-6 md:h-10 px-2 flex items-center justify-center text-white cursor-pointer text-[0.8rem] rounded-[10px] w-fit shadow bg-gradient-to-r from-[#660000] to-[#993333] hover:from-[#550000] hover:to-[#800000] transition-all duration-300"
+              className="h-6 p-3 flex items-center justify-center text-white cursor-pointer text-[0.8rem] rounded-[10px] shadow bg-gradient-to-r from-[#660000] to-[#993333] hover:from-[#550000] hover:to-[#800000] transition-all duration-300"
             >
               {t("order.heading10")}
             </div>
           ) : (
-            <h4 className="text-center poppins_regular text-gray-400 italic">
+            <h4 className="text-center poppins_regular text-sm text-gray-400 mb-0">
               {t("order.heading11")}
             </h4>
           )}
@@ -169,13 +169,13 @@ const Page = () => {
     },
     {
       name: t("order.heading13"),
-      minWidth: "100px",
-      maxWidth: "120px",
+      minWidth: "140px",
+      maxWidth: "300px",
       cell: (row) => (
         <>
           {/* {currentActiveButton !== "Payement" && ( */}
           <div
-            className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#660000] poppins_medium capitalize cursor-pointer"
+            className="text-center p-3 h-6 rounded-lg flex items-center justify-center text-[10px] text_primary border-1 border-[#660000] poppins_medium capitalize cursor-pointer"
             onClick={() => {
               handleDetail(row);
             }}
@@ -246,7 +246,7 @@ const Page = () => {
 
   return (
     <>
-      <main dir={language === "ar" ? "rtl" : "ltr"}>
+      <main dir={language === "ar" ? "rtl" : "ltr"} className="p-2">
         <Container
           fluid="xxl"
           className="bg_white rounded-[9px] p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
@@ -262,7 +262,7 @@ const Page = () => {
         </Container>
         <Container
           fluid="xxl"
-          className="bg_white p-2 p-md-3 rounded-[9px] mt-2 md:mt-4"
+          className="bg_white p-2 p-md-3 rounded-[9px] mt-2 mt-md-4"
         >
           <Row className="rounded-[9px] g-3 min-h-screen ">
             <Col md="3">
@@ -344,7 +344,7 @@ const Page = () => {
                   backrout={"/orders"}
                 />
               ) : (
-                <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] py-1 py-md-2 px-2 px-md-5 rounded-[11px]">
+                <div className="flex items-center justify-start gap-10 bg-[#FAFAFA] p-2 p-md-4 rounded-[11px]">
                   <ProductTable
                     rowHeading={t("order.heading")}
                     count={count}

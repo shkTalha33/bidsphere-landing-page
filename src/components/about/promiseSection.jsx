@@ -15,7 +15,7 @@ const PromiseSection = () => {
   const language = useSelector((state) => state.language?.language);
   return (
     <motion.div
-      className="bg-white text-white py-8 sm:py-16 px-4"
+      className="bg-white text-white py-4 sm:py-5 px-md-4"
       variants={staggerContainer}
       initial="hidden"
       whileInView="show"
@@ -27,7 +27,9 @@ const PromiseSection = () => {
         <div className="grid lg:grid-cols-2 gap-4 md:gap-12 items-start">
           {/* Left Column */}
           <div>
-            <div className={`flex gap-3 items-center  mb-[10px] `}>
+            <div
+              className={`flex gap-3 items-center justify-center md:justify-start mb-[10px] `}
+            >
               <div className={`w-8 h-2 bg_primary rounded-full`}></div>
               <h6
                 className={`text-[#202020] poppins_semibold text-xl capitalize mb-0`}
@@ -36,23 +38,20 @@ const PromiseSection = () => {
               </h6>
             </div>
             <h4
-              className={`text-2xl md:text-4xl text_primary poppins_medium capitalize mb-2 mb-md-4 ${
-                language === "ar" ? "text-right" : "text-left"
-              }`}
+              className={`text-2xl md:text-4xl text_primary poppins_medium capitalize mb-2 mb-md-4 flex items-center justify-center md:justify-start`}
             >
-              {t("promise.ourValue")}
+              {t("promise.ourValue")}{" "}
               <span
                 className={`text-black poppins_medium ${
-                  language === "ar" ? "text-right" : "text-center md:text-start"
+                  language === "ar" ? "mr-2" : "ml-2"
                 }`}
               >
                 {t("promise.promises")}
               </span>
             </h4>
+
             <p
-              className={`poppins_regular text-sm md:text-base text-[#8B8B8B] mb-3 mb-md-4 ${
-                language === "ar" ? "text-right" : "text-start md:text-start"
-              }`}
+              className={`poppins_regular text-sm md:text-base text-[#8B8B8B] mb-3 mb-md-4`}
             >
               {t("promise.description")}
             </p>

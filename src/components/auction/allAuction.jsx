@@ -17,6 +17,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ApiFunction from "../api/apiFuntions";
 import { useSelector } from "react-redux";
+
 export default function AllAuction() {
   const [activeTab, setActiveTab] = useState("all");
   const { t } = useTranslation();
@@ -303,7 +304,7 @@ export default function AllAuction() {
       <Container
         dir={language === "ar" ? "rtl" : "ltr"}
         fluid="xxl"
-        className="bg_white rounded-[9px] p-3 sm:p-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
+        className="bg_white rounded-[9px] p-3 p-sm-4 shadow-[0px_4px_22.9px_0px_#0000000D]"
       >
         <Row>
           <Col md="12">
@@ -329,11 +330,11 @@ export default function AllAuction() {
             <div className="w-full text-end">
               <div
                 onClick={handleOpenFilter}
-                className={`${language === "ar" ? "mr-auto" : "ml-auto"} mb-4 ${
+                className={`${language === "ar" ? "mr-auto" : "ml-auto"} mb-2 ${
                   isFiltered ? "bg_primary" : "bg-1"
-                } w-[2.5rem] h-[2.5rem] rounded-full items-center justify-center flex sm:hidden cursor-pointer`}
+                } md:w-[2.5rem] md:h-[2.5rem] w-[2rem] h-[2rem] rounded-full items-center justify-center flex sm:hidden cursor-pointer`}
               >
-                <FiFilter className="text-white w-[1.5rem] h-[1.5rem]" />
+                <FiFilter className="text-white w-[1rem] h-[1rem] md:w-[1.5rem] md:h-[1.5rem]" />
               </div>
             </div>
           </Col>

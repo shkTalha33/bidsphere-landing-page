@@ -59,8 +59,8 @@ export default function PaymentDetail() {
     },
     {
       name: t("payment.heading4"),
-      minWidth: "150px",
-      maxWidth: "350px",
+      minWidth: "250px",
+      maxWidth: "450px",
       cell: (row) => (
         <div className="flex items-center justify-center capitalize gap-2">
           <Image
@@ -70,7 +70,7 @@ export default function PaymentDetail() {
             alt={row?.auction?.name}
             className="w-8 rounded-full h-8"
           />
-          {row?.auction?.name || "N/A"}
+          <span className="line-clamp-2">{row?.auction?.name || "N/A"}</span>
         </div>
       ),
     },
@@ -290,11 +290,11 @@ export default function PaymentDetail() {
   };
 
   return (
-    <>
+    <main className="bg_mainsecondary overflow-hidden p-2">
       <Container
         fluid="xxl"
         dir={language === "ar" ? "rtl" : "ltr"}
-        className={`bg_white rounded-[9px] p-4 shadow-[0px_4px_22.9px_0px_#0000000D] ${
+        className={`bg_white rounded-[9px] p-2 p-md-4 shadow-[0px_4px_22.9px_0px_#0000000D] ${
           language === "ar" ? "text-right" : ""
         }`}
       >
@@ -316,7 +316,7 @@ export default function PaymentDetail() {
         <div
           className={`flex items-center ${
             language === "ar" ? "justify-end" : "justify-start"
-          } gap-10 bg-[#FAFAFA] py-2 px-3 px-md-5 rounded-[11px] mt-3`}
+          } gap-10 bg-[#FAFAFA] py-2 px-3 px-md-4 rounded-[11px]`}
         >
           <ProductTable
             rowHeading={t("payment.heading2")}
@@ -507,6 +507,6 @@ export default function PaymentDetail() {
           </Modal.Body>
         </Modal>
       </Container>
-    </>
+    </main>
   );
 }

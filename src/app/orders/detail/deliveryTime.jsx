@@ -11,13 +11,13 @@ const DeliveryTime = ({ orderDetail }) => {
 
   return (
     <div className="rounded-lg">
-      <h2 className="text-lg capitalize poppins_semibold text-gray-800 mb-4">
+      <h2 className="text-lg capitalize poppins_semibold text-gray-800 mb-3">
         {t("order.heading18")}
       </h2>
 
       {orderDetail?.paymentDate && formatDate(orderDetail.paymentDate) && (
-        <div className="mb-3">
-          <p className="text-sm text-gray-500">{t("order.heading28")}</p>
+        <div className="mb1">
+          <p className="text-sm text-gray-500 mb-1">{t("order.heading28")}</p>
           <p className="text-base poppins_medium text-gray-800">
             {formatDate(orderDetail.paymentDate)}
           </p>
@@ -25,8 +25,8 @@ const DeliveryTime = ({ orderDetail }) => {
       )}
 
       {orderDetail?.shippedDate && formatDate(orderDetail.shippedDate) && (
-        <div className="mb-3">
-          <p className="text-sm text-gray-500">{t("order.heading29")}</p>
+        <div className="mb1">
+          <p className="text-sm text-gray-500 mb-1">{t("order.heading29")}</p>
           <p className="text-base poppins_medium text-gray-800">
             {formatDate(orderDetail.shippedDate)}
           </p>
@@ -34,8 +34,8 @@ const DeliveryTime = ({ orderDetail }) => {
       )}
 
       {orderDetail?.transitDate && formatDate(orderDetail.transitDate) && (
-        <div className="mb-3">
-          <p className="text-sm text-gray-500">{t("order.heading30")}</p>
+        <div className="mb1">
+          <p className="text-sm text-gray-500 mb-1">{t("order.heading30")}</p>
           <p className="text-base poppins_medium text-gray-800">
             {formatDate(orderDetail.transitDate)}
           </p>
@@ -43,8 +43,8 @@ const DeliveryTime = ({ orderDetail }) => {
       )}
 
       {orderDetail?.deliveryDate && formatDate(orderDetail.deliveryDate) && (
-        <div className="mb-3">
-          <p className="text-sm text-gray-500">{t("order.heading31")}</p>
+        <div className="mb1">
+          <p className="text-sm text-gray-500 mb-1">{t("order.heading31")}</p>
           <p className="text-base poppins_medium text-green-600">
             {formatDate(orderDetail.deliveryDate)}
           </p>

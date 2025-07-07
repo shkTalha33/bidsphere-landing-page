@@ -16,12 +16,12 @@ export default function Home() {
   const language = useSelector(getLanguage);
   return (
     <main
-      className="bg-gray-100 flex flex-col items-start"
+      className="flex flex-col items-start pb-4"
       dir={language === "ar" ? "rtl" : "ltr"}
     >
       <Container
         fluid="xxl"
-        className="mx-auto p-4 flex flex-col lg:flex-row gap-6"
+        className="mx-auto p-2 p-md-4 flex flex-col lg:flex-row gap-3"
       >
         <div className="w-full lg:w-1/4">
           <TabHeader />
@@ -34,49 +34,14 @@ export default function Home() {
           />
 
           {loading ? (
-            <div className="flex justify-center items-center py-32 rounded-lg shadow-sm bg_white text-center px-8  w-full">
+            <div className="flex justify-center items-center py-32 rounded-lg shadow-sm bg_white text-center px-2 px-md-4  w-full">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-700"></div>
             </div>
           ) : (
             <>
-              <div className="bg-white px-8 py-6 rounded-lg w-full shadow-sm">
+              <div className="bg-white p-3 p-md-4 rounded-lg w-full shadow-sm">
                 <CurrencyConverter />
               </div>
-              {/* <div className="bg-white px-8 py-6 rounded-lg w-full shadow-sm">
-                <h2 className="text-xl font-bold mb-4">
-                  Currency Converter Demo
-                </h2>
-                <div className="flex flex-col md:flex-row md:items-center gap-4">
-                  <div>
-                    <label
-                      htmlFor="amount"
-                      className="block text-sm poppins_medium text-gray-700 mb-1"
-                    >
-                      Amount ({baseCurrency}):
-                    </label>
-                    <input
-                      type="number"
-                      id="amount"
-                      value={amount}
-                      onChange={(e) => setAmount(Number(e.target.value))}
-                      className="p-2 border rounded w-full"
-                    />
-                  </div>
-                  <div className="md:self-end">
-                    <p className="text-lg">
-                      {amount.toLocaleString()} {baseCurrency} ={" "}
-                      <strong>
-                        {formatPrice(convert(amount, baseCurrency))}
-                      </strong>
-                    </p>
-                    <p className="text-sm text-gray-500 mt-1">
-                      {loading
-                        ? "Loading latest rates..."
-                        : "Using latest exchange rates"}
-                    </p>
-                  </div>
-                </div>
-              </div> */}
             </>
           )}
         </div>
