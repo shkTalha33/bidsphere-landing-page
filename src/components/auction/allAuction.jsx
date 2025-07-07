@@ -469,7 +469,7 @@ export default function AllAuction() {
                 type="submit"
                 className={`${
                   isFiltered ? "flex-1" : "w-full"
-                } h-[3.5rem] bg_primary hover:bg-[#660000] border-0`}
+                } h-[3.5rem] bg_primary hover:bg-[#9F1E24] border-0`}
               >
                 {t("allAuction.heading9")}
               </Button>

@@ -143,7 +143,7 @@ const Page = () => {
           {row?.transaction?._id ? (
             <div
               onClick={() => handleinvoice(row)}
-              className="h-6 p-3 flex items-center justify-center text-white cursor-pointer text-[0.8rem] rounded-[10px] shadow bg-gradient-to-r from-[#660000] to-[#993333] hover:from-[#550000] hover:to-[#800000] transition-all duration-300"
+              className="h-6 p-3 flex items-center justify-center text-white cursor-pointer text-[0.8rem] rounded-[10px] shadow bg-gradient-to-r from-[#9F1E24] to-[#993333] hover:from-[#550000] hover:to-[#800000] transition-all duration-300"
             >
               {t("order.heading10")}
             </div>
@@ -175,7 +175,7 @@ const Page = () => {
         <>
           {/* {currentActiveButton !== "Payement" && ( */}
           <div
-            className="text-center p-3 h-6 rounded-lg flex items-center justify-center text-[10px] text_primary border-1 border-[#660000] poppins_medium capitalize cursor-pointer"
+            className="text-center p-3 h-6 rounded-lg flex items-center justify-center text-[10px] text_primary border-1 border-[#9F1E24] poppins_medium capitalize cursor-pointer"
             onClick={() => {
               handleDetail(row);
             }}

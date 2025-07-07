@@ -59,7 +59,7 @@ const Page = () => {
             title={t("termConditions.heading")}
           />
           <div className="bg-white rounded-lg w-full shadow-sm">
-            <div className=" rounded-4 bg_white">
+            <div className=" rounded-4 rounded-lg w-full shadow-sm">
               {loading ? (
                 <Skeleton active />
               ) : (

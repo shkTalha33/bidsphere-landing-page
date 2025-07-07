@@ -103,12 +103,12 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                     >
                       {language === "ar" ? (
                         <TbArrowBackUp
-                          color="#660000"
+                          color="#9F1E24"
                           className="text-xl md:text-2xl"
                         />
                       ) : (
                         <TbArrowBackUp
-                          color="#660000"
+                          color="#9F1E24"
                           className="text-xl md:text-2xl"
                         />
                       )}
@@ -152,7 +152,7 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
                           className="bg_lightsecondary flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full ml-auto cursor-pointer"
                         >
                           <TbMessage
-                            color="#660000"
+                            color="#9F1E24"
                             className="text-xl md:text-2xl"
                           />
                         </div>

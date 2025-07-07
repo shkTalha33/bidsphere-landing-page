@@ -172,7 +172,7 @@ const Page = () => {
             icon={<TbCurrentLocation />}
             onClick={handleCurrentLocation}
             disabled={loading}
-            className="flex-1 flex items-center justify-center px-4 py-3 gap-2 border-[1px] border-[#660000] text_primary rounded-lg"
+            className="flex-1 flex items-center justify-center px-4 py-3 gap-2 border-[1px] border-[#9F1E24] text_primary rounded-lg"
           >
             <TbCurrentLocation size={20} />
             {loading ? <Spin size="small" /> : t("location.currentLocation")}

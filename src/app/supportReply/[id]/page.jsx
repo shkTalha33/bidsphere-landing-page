@@ -56,7 +56,7 @@ const Page = () => {
         {loading ? (
           <>
             <div className="flex justify-center items-center mb-2 h-[10rem]">
-              <div className="loader border-t-2 border-b-2 border-[#660000] rounded-full w-5 h-5 animate-spin" />
+              <div className="loader border-t-2 border-b-2 border-[#9F1E24] rounded-full w-5 h-5 animate-spin" />
             </div>
           </>
         ) : (

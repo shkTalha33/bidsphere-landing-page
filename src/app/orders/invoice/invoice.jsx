@@ -205,7 +205,7 @@ const Invoice = ({
                     className="bg_lightsecondary md:w-9 md:h-9 w-8 h-8 rounded-full cursor-pointer flex items-center justify-center"
                   >
                     <TbArrowBackUp
-                      color="#660000"
+                      color="#9F1E24"
                       className="text-xl md:text-2xl"
                     />
                   </div>
@@ -213,7 +213,7 @@ const Invoice = ({
                     orderDetail?.transaction?.status === "rejected") && (
                     <div
                       onClick={handleShow}
-                      className="text-[1rem] py-[5px] px-[10px] bg-[#660000] text-white rounded-[8px] poppins_regular whitespace-nowrap flex items-center gap-2 cursor-pointer"
+                      className="text-[1rem] py-[5px] px-[10px] bg-[#9F1E24] text-white rounded-[8px] poppins_regular whitespace-nowrap flex items-center gap-2 cursor-pointer"
                     >
                       <BsCash />
                       {t("order.heading45")}

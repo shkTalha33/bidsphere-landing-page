@@ -50,13 +50,13 @@ export default function Page() {
         btnText: "Yes, Place My Bid",
         // onClick: () => router.push("/auctions/registration"),
         className:
-          "rounded-[10px] bg_primary text-white poppins_medium text-xs sm:text-base md:text-lg border border-[#660000] w-full py-2 md:py-3",
+          "rounded-[10px] bg_primary text-white poppins_medium text-xs sm:text-base md:text-lg border border-[#9F1E24] w-full py-2 md:py-3",
       },
       {
         btnText: "Cancel",
         onClick: () => setOpenBiddingConfirmationModal(false),
         className:
-          "rounded-[10px] bg-white text_primary border border-[#660000] poppins_medium text-xs sm:text-base md:text-lg w-full py-2 md:py-3",
+          "rounded-[10px] bg-white text_primary border border-[#9F1E24] poppins_medium text-xs sm:text-base md:text-lg w-full py-2 md:py-3",
       },
     ],
   };
@@ -97,7 +97,7 @@ export default function Page() {
       {loading ? (
         <div className="min-h-[100vh] flex items-center justify-center">
           {" "}
-          <HashLoader color="#660000" size={25} />{" "}
+          <HashLoader color="#9F1E24" size={25} />{" "}
         </div>
       ) : (
         <>

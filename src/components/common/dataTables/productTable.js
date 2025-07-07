@@ -183,7 +183,7 @@ const ProductTable = ({
               className="py-5"
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <HashLoader size={18} color="#660000" />
+              <HashLoader size={18} color="#9F1E24" />
             </div>
           ) : (
             <div className="react-dataTable">

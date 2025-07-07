@@ -168,7 +168,7 @@ export default function Orders() {
       maxWidth: "120px",
       cell: (row) => (
         <div
-          className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#660000] poppins_medium capitalize cursor-pointer"
+          className="text-center w-24 h-6 rounded-md flex items-center justify-center text-[10px] text_primary border-1 border-[#9F1E24] poppins_medium capitalize cursor-pointer"
           onClick={() => router.push("/orders/detail")}
         >
           view details

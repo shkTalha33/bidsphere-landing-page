@@ -660,7 +660,7 @@ const AuctionDetailPage = () => {
       {loading ? (
         <div className="min-h-[100vh] flex items-center justify-center">
           {" "}
-          <HashLoader color="#660000" size={25} />{" "}
+          <HashLoader color="#9F1E24" size={25} />{" "}
         </div>
       ) : (
         <>

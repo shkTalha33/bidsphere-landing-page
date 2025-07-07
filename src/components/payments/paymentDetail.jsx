@@ -169,7 +169,7 @@ export default function PaymentDetail() {
           return (
             <button
               onClick={() => handleShow(row)}
-              className={`bg-gradient-to-r from-[#660000] via-[#800000] to-[#990000] whitespace-nowrap text-white text-sm font-medium py-1.5 px-3 rounded-md hover:opacity-90 transition ${
+              className={`bg-gradient-to-r from-[#9F1E24] via-[#800000] to-[#990000] whitespace-nowrap text-white text-sm font-medium py-1.5 px-3 rounded-md hover:opacity-90 transition ${
                 language === "ar" ? "ml-auto" : ""
               }`}
             >
@@ -482,7 +482,7 @@ export default function PaymentDetail() {
             >
               {/* Contact Admin Button */}
               <button
-                className={`bg-gradient-to-r from-[#660000] via-[#800000] to-[#990000] text-white poppins_medium py-2 px-4 rounded hover:opacity-90 transition flex items-center justify-center ${
+                className={`bg-gradient-to-r from-[#9F1E24] via-[#800000] to-[#990000] text-white poppins_medium py-2 px-4 rounded hover:opacity-90 transition flex items-center justify-center ${
                   language === "ar" ? "text-right" : "text-left"
                 }`}
                 onClick={handleContactAdmin}

@@ -9,7 +9,7 @@ export default function AlertSection({ type, message, description, buttons = [] 
     success: <CheckCircleTwoTone twoToneColor="#52c41a" />, // Green
     warning: <ExclamationCircleTwoTone twoToneColor="#faad14" />, // Yellow
     error: <CloseCircleTwoTone twoToneColor="#ff4d4f" />, // Red
-    info: <RiInformationFill  color="#660000" />, // Blue
+    info: <RiInformationFill  color="#9F1E24" />, // Blue
   };
 
   return (

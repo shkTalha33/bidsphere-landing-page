@@ -125,7 +125,7 @@ export default function Page() {
     text: t("auctionJoin.heading46"),
     onClick: backnavi,
     className:
-      "bg-gradient-to-r w-fit flex from-[#660000] via-[#800000] to-[#990000] text-white poppins_semibold px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
+      "bg-gradient-to-r w-fit flex from-[#9F1E24] via-[#800000] to-[#990000] text-white poppins_semibold px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300",
   };
 
   return (
@@ -208,7 +208,7 @@ export default function Page() {
                       className="btn"
                       disabled={!isValid}
                       style={{
-                        background: "#660000",
+                        background: "#9F1E24",
                         color: "white",
                       }}
                     >
