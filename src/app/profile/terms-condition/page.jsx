@@ -58,8 +58,8 @@ const Page = () => {
             mt={"mt-0 md:mt-0"}
             title={t("termConditions.heading")}
           />
-          <div className="bg-white rounded-lg w-full shadow-sm">
-            <div className=" rounded-4 rounded-lg w-full shadow-sm">
+          <div className="bg-white">
+            <div className="   rounded-lg  p-3 p-md-4 rounded-lg w-full shadow-sm">
               {loading ? (
                 <Skeleton active />
               ) : (
