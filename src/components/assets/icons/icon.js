@@ -1,5 +1,6 @@
 import Logo1 from "../logo/logo1.png";
-import Logo11 from "../logo/logo11.png";
+// import Logo11 from "../logo/logo11.png";
+import Logo11 from "../logo/flogo.png";
 import Logo2 from "../logo/logo2.png";
 import Logo3 from "../logo/logo3.png";
 import Logo4 from "../logo/logo4.png";
@@ -114,7 +115,8 @@ import offer3 from "../png/offer3.png";
 import promise1 from "../png/promise1.png";
 import promise2 from "../png/promise2.png";
 import authLogo from "../png/authLogo.png";
-import authLogo2 from "../logo/logo5.jpg";
+// import authLogo2 from "../logo/logo5.jpg";
+import authLogo2 from "../logo/newlogo5.png";
 
 export {
   avataruser,

@@ -30,7 +30,7 @@ const Footer = () => {
             <Image
               src={Logo11}
               alt="Logo"
-              className="mb-2 md:mb-6 h-[4rem] sm:h-[5rem] md:h-[6rem] object-contain w-[4rem] sm:w-[5rem] md:w-[6rem]"
+              className="mb-2 md:mb-6 h-[4rem] sm:h-[5rem] md:h-[4rem] object-contain w-[4rem] sm:w-[5rem] md:w-[4rem]"
             />
             <p className={`text-sm max-w-md `}>
               {data?.footer?.desc[language]}
