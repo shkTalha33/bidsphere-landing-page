@@ -116,6 +116,7 @@ import promise2 from "../png/promise2.png";
 import authLogo from "../png/authLogo.png";
 // import authLogo2 from "../logo/logo5.jpg";
 import authLogo2 from "../logo/newlogo00.png";
+import Logo001 from "../logo/logo001.png";
 
 export {
   avataruser,
@@ -230,5 +231,6 @@ export {
   promise2,
   authLogo,
   authLogo2,
-  Logo5
+  Logo5,
+  Logo001
 };

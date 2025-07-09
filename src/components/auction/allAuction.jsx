@@ -331,7 +331,7 @@ export default function AllAuction() {
               <div
                 onClick={handleOpenFilter}
                 className={`${language === "ar" ? "mr-auto" : "ml-auto"} mb-2 ${
-                  isFiltered ? "bg_primary" : "bg-1"
+                  isFiltered ? "bg_primary" : "bg_primary"
                 } md:w-[2.5rem] md:h-[2.5rem] w-[2rem] h-[2rem] rounded-full items-center justify-center flex sm:hidden cursor-pointer`}
               >
                 <FiFilter className="text-white w-[1rem] h-[1rem] md:w-[1.5rem] md:h-[1.5rem]" />
@@ -356,7 +356,7 @@ export default function AllAuction() {
               >
                 <div
                   className={`${
-                    isFiltered ? "bg_primary" : "bg-1"
+                    isFiltered ? "bg_primary" : "bg_primary"
                   } w-[2.5rem] h-[2.5rem] rounded-full items-center justify-center hidden sm:flex cursor-pointer`}
                 >
                   <FiFilter className="text-white w-[1.5rem] h-[1.5rem]" />

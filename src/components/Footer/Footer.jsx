@@ -25,12 +25,12 @@ const Footer = () => {
         fluid="xxl"
         className="mx-auto md:px-4 grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-12"
       >
-        <div className="space-y-6 flex flex-col items-start justify-start">
+        <div className="space-y-6 flex flex-col items-center justify-center">
           <div>
             <Image
               src={Logo11}
               alt="Logo"
-              className="mb-2 md:mb-6 h-[4rem] sm:h-[5rem] md:h-[4rem] object-contain w-[4rem] sm:w-[5rem] md:w-[4rem] mx-auto"
+              className="mb-2 md:mb-6 h-[4rem] w-[4rem]  sm:h-[5rem] md:h-[4.5rem] object-contain sm:w-[5rem] md:w-[4.5rem] mx-auto"
             />
             <p className={`text-sm max-w-md `}>
               {data?.footer?.desc[language]}

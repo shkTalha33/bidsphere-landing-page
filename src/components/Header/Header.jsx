@@ -13,7 +13,7 @@ import { TbLogout } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { Container } from "reactstrap";
 import ApiFunction from "../api/apiFuntions";
-import { authLogo2, avataruser } from "../assets/icons/icon";
+import { authLogo2, avataruser, Logo001 } from "../assets/icons/icon";
 
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -253,7 +253,7 @@ export default function Header() {
         <div className="relative" ref={dropdownRef}>
           <div
             onClick={handleToggleNotification}
-            className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+            className="bg_primary w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
           >
             <IoMdNotificationsOutline className="text-white w-[1rem] h-[1rem] md:w-[1.2rem] md:h-[1.2rem]" />
           </div>
@@ -284,7 +284,7 @@ export default function Header() {
         <div className="relative">
           <div
             onClick={handleChatnaoo}
-            className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+            className="bg_primary w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
           >
             <RiChatSmile2Line className="text-white w-[1rem] h-[1rem] md:w-[1.2rem] md:h-[1.2rem]" />
           </div>
@@ -296,7 +296,7 @@ export default function Header() {
         </div>
         <Link
           href={`/favorite`}
-          className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+          className="bg_primary w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
         >
           <FaRegHeart className="text-white w-[1.2rem] h-[1.2rem]" />
         </Link>
@@ -524,8 +524,8 @@ export default function Header() {
             onClick={() => router.push("/")}
           >
             <Image
-              className="w-[2rem] h-[2rem] md:w-[2.5rem] md:h-[2.5rem] object-cover"
-              src={authLogo2}
+              className="w-[2rem] h-[2rem] md:w-[3rem] md:h-[3rem] object-contain"
+              src={Logo001}
               alt=""
             />
           </div>
@@ -535,7 +535,7 @@ export default function Header() {
               <>
                 <div className="relative" ref={dropdownRef}>
                   <div
-                    className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+                    className="bg_primary w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
                     onClick={handleToggleNotification}
                   >
                     <IoMdNotificationsOutline className="text-white w-[1.2rem] h-[1.2rem]" />
@@ -693,7 +693,7 @@ export default function Header() {
                       handleChatnaoo();
                       handleNavClose();
                     }}
-                    className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+                    className="bg_primary w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
                   >
                     <RiChatSmile2Line className="text-white w-[1.2rem] h-[1.2rem]" />
                   </div>
@@ -705,7 +705,7 @@ export default function Header() {
                 </div>
                 <Link
                   href={"/favorite"}
-                  className="bg-1 w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
+                  className="bg_primary w-[2rem] h-[2rem] rounded-full flex items-center justify-center cursor-pointer"
                   onClick={handleNavClose}
                 >
                   <FaRegHeart className="text-white w-[1.2rem] h-[1.2rem]" />
