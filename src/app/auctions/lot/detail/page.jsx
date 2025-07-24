@@ -36,7 +36,7 @@ const Page = () => {
   const fetchLotDetail = async () => {
     try {
       const response = await get(`${getAuctionLot}${itemParam}`);
-  
+
       setCurrentLot(response?.lot);
       setLoading(false);
     } catch (error) {
@@ -274,7 +274,7 @@ const Page = () => {
                           {currentLot?.subcategory?.title[userLanguage]}
                         </p>
                       </Col>
-                      <Col xs="12" className="px-3 px-md-4">
+                      <Col xs="12" sm="6" className="px-3 px-md-4">
                         <p className="text-[#1B212C] mb-0 text-base md:text-lg poppins_medium capitalize">
                           {t("lotDetail.heading7")}
                         </p>

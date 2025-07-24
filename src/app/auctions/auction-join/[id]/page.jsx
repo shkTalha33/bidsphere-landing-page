@@ -527,6 +527,8 @@ export default function Page() {
       });
   };
 
+  console.log(recentBids, "recentBids");
+
   return (
     <main className="bg_mainsecondary">
       <>
@@ -879,6 +881,13 @@ export default function Page() {
                           } mb-0`}
                         >
                           {formatPrice(convert(bid?.price || 0, "LYD"))}
+                        </p>
+                        <p
+                          className={`capitalize poppins_regular text-[14px] ${
+                            language === "ar" ? "text-start" : "text-end"
+                          } mb-0`}
+                        >
+                          {bid?.bidNumber}
                         </p>
                       </div>
                     ))}
