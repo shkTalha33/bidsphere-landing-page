@@ -535,7 +535,7 @@ const AuctionDetailPage = () => {
                                 : displayValue}
                             </span>
                             {isLongText && (
-                              <span className="">
+                              <span>
                                 <button
                                   className={`text-xs underline text_primary poppins_medium mt-1 hover:underline`}
                                   onClick={() => handleSeeMore(key, value)}
@@ -786,7 +786,7 @@ const AuctionDetailPage = () => {
                   </Col>
                 </Row>
                 <Row className="justify-center p-2">
-                  <Col md="6" className="">
+                  <Col md="6">
                     <div
                       className={`poppins_medium text-base text-[#8B0000] ${
                         language === "ar" ? "text-right" : "text-left"
@@ -800,11 +800,11 @@ const AuctionDetailPage = () => {
                       }`}
                     >
                       <span className="px-3 mt-2 py-1 rounded-full border border-black-300">
-                        {item?.subcategory?.title}
+                        {item?.category?.name}
                       </span>
                     </div>
                   </Col>
-                  <Col md="6" className="">
+                  <Col md="6">
                     <div
                       className={`poppins_medium text-base text-[#8B0000] ${
                         language === "ar" ? "text-right" : "text-left"

@@ -39,20 +39,22 @@ export default function RegistrationReviewPage({
       toast.error(t("registration.validation.fillAllFields"));
       return;
     }
-    setLoading(true);
-    await post(`${auctionRegistration}${id}`, data)
-      .then((result) => {
-        toast.success(result?.message);
-        router.push(`/auctions/${id}/detail`);
-        dispatch(clearRegisterData());
-        dispatch(resetKeysObject());
-      })
-      .catch((err) => {
-        handleError(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    // setLoading(true);
+    console.log(data, "data");
+
+    // await post(`${auctionRegistration}${id}`, data)
+    //   .then((result) => {
+    //     toast.success(result?.message);
+    //     router.push(`/auctions/${id}/detail`);
+    //     dispatch(clearRegisterData());
+    //     dispatch(resetKeysObject());
+    //   })
+    //   .catch((err) => {
+    //     handleError(err);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   };
 
   return (
