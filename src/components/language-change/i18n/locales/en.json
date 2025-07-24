@@ -235,14 +235,22 @@
     "amount": "Amount",
     "enterHere": "Enter Here",
     "walletBalance": "Wallet Balance",
-    "paymentDoneWith": "Payment Done with",
-    "wallet": "Wallet",
+    "paymentDoneWith": "Payment has already been completed using",
+    "paymentCompletedNote": "Payment has already been completed using the selected method.",
+    "paymentMethod": {
+      "wallet": "Wallet",
+      "cash": "Cash",
+      "stripe": "Stripe"
+    },
     "stripe": "Stripe",
     "choosePaymentMethod": "Choose a Payment Method",
     "payWithStripe": "Pay with Stripe",
     "payWithWallet": "Pay with Wallet",
-    "insufficientWalletBalance": "Insufficient Wallet Balance. Please pay with Stripe.",
-    "payAmount": "Pay Amount"
+    "payWithCash": "Pay with Cash",
+    "payWithBank": "Pay with Bank Transfer",
+    "insufficientWalletBalance": "Insufficient Wallet Balance. Please pay with Stripe , Bank Transfer or Cash.",
+    "payAmount": "Pay Amount",
+    "uploadProof": "Upload bank proof (image)"
   },
   "order": {
     "heading": "All Orders",
@@ -416,7 +424,9 @@
     },
     "payment": {
       "payWithWallet": "Pay with Wallet",
-      "payWithStripe": "Pay with Stripe"
+      "payWithStripe": "Pay with Stripe",
+      "payWithCash": "Pay with Cash",
+      "payWithBank": "Pay via Bank Transfer"
     },
     "actions": {
       "submitApplication": "Submit Application"

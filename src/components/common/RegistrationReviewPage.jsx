@@ -32,6 +32,7 @@ export default function RegistrationReviewPage({
   const { post } = ApiFunction();
   const router = useRouter();
   const data = useSelector(selectRegisterData);
+
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
@@ -39,22 +40,21 @@ export default function RegistrationReviewPage({
       toast.error(t("registration.validation.fillAllFields"));
       return;
     }
-    // setLoading(true);
-    console.log(data, "data");
+    setLoading(true);
 
-    // await post(`${auctionRegistration}${id}`, data)
-    //   .then((result) => {
-    //     toast.success(result?.message);
-    //     router.push(`/auctions/${id}/detail`);
-    //     dispatch(clearRegisterData());
-    //     dispatch(resetKeysObject());
-    //   })
-    //   .catch((err) => {
-    //     handleError(err);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
+    await post(`${auctionRegistration}${id}`, data)
+      .then((result) => {
+        toast.success(result?.message);
+        router.push(`/auctions/${id}/detail`);
+        dispatch(clearRegisterData());
+        dispatch(resetKeysObject());
+      })
+      .catch((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -218,8 +218,12 @@ export default function RegistrationReviewPage({
                     {t("registration.fields.paymentOption")}
                   </p>
                   <p className="text-base poppins_regular text-[#818898]">
-                    {data?.walletBalance
+                    {data?.walletBalance || formData?.walletBalance
                       ? t("registration.payment.payWithWallet")
+                      : data?.cash || formData?.cash === true
+                      ? t("registration.payment.payWithCash")
+                      : data?.bank || formData?.bank
+                      ? t("registration.payment.payWithBank")
                       : t("registration.payment.payWithStripe")}
                   </p>
                 </div>

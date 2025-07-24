@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import ApiFunction from "@/components/api/apiFuntions";
@@ -44,7 +45,8 @@ import {
   setsliceProgress,
 } from "@/components/redux/registrationSlice/resgiterSlice";
 import { useTranslation } from "react-i18next";
-
+import { uploadFile } from "@/components/api/uploadFile";
+import { FiUploadCloud } from "react-icons/fi";
 const PaymentDetail = ({
   setProgress,
   setIsCompleted,
@@ -88,17 +90,38 @@ const PaymentDetail = ({
   }, []);
 
   const [walletUsed, setWalletUsed] = useState(false);
+  const [cashUsed, setCashUsed] = useState(false);
+  const [bankUsed, setBankUsed] = useState(false);
+  const [bankImage, setBankImage] = useState(null);
+  const [bankImageUrl, setBankImageUrl] = useState("");
+  const [bankUploading, setBankUploading] = useState(false);
+  const [bankError, setBankError] = useState("");
+  // Add a state to track the selected payment method
+  const [selectedMethod, setSelectedMethod] = useState(null);
 
   const handlenavoiu = () => {
-    const data = walletUsed
-      ? {
-          walletBalance: item?.depositamount,
-          amount: item?.depositamount,
-        }
-      : {
-          paymentId: stripKeysData?.paymentId,
-          amount: item?.depositamount,
-        };
+    let data;
+    if (walletUsed) {
+      data = {
+        walletBalance: item?.depositamount,
+        amount: item?.depositamount,
+      };
+    } else if (cashUsed) {
+      data = {
+        cash: true,
+        amount: item?.depositamount,
+      };
+    } else if (bankUsed) {
+      data = {
+        bank: bankImageUrl,
+        amount: item?.depositamount,
+      };
+    } else {
+      data = {
+        paymentId: stripKeysData?.paymentId,
+        amount: item?.depositamount,
+      };
+    }
 
     if (!isCompleted?.security) {
       if (progress === 66) {
@@ -110,6 +133,7 @@ const PaymentDetail = ({
       ...formData,
       ...data,
     };
+
     // Encrypt and encode
     dispatch(setRegisterData(mergedData));
     dispatch(setActiveStep("review"));
@@ -174,6 +198,28 @@ const PaymentDetail = ({
         console.log(error, "error");
       });
   };
+
+  // Determine if payment is already completed
+  const paymentCompleted =
+    !!formData?.paymentId ||
+    !!formData?.walletBalance ||
+    !!formData?.bank ||
+    formData?.cash === true;
+
+  // Update selection logic for payment methods
+  // When a method is selected, set selectedMethod accordingly
+  useEffect(() => {
+    if (walletUsed) {
+      setSelectedMethod("wallet");
+    } else if (cashUsed) {
+      setSelectedMethod("cash");
+    } else if (bankUsed) {
+      setSelectedMethod("bank");
+    } else {
+      setSelectedMethod(null);
+    }
+  }, [walletUsed, cashUsed, bankUsed]);
+
   return (
     <>
       <Container
@@ -217,48 +263,190 @@ const PaymentDetail = ({
               </div>
 
               <div className="bg-white shadow-md rounded-lg p-4">
-                {formData?.paymentId ||
-                urlStatus === "succeeded" ||
-                walletUsed ? (
+                {paymentCompleted ? (
                   <div className="mb-3 text-lg poppins_semibold text-green-600">
                     {t("payment.paymentDoneWith")}{" "}
                     <span className="font-bold">
-                      {walletUsed ? t("payment.wallet") : t("payment.stripe")}
+                      {formData?.walletBalance
+                        ? t("payment.paymentMethod.wallet")
+                        : formData?.cash === true
+                        ? t("payment.paymentMethod.cash")
+                        : t("payment.paymentMethod.stripe")}
                     </span>
                   </div>
                 ) : (
                   <>
-                    <div className="mb-4 text-lg poppins_semibold text-gray-800">
+                    <div className="mb-3 text-lg poppins_semibold text-gray-800">
                       {t("payment.choosePaymentMethod")}
                     </div>
 
-                    <div className="flex max-[1286px]:flex-col items-center justify-center gap-3">
-                      {/* Stripe Button */}
-                      <div
-                        onClick={() => {
-                          handleCreatePayment();
-                          setWalletUsed(false);
-                        }}
-                        className="bg-blue-600 whitespace-nowrap hover:bg-blue-700 transition-all w-full sm:w-auto cursor-pointer text-white px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg flex items-center justify-center gap-2"
-                      >
-                        <FaCreditCard size={20} />
-                        {t("payment.payWithStripe")}
-                      </div>
+                    {/* Payment Method Selection UI */}
+                    {selectedMethod === "bank" ? (
+                      <div className="flex flex-col items-center w-full sm:w-auto bg-white p-4 rounded-lg shadow-md">
+                        <div className="mb-3 text-lg poppins_semibold text-purple-700">
+                          {t("payment.payWithBank")}
+                        </div>
 
-                      {/* Wallet Button */}
-                      {userData?.walletBalance >= item?.depositamount ? (
-                        <div
-                          onClick={() => setWalletUsed(true)}
-                          className="bg-green-600 whitespace-nowrap hover:bg-green-700 transition-all w-full sm:w-auto cursor-pointer text-white px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"
+                        {/* Upload Box with Icon */}
+                        <label className="relative w-full max-w-xs h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-purple-500 transition">
+                          <FiUploadCloud
+                            size={32}
+                            className="text-gray-500 mb-2"
+                          />
+                          <span className="text-sm text-gray-500">
+                            {t("payment.uploadProof")}
+                          </span>
+                          <input
+                            type="file"
+                            accept="image/*,application/pdf"
+                            disabled={bankUploading}
+                            onChange={async (e) => {
+                              setBankError("");
+                              const file = e.target.files[0];
+                              if (!file) return;
+                              setBankUploading(true);
+                              try {
+                                const response = await uploadFile(file);
+                                const url =
+                                  response.data.image || response.data.video;
+                                setBankImageUrl(url);
+                                setBankImage(file);
+                              } catch (err) {
+                                setBankError(t("order.heading38"));
+                              }
+                              setBankUploading(false);
+                            }}
+                            className="absolute inset-0 opacity-0 cursor-pointer"
+                          />
+                        </label>
+
+                        {/* Uploading Spinner */}
+                        {bankUploading && (
+                          <Spinner size="sm" color="purple" className="mt-2" />
+                        )}
+
+                        {/* Uploaded Image Preview */}
+                        {bankImageUrl && (
+                          <div className="mt-2">
+                            <a
+                              href={bankImageUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <img
+                                src={bankImageUrl}
+                                alt="Bank Proof"
+                                style={{
+                                  maxWidth: 120,
+                                  maxHeight: 120,
+                                  borderRadius: 8,
+                                }}
+                              />
+                            </a>
+                          </div>
+                        )}
+
+                        {/* Error Message */}
+                        {bankError && (
+                          <div className="text-red-500 text-sm mt-2">
+                            {bankError}
+                          </div>
+                        )}
+
+                        {/* Back Button */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedMethod(null);
+                            setBankUsed(false);
+                            setBankImage(null);
+                            setBankImageUrl("");
+                            setBankError("");
+                          }}
+                          className="mt-4 px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-800 poppins_medium"
                         >
-                          {t("payment.payWithWallet")}
+                          {t("auctionJoin.heading46")}
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex flex-wrap gap-4 w-full">
+                        {/* Stripe Button */}
+                        <div
+                          onClick={() => {
+                            handleCreatePayment();
+                            setWalletUsed(false);
+                            setCashUsed(false);
+                            setBankUsed(false);
+                            setSelectedMethod("stripe");
+                          }}
+                          className={`flex-1 min-w-[150px] sm:min-w-[180px] text-center transition-all cursor-pointer text-white px-4 py-2 rounded-lg poppins_medium text-sm sm:text-base flex items-center justify-center gap-2 ${
+                            selectedMethod === "stripe"
+                              ? "bg_primary"
+                              : "bg-blue-600 hover:bg-blue-700"
+                          }`}
+                        >
+                          <FaCreditCard size={18} />
+                          {t("payment.payWithStripe")}
                         </div>
-                      ) : (
-                        <div className="text-red-500 text-sm mt-2">
-                          {t("payment.insufficientWalletBalance")}
+
+                        {/* Cash Button */}
+                        <div
+                          onClick={() => {
+                            setCashUsed(true);
+                            setWalletUsed(false);
+                            setBankUsed(false);
+                            setSelectedMethod("cash");
+                          }}
+                          className={`flex-1 min-w-[150px] sm:min-w-[180px] text-center transition-all cursor-pointer text-white px-4 py-2 rounded-lg poppins_medium text-sm sm:text-base ${
+                            selectedMethod === "cash"
+                              ? "bg_primary"
+                              : "bg-yellow-600 hover:bg-yellow-700"
+                          }`}
+                        >
+                          {t("payment.payWithCash")}
                         </div>
-                      )}
-                    </div>
+
+                        {/* Bank Transfer Button */}
+                        <div
+                          onClick={() => {
+                            setBankUsed(true);
+                            setWalletUsed(false);
+                            setCashUsed(false);
+                            setSelectedMethod("bank");
+                          }}
+                          className={`flex-1 min-w-[150px] sm:min-w-[180px] text-center transition-all cursor-pointer text-white px-4 py-2 rounded-lg poppins_medium text-sm sm:text-base ${
+                            selectedMethod === "bank"
+                              ? "bg_primary"
+                              : "bg-purple-600 hover:bg-purple-700"
+                          }`}
+                        >
+                          {t("payment.payWithBank")}
+                        </div>
+
+                        {/* Wallet Button */}
+                        {userData?.walletBalance >= item?.depositamount ? (
+                          <div
+                            onClick={() => {
+                              setWalletUsed(true);
+                              setCashUsed(false);
+                              setBankUsed(false);
+                              setSelectedMethod("wallet");
+                            }}
+                            className={`flex-1 min-w-[150px] sm:min-w-[180px] text-center transition-all cursor-pointer text-white px-4 py-2 rounded-lg poppins_medium text-sm sm:text-base ${
+                              selectedMethod === "wallet"
+                                ? "bg_primary"
+                                : "bg-green-600 hover:bg-green-700"
+                            }`}
+                          >
+                            {t("payment.payWithWallet")}
+                          </div>
+                        ) : (
+                          <div className="text-red-500 text-sm mt-2 w-full text-center">
+                            {t("payment.insufficientWalletBalance")}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </>
                 )}
               </div>
@@ -269,7 +457,10 @@ const PaymentDetail = ({
                   isRTL ? "justify-start" : "justify-end"
                 } mt-3`}
               >
-                {(urlStatus === "succeeded" || walletUsed) && (
+                {(urlStatus === "succeeded" ||
+                  walletUsed ||
+                  cashUsed ||
+                  (bankUsed && bankImageUrl)) && (
                   <div
                     onClick={handlenavoiu}
                     className="bg_primary hover:bg-indigo-700 transition-all w-fit cursor-pointer text-white whitespace-nowrap px-5 py-2 rounded-lg poppins_medium text-base sm:text-lg"

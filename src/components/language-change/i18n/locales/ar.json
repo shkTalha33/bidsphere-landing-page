@@ -236,13 +236,22 @@
     "enterHere": "أدخل هنا",
     "walletBalance": "رصيد المحفظة",
     "paymentDoneWith": "تم الدفع باستخدام",
+    "paymentCompletedNote": "تم الدفع باستخدام الطريقة المحددة.",
+    "paymentMethod": {
+      "wallet": "المحفظة",
+      "cash": "نقدًا",
+      "stripe": "سترايب"
+    },
     "wallet": "المحفظة",
     "stripe": "سترايب",
     "choosePaymentMethod": "اختر طريقة الدفع",
     "payWithStripe": "ادفع باستخدام سترايب",
     "payWithWallet": "ادفع باستخدام المحفظة",
-    "insufficientWalletBalance": "رصيد المحفظة غير كافٍ. يرجى الدفع باستخدام سترايب.",
-    "payAmount": "ادفع المبلغ"
+    "payWithCash": "ادفع نقدًا",
+    "payWithBank": "ادفع عن طريق التحويل البنكي",
+    "insufficientWalletBalance": "رصيد المحفظة غير كافٍ. يرجى الدفع باستخدام سترايب أو التحويل البنكي أو النقدي.",
+    "payAmount": "ادفع المبلغ",
+    "uploadProof": "ربما يكون الإثبات صورة أو ملف"
   },
   "order": {
     "heading": "جميع الطلبات",
@@ -509,7 +518,9 @@
     },
     "payment": {
       "payWithWallet": "الدفع بالمحفظة",
-      "payWithStripe": "الدفع بسترايب"
+      "payWithStripe": "الدفع بسترايب",
+      "payWithCash": "الدفع نقدًا",
+      "payWithBank": "الدفع عن طريق التحويل البنكي"
     },
     "actions": {
       "submitApplication": "تقديم الطلب"

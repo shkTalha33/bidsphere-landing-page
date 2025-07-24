@@ -27,8 +27,7 @@ export default function OrderDetails({ orderDetail, detailLoading, backrout }) {
   const router = useRouter();
   const onChange = (key) => {};
   const { userData } = ApiFunction();
-  console.log(t("order.heading16"));
-  console.log("currentSelectedButton", currentSelectedButton);
+
 
   const orderDetailButtons = [
     `${t("order.heading16")}`,

@@ -36,7 +36,7 @@ const Page = () => {
   const fetchLotDetail = async () => {
     try {
       const response = await get(`${getAuctionLot}${itemParam}`);
-      console.log(response?.lot, "response");
+  
       setCurrentLot(response?.lot);
       setLoading(false);
     } catch (error) {
