@@ -368,7 +368,11 @@
     "exterior": "Exterior",
     "interior": "Interior",
     "technology": "Technology & Safety",
-    "readMore": "Read More"
+    "readMore": "Read More",
+    "name": "Name",
+    "branch": "Branch",
+    "accountNumber": "Account Number",
+    "IBNNumber": "IBAN Number"
   },
   "offers": {
     "heading": "services to prefer choosing",

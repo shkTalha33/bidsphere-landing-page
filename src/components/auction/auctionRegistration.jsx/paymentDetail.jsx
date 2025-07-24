@@ -5,7 +5,7 @@ import ApiFunction from "@/components/api/apiFuntions";
 import {
   auctionDetail,
   createPaymentStripe,
-  getstripKey,
+  getstripKey,getBank
 } from "@/components/api/ApiFile";
 import { handleError } from "@/components/api/errorHandler";
 import { googlePay, paypal, stripe } from "@/components/assets/icons/icon";
@@ -47,6 +47,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { uploadFile } from "@/components/api/uploadFile";
 import { FiUploadCloud } from "react-icons/fi";
+import { getLanguage } from "@/components/redux/language/languageSlice";
 const PaymentDetail = ({
   setProgress,
   setIsCompleted,
@@ -64,10 +65,13 @@ const PaymentDetail = ({
   const stripKeysData = useSelector(selectKeysObject);
   const formData = useSelector(selectRegisterData);
   const progress = useSelector(selectProgress);
+  const language = useSelector(getLanguage);
 
   const searchParams = useSearchParams();
   const urlParams = new URLSearchParams(searchParams);
   const urlStatus = urlParams.get("redirect_status");
+  const [bank, setBank] = useState([]);
+  
 
   const fetchAuctionDetail = debounce(async () => {
     setLoading(true);
@@ -85,7 +89,18 @@ const PaymentDetail = ({
       });
   }, 300);
 
+  const fetchBank = debounce(async () => {
+    setLoading(true);
+    await get(`${getBank}`)
+      .then((result) => {
+        if (result?.success) {
+          setBank(result?.data);
+        }
+      })
+  }, 300);
+
   useEffect(() => {
+    fetchBank();
     fetchAuctionDetail();
   }, []);
 
@@ -98,6 +113,9 @@ const PaymentDetail = ({
   const [bankError, setBankError] = useState("");
   // Add a state to track the selected payment method
   const [selectedMethod, setSelectedMethod] = useState(null);
+
+  // Add a state for bank accounts (example, replace with your actual state source)
+
 
   const handlenavoiu = () => {
     let data;
@@ -283,10 +301,32 @@ const PaymentDetail = ({
                     {/* Payment Method Selection UI */}
                     {selectedMethod === "bank" ? (
                       <div className="flex flex-col items-center w-full sm:w-auto bg-white p-4 rounded-lg shadow-md">
-                        <div className="mb-3 text-lg poppins_semibold text-purple-700">
-                          {t("payment.payWithBank")}
+                        {/* Bank Account Info Section */}
+                        <div className="w-full max-w-xl mb-4">
+                          <h4 className="text-lg font-semibold mb-2 text-primary">{t("payment.payWithBank")}</h4>
+                          <div className="grid gap-3">
+                            {bank?.map((acc, idx) => (
+                              <div key={idx} className="border rounded-lg p-3 bg-gray-50 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                                <div>
+                                  <div className="font-medium text-gray-800">
+                                    {t("common.name")}: {acc.name[language]}
+                                  </div>
+                                  <div className="text-gray-600">
+                                    {t("common.branch")}: {acc.Branch[language]}
+                                  </div>
+                                </div>
+                                <div className="flex flex-col md:items-end">
+                                  <div className="text-gray-700">
+                                    {t("common.accountNumber")}: <span className="font-mono">{acc.accountNumber}</span>
+                                  </div>
+                                  <div className="text-gray-700">
+                                    {t("common.IBNNumber")}: <span className="font-mono">{acc.IBNNumber}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-
                         {/* Upload Box with Icon */}
                         <label className="relative w-full max-w-xs h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-purple-500 transition">
                           <FiUploadCloud

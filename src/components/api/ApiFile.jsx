@@ -29,6 +29,7 @@ const getLatestCurrencyRate = "users/data";
 const getCategory = "cat/all";
 const checkPhoneNumber = "users/check-phone";
 const getAuctionByCategory = "catId";
+const getBank="bank";
 
 const getLiveChat = "msg/liveChat";
 
@@ -122,4 +123,5 @@ export {
   getSubcategory,
   getAuctionRegister,
   registerAgain,
+  getBank
 };

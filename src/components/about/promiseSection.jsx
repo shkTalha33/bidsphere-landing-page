@@ -40,7 +40,7 @@ const PromiseSection = () => {
             <h4
               className={`text-2xl md:text-4xl text_primary poppins_medium capitalize mb-2 mb-md-4 flex items-center justify-center md:justify-start`}
             >
-              {t("promise.ourValue")}{" "}
+              {/* {t("promise.ourValue")}{" "} */}
               <span
                 className={`text-black poppins_medium ${
                   language === "ar" ? "mr-2" : "ml-2"
