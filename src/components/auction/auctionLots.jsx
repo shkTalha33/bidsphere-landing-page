@@ -43,10 +43,10 @@ export default function AuctionLots({ items, loading }) {
                   </div>
                   <div className="flex items-center justify-between gap-2">
                     <div>
-                      <p className="poppins_semibold text-base capitalize">
+                      <p className="poppins_semibold  capitalizetext-base capitalize">
                         {item?.item?.name}
                       </p>
-                      <p className="poppins_medium text-sm capitalize">
+                      <p className="poppins_medium capitalize text-sm capitalize">
                         {items?.name}
                       </p>
                     </div>

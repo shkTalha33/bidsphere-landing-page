@@ -718,6 +718,7 @@
       "navigation_system": "Navigation System",
       "media_screen": "Media Screen",
       "noInfo": "No category information available"
-    }
+    },
+    "lotnumber": "Lot Number"
   }
 }

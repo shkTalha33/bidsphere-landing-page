@@ -527,8 +527,6 @@ export default function Page() {
       });
   };
 
-  console.log(recentBids, "recentBids");
-
   return (
     <main className="bg_mainsecondary">
       <>
@@ -887,7 +885,7 @@ export default function Page() {
                             language === "ar" ? "text-start" : "text-end"
                           } mb-0`}
                         >
-                          {bid?.bidNumber}
+                          #{bid?.bidNumber}
                         </p>
                       </div>
                     ))}

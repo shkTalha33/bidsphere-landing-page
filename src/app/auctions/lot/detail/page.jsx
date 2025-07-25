@@ -210,10 +210,10 @@ const Page = () => {
                   xs="12"
                   md="12"
                   lg="5"
-                  className="order-3 bg_white p-2 md:p-4 rounded-lg d-flex flex-column max-h-none lg:max-h-[700px] overflow-y-auto"
+                  className="order-3 bg_white p-3 md:p-4 rounded-lg d-flex flex-column max-h-none lg:max-h-[700px] overflow-y-auto"
                 >
                   {/* Green Header Section */}
-                  <div className="rounded-xl relative mb-3">
+                  <div className="rounded-xl relative mb-2">
                     <div className="flex items-start justify-between">
                       <div>
                         <p className="poppins_medium text-base sm:text-lg md:text-xl capitalize text-center md:text-start">
@@ -284,6 +284,14 @@ const Page = () => {
                               __html: currentLot?.additionalinfo,
                             }}
                           />
+                        </p>
+                      </Col>
+                      <Col xs="12" sm="6" className="px-3 px-md-4">
+                        <p className="text-[#1B212C] mb-0 text-base md:text-lg poppins_medium capitalize">
+                          {t("auction.lotnumber")}
+                        </p>
+                        <p className="text-[#1B212C] mb-0 text-sm poppins_regular capitalize">
+                          #{currentLot?.lotNumber}
                         </p>
                       </Col>
                     </Row>

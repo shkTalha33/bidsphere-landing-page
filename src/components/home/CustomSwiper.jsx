@@ -40,10 +40,10 @@ const CustomSwiper = ({
         </Swiper>
       </div>
       <div className="flex items-center justify-end mr-4 gap-2 md:gap-3 my-2 md:my-[26px]">
-        <div className="custom-prev bg_primary w-8 h-8 md:w-12 md:h-12 rounded-lg flex items-center justify-center cursor-pointer">
+        <div className="custom-prev bg_primary w-6 h-6 md:w-8 md:h-8 rounded-lg flex items-center justify-center cursor-pointer">
           <IoChevronBack className="text-white text-4 md:text-6" />
         </div>
-        <div className="custom-next bg_primary w-8 h-8 md:w-12 md:h-12 rounded-lg flex items-center justify-center cursor-pointer p-1">
+        <div className="custom-next bg_primary w-6 h-6 md:w-8 md:h-8 rounded-lg flex items-center justify-center cursor-pointer p-1">
           <IoChevronForward className="text-white text-4 md:text-6" />
         </div>
       </div>
